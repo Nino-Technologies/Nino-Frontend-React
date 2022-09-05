@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaCommentDots } from "react-icons/fa";
 
 function ChatPopUp() {
   const [isVisible, setIsVisible] = useState(false);
@@ -9,7 +10,7 @@ function ChatPopUp() {
         onclick="document.getElementById('chatPopUp').style.display='block'"
         className="btn btn-primary w-50"
       >
-        <font-awesome-icon icon="fas fa-comment-dots" />
+        <FaCommentDots />
         Message
       </button>
 
