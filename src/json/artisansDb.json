@@ -1,0 +1,270 @@
+[{
+  "_id":"0022334",
+  "avatar":  "",
+  
+  "email": "Tesat@hh.com",
+ " email_verified":  false,
+  
+  "fullName": "John Paul",
+  "phoneNumber": "081465728399",
+  "password": "2345dfgh%^&ghjh",
+  "location": {
+    "city":"Aja","state":"Lagos"
+    },
+  "socialContact": {
+      "facebook": null,
+      "instagram": null,
+      "tweeter": null,
+      "linkedin": null
+    },
+  "moreContactInformation":  [
+      {
+        "question": "Tell us more about our work"
+      },
+      {
+        "question": "Let Get Your Contact"
+      }
+    ],
+
+  "accountInformation": [
+      {
+        "bankName": null,
+        "accountNumber": null
+      }
+    ],
+  "categories":["artisans"],
+  "role": "1",
+  "joinDate": "",
+  "reviews": [  {
+    "rId":"4567tgg",
+    "avatar":"https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp",
+    "fullName":"Tom Edic",
+    "hiredOnThumbtack": true,
+    "review":"..Julio responded immediately to my request. He made it easy to schedule and was accommodating to timing on our side. Arrived on time, very professional, knowledgeable, and HONEST. Took care of the job efficiently and even cleaned up which I wasn’t expecting. They are both professional, respectful and will definitely be hiring them for additional electrical work. Their pricing is very fair and they communicate and respond quickly. Highly recommend!",
+    "rate":"3",
+    "date":"Jen 10, 2021"
+  }],
+  "employees": 10,
+  "gender":"male",
+"backgroundChecked": false ,
+"discountsAvailable": false ,
+"offersRemoteServices": false ,
+"licensed": false ,
+"topPro":false,
+    "service":"test1",
+    "introduction":"What really sets us apart from our competition is the constant communication and quality of our services. From kitchen and bathroom remodeling to building your home from scratch, adding a room, or even backyard or painting jobs, we have a team of professionals to get it done in a timely and respectful manner. We will keep you in touch with all projects on a DAILY basis with photos of the progress so you know exactly what's being done, and when. You'll always be in-the-know with Hi-Tech Builders.    We've been in business since 1991, and our customers absolutely love us! We service Ventura County, Los Angeles County, Orange County for all projects regarding your home above $5,000 in value. Our owner David, is very personable and will not sign off on a job that our customers are not 100% satisfied with. We look forward to working with you! Seeing the look on our clients face when they see the finished product is 100% our favorite part.",
+  "payment": ["Bank transfer", "Cash"],
+  "hired":3
+},
+{
+  "_id":"0012445",
+  "avatar": 
+      "  ",
+  
+  "email": "Tesat@hh.com",
+ " email_verified":  false,
+  
+  "fullName": "Victor Josiah",
+  "phoneNumber": "081465728399",
+  "password": "2345dfgh%^&ghjh",
+  "location": {
+    "city":"Bako","state":"Abuja"
+    },
+  "socialContact": {
+      "facebook": null,
+      "instagram": null,
+      "tweeter": null,
+      "linkedin": null
+    },
+  "moreContactInformation":  [
+      {
+        "question": "Tell us more about our work"
+      },
+      {
+        "question": "Let Get Your Contact"
+      }
+    ],
+
+  "accountInformation": [
+      {
+        "bankName": null,
+        "accountNumber": null
+      }
+    ],
+  "categories": 
+    ["artisans"],
+  "role": "1",
+  "joinDate": "",
+
+  "reviews": [
+    {
+      "rId":"4567tgg",
+      "avatar":"https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp",
+      "fullName":"Taylor Jdds",
+      "hiredOnThumbtack": true,
+      "review":"..Julio responded immediately to my request. He made it easy to schedule and was accommodating to timing on our side. Arrived on time, very professional, knowledgeable, and HONEST. Took care of the job efficiently and even cleaned up which I wasn’t expecting. They are both professional, respectful and will definitely be hiring them for additional electrical work. Their pricing is very fair and they communicate and respond quickly. Highly recommend!",
+      "rate":"3",
+      "date":"Mar 4, 2022"
+    }
+  ],
+  "gender":"male",
+
+  "employees": 10,
+"backgroundChecked": true ,
+"discountsAvailable": false ,
+"offersRemoteServices": false ,
+"licensed": false ,
+"topPro":false,
+    "service":"test2",
+    "introduction":"What really sets us apart from our competition is the constant communication and quality of our services. From kitchen and bathroom remodeling to building your home from scratch, adding a room, or even backyard or painting jobs, we have a team of professionals to get it done in a timely and respectful manner. We will keep you in touch with all projects on a DAILY basis with photos of the progress so you know exactly what's being done, and when. You'll always be in-the-know with Hi-Tech Builders.    We've been in business since 1991, and our customers absolutely love us! We service Ventura County, Los Angeles County, Orange County for all projects regarding your home above $5,000 in value. Our owner David, is very personable and will not sign off on a job that our customers are not 100% satisfied with. We look forward to working with you! Seeing the look on our clients face when they see the finished product is 100% our favorite part.",
+  "payment": ["Bank transfer", "Cash"] ,
+  "hired":0
+},
+{
+  "_id":"00de12445",
+  "avatar": 
+      "  ",
+  
+  "email": "Tesat@hh.com",
+ " email_verified":  false,
+  
+  "fullName": "Mark Peter",
+  "phoneNumber": "081465728399",
+  "password": "2345dfgh%^&ghjh",
+  "location": {
+    "city":"Bako","state":"Abuja"
+    },
+  "socialContact": {
+      "facebook": null,
+      "instagram": null,
+      "tweeter": null,
+      "linkedin": null
+    },
+  "moreContactInformation":  [
+      {
+        "question": "Tell us more about our work"
+      },
+      {
+        "question": "Let Get Your Contact"
+      }
+    ],
+
+  "accountInformation": [
+      {
+        "bankName": null,
+        "accountNumber": null
+      }
+    ],
+  "categories": 
+    ["Artisans", "Mechanical", "Building"],
+  "role": "1",
+  "joinDate": "",
+
+  "reviews": [
+    {
+      "rId":"45g67tgg",
+      "avater":"https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp",
+      "fullName":"Taylor Jdds",
+      "hiredOnThumbtack": true,
+      "review":"..Julio responded immediately to my request. He made it easy to schedule and was accommodating to timing on our side. Arrived on time, very professional, knowledgeable, and HONEST. Took care of the job efficiently and even cleaned up which I wasn’t expecting. They are both professional, respectful and will definitely be hiring them for additional electrical work. Their pricing is very fair and they communicate and respond quickly. Highly recommend!",
+      "rate":"3",
+      "date":"Mar 4, 2022"
+    }
+  ],
+  "gender":"male",
+
+  "employees": 10,
+"backgroundChecked": true ,
+"discountsAvailable": false ,
+"offersRemoteServices": false ,
+"licensed": false ,
+"topPro":false,
+    "service":"Welding",
+    "introduction":"What really sets us apart from our competition is the constant communication and quality of our services. From kitchen and bathroom remodeling to building your home from scratch, adding a room, or even backyard or painting jobs, we have a team of professionals to get it done in a timely and respectful manner. We will keep you in touch with all projects on a DAILY basis with photos of the progress so you know exactly what's being done, and when. You'll always be in-the-know with Hi-Tech Builders.    We've been in business since 1991, and our customers absolutely love us! We service Ventura County, Los Angeles County, Orange County for all projects regarding your home above $5,000 in value. Our owner David, is very personable and will not sign off on a job that our customers are not 100% satisfied with. We look forward to working with you! Seeing the look on our clients face when they see the finished product is 100% our favorite part.",
+  "payment": ["Bank transfer", "Cash"] ,
+  "hired":0
+},
+{
+  "_id":"0034545",
+  "avatar": 
+      "  ",
+  
+  "email": "Girlss@hh.com",
+ " email_verified":  true,
+  
+  "fullName": "Mary Jen",
+  "phoneNumber": "081567728399",
+  "password": "2345dfgh%^&ghjh",
+  "location": {
+    "city":"Lugbe","state":"Abuja"
+    },
+  "socialContact": {
+      "facebook": "Facebook.com",
+      "instagram": "",
+      "tweeter": null,
+      "linkedin": null
+    },
+  "moreContactInformation":  [
+      {
+        "question": "Tell us more about our work"
+      },
+      {
+        "question": "Let Get Your Contact"
+      }
+    ],
+
+  "accountInformation": [
+      {
+        "bankName": null,
+        "accountNumber": null
+      }
+    ],
+  "categories": 
+    ["artisans"],
+  "role": "1",
+  "joinDate": "",
+
+  "reviews": [
+    {
+      "rId":"4567dtrgg",
+      "avater":"https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp",
+      "fullName":"Taylor Jdds",
+      "hiredOnThumbtack": true,
+      "review":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, eaque at. Possimus fugiat iusto hic at esse nesciunt quis omnis doloremque maxime mollitia, inventore recusandae laudantium quia facere asperiores consequuntur!",
+      "rate":"3",
+      "date":"Jul 12, 2022"
+    },
+    {
+      "rId":"456y7trgg",
+      "avatar":"https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp",
+      "fullName":"Taylor Jdds",
+      "hiredOnThumbtack": true,
+      "review":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, eaque at. Possimus fugiat iusto hic at esse nesciunt quis omnis doloremque maxime mollitia, inventore recusandae laudantium quia facere asperiores consequuntur!",
+      "rate":"3",
+      "date":"Feb 10, 2022"
+    },
+    {
+      "rId":"4567trgg",
+      "avater":"https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp",
+      "fullName":"Taylor Jdds",
+      "hiredOnThumbtack": true,
+      "review":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, eaque at. Possimus fugiat iusto hic at esse nesciunt quis omnis doloremque maxime mollitia, inventore recusandae laudantium quia facere asperiores consequuntur!",
+      "rate":"3",
+      "date":"Jen 20, 2022"
+    }
+  ],
+  "gender":"female",
+
+  "employees": 10,
+"backgroundChecked": true ,
+"discountsAvailable": true ,
+"offersRemoteServices": true ,
+"licensed": true ,
+"topPro":true,
+    "service":"test2",
+    "introduction":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, eaque at. Possimus fugiat iusto hic at esse nesciunt quis omnis doloremque maxime mollitia, inventore recusandae laudantium quia facere asperiores consequuntur!",
+  "payment": ["Bank transfer", "Cash", "Paypal"] ,
+  "hired":20
+}
+
+]

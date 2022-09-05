@@ -1,0 +1,117 @@
+// .ProfileCard{
+.ProfileCard {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  // max-width: 300px;
+  margin: auto;
+  display: flex;
+  text-align: center;
+  // height: 200px;
+  overflow: hidden;
+  margin: 10px auto;
+  max-width: 800px;
+
+  .image-div {
+    // border: solid;
+    overflow: hidden;
+    width: 50%;
+    max-width: 200px;
+    // margin: auto 0;
+  }
+  .text-div {
+    width: 100%;
+    text-align: start;
+    padding: 0 20px;
+    // flex-direction: column;
+    // h1 {
+    // }
+    // p {
+    // display: inline-flex;
+    a {
+      border: none;
+      outline: 0;
+      display: inline-block;
+      padding: 8px;
+      color: white;
+      background-color: #014654;
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+      max-width: 200px;
+      margin-right: auto;
+      font-size: 18px;
+      margin: 0 5px;
+
+      text-decoration: none;
+    }
+    // }
+    position: relative;
+    .extra-button {
+      display: flex;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    .introduction {
+      // border: solid 1px;
+      max-height: 55px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .introduction:hover ::after {
+      content: "... Read More";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      color: #014654;
+      text-shadow: 1px 1px 3px rgb(252, 252, 252);
+    }
+  }
+
+  @media (max-width: 650px) {
+    display: flex;
+    flex-wrap: wrap;
+    .image-div {
+      // border: solid red;
+      overflow: hidden;
+      width: 100%;
+      max-width: none;
+      // margin: auto 0;
+    }
+  }
+  @media (max-width: 425px) {
+    .text-div {
+      a {
+        max-width: none;
+      }
+      .extra-button {
+        position: static;
+        justify-content: space-around;
+        margin: 5px 0;
+      }
+    }
+  }
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button:hover,
+a:hover {
+  opacity: 0.7;
+}
+// }
+@media (max-width: 375px) {
+  button {
+    padding: 0;
+    // font-size: 10px;
+    margin: 0 2px;
+    padding: 5px 0;
+    a {
+      font-size: 20px;
+    }
+  }
+}

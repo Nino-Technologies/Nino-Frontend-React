@@ -1,0 +1,46 @@
+.ShareButton {
+  position: relative;
+
+  .Share-icons {
+    display: flex;
+    position: absolute;
+    bottom: -40px;
+    left: -25px;
+    box-shadow: 1px 1px 5px #ddd;
+    padding: 5px 0px;
+    width: 150px;
+    background-color: #fff;
+    // display: flex;
+    justify-content: space-evenly;
+    // border: solid;
+    svg,
+    a {
+      font-size: 20px;
+      color: #003049;
+    }
+  }
+  button {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin-top: 5px;
+    width: 100px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background-color: transparent;
+    user-select: none;
+    cursor: pointer;
+  }
+  :focus {
+    outline: none;
+    border: #014654 solid 1px;
+  }
+  @media (max-width: 425px) {
+    .Share-icons {
+      top: -40px;
+      bottom: unset;
+    }
+  }
+}

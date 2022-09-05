@@ -1,0 +1,22 @@
+.SaveButton {
+  overflow: hidden;
+  // padding: 5px;
+  margin-top: 5px;
+  margin: 0 10px;
+  display: flex;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  .icon {
+    padding: 3px;
+    border-radius: 5px;
+  }
+  .remove {
+    border: solid 1px #dc3545;
+    color: #dc3545;
+  }
+  .add {
+    border: solid 1px #014654;
+    color: #014654;
+  }
+}

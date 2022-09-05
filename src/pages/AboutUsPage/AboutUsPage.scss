@@ -1,0 +1,105 @@
+.hero {
+  min-height: 50vh;
+  /* background-color: #003049; */
+}
+.svg {
+  margin-top: -260px;
+}
+#art {
+  color: #ef6e0b;
+}
+/* .container {
+        border: 1px solid #003049;
+    } */
+.hero-name {
+  font-size: 4em;
+  font-weight: 600;
+  text-align: left;
+  color: #003049;
+  padding-top: 140px;
+}
+.desc {
+  font-size: 1.1em;
+  font-weight: 400;
+  word-spacing: 4px;
+  color: #ffffff;
+}
+.main {
+  background-color: #003049;
+}
+.main .about {
+  margin-top: -20px;
+}
+.sub-head-text {
+  font-size: 3em;
+  word-spacing: 2px;
+  color: #ffffff;
+}
+.line {
+  width: 70px;
+  /* margin: auto; */
+  height: 5px;
+  background-color: #ef6e0b;
+}
+.img {
+  width: 100%;
+  margin-top: -80px;
+}
+.con {
+  width: 100%;
+  margin: auto;
+  height: 510px;
+  overflow: hidden;
+  max-width: 400px;
+}
+.list-group-item {
+  border: none;
+  font-size: 1em;
+  color: #ffffff;
+  background-color: transparent;
+}
+.sub-head-text1 {
+  font-size: 2em;
+  word-spacing: 2px;
+  color: #ffffff;
+}
+
+@media only screen and (max-width: 1024px) {
+  .hero-name {
+    padding-bottom: 7px;
+  }
+  .svg {
+    margin-top: -200px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .hero-name {
+    padding-bottom: 7px;
+  }
+  .main .about {
+    margin-top: -10px;
+  }
+  .svg {
+    margin-top: -90px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .hero-name {
+    font-size: 2.5em;
+    text-align: center;
+    padding-bottom: 7px;
+  }
+  .svg {
+    margin-top: -50px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .svg {
+    margin-top: -20px;
+  }
+  .main .about {
+    margin-top: 0px;
+  }
+}

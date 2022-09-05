@@ -1,0 +1,41 @@
+.hero {
+  min-height: 350px;
+  margin-top: 30px;
+  background-color: #003049;
+}
+
+.list-group-item {
+  background-color: #003049;
+}
+
+.hero-name {
+  padding-top: 80px;
+  text-align: center;
+  font-size: 3em;
+  color: #ffffff;
+}
+.contact-box {
+  margin: 0 auto;
+  bottom: 130px;
+  position: relative;
+}
+.main {
+  min-height: 80vh;
+}
+.btn-primary {
+  width: 100%;
+  border: none;
+  background-color: #ff730a;
+}
+.btn-primary:hover {
+  background-color: #d15e07;
+}
+.list-group-item {
+  border: none;
+}
+
+.contact-icon {
+  font-size: 25px;
+  cursor: pointer;
+  color: #d6d6d6a0;
+}
