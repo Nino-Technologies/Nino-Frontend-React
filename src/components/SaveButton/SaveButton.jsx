@@ -10,9 +10,9 @@ function SaveButton() {
   return (
     <div className="SaveButton">
       {save ? (
-        <GiHeartPlus className="icon add" onClick={() => toggleSave()} />
-      ) : (
         <GiHeartMinus className="icon remove" onClick={() => toggleSave()} />
+      ) : (
+        <GiHeartPlus className="icon add" onClick={() => toggleSave()} />
       )}
     </div>
   );
