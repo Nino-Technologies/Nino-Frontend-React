@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import "./ShareButton.scss";
 
-function ShareButton({ profileUrlId }) {
+function ShareButton({ id }) {
   const [visibility, setVisibility] = useState(false);
   function toggleVisibility() {
     setVisibility(!visibility);
@@ -20,7 +20,7 @@ function ShareButton({ profileUrlId }) {
         "https://nino-tech.netlify.app/artisans-profile/" + id
       );
       alert("Copied");
-    } catch ($e) {
+    } catch {
       alert("Cannot copy");
     }
   }
@@ -39,12 +39,9 @@ function ShareButton({ profileUrlId }) {
         <a href="#">
           <FaTwitter />
         </a>
-        <FaRegClipboard
-          onClick={() => copyURL(profileUrlId)}
-          className="my-auto"
-        />
+        <FaRegClipboard onClick={() => copyURL(id)} className="my-auto" />
       </div>
-      <button for="toggle-share" onClick={toggleVisibility()}>
+      <button for="toggle-share" onClick={() => toggleVisibility()}>
         <FaShareSquare /> Share
       </button>
     </div>
