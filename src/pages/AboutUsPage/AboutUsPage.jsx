@@ -27,7 +27,7 @@ function AboutUsPage() {
         ></path>
       </svg>
       <div class="main">
-        <div class="about pb-5">
+        <div class="about pt-md-0 py-5">
           <div class="container">
             <div class="col-md-12 text-center">
               <h4 class="sub-head-text">Who we Are</h4>
