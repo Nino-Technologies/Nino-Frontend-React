@@ -1,5 +1,5 @@
 import React from "react";
-import "./StarComponent.css";
+import "./StarComponent.scss";
 import { FaStar } from "react-icons/fa";
 // import profilePix from "../../assets/profile-pix.jpg";
 
