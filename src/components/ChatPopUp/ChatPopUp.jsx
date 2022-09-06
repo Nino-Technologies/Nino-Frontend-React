@@ -1,23 +1,29 @@
 import React, { useState } from "react";
 import { FaCommentDots } from "react-icons/fa";
+import "./ChatPopUp.scss";
 
 function ChatPopUp() {
   const [isVisible, setIsVisible] = useState(false);
   return (
-    <>
+    <div className="ChatPopUp">
       {/* <!-- Button to open the modal login form --> */}
       <button
-        onclick="document.getElementById('chatPopUp').style.display='block'"
-        className="btn btn-primary w-50"
+        onClick={() => setIsVisible(true)}
+        // onclick="document.getElementById('chatPopUp').style.display='block'"
+        className="contact-button ChatPopUpButton"
       >
         <FaCommentDots />
         Message
       </button>
 
       {/* <!-- The Modal --> */}
-      <div id="chatPopUp" className="modal">
+      <div
+        id="chatPopUp"
+        style={isVisible ? { display: "block" } : { display: "none" }}
+        className="modal"
+      >
         <span
-          onclick="document.getElementById('chatPopUp').style.display='none'"
+          onClick={() => setIsVisible(false)}
           className="close"
           title="Close Modal"
         >
@@ -31,7 +37,7 @@ function ChatPopUp() {
       </div> --> */}
 
           <div className="container">
-            <label for="uname">
+            <label htmlFor="uname">
               <b>Email</b>
             </label>
             <input
@@ -42,7 +48,7 @@ function ChatPopUp() {
               required
             />
 
-            <label for="psw">
+            <label htmlFor="psw">
               <b>Message</b>
             </label>
             <textarea cols="5" rows="3" className="form-control"></textarea>
@@ -62,21 +68,25 @@ function ChatPopUp() {
             </label>
           </div>
 
-          <div className="container" style="background-color: #f1f1f1">
+          <div
+            className="container"
+            //  style="background-color: #f1f1f1"
+          >
             <button
               type="button"
-              onclick="document.getElementById('chatPopUp').style.display='none'"
+              onClick={() => setIsVisible(false)}
+              // onclick="document.getElementById('chatPopUp').style.display='none'"
               className="btn btn-danger w-25"
             >
               Cancel
             </button>
-            <span className="psw">
+            {/* <span className="psw">
               Forgot <a href="#">password?</a>
-            </span>
+            </span> */}
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
