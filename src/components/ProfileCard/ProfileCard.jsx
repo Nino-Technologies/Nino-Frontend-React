@@ -3,35 +3,37 @@ import { Link } from "react-router-dom";
 import SaveButton from "../SaveButton/SaveButton";
 import StarComponent from "../stars/Stars";
 import "./ProfileCard.scss";
-// import ShareButton from "../ShareButton/ShareButton";
 import { FaTrophy, FaUser, FaUserCheck } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
+import ShareButton from "../ShareButton/ShareButton";
 
 function ProfileCard({ artisan }) {
-  const { fullName, review, introduction, service, hired, location, _id } =
-    artisan;
-  // console.log(fullName);
-
-  //   function Navegar(id) {
-  //     navigate('/products/id')
-  // }
+  const {
+    fullName,
+    introduction,
+    service,
+    hired,
+    location,
+    _id,
+    avatar,
+    gender,
+    backgroundChecked,
+  } = artisan;
   return (
     <>
       <div className="ProfileCard">
         <div className="image-div">
           <img
-            src="https://st4.depositphotos.com/9998432/20073/v/1600/depositphotos_200738870-stock-illustration-default-placeholder-businessman-half-length.jpg"
-            alt="John"
+            src={`${
+              avatar === ""
+                ? gender === "male"
+                  ? "https://st4.depositphotos.com/9998432/20073/v/1600/depositphotos_200738870-stock-illustration-default-placeholder-businessman-half-length.jpg"
+                  : "https://st3.depositphotos.com/9998432/19099/v/1600/depositphotos_190990184-stock-illustration-default-placeholder-businesswoman-half-length.jpg"
+                : avatar
+            }`}
+            alt="Profile picture"
             className="w-100"
-            // style="width: 100%"
-            // v-if=" gender == 'male'"
           />
-          {/* <img
-            src="https://st3.depositphotos.com/9998432/19099/v/1600/depositphotos_190990184-stock-illustration-default-placeholder-businesswoman-half-length.jpg"
-            alt="John"
-            style="width: 100%"
-            // v-else
-          /> */}
         </div>
         <div className="text-div">
           <h1>{fullName}</h1>
@@ -45,11 +47,6 @@ function ProfileCard({ artisan }) {
           <p className="m-0">
             <b>Service</b> <br />
             {service}
-            {/* <!-- <ul className="nav">
-          <li v-for="service in  service" :key="service">
-            - {{ service }}
-          </li>
-        </ul> --> */}
           </p>
           <div className="mt-0">
             <b> Overview</b>
@@ -67,32 +64,24 @@ function ProfileCard({ artisan }) {
                 </span>
                 {location.city}, {location.state}
               </li>
-
-              <li
-              // v-if=" backgroundChecked"
-              >
-                <span className="icon mx-2">
-                  <FaUserCheck />
-                </span>
-                Background checked
-              </li>
+              {backgroundChecked ? (
+                <li>
+                  <span className="icon mx-2">
+                    <FaUserCheck />
+                  </span>
+                  Background checked
+                </li>
+              ) : null}
             </ul>
           </div>
 
           <div className="extra-button">
-            {/* <ShareButton profileUrlId="882ywbb" /> */}
+            <ShareButton id={`${_id}`} />
 
             <SaveButton />
           </div>
-          {/* <!-- </div> --> */}
           <p className="d-flex w-100">
-            {/* <router-link
-          :to="{ name: 'Artisans-profile', params: { id:  _id } }"
-          className="me-auto mt-2"
-        >
-      </router-link> */}
-
-            <Link to={`/artisans/${_id}`} className="me-auto mt-2">
+            <Link to={`/artisans-profile/${_id}`} className="me-auto mt-2">
               <FaUser />
               <span className="d-none d-md-inline">View</span>
               Profile
