@@ -1,0 +1,16 @@
+.PageLoading {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  // background-color: rgba(0, 0, 0, 0.319);
+  // color: #fff;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+}
+.PageLoading.error {
+  color: rgb(246, 0, 0);
+  // background-color: rgba(102, 0, 0, 0.319);
+  font-weight: 800;
+}
