@@ -5,7 +5,7 @@ import "./Nav.scss";
 function Nav() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white">
-      <div className="container container-fluid">
+      <div className="container container-fluid p-0">
         <Link className="navbar-brand" to={"/"}>
           Grinders
         </Link>
@@ -23,22 +23,22 @@ function Nav() {
 
         <div className="collapse navbar-collapse text-center" id="navbarNav">
           <ul className="navbar-nav">
-            <li className="nav-item effect px-3 mx-2">
+            <li className="nav-item effect px-3 ">
               <Link to="/" className="nav-link active" aria-current="page">
                 Home
               </Link>
             </li>
-            <li className="nav-item effect px-3 mx-2">
+            <li className="nav-item effect px-3 ">
               <Link to="/artisans" className="nav-link">
                 Artisans
               </Link>
             </li>
-            <li className="nav-item effect px-3 mx-2">
+            <li className="nav-item effect px-3 ">
               <Link to="/about-us" className="nav-link">
                 About Us
               </Link>
             </li>
-            <li className="nav-item effect px-3 mx-2">
+            <li className="nav-item effect px-3 ">
               <Link to="/contact-us" className="nav-link">
                 Contact Us
               </Link>
@@ -52,7 +52,10 @@ function Nav() {
         >
           <ul className="navbar-nav">
             <li className="nav-item mx-3">
-              <Link to="#" className="btn btn-outline-success px-3 mb-3 w-100">
+              <Link
+                to="#"
+                className="btn btn-outline-success px-3 mb-2 mb-md-0  w-100"
+              >
                 Sign Up
               </Link>
             </li>
