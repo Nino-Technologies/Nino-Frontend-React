@@ -5,13 +5,14 @@ import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import Search from "../../components/Search/Search";
 
 import artisansData from "../../json/artisansDb.json";
+import "./ArtisansPage.scss";
 
 function ArtisansPage() {
   const [artisans, setArtisans] = useState(artisansData);
 
   // console.log(artisans);
   return (
-    <>
+    <div className="ArtisansPage">
       <Nav />
 
       <div className="hero">
@@ -37,10 +38,9 @@ function ArtisansPage() {
         {artisans.map((artisan) => (
           <ProfileCard artisan={artisan} />
         ))}
-        {/* <ProfileCard artisans={artisans[1]} /> */}
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
