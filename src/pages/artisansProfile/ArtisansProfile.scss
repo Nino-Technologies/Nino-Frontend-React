@@ -1,0 +1,254 @@
+// .loading {
+//   // border: solid;
+//   font-size: 30px;
+//   text-align: center;
+//   margin-top: 40%;
+// }
+// .loading.error {
+//   color: red;
+// }
+.ArtisansProfile {
+  // border: solid 1px red;
+  margin-top: 70px;
+  text-align: start;
+  // height: 1000px;
+  // overflow: hidden;
+  .containers {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    // height: 500px !important;
+    .main-area {
+      // border: solid 1px red;
+      width: 70%;
+      // height: 500px;
+
+      .profile-nav {
+        list-style: none;
+        display: flex;
+        border-bottom: solid 1px #ddd;
+        li {
+          padding: 10px 5px;
+          cursor: pointer;
+        }
+        :hover {
+          border-bottom: solid 2px #333;
+        }
+      }
+      .top-section {
+        display: flex;
+        // border: solid;
+        .image-div {
+          width: 200px;
+          padding: 0;
+          // margin: 0 20px;
+          margin-left: 25px;
+          overflow: hidden;
+          height: 200px;
+          // border: solid;
+          img {
+            border-radius: 3px;
+          }
+        }
+        .name-div {
+          padding: 10px;
+          // border: solid 1px red;
+          width: 100%;
+          max-width: 400px;
+        }
+        h1 {
+          font-size: 30px;
+        }
+        span {
+          border: solid 1px;
+          margin: 0 10px;
+          padding: 0;
+          border-radius: 30px;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          height: 20px;
+          font-size: 12px;
+          width: 140px;
+        }
+
+        position: relative;
+        // border: solid 1px red;
+        .extra-button {
+          // border: solid 1px red;
+          display: flex;
+          position: absolute;
+          top: 0;
+          right: 0px;
+        }
+      }
+      padding: 30px;
+      .introduction {
+        text-align: start;
+        line-height: 30px;
+        // font-size: 20px;
+        padding: 25px;
+      }
+
+      .more-info {
+        ul {
+          list-style: none;
+          padding: 0;
+          width: 200px;
+        }
+      }
+      .contact-div {
+        // border: solid;
+        display: flex;
+        justify-content: space-evenly;
+        .contact-button {
+          border: solid 1px #014654;
+          // width: 50%;
+          width: 300px;
+          background-color: transparent;
+          height: 40px;
+        }
+        .ChatPopUpButton {
+          width: 300px;
+          background-color: #014654;
+          min-width: 100%;
+          // color: red !important;
+        }
+      }
+      .featured-projects {
+        // border: solid 1px red;
+        overflow-x: hidden;
+        .image-flex {
+          // border: solid;
+          display: flex;
+          overflow-x: scroll;
+          img {
+            width: 200px;
+            margin: 5px;
+          }
+        }
+      }
+    }
+
+    .card-area {
+      // border: solid;
+      width: 30%;
+      position: relative;
+      .form-card {
+        position: sticky;
+        top: 95px;
+        border: solid 1px #ddd;
+        // height: 300px;
+        border-radius: 10px;
+        padding: 20px;
+        width: 100%;
+        max-width: 300px;
+        margin: auto;
+        box-shadow: 1px 1px 4px #00000036;
+        input:focus,
+        select:focus {
+          box-shadow: none;
+        }
+        form {
+          label {
+            b {
+              padding: 5px 0;
+              font-weight: 500;
+            }
+            margin: 5px 0;
+          }
+        }
+      }
+    }
+  }
+  .test-space {
+    height: 500px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    overflow: hidden;
+    .containers {
+      .main-area {
+        width: 100%;
+        .introduction {
+          padding: 18px;
+        }
+      }
+      .card-area {
+        display: none;
+      }
+    }
+  }
+  @media only screen and (max-width: 425px) {
+    overflow: hidden;
+    .containers {
+      .main-area {
+        // width: 100%;
+        padding: 10px;
+        .profile-nav {
+          // border: solid;
+          padding: 0;
+          li {
+            padding: 0 2px;
+          }
+        }
+        .top-section {
+          // border: solid;
+          flex-direction: column;
+          text-align: center;
+          .name-div {
+            .service-ul {
+              justify-content: center;
+            }
+          }
+          .image-div {
+            width: 100%;
+            max-width: 300px;
+
+            margin: auto;
+            img {
+              width: 100%;
+            }
+          }
+          button {
+            margin: 10px auto;
+          }
+          .extra-button {
+            position: static;
+            justify-content: space-evenly;
+          }
+        }
+        .introduction {
+          padding: 5px;
+        }
+        .more-info {
+          ul {
+            width: 100%;
+            // border: solid;
+          }
+          flex-direction: column;
+        }
+        .contact-div {
+          .contact-button {
+            width: 200px;
+          }
+        }
+      }
+      .card-area {
+        display: none;
+      }
+    }
+  }
+  @media only screen and (max-width: 320px) {
+    overflow: hidden;
+    .containers {
+      .main-area {
+        .contact-div {
+          .contact-button {
+            width: 150px;
+          }
+        }
+      }
+    }
+  }
+}
