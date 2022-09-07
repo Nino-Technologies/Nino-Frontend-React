@@ -53,18 +53,18 @@ function Nav() {
           <ul className="navbar-nav">
             <li className="nav-item mx-3">
               <Link
-                to="#"
+                to="/login?as=user"
                 className="btn btn-outline-success px-3 mb-2 mb-md-0  w-100"
               >
-                Sign Up
+                Login
               </Link>
             </li>
             <li className="nav-item mx-3">
               <Link
-                to="#"
+                to="/login?as=user"
                 className="btn btn-outline-success signin px-3 w-100"
               >
-                Sign In
+                Sign up
               </Link>
             </li>
           </ul>
