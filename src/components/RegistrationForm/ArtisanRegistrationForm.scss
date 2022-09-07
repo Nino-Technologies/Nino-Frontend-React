@@ -1,0 +1,93 @@
+.ArtisanRegistrationForm {
+  /* Style the form */
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  // border: solid red;
+  margin: auto;
+  #regForm {
+    // background-color: #ffffff;
+    // margin: 100px auto;
+    margin: auto;
+    padding: 10px;
+    width: 100%;
+    // width: 70%;
+    // min-width: 300px;
+    padding: 0 3rem;
+
+    /* Hide all steps by default: */
+    .tab {
+      display: none;
+
+      .option-box-div {
+        // flex-direction: column;
+        display: flex;
+        label {
+          display: flex;
+          align-items: center;
+          height: 30px;
+          width: 50%;
+          // border: solid;
+          font-size: 15px;
+          // flex-direction: column;
+          input {
+            width: unset;
+            padding: 0;
+            margin: 0;
+          }
+        }
+      }
+
+      /* Style the input fields */
+      input {
+        // padding: 10px;
+        // margin: 5px 0;
+        // height: 40px;
+        // width: 100%;
+        // font-size: 17px;
+        // font-family: Raleway;
+        // border: none;
+        // background-color: transparent;
+        // border-bottom: solid red;
+        // border-radius: 10px;
+        // color: #fff;
+
+        margin: 10px 0;
+        padding: 10px;
+      }
+      :focus {
+        outline: none;
+        box-shadow: none;
+        // border: none;
+      }
+      /* Mark input boxes that gets an error on validation: */
+      input.invalid {
+        background-color: #ffdddd;
+      }
+    }
+
+    /* Make circles that indicate the steps of the form: */
+    .step {
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #ff730a;
+      border: none;
+      border-radius: 50%;
+      display: inline-block;
+      opacity: 0.5;
+    }
+
+    /* Mark the active step: */
+    .step.active {
+      opacity: 1;
+    }
+
+    /* Mark the steps that are finished and valid: */
+    .step.finish {
+      background-color: #04aa6d;
+    }
+  }
+}
