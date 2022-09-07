@@ -19,7 +19,9 @@ nav {
     font-size: 1.9em;
     /* color: #003049; */
   }
-
+  button.navbar-toggler:focus {
+    box-shadow: none;
+  }
   .nav-item {
     color: #003049;
     cursor: pointer;
@@ -71,4 +73,74 @@ nav {
     color: #ffffff;
     background-color: #ef6e0b;
   }
+}
+
+/* ###### NavMenuComponent ###### */
+.NavMenuComponent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 200px;
+
+  .dropdown-menu-ul {
+    top: 60px;
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 1rem;
+    color: #212529;
+    list-style: none;
+    background-color: rgb(255, 255, 255);
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0 0 0 5px;
+  }
+  .dropdown-menu-ul a {
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--btn-primary);
+  }
+  .logout {
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 324px) {
+    .button {
+      font-size: 0.8rem;
+    }
+  }
+  @media screen and (max-width: 991px) {
+    max-width: none;
+    .dropdown-menu-ul {
+      left: 0px;
+      background-color: rgb(255, 255, 255);
+      top: 50px;
+    }
+  }
+}
+
+/* ###### NavProfilePicture ###### */
+
+.NavProfilePicture,
+.ProfilePicture {
+  border: solid 2px;
+  display: inline-flex;
+  padding: 0px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  color: #ddd;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  margin: auto 3px;
+  margin-left: auto;
+}
+.ProfilePicture {
+  width: 40px;
+  height: 40px;
 }
