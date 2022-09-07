@@ -1,0 +1,69 @@
+import React, { useEffect, useState } from "react";
+import ArtisanRegistrationForm from "../../components/RegistrationForm/ArtisanRegistrationForm";
+import "./RegisterPage.scss";
+import UserRegistrationForm from "../../components/RegistrationForm/UserRegistrationForm";
+import { Link, useSearchParams } from "react-router-dom";
+import { BackComponent } from "../LoginPage/LoginPage";
+
+function RegisterPage() {
+  const [displayForm, setDisplayForm] = useState(-1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("as") === "user") {
+      return setDisplayForm(1);
+    }
+    if (searchParams.get("as") === "artisan") {
+      return setDisplayForm(2);
+    }
+    console.log("Invalid login request");
+  }, [searchParams]);
+  return (
+    <div className="RegisterPage">
+      <div class="login">
+        <div class="form-section">
+          <BackComponent />
+          <div class="container ">
+            {displayForm === 1 ? (
+              <UserRegistrationForm />
+            ) : (
+              <>
+                {" "}
+                {displayForm === 2 ? (
+                  <ArtisanRegistrationForm />
+                ) : (
+                  <>Invalid Login Request</>
+                )}
+              </>
+            )}
+            {/* <br /> */}
+            <hr className="w-100" />
+            {displayForm === -1 ? (
+              <>
+                Do You Want To
+                <Link to={"/register?as=artisan"}>Register As An Artisan</Link>
+                <Link to={"/register?as=user"}>Register As An User</Link>
+                {/* <hr className="w-100" /> */}
+                OR
+                <Link to={"/login?as=artisan"}>Login As An Artisan</Link>
+                <Link to={"/login?as=user"}>Login As An User</Link>
+              </>
+            ) : null}
+          </div>
+        </div>
+
+        <div class="image-body">
+          {/* <!-- <img src="https://images.unsplash.com/photo-1550147760-44c9966d6bc7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" alt=""> --> */}
+          <div class="container">
+            <div class="m-box">
+              <h1>Welcome Back!</h1>
+              <p>Login and let's get connected with your clients</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default RegisterPage;
