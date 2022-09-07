@@ -6,6 +6,8 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import AboutUsPage from "./pages/AboutUsPage/AboutUsPage";
 import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
 import ArtisansProfile from "./pages/artisansProfile/ArtisansProfile";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           element={<ArtisansProfile />}
         />
         <Route exact path="/contact-us" element={<ContactUsPage />} />
+        <Route exact path="/login" element={<LoginPage />} />
+        <Route exact path="/register" element={<RegisterPage />} />
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
