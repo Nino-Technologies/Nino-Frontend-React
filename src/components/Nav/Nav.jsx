@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Nav.scss";
 import { BsCaretDownFill, BsHouse } from "react-icons/bs";
+import { UserContext, UserProvider } from "../../context/UserContext";
 
 function Nav() {
+  const { loggedIn } = useContext(UserContext);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white">
       <div className="container container-fluid px-4">
@@ -51,25 +53,28 @@ function Nav() {
           className="collapse navbar-collapse justify-content-end text-center"
           id="navbarNav"
         >
-          {/* <ul className="navbar-nav">
-            <li className="nav-item mx-3">
-              <Link
-                to="/login?as=user"
-                className="btn btn-outline-success px-3 mb-2 mb-md-0  w-100"
-              >
-                Login
-              </Link>
-            </li>
-            <li className="nav-item mx-3">
-              <Link
-                to="/login?as=user"
-                className="btn btn-outline-success signin px-3 w-100"
-              >
-                Sign up
-              </Link>
-            </li>
-          </ul> */}
-          <NavMenuComponent />
+          {loggedIn ? (
+            <NavMenuComponent />
+          ) : (
+            <ul className="navbar-nav">
+              <li className="nav-item mx-3">
+                <Link
+                  to="/login?as=user"
+                  className="btn btn-outline-success px-3 mb-2 mb-md-0  w-100"
+                >
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item mx-3">
+                <Link
+                  to="/login?as=user"
+                  className="btn btn-outline-success signin px-3 w-100"
+                >
+                  Sign up
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </nav>
@@ -96,6 +101,7 @@ export const NavProfilePicture = () => {
 
 export const NavMenuComponent = ({ setLoggedIn }) => {
   const [navMenuComponent, setNavMenuComponent] = useState(false);
+
   // const navigate = useNavigate();
   // function logout() {
   //   window.confirm("logout?") && setLoggedIn(false);
