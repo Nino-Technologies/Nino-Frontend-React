@@ -35,9 +35,19 @@ function ArtisanLoginForm() {
       </button>
       <div class="form-text mt-3">
         <div>
-          <Link to={"/login?as=user"}>Login As An User</Link> <br />
-          Don't have an account?{" "}
-          <Link to={"/register?as=artisan"}>Register As An Artisan</Link>
+          Don't have an account? <br />
+          <div className="d-flex justify-content-around mt-3">
+            <Link
+              to={"/register?as=artisan"}
+              className="btn btn-outline-primary"
+            >
+              Register As An Artisan
+            </Link>
+            <span class="my-auto">OR</span>
+            <Link to={"/login?as=user"} className="btn btn-outline-primary">
+              Login As An User
+            </Link>{" "}
+          </div>
         </div>
       </div>
     </form>

@@ -113,7 +113,7 @@ function ArtisanRegistrationForm() {
       payment: payment,
     };
 
-    // ============= Send Request To Back End to save data
+    // ============= Send Request To Back End to save data ======================
 
     //   const res = await axios({
     //     method: 'post',
@@ -366,9 +366,22 @@ function ArtisanRegistrationForm() {
         </div>
         <div class="form-text mt-3">
           <div>
-            <Link to={"/register?as=user"}>Register As An User</Link> <br />
-            Don't have an account?{" "}
-            <Link to={"/login?as=artisan"}>Login As An Artisan</Link>
+            have an account? <br />
+            <div className="d-flex justify-content-around mt-3">
+              <Link
+                to={"/login?as=artisan"}
+                className="btn btn-outline-primary"
+              >
+                Login As An Artisan
+              </Link>{" "}
+              <span class="my-auto">OR</span>
+              <Link
+                to={"/register?as=user"}
+                className="btn btn-outline-primary"
+              >
+                Register As An User
+              </Link>
+            </div>
           </div>
         </div>
       </form>
