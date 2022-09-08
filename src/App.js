@@ -8,10 +8,22 @@ import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
 import ArtisansProfile from "./pages/artisansProfile/ArtisansProfile";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div className="App">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/about-us" element={<AboutUsPage />} />
