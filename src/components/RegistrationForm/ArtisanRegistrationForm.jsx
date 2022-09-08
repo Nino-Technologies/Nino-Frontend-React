@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ArtisanRegistrationForm.scss";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { UserContext } from "../../context/UserContext";
+import axios from "axios";
 
 function ArtisanRegistrationForm() {
   const [currentTab, setCurrentTab] = useState(1);
   const [maxTab] = useState(4);
   const [formComplete, setFormComplete] = useState(false);
+  const [loading, setLoading] = useState(false);
   // form data
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
@@ -21,6 +24,8 @@ function ArtisanRegistrationForm() {
   const [offersRemoteServices, setOffersRemoteServices] = useState(false);
   const [service, setService] = useState("");
   const [introduction, setIntroduction] = useState("");
+
+  const { apiUrl } = useContext(UserContext);
 
   useEffect(() => {
     if (
@@ -41,7 +46,7 @@ function ArtisanRegistrationForm() {
 
     // console.dir();
 
-    const formElements = e.target;
+    // const formElements = e.target;
 
     // Validate input
     if (email === "") {
@@ -75,6 +80,8 @@ function ArtisanRegistrationForm() {
       return;
     }
 
+    setLoading(true);
+
     const profileOject = {
       avatar: "",
       fullName: fullName,
@@ -97,14 +104,34 @@ function ArtisanRegistrationForm() {
 
     // ============= Send Request To Back End to save data ======================
 
-    //   const res = await axios({
-    //     method: 'post',
-    //     url: url,
-    //     headers: { Authorization: "<Generated Bearer Token>"},
-    //     data: {
+    // axios POST request
+    const options = {
+      url: `${apiUrl}/auth/artisan/register`,
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      data: profileOject,
+    };
 
-    //     }
-    // })
+    axios(options)
+      .then((response) => {
+        setLoading(false);
+
+        toast.success("Registration successfully");
+        // navigate("/");
+        console.log(response);
+      })
+      .catch((error) => {
+        setLoading(false);
+        // console.log(error.message);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        // toast.error(error.message);
+        console.log(error);
+      });
     console.log(profileOject);
   }
 
@@ -290,10 +317,10 @@ function ArtisanRegistrationForm() {
             {currentTab === maxTab ? (
               <button
                 type="submit"
-                disabled={formComplete ? false : true}
+                disabled={formComplete || loading ? false : true}
                 className="btn btn-primary mx-1"
               >
-                Submit
+                {!loading ? <> Submit</> : <>Loading...</>}
               </button>
             ) : (
               <button
