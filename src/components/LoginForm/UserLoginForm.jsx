@@ -89,7 +89,7 @@ function UserLoginForm() {
     <form className="form-layout px-5" onSubmit={(e) => loginUserFunction(e)}>
       <h3 className="login-name">Login User</h3>
       <div className="">
-        {/* <label for="exampleInputEmail1" className="form-label">
+        {/* <label htmlFor="exampleInputEmail1" className="form-label">
           
         </label> */}
         <input
@@ -102,7 +102,7 @@ function UserLoginForm() {
       </div>
 
       <div className="">
-        <label for="exampleInputPassword1" className="form-label"></label>
+        <label htmlFor="exampleInputPassword1" className="form-label"></label>
         <input
           type="password"
           className="form-control"

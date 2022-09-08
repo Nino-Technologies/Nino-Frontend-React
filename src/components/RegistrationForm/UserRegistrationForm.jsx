@@ -72,7 +72,7 @@ function UserRegistrationForm() {
     >
       <h3 className="login-name">Register User</h3>
       <div className="">
-        {/* <label for="exampleInputEmail1" className="form-label">
+        {/* <label htmlFor="exampleInputEmail1" className="form-label">
       
         </label> */}
         <input
@@ -83,7 +83,7 @@ function UserRegistrationForm() {
       </div>
 
       <div className="mt-3">
-        {/* <label for="exampleInputPassword1" className="form-label">
+        {/* <label htmlFor="exampleInputPassword1" className="form-label">
           
         </label> */}
         <input

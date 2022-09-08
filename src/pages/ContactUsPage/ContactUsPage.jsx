@@ -29,7 +29,10 @@ function ContactUsPage() {
                   <h3 className="login-name">Send us a Message</h3>
                   <div className="row mb-3">
                     <div className="col-md-6 mb-3">
-                      <label for="exampleInputEmail1" className="form-label">
+                      <label
+                        htmlFor="exampleInputEmail1"
+                        className="form-label"
+                      >
                         Name
                       </label>
                       <input
@@ -40,7 +43,10 @@ function ContactUsPage() {
                       />
                     </div>
                     <div className="col-md-6">
-                      <label for="exampleInputEmail1" className="form-label">
+                      <label
+                        htmlFor="exampleInputEmail1"
+                        className="form-label"
+                      >
                         Email address
                       </label>
                       <input
@@ -52,7 +58,10 @@ function ContactUsPage() {
                     </div>
                   </div>
                   <div className="mb-3">
-                    <label for="exampleInputPassword1" className="form-label">
+                    <label
+                      htmlFor="exampleInputPassword1"
+                      className="form-label"
+                    >
                       Number
                     </label>
                     <input

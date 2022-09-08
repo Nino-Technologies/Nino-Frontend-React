@@ -6,7 +6,7 @@ function ArtisanLoginForm() {
     <form className="form-layout px-5">
       <h3 className="login-name">Login Artisan</h3>
       <div className="">
-        {/* <label for="exampleInputEmail1" className="form-label">
+        {/* <label htmlFor="exampleInputEmail1" className="form-label">
           
         </label> */}
         <input
@@ -19,7 +19,7 @@ function ArtisanLoginForm() {
       </div>
 
       <div className="mt-3">
-        {/* <label for="exampleInputPassword1" className="form-label">
+        {/* <label htmlFor="exampleInputPassword1" className="form-label">
           
         </label> */}
         <input
