@@ -148,7 +148,7 @@ function ArtisanRegistrationForm() {
             setCurrentTab={setCurrentTab}
           />
         </div>
-        <h3 class="login-name">Register Artisan</h3>
+        <h3 className="login-name">Register Artisan</h3>
 
         {/* <!-- One "tab" for each step in the form: --> */}
         <div
@@ -364,7 +364,7 @@ function ArtisanRegistrationForm() {
             )}
           </div>
         </div>
-        <div class="form-text mt-3">
+        <div className="form-text mt-3">
           <div>
             have an account? <br />
             <div className="d-flex justify-content-around mt-3">
@@ -374,7 +374,7 @@ function ArtisanRegistrationForm() {
               >
                 Login As An Artisan
               </Link>{" "}
-              <span class="my-auto">OR</span>
+              <span className="my-auto">OR</span>
               <Link
                 to={"/register?as=user"}
                 className="btn btn-outline-primary"

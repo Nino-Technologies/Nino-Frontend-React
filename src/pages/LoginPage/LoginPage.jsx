@@ -22,10 +22,10 @@ function LoginPage() {
   }, [searchParams]);
   return (
     <div className="LoginPage">
-      <div class="login">
-        <div class="form-section">
+      <div className="login">
+        <div className="form-section">
           <BackComponent />
-          <div class="container">
+          <div className="container">
             {displayForm === 1 ? (
               <UserLoginForm />
             ) : (
@@ -52,10 +52,10 @@ function LoginPage() {
             ) : null}
           </div>
         </div>
-        <div class="image-body">
+        <div className="image-body">
           {/* <!-- <img src="https://images.unsplash.com/photo-1550147760-44c9966d6bc7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" alt=""> --> */}
-          <div class="container">
-            <div class="m-box">
+          <div className="container">
+            <div className="m-box">
               <h1>Welcome Back!</h1>
               <p>Login and let's get connected with your clients</p>
             </div>

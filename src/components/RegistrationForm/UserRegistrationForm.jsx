@@ -107,7 +107,7 @@ function UserRegistrationForm() {
             <Link to={"/login?as=user"} className="btn btn-outline-primary">
               Login As An User
             </Link>{" "}
-            <span class="my-auto">OR</span>
+            <span className="my-auto">OR</span>
             <Link
               to={"/register?as=artisan"}
               className="btn btn-outline-primary"
