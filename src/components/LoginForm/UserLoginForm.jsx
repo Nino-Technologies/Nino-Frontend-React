@@ -122,11 +122,11 @@ function UserLoginForm() {
           Don't have an account? <br />
           <div className="d-flex justify-content-around mt-3">
             <Link to={"/register?as=user"} className="btn btn-outline-primary">
-              Register As An User
+              Register User
             </Link>
             <span className="my-auto">OR</span>
             <Link to={"/login?as=artisan"} className="btn btn-outline-primary">
-              Login As An Artisan
+              Login Artisan
             </Link>{" "}
           </div>
         </div>

@@ -104,24 +104,19 @@ function UserRegistrationForm() {
       <div className="form-text mt-3">
         <div>
           have an account? <br />
-          <div className="d-flex justify-content-around mt-3">
+          <div className="d-flex justify-content-around mt-3 flex-colum n">
             <Link to={"/login?as=user"} className="btn btn-outline-primary">
-              Login As An User
+              Login User
             </Link>{" "}
             <span className="my-auto">OR</span>
             <Link
               to={"/register?as=artisan"}
               className="btn btn-outline-primary"
             >
-              Register As An Artisan
+              Register Artisan
             </Link>
           </div>
         </div>
-        {/* <div>
-          <Link to={"/register?as=artisan"}>Register As An Artisan</Link>
-          <br />
-          have an account? <Link to={"/login?as=user"}>Login As An User</Link>
-        </div> */}
       </div>
 
       <SocialLogin />

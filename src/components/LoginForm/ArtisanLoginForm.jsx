@@ -41,11 +41,11 @@ function ArtisanLoginForm() {
               to={"/register?as=artisan"}
               className="btn btn-outline-primary"
             >
-              Register As An Artisan
+              Register Artisan
             </Link>
             <span className="my-auto">OR</span>
             <Link to={"/login?as=user"} className="btn btn-outline-primary">
-              Login As An User
+              Login User
             </Link>{" "}
           </div>
         </div>
