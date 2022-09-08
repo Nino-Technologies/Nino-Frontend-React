@@ -120,7 +120,7 @@ function ArtisanRegistrationForm() {
         setLoading(false);
 
         toast.success("Registration successfully");
-        // navigate("/");
+        navigate("/login?as=artisan");
         console.log(response);
       })
       .catch((error) => {
