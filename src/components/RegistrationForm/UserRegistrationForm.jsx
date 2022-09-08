@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import SocialLogin from "../LoginForm/SocialLogin";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { UserContext } from "../../context/UserContext";
 
 function UserRegistrationForm() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { apiUrl } = useContext(UserContext);
 
   async function registerUserFunction(e) {
     e.preventDefault();
-    const apiUrl = "http://localhost:5000/api/auth/user/register";
 
     const formElement = e.target;
 
@@ -31,7 +32,7 @@ function UserRegistrationForm() {
 
     // axios POST request
     const options = {
-      url: apiUrl,
+      url: `${apiUrl}/auth/user/register`,
       method: "POST",
       headers: {
         Accept: "application/json",

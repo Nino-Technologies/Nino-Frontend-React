@@ -1,10 +1,12 @@
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { UserContext } from "../../context/UserContext";
 
 function SocialLogin() {
-  const apiUrl = "http://localhost:5000/api/auth/";
+  const { apiUrl } = useContext(UserContext);
+  // const apiUrl = "http://localhost:5000/api/auth/";
 
   async function loginWithFacebook() {
     //   const res = await axios({

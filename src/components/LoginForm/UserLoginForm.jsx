@@ -8,13 +8,12 @@ import { useCookies } from "react-cookie";
 
 function UserLoginForm() {
   const [loading, setLoading] = useState(false);
-  const { setLoggedIn, setUserProfile } = useContext(UserContext);
+  const { setLoggedIn, setUserProfile, apiUrl } = useContext(UserContext);
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies();
 
   async function loginUserFunction(e) {
     e.preventDefault();
-    const apiUrl = "http://localhost:5000/api/auth/user/login";
 
     const formElement = e.target;
 
@@ -35,7 +34,7 @@ function UserLoginForm() {
     };
     // axios POST request
     const options = {
-      url: apiUrl,
+      url: `${apiUrl}/auth/user/login`,
       method: "POST",
       headers: {
         Accept: "application/json",

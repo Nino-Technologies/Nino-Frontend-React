@@ -9,6 +9,7 @@ export function UserProvider({ children }) {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [userProfile, setUserProfile] = useState([]);
   const navigate = useNavigate();
+  const apiUrl = "http://localhost:5000/api";
 
   useEffect(() => {
     // console.log(cookies.grinderUser);
@@ -40,6 +41,7 @@ export function UserProvider({ children }) {
         userProfile,
         setUserProfile,
         logOutFunction,
+        apiUrl,
       }}
     >
       {children}
