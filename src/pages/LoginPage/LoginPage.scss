@@ -61,6 +61,11 @@
   }
   .form-text {
     font-size: 1em;
+    .btn-outline-primary {
+      border: 1px solid #0a96b1;
+      color: #0a96b1;
+      box-shadow: 1px 1px 5px #004d5c79;
+    }
   }
 
   .m-box {
