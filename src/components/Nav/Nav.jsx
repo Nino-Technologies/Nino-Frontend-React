@@ -101,6 +101,7 @@ export const NavProfilePicture = () => {
 
 export const NavMenuComponent = ({ setLoggedIn }) => {
   const [navMenuComponent, setNavMenuComponent] = useState(false);
+  const { logOutFunction } = useContext(UserContext);
 
   // const navigate = useNavigate();
   // function logout() {
@@ -140,10 +141,7 @@ export const NavMenuComponent = ({ setLoggedIn }) => {
             </Link>
           </li>
           <hr />
-          <li
-            // onClick={() => logOut()}
-            className="logout text-danger"
-          >
+          <li onClick={() => logOutFunction()} className="logout text-danger">
             Logout
           </li>
         </ul>
