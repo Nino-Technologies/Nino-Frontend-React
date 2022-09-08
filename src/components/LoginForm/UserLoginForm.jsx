@@ -86,26 +86,26 @@ function UserLoginForm() {
     // console.log(content);
   }
   return (
-    <form class="form-layout px-5" onSubmit={(e) => loginUserFunction(e)}>
-      <h3 class="login-name">Login User</h3>
-      <div class="">
-        {/* <label for="exampleInputEmail1" class="form-label">
+    <form className="form-layout px-5" onSubmit={(e) => loginUserFunction(e)}>
+      <h3 className="login-name">Login User</h3>
+      <div className="">
+        {/* <label for="exampleInputEmail1" className="form-label">
           
         </label> */}
         <input
           type="email"
-          class="form-control"
+          className="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
           placeholder="Email address"
         />
       </div>
 
-      <div class="">
-        <label for="exampleInputPassword1" class="form-label"></label>
+      <div className="">
+        <label for="exampleInputPassword1" className="form-label"></label>
         <input
           type="password"
-          class="form-control"
+          className="form-control"
           id="exampleInputPassword1"
           placeholder="Password"
         />
@@ -113,19 +113,19 @@ function UserLoginForm() {
 
       <button
         type="submit"
-        class="btn btn-primary mt-3 w-100"
+        className="btn btn-primary mt-3 w-100"
         disabled={loading}
       >
         {!loading ? <> Submit</> : <>Loading...</>}
       </button>
-      <div class="form-text">
+      <div className="form-text">
         <div>
           Don't have an account? <br />
           <div className="d-flex justify-content-around mt-3">
             <Link to={"/register?as=user"} className="btn btn-outline-primary">
               Register As An User
             </Link>
-            <span class="my-auto">OR</span>
+            <span className="my-auto">OR</span>
             <Link to={"/login?as=artisan"} className="btn btn-outline-primary">
               Login As An Artisan
             </Link>{" "}
