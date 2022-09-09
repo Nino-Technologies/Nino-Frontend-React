@@ -17,7 +17,7 @@ function LandingPage() {
           <h1 className="hero-name">Hire Artisans With Grinders</h1>
           <p className="sub">Connecting people to trusted local services.</p>
           <Search />
-          <Link to={"#"} className="text-end py-2">
+          <Link to={"/register?as=artisan"} className="text-end py-2">
             {" "}
             Became a service provider
           </Link>

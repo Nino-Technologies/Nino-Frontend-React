@@ -7,14 +7,18 @@ import '@popperjs/core';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import { UserProvider } from "./context/UserContext";
+import "react-toastify/dist/ReactToastify.css";
+import { CookiesProvider } from "react-cookie";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <UserProvider>
-        <App />
-      </UserProvider>
-    </BrowserRouter>
+    <CookiesProvider>
+      <BrowserRouter>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </BrowserRouter>
+    </CookiesProvider>
   </React.StrictMode>
 );
