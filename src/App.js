@@ -9,8 +9,30 @@ import ArtisansProfile from "./pages/artisansProfile/ArtisansProfile";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import { ToastContainer } from "react-toastify";
+// import { useEffect, useState } from "react";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import HomePage from "./pages/Home/HomePage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 function App() {
+  // check network
+  // const [networkConnected, setNetworkConnected] = useState(true);
+
+  // useEffect(() => {
+  //   if (navigator.onLine) {
+  //     setNetworkConnected(true);
+  //     return;
+  //   }
+  //   setNetworkConnected(false);
+  // });
+  // useEffect(() => {
+  //   if (networkConnected) {
+  //     toast.info("Welcome Back Connected");
+  //     return;
+  //   }
+  //   toast.info("you lost Connection ");
+  //   // console.log("  navigator.onLine");
+  // }, [networkConnected]);
   return (
     <div className="App">
       <ToastContainer
@@ -36,6 +58,10 @@ function App() {
         <Route exact path="/contact-us" element={<ContactUsPage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/register" element={<RegisterPage />} />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="home" element={<HomePage />} />
+          <Route path="profile" element={<ProfilePage />} />
+        </Route>
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
