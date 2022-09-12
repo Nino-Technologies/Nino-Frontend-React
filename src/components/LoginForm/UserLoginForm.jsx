@@ -62,7 +62,7 @@ function UserLoginForm() {
         });
         toast.success("Welcome Back User");
 
-        navigate("/");
+        navigate("/dashboard/home");
       })
       .catch((error) => {
         setLoading(false);
@@ -70,7 +70,7 @@ function UserLoginForm() {
         if (error.response.status || error.response.status === 400) {
           return toast.error(error.response.data.message);
         }
-        // toast.error(error.message);
+        toast.error(error.message);
       });
     // const rawResponse = await fetch(apiUrl, {
     //   method: "POST",
