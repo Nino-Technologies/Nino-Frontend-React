@@ -2,7 +2,15 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Nav.scss";
 import { BsCaretDownFill, BsHouse } from "react-icons/bs";
-import { UserContext, UserProvider } from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext";
+import {
+  BsArrowLeftSquareFill,
+  BsArrowRightSquareFill,
+  // BsCaretDownFill,
+  BsFillDoorOpenFill,
+  // BsHouse,
+} from "react-icons/bs";
+import { userNavLinkObject } from "./dashboradNavList";
 
 function Nav() {
   const { loggedIn } = useContext(UserContext);
@@ -133,7 +141,7 @@ export const NavMenuComponent = ({ setLoggedIn }) => {
           }
         >
           <li>
-            <Link to={"#"}>
+            <Link to={"/dashboard/home"}>
               <span className="me-2">
                 <BsHouse />
               </span>
@@ -146,6 +154,63 @@ export const NavMenuComponent = ({ setLoggedIn }) => {
           </li>
         </ul>
       </div>
+    </>
+  );
+};
+
+export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
+  // const {  } = useContext(UserContext);
+  // const [sideNavOpen, setSideNavOpen] = useState(false);
+  function navToggle() {
+    setSideNavOpen(!sideNavOpen);
+  }
+
+  // const { logOut, userInformation } = useContext(UserContext);
+  // const { privilege } = userInformation;
+  return (
+    <>
+      <div
+        className="
+        
+        side-nav-icon toggle"
+        onClick={() => {
+          navToggle();
+        }}
+      >
+        {sideNavOpen ? <BsArrowLeftSquareFill /> : <BsArrowRightSquareFill />}
+      </div>
+      <ul>
+        {userNavLinkObject.map((link, i) => {
+          const { name, icon, path, userPrivilege } = link;
+          // console.log("userPrivilege");
+          return (
+            <>
+              {/* {privilege >= userPrivilege ? ( */}
+              <li key={i}>
+                <Link to={path}>
+                  <div className="side-nav-icon">{icon}</div>
+                  <span className="nav-link-name">{name}</span>
+                </Link>
+              </li>
+              {/* ) : null} */}
+            </>
+          );
+        })}
+        <li>
+          <Link
+            to="#"
+            onClick={() => {
+              // logOut();
+            }}
+          >
+            <div className="side-nav-icon text-danger">
+              {" "}
+              <BsFillDoorOpenFill />
+            </div>
+            <span className="nav-link-name text-danger">LogOut</span>
+          </Link>
+        </li>
+      </ul>
     </>
   );
 };
