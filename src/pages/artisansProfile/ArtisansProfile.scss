@@ -102,7 +102,7 @@
         display: flex;
         justify-content: space-evenly;
         .contact-button {
-          border: solid 1px #014654;
+          border: solid 1px var(--color-primary);
           // width: 50%;
           width: 300px;
           background-color: transparent;
@@ -110,7 +110,7 @@
         }
         .ChatPopUpButton {
           width: 300px;
-          background-color: #014654;
+          background-color: var(--color-primary);
           min-width: 100%;
           // color: red !important;
         }

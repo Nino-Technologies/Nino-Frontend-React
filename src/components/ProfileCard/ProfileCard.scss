@@ -32,7 +32,7 @@
       display: inline-block;
       padding: 8px;
       color: white;
-      background-color: #014654;
+      background-color: var(--color-primary);
       text-align: center;
       cursor: pointer;
       width: 100%;
@@ -64,7 +64,7 @@
       position: absolute;
       bottom: 0;
       right: 0;
-      color: #014654;
+      color: var(--color-primary);
       text-shadow: 1px 1px 3px rgb(252, 252, 252);
     }
   }

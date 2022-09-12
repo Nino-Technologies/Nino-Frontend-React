@@ -10,9 +10,16 @@
     padding: 0 5px;
     max-width: 350px;
     width: 50%;
+    b {
+      font-weight: normal;
+      font-size: 12px;
+    }
+    input {
+      border-radius: 0px;
+    }
     input:focus {
       box-shadow: none;
-      border: solid 2px #014654;
+      border: solid 2px var(--color-primary);
     }
     .text-muted {
       font-size: 10px;

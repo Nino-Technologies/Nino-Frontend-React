@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  min-height: 700px;
   // max-height: 700px;
   overflow: hidden;
   .image-div,
@@ -29,7 +30,7 @@
     .hero-name,
     .sub {
       text-align: left;
-      color: #014654;
+      color: var(--color-primary);
     }
     .hero-name {
       font-size: 3.6em;
@@ -47,7 +48,7 @@
     }
     a {
       // text-decoration: none;
-      color: #ef6e0b;
+      color: var(--color-secondary);
       // font-weight: 500;
     }
   }
