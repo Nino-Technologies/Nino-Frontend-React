@@ -1,7 +1,7 @@
 .ChatPopUp {
   /*Open ChatPopUpButton*/
   .ChatPopUpButton {
-    background-color: #014654;
+    background-color: var(--color-primary);
     color: #fff;
     width: 100%;
   }
@@ -143,6 +143,58 @@
     }
     .cancelbtn {
       width: 100%;
+    }
+  }
+}
+
+.PopUpMessage {
+  border: solid red;
+  .modal {
+    margin-top: -37px;
+  }
+  .modal-content {
+    border: solid;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    .footer {
+      border: solid;
+      width: 100%;
+      margin-bottom: 0;
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      right: 5px;
+      height: 45px;
+      margin: 0;
+      a,
+      button {
+        position: static;
+        width: 100px;
+        height: 40px;
+        display: inline-block;
+        font-size: 20px;
+        border: none;
+        border-radius: 5px;
+        // left: 0;
+        top: 0;
+        margin: 0 5px;
+      }
+      a {
+        text-decoration: none;
+        width: 200px;
+        color: #fff;
+        justify-content: center;
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--color-primary);
+      }
+      button.close {
+        background-color: red;
+        color: #fff;
+      }
     }
   }
 }

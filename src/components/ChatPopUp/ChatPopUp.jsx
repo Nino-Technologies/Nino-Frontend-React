@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FaCommentDots } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./ChatPopUp.scss";
 
-function ChatPopUp() {
+function ChatPopUpForm() {
   const [isVisible, setIsVisible] = useState(false);
   return (
     <div className="ChatPopUp">
@@ -90,4 +91,37 @@ function ChatPopUp() {
   );
 }
 
-export default ChatPopUp;
+export default ChatPopUpForm;
+
+export function PopUpMessage({ show, message }) {
+  const [isVisible, setIsVisible] = useState(show);
+  return (
+    <div className="ChatPopUp PopUpMessage">
+      {/* <!-- The Modal --> */}
+      <div
+        id="chatPopUp"
+        style={isVisible ? { display: "block" } : { display: "none" }}
+        className="modal"
+      >
+        <span
+          onClick={() => setIsVisible(false)}
+          className="close"
+          title="Close Modal"
+        >
+          &times;
+        </span>
+
+        {/* <!-- Modal Content --> */}
+        <div className="modal-content animate">
+          {message}
+          <div className="footer">
+            <Link to={"/dashboard/profile"}>Complete Profile</Link>
+            <button className="close" onClick={() => setIsVisible(false)}>
+              close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
