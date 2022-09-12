@@ -3,12 +3,14 @@ import React, { useContext } from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
+import "./SocialLogin.scss";
 
 function SocialLogin() {
   const { apiUrl } = useContext(UserContext);
   // const apiUrl = "http://localhost:5000/api/auth/";
 
-  async function loginWithFacebook() {
+  async function loginWithFacebook(e) {
+    e.preventDefault();
     //   const res = await axios({
     //     method: 'post',
     //     url: url,
@@ -44,7 +46,7 @@ function SocialLogin() {
       <div className="d-flex justify-content-around mt-2 flex-column flex-md-row">
         <button
           className="btn btn-primary mx-1 mb-2 mb-md-0"
-          onClick={() => loginWithFacebook()}
+          onClick={(e) => loginWithFacebook(e)}
         >
           <FaFacebook /> FaceBook
         </button>
