@@ -38,7 +38,7 @@
   }
   :focus {
     outline: none;
-    border: #014654 solid 1px;
+    border: var(--color-primary) solid 1px;
   }
   @media (max-width: 425px) {
     .Share-icons {
