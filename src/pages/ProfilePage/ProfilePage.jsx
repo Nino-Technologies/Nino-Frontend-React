@@ -43,7 +43,7 @@ function ProfilePage() {
                   className="form-control"
                   placeholder={userProfile.socialId || "Social ID"}
                   disabled={!editForm}
-                  // value={userProfile.socialId || "Social ID"}
+                  // value={editForm.socialId || "Social ID"}
                 />
               </label>
               <label className="w-100 mx-3 my-3" htmlFor="">
