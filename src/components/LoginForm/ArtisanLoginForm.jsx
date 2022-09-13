@@ -69,7 +69,7 @@ function ArtisanLoginForm() {
         if (error.response.status || error.response.status === 400) {
           return toast.error(error.response.data.message);
         }
-        // toast.error(error.message);
+        toast.error(error.message);
       });
   }
   return (
