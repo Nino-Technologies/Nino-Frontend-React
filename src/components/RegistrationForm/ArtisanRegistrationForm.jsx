@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./ArtisanRegistrationForm.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
@@ -15,6 +15,7 @@ function ArtisanRegistrationForm() {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const [locationState, setLocationState] = useState("");
   const [locationCity, setLocationCity] = useState("");
   const [officeLocation, setOfficeLocation] = useState("");
@@ -26,6 +27,7 @@ function ArtisanRegistrationForm() {
   const [introduction, setIntroduction] = useState("");
 
   const { apiUrl } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -67,6 +69,9 @@ function ArtisanRegistrationForm() {
 
     if (password === "") {
       toast.info("password is empty");
+    }
+    if (password !== rePassword) {
+      return toast.info("Password not match");
     }
 
     if (
@@ -129,10 +134,10 @@ function ArtisanRegistrationForm() {
         if (error.response.status || error.response.status === 400) {
           return toast.error(error.response.data.message);
         }
-        // toast.error(error.message);
+        toast.error(error.message);
         console.log(error);
       });
-    console.log(profileOject);
+    // console.log(profileOject);
   }
 
   function nextSlide() {
@@ -180,7 +185,7 @@ function ArtisanRegistrationForm() {
           />
           <input
             className="form-control"
-            placeholder="phoneNumber"
+            placeholder="Phone Number"
             type={"number"}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
@@ -253,7 +258,7 @@ function ArtisanRegistrationForm() {
             type={"text"}
             onChange={(e) => setOfficeLocation(e.target.value)}
           />
-          <div className="option-box-div">
+          {/* <div className="option-box-div">
             <label className=" me-3 my-2 ">
               {" "}
               <input
@@ -275,7 +280,7 @@ function ArtisanRegistrationForm() {
               />{" "}
               offers Remote Services
             </label>
-          </div>
+          </div> */}
         </div>
 
         <div
@@ -296,6 +301,13 @@ function ArtisanRegistrationForm() {
             type={"password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            className="form-control"
+            placeholder="Renter Password..."
+            type={"password"}
+            value={rePassword}
+            onChange={(e) => setRePassword(e.target.value)}
           />
           {formComplete ? null : (
             <span className="text-danger my-2">Complete Form to Submit</span>
