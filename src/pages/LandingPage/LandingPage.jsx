@@ -19,7 +19,7 @@ function LandingPage() {
           <Search />
           <Link to={"/register?as=artisan"} className="text-end py-2">
             {" "}
-            Became a service provider
+            Become a service provider
           </Link>
           <img src={smallHeroImage} alt="" className="" />
         </div>

@@ -8,7 +8,7 @@ function Search() {
       <form action="">
         <label>
           <b>
-            Looking for an Service? <br />{" "}
+            Looking for a Service? <br />{" "}
           </b>
           <input
             type="text"
