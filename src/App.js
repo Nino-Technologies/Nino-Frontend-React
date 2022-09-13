@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import HomePage from "./pages/Home/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import NotificationPage from "./pages/Notification/NotificationPage";
 
 function App() {
   // check network
@@ -61,6 +62,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="home" element={<HomePage />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="notification" element={<NotificationPage />} />
         </Route>
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
