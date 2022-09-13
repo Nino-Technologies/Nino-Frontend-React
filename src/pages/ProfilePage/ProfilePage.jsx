@@ -6,6 +6,14 @@ function ProfilePage() {
   const [editForm, setEditForm] = useState(false);
   const { userProfile } = useContext(UserContext);
   // console.log(userProfile);
+  function getAccountType(role) {
+    if (role === 0) {
+      return "User";
+    }
+    if (role === 1) {
+      return "Artisan";
+    }
+  }
   return (
     <div className="ProfilePage">
       <div className="header mt-5 mb-3 d-flex justify-content-between">
@@ -73,11 +81,11 @@ function ProfilePage() {
             </div>
             <div className="d-flex">
               <label className="w-100 mx-3 my-3" htmlFor="">
-                Role
+                Account Type
                 <input
                   type="text"
                   className="form-control"
-                  placeholder={userProfile.role}
+                  placeholder={getAccountType(userProfile.role)}
                   disabled={!editForm}
                   // value={userProfile.role}
                 />
@@ -93,6 +101,78 @@ function ProfilePage() {
                 />
               </label>
             </div>
+            {userProfile.role === 1 ? (
+              <>
+                <b>Location</b>
+                <div className="d-flex">
+                  <label className="w-100 mx-3 my-3" htmlFor="">
+                    City
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder={userProfile.location.city}
+                      disabled={!editForm}
+                      // value={userProfile.joinDate}
+                    />
+                  </label>
+                  <label className="w-100 mx-3 my-3" htmlFor="">
+                    State
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder={userProfile.location.state}
+                      disabled={!editForm}
+                      // value={userProfile.joinDate}
+                    />
+                  </label>
+                </div>
+                <b>Social Contact</b>
+                <div className="d-flex">
+                  <label className="w-100 mx-3 my-3" htmlFor="">
+                    Facebook
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder={userProfile.socialContact.facebook}
+                      disabled={!editForm}
+                      // value={userProfile.joinDate}
+                    />
+                  </label>
+                  <label className="w-100 mx-3 my-3" htmlFor="">
+                    Instagram
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder={userProfile.socialContact.instagram}
+                      disabled={!editForm}
+                      // value={userProfile.joinDate}
+                    />
+                  </label>
+                </div>
+                <div className="d-flex">
+                  <label className="w-100 mx-3 my-3" htmlFor="">
+                    Twitter
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder={userProfile.socialContact.tweeter}
+                      disabled={!editForm}
+                      // value={userProfile.joinDate}
+                    />
+                  </label>
+                  <label className="w-100 mx-3 my-3" htmlFor="">
+                    Linkedin
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder={userProfile.socialContact.linkedin}
+                      disabled={!editForm}
+                      // value={userProfile.joinDate}
+                    />
+                  </label>
+                </div>
+              </>
+            ) : null}
             {editForm ? (
               <button className="w-50 m-auto mt-4 btn-primary btn">Save</button>
             ) : null}
