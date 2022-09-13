@@ -1,34 +1,30 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-// import GroupCard, {
-//   DashboardActionCard,
-//   DashboardCard,
-// } from "../../components/CroupCard/GroupCardComponent";
-// import { UserContext } from "../../context/userContext";
 import "./HomePage.css";
 
-import {
-  BsDoorOpen,
-  BsPeople,
-  BsPersonBoundingBox,
-  BsPersonCheck,
-  BsPersonPlus,
-  BsWallet,
-} from "react-icons/bs";
+// import {
+//   BsDoorOpen,
+//   BsPeople,
+//   BsPersonBoundingBox,
+//   BsPersonCheck,
+//   BsPersonPlus,
+//   BsWallet,
+// } from "react-icons/bs";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
-import { PopUpMessage } from "../../components/ChatPopUp/ChatPopUp";
+// import { PopUpMessage } from "../../components/ChatPopUp/ChatPopUp";
 import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
 import { FaExclamation } from "react-icons/fa";
+import ModalComponent from "../../components/Modal/ModalComponent";
 
 function HomePage() {
   const [profileProgress, setProfileProgress] = useState(30);
   const {
     logOutFunction,
     userProfile,
-    apiUrl,
+    // apiUrl,
 
-    token,
+    // token,
   } = useContext(UserContext);
   function checkVerified(verify) {
     if (verify) {
@@ -36,15 +32,40 @@ function HomePage() {
     }
     return <FaExclamation className="text-danger" />;
   }
+
+  useEffect(() => {
+    if (!userProfile.email_verified) {
+      //  CLike the model button with js
+      window.document.getElementById("open_profile_completeness_modal").click();
+    }
+  }, []);
   return (
     <div className="HomePage">
-      {/* <PopUpMessage
-        show={!userProfile.email_verified}
-        message="Profile is not completed"
-      /> */}
+      {/* button to open model */}
+      <button
+        type="button"
+        className="button"
+        id="open_profile_completeness_modal"
+        // hide button; it will be clicked with js
+        style={{ display: "none" }}
+        data-bs-toggle="modal"
+        data-bs-target="#profile_completeness_modal"
+      ></button>
+      {/* model component;  */}
+      <ModalComponent
+        modalTitle={"Important Notification"}
+        modalId={"profile_completeness_modal"}
+      >
+        Your profile is not completed <br />
+        Update Profile to get our top pro artisans
+        <br />{" "}
+        <Link to="/dashboard/profile" className="btn btn-primary mt-2 ms-auto">
+          Update Profile
+        </Link>
+      </ModalComponent>
+
       <div className="header my-4  d-flex justify-content-between">
         <div className="welcome ms-4">
-          {" "}
           Welcome {userProfile.userName || "User"}
         </div>
         <button
