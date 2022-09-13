@@ -1,3 +1,4 @@
+// require("dotenv").config();
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -13,7 +14,6 @@ export function UserProvider({ children }) {
   // const apiUrl = "http://localhost:5000/api";
 
   useEffect(() => {
-    // console.log(cookies.grinderUser);
     if (cookies.grinderUser === undefined) {
       setLoggedIn(false);
       return;
@@ -21,6 +21,12 @@ export function UserProvider({ children }) {
     setLoggedIn(true);
     setUserProfile(cookies.grinderUser.profile || null);
   }, []);
+  useEffect(() => {
+    if (userProfile === null) {
+      setLoggedIn(false);
+      return;
+    }
+  });
 
   function logOutFunction() {
     if (window.confirm("You will be logged out of your account !!!")) {
