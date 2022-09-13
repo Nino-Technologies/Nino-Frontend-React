@@ -165,7 +165,7 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
     setSideNavOpen(!sideNavOpen);
   }
 
-  // const { logOut, userInformation } = useContext(UserContext);
+  const { logOutFunction } = useContext(UserContext);
   // const { privilege } = userInformation;
   return (
     <>
@@ -200,7 +200,7 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
           <Link
             to="#"
             onClick={() => {
-              // logOut();
+              logOutFunction();
             }}
           >
             <div className="side-nav-icon text-danger">
