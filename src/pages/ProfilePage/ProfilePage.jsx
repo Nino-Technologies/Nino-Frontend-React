@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import "./ProfilePage.scss";
 
@@ -14,6 +14,102 @@ function ProfilePage() {
       return "Artisan";
     }
   }
+  // const [editProfile, setEditProfile] = useState({
+  //   accountInformation: [],
+  //   avatar: "",
+  //   backgroundChecked: "",
+  //   categories: ["artisans"],
+  //   discountsAvailable: false,
+  //   email: "",
+  //   email_verified: false,
+  //   employees: "",
+  //   fullName: "",
+  //   hired: 0,
+  //   joinDate: "",
+  //   licensed: false,
+  //   location: { city: "", state: "" },
+  //   moreContactInformation: [],
+  //   offersRemoteServices: false,
+  //   paymentMethods: ["Bank transfer", "Cash"],
+  //   phoneNumber: "",
+  //   introduction: "",
+  //   reviews: [],
+  //   role: 1,
+  //   socialContact: {
+  //     facebook: null,
+  //     instagram: null,
+  //     tweeter: null,
+  //     linkedin: null,
+  //   },
+  //   specialties: [],
+  //   topPro: false,
+  // });
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   console.log(value);
+  //   setEditProfile((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
+  // const {
+  //   avatar,
+  //   backgroundChecked,
+  //   categories,
+  //   discountsAvailable,
+  //   email,
+  //   employees,
+  //   fullName,
+  //   hired,
+  //   joinDate,
+  //   licensed,
+  //   location,
+  //   moreContactInformation,
+  //   offersRemoteServices,
+  //   paymentMethods,
+  //   phoneNumber,
+  //   introduction,
+  //   reviews,
+  //   role,
+  //   specialties,
+  //   email_verified,
+  //   socialContact,
+  //   topPro,
+  // } = userProfile;
+  // useEffect(() => {
+  //   setEditProfile({
+  //     accountInformation: [],
+  //     avatar: avatar,
+  //     backgroundChecked: backgroundChecked,
+  //     categories: ["artisans"],
+  //     discountsAvailable: false,
+  //     email: email,
+  //     email_verified: email_verified,
+  //     employees: employees,
+  //     fullName: fullName,
+  //     hired: hired,
+  //     joinDate: joinDate,
+  //     licensed: licensed,
+  //     // location: { city: location.city, state: location.state },
+  //     moreContactInformation: [],
+  //     offersRemoteServices: false,
+  //     paymentMethods: ["Bank transfer", "Cash"],
+  //     phoneNumber: phoneNumber,
+  //     introduction: introduction,
+  //     reviews: [],
+  //     role: 1,
+  //     // socialContact: {
+  //     //   facebook: socialContact.facebook,
+  //     //   instagram: socialContact.instagram,
+  //     //   tweeter: socialContact.tweeter,
+  //     //   linkedin: socialContact.linkedin,
+  //     // },
+  //     specialties: [],
+  //     topPro: topPro,
+  //   });
+  // }, [editForm]);
+
   return (
     <div className="ProfilePage">
       <div className="header mt-5 mb-3 d-flex justify-content-between">
@@ -36,7 +132,7 @@ function ProfilePage() {
         <div className="form-div ">
           <form className=" my-5">
             <div className="d-flex">
-              <label className="w-100 mx-3 my-3" htmlFor="">
+              {/* <label className="w-100 mx-3 my-3" htmlFor="">
                 social ID
                 <input
                   type="text"
@@ -45,7 +141,7 @@ function ProfilePage() {
                   disabled={!editForm}
                   // value={editForm.socialId || "Social ID"}
                 />
-              </label>
+              </label> */}
               <label className="w-100 mx-3 my-3" htmlFor="">
                 FullName
                 <input
@@ -79,28 +175,7 @@ function ProfilePage() {
                 />
               </label>
             </div>
-            <div className="d-flex">
-              <label className="w-100 mx-3 my-3" htmlFor="">
-                Account Type
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder={getAccountType(userProfile.role)}
-                  disabled={!editForm}
-                  // value={userProfile.role}
-                />
-              </label>
-              <label className="w-100 mx-3 my-3" htmlFor="">
-                Joined Date
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder={userProfile.joinDate}
-                  disabled={!editForm}
-                  // value={userProfile.joinDate}
-                />
-              </label>
-            </div>
+
             {userProfile.role === 1 ? (
               <>
                 <b>Location</b>
@@ -173,12 +248,91 @@ function ProfilePage() {
                 </div>
               </>
             ) : null}
+            <div className="d-flex">
+              <label className="w-100 mx-3 my-3" htmlFor="">
+                Account Type
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder={getAccountType(userProfile.role)}
+                  disabled={true}
+                  // value={userProfile.role}
+                />
+              </label>
+              <label className="w-100 mx-3 my-3" htmlFor="">
+                Joined Date
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder={userProfile.joinDate}
+                  disabled={true}
+                  // value={userProfile.joinDate}
+                />
+              </label>
+            </div>
             {editForm ? (
               <button className="w-50 m-auto mt-4 btn-primary btn">Save</button>
             ) : null}
           </form>
         </div>
       </div>
+      {userProfile.role === 1 ? (
+        <>
+          <div className="header mt-5 mb-3 d-flex flex-column flex-md-row justify-content-between">
+            <h3 className=" ms-4"> Business Info</h3>{" "}
+            <button
+              className="btn btn-primary mt-3"
+              onClick={() => setEditForm(!editForm)}
+            >
+              {!editForm ? "Update Profile" : "Cancel Edit"}
+            </button>
+          </div>
+          <div className="profile-card mx-5 mb-5">
+            <div className=" w-100 py-2">
+              <form className=" my-5 px-3">
+                {/* <div className="d-flex"> */}
+                <label htmlFor="" className="w-100">
+                  Introduction
+                  <textarea
+                    name="introduction"
+                    id=""
+                    className="form-control"
+                    cols="15"
+                    rows="3"
+                    // value={userProfile.introduction}
+                    placeholder={userProfile.introduction}
+                    disabled={!editForm}
+
+                    // onChange={(e) => handleChange(e)}
+                  ></textarea>
+                </label>
+                <label className="w-100 my-2">
+                  office location
+                  <input
+                    type="text"
+                    className="form-control"
+                    disabled={!editForm}
+                  />
+                </label>
+                <label className="w-100 my-2">
+                  Payment Method
+                  <input
+                    type="text"
+                    className="form-control"
+                    disabled={!editForm}
+                  />
+                </label>
+
+                {editForm ? (
+                  <button className="w-50 m-auto mt-4 btn-primary btn">
+                    Save
+                  </button>
+                ) : null}
+              </form>
+            </div>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }
