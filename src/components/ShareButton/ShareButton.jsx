@@ -14,11 +14,10 @@ function ShareButton({ id }) {
   function toggleVisibility() {
     setVisibility(!visibility);
   }
+  const profileUrl = "https://nino-tech.netlify.app/artisans-profile/" + id;
   async function copyURL(id) {
     try {
-      await navigator.clipboard.writeText(
-        "https://nino-tech.netlify.app/artisans-profile/" + id
-      );
+      await navigator.clipboard.writeText(profileUrl);
       alert("Copied");
     } catch {
       alert("Cannot copy");
@@ -30,13 +29,28 @@ function ShareButton({ id }) {
         className="Share-icons"
         style={!visibility ? { display: "none" } : null}
       >
-        <a href="#">
+        <a
+          title="Share on facebook"
+          href={`https://www.facebook.com/sharer/sharer.php?u=${profileUrl}`}
+          target="_blank"
+          rel="noopener"
+        >
+          {/* <i class="fab fa-2x fa-facebook-square"></i> */}
           <FaFacebook />
         </a>
-        <a href="#">
+        {/* <a href="#">
+        </a> */}
+        {/* <a href="#">
           <FaInstagram />
-        </a>
-        <a href="#">
+        </a> */}
+        <a
+          title="Share on facebook"
+          href={`
+https://twitter.com/intent/tweet?text=Artisan%20profile ${profileUrl}&original_referer=${profileUrl}&related=clicktotweet
+`}
+          target="_blank"
+          rel="noopener"
+        >
           <FaTwitter />
         </a>
         <FaRegClipboard onClick={() => copyURL(id)} className="my-auto" />
