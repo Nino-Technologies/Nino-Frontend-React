@@ -1,0 +1,15 @@
+.social-login-div {
+  // border: solid;
+  button.btn-primary {
+    background-color: transparent;
+    color: var(--color-secondary);
+    border: solid 1px var(--color-secondary);
+    border-radius: 0px;
+    display: inline-flex;
+    justify-content: center;
+    svg {
+      margin: auto 5px;
+      font-size: 20px;
+    }
+  }
+}
