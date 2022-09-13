@@ -4,14 +4,14 @@
   .profile-card {
     // border: var(--color-primary) solid 1px;
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
-    display: flex;
+    // display: flex;
     // margin-top: 100px;
     background-color: #fff;
     border-radius: 10px;
     // box-shadow: var(--shadow-primary);
     // height: 600px;
     .image-div {
-      width: 25%;
+      // width: 25%;
       // justify-content: center;
       align-items: center;
       display: flex;
@@ -37,7 +37,8 @@
     }
     .form-div {
       // border: solid;
-      width: 75%;
+      // width: 75%;
+      padding: 0 20px;
       form {
         display: inline-flex;
         flex-direction: column;
@@ -56,6 +57,12 @@
           :focus {
             box-shadow: none;
           }
+          input:disabled {
+            background-color: transparent;
+            border: none;
+            padding: 10px 5px;
+            font-size: 20px;
+          }
         }
       }
     }
@@ -71,7 +78,7 @@
       }
       .form-div {
         margin: 0;
-        padding: 0;
+        padding: 0 10px;
         form {
           margin: 0 !important;
           padding-bottom: 20px;
@@ -81,6 +88,9 @@
             padding: 0 5px;
             label {
               margin: 10px 0 !important;
+              input:disabled {
+                font-size: 16px;
+              }
             }
           }
         }
