@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Nav.scss";
-import { BsCaretDownFill, BsHouse } from "react-icons/bs";
+import { BsCaretDownFill, BsHeart, BsHouse } from "react-icons/bs";
 import { UserContext } from "../../context/UserContext";
 import {
   BsArrowLeftSquareFill,
@@ -159,14 +159,14 @@ export const NavMenuComponent = ({ setLoggedIn }) => {
 };
 
 export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
-  // const {  } = useContext(UserContext);
+  const { userProfile } = useContext(UserContext);
   // const [sideNavOpen, setSideNavOpen] = useState(false);
   function navToggle() {
     setSideNavOpen(!sideNavOpen);
   }
 
   const { logOutFunction } = useContext(UserContext);
-  // const { privilege } = userInformation;
+  const { role } = userProfile;
   return (
     <>
       <div
@@ -182,20 +182,29 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
       <ul>
         {userNavLinkObject.map((link, i) => {
           const { name, icon, path, userPrivilege } = link;
-          // console.log("userPrivilege");
           return (
             <>
-              {/* {privilege >= userPrivilege ? ( */}
-              <li key={i}>
-                <Link to={path}>
-                  <div className="side-nav-icon">{icon}</div>
-                  <span className="nav-link-name">{name}</span>
-                </Link>
-              </li>
-              {/* ) : null} */}
+              {role >= userPrivilege ? (
+                <li key={i}>
+                  <Link to={path}>
+                    <div className="side-nav-icon">{icon}</div>
+                    <span className="nav-link-name">{name}</span>
+                  </Link>
+                </li>
+              ) : null}
             </>
           );
         })}
+        {role === 0 ? (
+          <li>
+            <Link to="saved-artisan">
+              <div className="side-nav-icon">
+                <BsHeart />
+              </div>
+              <span className="nav-link-name">Saved Artisan</span>
+            </Link>
+          </li>
+        ) : null}
         <li>
           <Link
             to="#"
