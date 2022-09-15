@@ -6,6 +6,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import UserLoginForm from "../../components/LoginForm/UserLoginForm";
 import ArtisanLoginForm from "../../components/LoginForm/ArtisanLoginForm";
 import { FaArrowLeft } from "react-icons/fa";
+import AdminLoginForm from "../../components/LoginForm/AdminLoginForm";
 
 function LoginPage() {
   const [displayForm, setDisplayForm] = useState(-1);
@@ -17,6 +18,9 @@ function LoginPage() {
     }
     if (searchParams.get("as") === "artisan") {
       return setDisplayForm(2);
+    }
+    if (searchParams.get("as") === "admin") {
+      return setDisplayForm(3);
     }
     console.log("Invalid login request");
   }, [searchParams]);
@@ -34,7 +38,14 @@ function LoginPage() {
                 {displayForm === 2 ? (
                   <ArtisanLoginForm />
                 ) : (
-                  <>Invalid Login Request</>
+                  <>
+                    {" "}
+                    {displayForm === 3 ? (
+                      <AdminLoginForm />
+                    ) : (
+                      <>Invalid Login Request</>
+                    )}
+                  </>
                 )}
               </>
             )}{" "}
