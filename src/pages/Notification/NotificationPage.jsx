@@ -1,17 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import GroupCard from "../../components/CroupCard/GroupCardComponent";
-// import { UserContext } from "../../context/userContext";
-import {
-  BsEyeFill,
-  BsPlus,
-  BsPlusCircleDotted,
-  BsPlusCircleFill,
-} from "react-icons/bs";
 import "./NotificationPage.css";
 import ModalComponent from "../../components/Modal/ModalComponent";
-// import ModalComponent from "../../components/Modal/ModalComponent";
-// import { AddNotificationForm } from "../../components/Forms/FormsComponent";
 function NotificationPage() {
   const [notification, setNotification] = useState([
     {
@@ -81,32 +71,6 @@ function NotificationPage() {
 
   return (
     <div className="NotificationPage pt-5">
-      {/* Add notification model */}
-      {/* <ModalComponent modalTitle="Add Note" modalId={"AddNotification"}>
-        {/* <AddNotificationForm /> * /}
-        helo
-      </ModalComponent> */}
-      {/* <GroupCard> */}
-      {/* {
-          // getUserPrivilege() >= 3 ?
-          true ? (
-            <>
-              <div className="header d-flex justify-content-between">
-                {/* <h3>New Notification</h3> * /}
-                <button
-                  className="button "
-                  data-bs-toggle="modal"
-                  data-bs-target="#AddNotification"
-                >
-                  {" "}
-                  <BsPlusCircleFill className="me-2 fs-4" />
-                  Add Notification
-                </button>
-              </div>
-              <hr />
-            </>
-          ) : null
-        } */}
       <div className="header d-flex justify-content-between">
         <h3>Notification</h3>
       </div>
@@ -135,7 +99,6 @@ function NotificationPage() {
           })
         )}
       </ul>
-      {/* </GroupCard> */}
     </div>
   );
 }
