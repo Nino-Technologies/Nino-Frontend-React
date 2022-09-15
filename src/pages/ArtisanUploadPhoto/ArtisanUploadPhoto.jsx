@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./ArtisanUploadPhoto.scss";
 import ModalImage from "../../components/ModalImage/ModalImage";
 import altImg from "../../assets/images/hero-design.png";
+import { toast } from "react-toastify";
 
 function ArtisanUploadPhoto() {
   const [photoList, setPhotoList] = useState([]);
@@ -20,10 +21,10 @@ function ArtisanUploadPhoto() {
         console.log(img_url);
         setPhotoList([...photoList, newPhoto]);
       } else {
-        console.log("fill fields before submit");
+        toast.info("fill fields before submit");
       }
     } else {
-      console.log("Select an image");
+      toast.info("Select an image");
     }
   };
   const imageHandler = (e) => {

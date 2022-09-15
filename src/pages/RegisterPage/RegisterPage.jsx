@@ -4,6 +4,7 @@ import "./RegisterPage.scss";
 import UserRegistrationForm from "../../components/RegistrationForm/UserRegistrationForm";
 import { Link, useSearchParams } from "react-router-dom";
 import { BackComponent } from "../LoginPage/LoginPage";
+import { toast } from "react-toastify";
 
 function RegisterPage() {
   const [displayForm, setDisplayForm] = useState(-1);
@@ -16,7 +17,7 @@ function RegisterPage() {
     if (searchParams.get("as") === "artisan") {
       return setDisplayForm(2);
     }
-    console.log("Invalid login request");
+    toast.info("Invalid login request");
   }, [searchParams]);
   return (
     <div className="RegisterPage">
