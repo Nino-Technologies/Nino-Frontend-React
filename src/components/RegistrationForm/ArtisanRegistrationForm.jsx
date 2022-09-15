@@ -21,8 +21,8 @@ function ArtisanRegistrationForm() {
   const [officeLocation, setOfficeLocation] = useState("");
   const [userName, setUserName] = useState("");
   const [gender, setGender] = useState("");
-  const [discountsAvailable, setDiscountsAvailable] = useState(false);
-  const [offersRemoteServices, setOffersRemoteServices] = useState(false);
+  // const [discountsAvailable, setDiscountsAvailable] = useState(false);
+  // const [offersRemoteServices, setOffersRemoteServices] = useState(false);
   const [service, setService] = useState("");
   const [introduction, setIntroduction] = useState("");
 
@@ -93,14 +93,10 @@ function ArtisanRegistrationForm() {
       userName: userName,
       phoneNumber: phoneNumber,
       gender: gender,
-      location: {
-        city: locationCity,
-        state: locationState,
-      },
+      locationState: locationState,
+      locationCity: locationCity,
 
       officeLocation: officeLocation,
-      discountsAvailable: discountsAvailable,
-      offersRemoteServices: offersRemoteServices,
       service: service,
       introduction: introduction,
       email: email,

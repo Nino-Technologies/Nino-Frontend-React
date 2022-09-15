@@ -21,7 +21,7 @@ function UserRegistrationForm() {
     if (formElement[1].value === "") {
       toast.info("Password is Required");
     }
-    if (formElement[1].value === "" || formElement[0] === "") {
+    if (formElement[1].value === "" || formElement[0].value === "") {
       return;
     }
 
