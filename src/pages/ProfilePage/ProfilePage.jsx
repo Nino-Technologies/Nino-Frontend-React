@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import { FaInfoCircle } from "react-icons/fa";
+import { PaymentModalComponent } from "../../components/Modal/ModalComponent";
 import { UserContext } from "../../context/UserContext";
 import "./ProfilePage.scss";
 
@@ -112,6 +114,24 @@ function ProfilePage() {
 
   return (
     <div className="ProfilePage">
+      {userProfile.freeAccount ? (
+        <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
+          <span className="my-auto">
+            {" "}
+            <FaInfoCircle className="my-auto" /> This Account is on Free trials
+          </span>
+          {/* ============================= open Subcribtion modal button =============================== */}
+          <button
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            href="#paymentModalToggle"
+            role="button"
+          >
+            Buy Subscription
+          </button>
+          {/* ===================================== </> ================================================= */}
+        </div>
+      ) : null}
       <div className="header mt-5 mb-3 d-flex justify-content-between">
         <h3 className=" ms-4"> Profile</h3>
       </div>
@@ -129,6 +149,16 @@ function ProfilePage() {
             {!editForm ? "Update Profile" : "Cancel Edit"}
           </button>
         </div>
+        {/* ============================= open Subcribtion modal button =============================== * /} 
+        <button
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          href="#paymentModalToggle"
+          role="button"
+        >
+          Buy Subscription
+        </button>
+        {/* ===================================== </> ================================================= */}
         <div className="form-div ">
           <form className=" my-5">
             <div className="d-flex">
@@ -310,8 +340,8 @@ function ProfilePage() {
                   ></textarea>
                 </label>
 
-                <div className="d-flex">
-                  <label className="w-100 mx-3 my-3">
+                <div className="d-flex flex-column flex-md-row">
+                  <label className="w-100 mx-0 mx-md-3 my-3">
                     office address
                     <input
                       type="text"
@@ -329,7 +359,7 @@ function ProfilePage() {
                       // value={userProfile.joinDate}
                     />
                   </label> */}
-                  <label className="w-100 mx-3 my-3">
+                  <label className="w-100  mx-0 mx-md-3 my-3">
                     Year of experience
                     <input
                       type="text"
@@ -338,8 +368,8 @@ function ProfilePage() {
                     />
                   </label>
                 </div>
-                <div className="d-flex">
-                  <label className="w-100 mx-3 my-3" htmlFor="">
+                <div className="d-flex flex-column flex-md-row">
+                  <label className="w-100  mx-0 mx-md-3 my-3" htmlFor="">
                     Referee Name
                     <input
                       type="text"
@@ -349,7 +379,7 @@ function ProfilePage() {
                       // value={userProfile.joinDate}
                     />
                   </label>
-                  <label className="w-100 mx-3 my-3" htmlFor="">
+                  <label className="w-100  mx-0 mx-md-3 my-3" htmlFor="">
                     Referee Number
                     <input
                       type="text"

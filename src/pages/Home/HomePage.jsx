@@ -14,7 +14,7 @@ import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 // import { PopUpMessage } from "../../components/ChatPopUp/ChatPopUp";
 import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
-import { FaExclamation } from "react-icons/fa";
+import { FaExclamation, FaInfo, FaInfoCircle } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 
 function HomePage() {
@@ -59,7 +59,13 @@ function HomePage() {
         Your profile is not completed <br />
         Update Profile to get our top pro artisans
         <br />{" "}
-        <Link to="/dashboard/profile" className="btn btn-primary mt-2 ms-auto">
+        <Link
+          onClick={() => {
+            document.getElementById("closeModalComponent").click();
+          }}
+          to="/dashboard/profile"
+          className="btn btn-primary mt-2 ms-auto"
+        >
           Update Profile
         </Link>
       </ModalComponent>
@@ -75,7 +81,25 @@ function HomePage() {
           LogOut
         </button>
       </div>
-      <hr />
+      <hr className="mb-0" />
+      {userProfile.freeAccount ? (
+        <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
+          <span className="my-auto">
+            {" "}
+            <FaInfoCircle className="my-auto" /> This Account is on Free trials
+          </span>
+          {/* ============================= open Subcribtion modal button =============================== */}
+          <button
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            href="#paymentModalToggle"
+            role="button"
+          >
+            Buy Subscription
+          </button>
+          {/* ===================================== </> ================================================= */}
+        </div>
+      ) : null}
       <div className="container">
         <div className="d-flex flex-wrap ">
           <div className="px-1">
@@ -149,10 +173,10 @@ function HomePage() {
       </div>
       <div className="container">
         {" "}
-        <div className="row mt-5">
+        <div className="row mt-1">
           <div className="col-sm-6">{/* Space */}</div>
           <div className="col-sm-6">
-            <div className="card mx-2">
+            <div className="card mx-2 mt-2">
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title tw-1">Profile Completeness</h5>
                 <p className="card-text">
