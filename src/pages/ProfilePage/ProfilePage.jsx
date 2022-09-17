@@ -6,7 +6,7 @@ import "./ProfilePage.scss";
 
 function ProfilePage() {
   const [editForm, setEditForm] = useState(false);
-  const { userProfile } = useContext(UserContext);
+  const { userProfile, decodeDate } = useContext(UserContext);
   // console.log(userProfile);
   function getAccountType(role) {
     if (role === 0) {
@@ -114,7 +114,7 @@ function ProfilePage() {
 
   return (
     <div className="ProfilePage">
-      {userProfile.freeAccount ? (
+      {!userProfile.freeAccount ? (
         <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
           <span className="my-auto">
             {" "}
@@ -297,7 +297,7 @@ function ProfilePage() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder={userProfile.joinDate}
+                  placeholder={decodeDate(userProfile.joinDate)}
                   disabled={true}
                   // value={userProfile.joinDate}
                 />
