@@ -26,3 +26,12 @@
   margin: 10px 0;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
+
+.NotificationPage ul li.loading {
+  height: 200px;
+  font-size: 25px;
+  color: rgb(148, 148, 148);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
