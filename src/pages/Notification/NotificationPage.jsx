@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import GroupCard from "../../components/CroupCard/GroupCardComponent";
+// import GroupCard from "../../components/CroupCard/GroupCardComponent";
 // import { UserContext } from "../../context/userContext";
 import {
   BsEyeFill,

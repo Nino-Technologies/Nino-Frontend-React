@@ -1,9 +1,9 @@
 .search-form {
   // border: solid 1px;
   min-height: 70px;
-  padding: 10px 0;
+  // padding: 10px 0;
   align-items: center;
-  justify-content: center;
+  // justify-content: center;
   display: flex;
   flex-wrap: wrap;
   label {
@@ -28,13 +28,13 @@
     }
   }
   button {
-    margin-top: auto;
+    margin-left: 5px;
     height: 40px;
     width: 90px;
     border: none;
     background-color: #003049;
     color: #ffffff;
-    margin-left: 10px;
+    margin-top: 10px;
   }
   // @media (max-width: 768px) {
   //   label {
@@ -44,6 +44,7 @@
   @media (max-width: 530px) {
     button {
       margin-top: 10px;
+      width: 100%;
     }
   }
   @media (max-width: 420px) {
