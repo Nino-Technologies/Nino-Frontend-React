@@ -1,18 +1,8 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
-
-// import {
-//   BsDoorOpen,
-//   BsPeople,
-//   BsPersonBoundingBox,
-//   BsPersonCheck,
-//   BsPersonPlus,
-//   BsWallet,
-// } from "react-icons/bs";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
-// import { PopUpMessage } from "../../components/ChatPopUp/ChatPopUp";
 import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
 import { FaExclamation, FaInfo, FaInfoCircle } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
@@ -26,9 +16,6 @@ function HomePage() {
     pageLoading,
     decodeDate,
     getNotification,
-    // apiUrl,
-
-    // token,
   } = useContext(UserContext);
   function checkVerified(verify) {
     if (verify) {
@@ -95,9 +82,9 @@ function HomePage() {
             {" "}
             <FaInfoCircle className="my-auto" /> This Account is on Free trials
           </span>
-          {/* ============================= open Subcribtion modal button =============================== */}
+          {/* ============================= open Subscription modal button =============================== */}
           <button
-            class="btn btn-primary"
+            className="btn btn-primary"
             data-bs-toggle="modal"
             href="#paymentModalToggle"
             role="button"
@@ -109,79 +96,17 @@ function HomePage() {
       ) : null}
       <div className="container">
         <div className="d-flex flex-wrap ">
-          <div className="px-1">
-            {/* <DashboardCard
-            label={"Wallet Balance"}
-            icon={<BsWallet />}
-            figure={<div className="n">{userAccountInformation.amount}</div>}
-          /> */}
-          </div>
-          {/* {getUserPrivilege() > 1 ? (
-          <>
-            <div className="px-1">
-              <DashboardCard
-                label={"Total Customers"}
-                icon={<BsPersonCheck />}
-                figure={"0"}
-              />
-            </div>
-          </>
-        ) : null} */}
-          {/* {getUserPrivilege() > 2 ? (
-          <>
-            <div className="px-1">
-              <DashboardCard
-                label={"Total Users"}
-                icon={<BsPeople />}
-                figure={users.length}
-              />
-            </div>
-            <div className="px-1">
-              <DashboardCard
-                label={"Total Resellers"}
-                icon={<BsPersonPlus />}
-                figure={resellers.length}
-              />
-            </div>
-          </>
-        ) : null} */}
-          {/* {getUserPrivilege() > 3 ? (
-          <>
-            <div className="px-1">
-              <DashboardCard
-                label={"Total Admin"}
-                icon={<BsPersonBoundingBox />}
-                figure={admins.length}
-              />
-            </div>
-          </>
-        ) : null} */}
+          <div className="px-1"></div>
         </div>
       </div>
       <div className="container">
         {" "}
-        <div className="row">
-          {/* {actionList.map((link, i) => {
-          const { label, icon, path, userPrivilege } = link;
-          // console.log("userPrivilege");
-          return (
-            <>
-              {getUserPrivilege() >= userPrivilege ? (
-                <div className="col-6 col-md-3 px-1" key={i}>
-                  <Link to={path}>
-                    <DashboardActionCard label={label} icon={icon} />
-                  </Link>
-                </div>
-              ) : null}
-            </>
-          );
-        })} */}
-        </div>
+        <div className="row"></div>
       </div>
       <div className="container">
         {" "}
         <div className="row mt-1">
-          <div className="col-sm-6">{/* Space */}</div>
+          <div className="col-sm-6">{/* just for the col-6 Space */}</div>
           <div className="col-sm-6">
             <div className="card mx-2 mt-2">
               <div className="card-body d-flex flex-column">
@@ -198,13 +123,6 @@ function HomePage() {
                     {profileProgress}%
                   </div>
                 </div>
-                {/* <p className="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-              <a href="#" >
-                Go somewhere
-              </a> */}
                 <Link
                   to="/dashboard/profile"
                   className="btn btn-primary mt-2 ms-auto"
@@ -223,14 +141,6 @@ function HomePage() {
             <div className="card mx-2 notification">
               <div className="card-header">Notification</div>
               <div className="card-body">
-                {/* <h5 className="card-title">Special title treatment</h5>
-              <p className="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-              <a href="#" className="btn btn-primary">
-                Go somewhere
-              </a> */}
                 {pageLoading ? (
                   <li className="loading">Loading....</li>
                 ) : (
@@ -247,11 +157,10 @@ function HomePage() {
                               <div key={_id}>
                                 <span className="w-100 me-4">
                                   <sup className="d-inline d-md-flex justify-content-between  mt-2 mb-0 flex-wrap"></sup>
-                                  <div className="date ms-md-auto my-0 ">
+                                  <sub className="date ms-md-auto my-0 ">
                                     {decodeDate(sentDate)[0]}
-                                    {/* , {decodeDate(sentDate)[1]} */}
-                                    {/* {date} */}
-                                  </div>
+                                  </sub>{" "}
+                                  <br />
                                   {message}{" "}
                                 </span>
                                 <hr className="my-0 mb-2" />
@@ -261,12 +170,9 @@ function HomePage() {
                         );
                       })
                     )}
-                    <Link to={"dashboard/profile"}>Read More...</Link>
+                    <Link to={"/dashboard/notification"}>Read More...</Link>
                   </>
                 )}
-                {/* <p className="empty">
-                  No Notification Yet Check out for later :){" "}
-                </p> */}
               </div>
             </div>
           </div>
@@ -323,6 +229,7 @@ function HomePage() {
           </div>
         </div>
       </div>
+      {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
       {/* <h4 className="mt-5">Resent Hairs</h4>
       <div className="container  table-responsive ">
         <table className="table">

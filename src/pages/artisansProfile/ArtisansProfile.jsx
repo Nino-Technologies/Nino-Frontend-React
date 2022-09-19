@@ -4,7 +4,6 @@ import Footer from "../../components/Footer/Footer";
 import Nav from "../../components/Nav/Nav";
 import StarComponent from "../../components/stars/Stars";
 import ChatPopUp from "../../components/ChatPopUp/ChatPopUp";
-import artisanJson from "../../json/artisansDb.json";
 import PageLoading from "../../components/PageLoading/PageLoading";
 import "./ArtisansProfile.scss";
 import ShareButton from "../../components/ShareButton/ShareButton";
@@ -30,7 +29,6 @@ function ArtisansProfile() {
 
     if (response.ok) {
       let json = await response.json();
-      // console.log(json[0].fullName);
       setArtisan(json[0]);
       setPageLoading(false);
     } else {
@@ -55,22 +53,12 @@ function ArtisansProfile() {
         <div className="ArtisansProfile">
           <div className="containers bor der h-100">
             <div className="main-area">
-              {/* <ul className="profile-nav">
-                <li>About</li>
-                <li>Photos</li>
-                <li>Services</li>
-                <li>Reviews</li>
-                <li>Credentials</li>
-                <li>FAQs</li>
-              </ul> */}
-
               <div className="top-section">
                 {/* <!--  --> */}
                 <div className="image-div">
                   <img
                     src={`${
-                      // remove the ! for proper use ====================
-                      artisan.avatar !== ""
+                      artisan.avatar === ""
                         ? artisan.gender === "male"
                           ? "https://st4.depositphotos.com/9998432/20073/v/1600/depositphotos_200738870-stock-illustration-default-placeholder-businessman-half-length.jpg"
                           : "https://st3.depositphotos.com/9998432/19099/v/1600/depositphotos_190990184-stock-illustration-default-placeholder-businesswoman-half-length.jpg"
@@ -88,19 +76,6 @@ function ArtisansProfile() {
                     <StarComponent rate="5" />
                     {/* <!-- (22) --> */}
                   </p>
-                  {/* {artisan.offersRemoteServices ? (
-                    <span>Offers remote services</span>
-                  ) : null}
-                  {artisan.discountsAvailable ? (
-                    <span>Discounts available</span>
-                  ) : null} */}
-                  {/* <p className="m-o">
-                    {" "}
-                    <b>categories</b> <br />
-                    {artisan.categories.map((categories) => (
-                      <>{categories} //</>
-                    ))}
-                  </p> */}
                   <b>Service</b> <br />
                   {artisan.service}
                   <div className="extra-button">
@@ -170,36 +145,6 @@ function ArtisansProfile() {
                     </li>
                   </ul>
                 </div>
-                {/* <div className="d-flex flex-column">
-                  <b>Payment Method</b>
-                  {/* 
-                  <div className="d-flex">
-                    {artisan.payment.map((payment, i) => (
-                      <span key={`payment${i}`}>{payment}, </span>
-                    ))}
-                  </div> */}
-                {/* <b>Social media</b>
-                  {/* // <!-- Facebook, Instagram, Twitter --> * /}
-
-                  {artisan.socialContact.facebook !== null ? (
-                    <span>Facebook</span>
-                  ) : null}
-                  {artisan.socialContact.instagram !== null ? (
-                    <span>instagram</span>
-                  ) : null}
-                  {artisan.socialContact.tweeter !== null ? (
-                    <span>tweeter</span>
-                  ) : null}
-                  {artisan.socialContact.linkedin !== null ? (
-                    <span>linkedin</span>
-                  ) : null}
-                  {artisan.socialContact.facebook === null &&
-                  artisan.socialContact.instagram === null &&
-                  artisan.socialContact.tweeter === null &&
-                  artisan.socialContact.linkedin === null ? (
-                    <span>No Social network Linked</span>
-                  ) : null} * /}
-                </div> */}
               </div>
 
               <div className="contact-div">
@@ -212,9 +157,11 @@ function ArtisansProfile() {
               </div>
 
               <hr />
-              <div className="featured-projects">
+              {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
+
+              {/* <div className="featured-projects">
                 <h4>Featured Projects</h4>
-                {/* 6 photos */}
+                {/* 6 photos * /}
                 {/* <div className="image-flex">
                   <img
                     src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
@@ -240,10 +187,9 @@ function ArtisansProfile() {
                     src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
                     alt=""
                   />
-                </div> */}
+                </div> * /}
               </div>
-
-              <hr />
+              <hr /> */}
 
               <div className="reviews">
                 <h3>Reviews</h3>
@@ -263,7 +209,6 @@ function ArtisansProfile() {
               <hr />
 
               <div className="reviews-div">
-                {/* <!-- <div className="review" ></div> --> */}
                 {artisan.reviews.map((review, i) => (
                   <div className="review" key={`artisanReview${i}`}>
                     <div className="name-pix d-flex my-2">
@@ -293,10 +238,6 @@ function ArtisansProfile() {
                 <b>Fixture type</b> <br />
                 <ul className="nav my-auto">
                   <font-awesome-icon icon="fas fa-check" className="my-auto" />
-                  {/* 
-                  {artisan.specialties.map((specialty) => (
-                    <li className="mx-1 p-0">{specialty}, </li>
-                  ))} */}
                 </ul>
               </div>
 

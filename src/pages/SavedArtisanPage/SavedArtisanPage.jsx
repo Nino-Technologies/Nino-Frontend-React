@@ -1,8 +1,6 @@
-// import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 
 import "./SavedArtisanPage.scss";
-// import AdminRegistrationForm from "../../components/RegistrationForm/AdminRegistrationForm";
 
 function SavedArtisanPage() {
   return (

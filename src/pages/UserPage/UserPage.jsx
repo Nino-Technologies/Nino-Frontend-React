@@ -41,9 +41,9 @@ function UsersPage() {
         />
       </div>
       <hr />
-      <div class="table-responsive-sm">
-        <table class="table">
-          <thead class="thead-dark">
+      <div className="table-responsive-sm">
+        <table className="table">
+          <thead className="thead-dark">
             <tr>
               <th
                 scope="col"

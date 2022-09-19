@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-// import { UserContext } from "../../context/userContext";
 import Nav, { DashboardSideNav } from "../../components/Nav/Nav";
-// import { AuthorizeAction } from "../../components/Forms/FormsComponent";
 import { UserContext } from "../../context/UserContext";
 
 function Dashboard() {
@@ -15,9 +13,6 @@ function Dashboard() {
     navigate("/404");
   }
 
-  useEffect(() => {
-    // getUserInfo();
-  }, []);
   return (
     <div className="Dashboard">
       <input

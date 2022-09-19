@@ -3,6 +3,9 @@ import { FaInfoCircle } from "react-icons/fa";
 import { PaymentModalComponent } from "../../components/Modal/ModalComponent";
 import { UserContext } from "../../context/UserContext";
 import "./ProfilePage.scss";
+{
+  /*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove any commented code on this page !!!!!!!!!!!!!!!!!!!!! */
+}
 
 function ProfilePage() {
   const [editForm, setEditForm] = useState(false);
@@ -122,7 +125,7 @@ function ProfilePage() {
           </span>
           {/* ============================= open Subscription modal button =============================== */}
           <button
-            class="btn btn-primary"
+            className="btn btn-primary"
             data-bs-toggle="modal"
             href="#paymentModalToggle"
             role="button"
@@ -151,7 +154,7 @@ function ProfilePage() {
         </div>
         {/* ============================= open Subscription modal button =============================== * /} 
         <button
-          class="btn btn-primary"
+          className="btn btn-primary"
           data-bs-toggle="modal"
           href="#paymentModalToggle"
           role="button"
@@ -234,6 +237,8 @@ function ProfilePage() {
                     />
                   </label>
                 </div>
+                {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
+
                 {/* <b>Social media  link</b>
                 <div className="d-flex">
                   <label className="w-100 mx-3 my-3" htmlFor="">
@@ -349,6 +354,8 @@ function ProfilePage() {
                       disabled={!editForm}
                     />
                   </label>
+                  {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
+
                   {/* <label className="w-100 mx-3 my-3" htmlFor="">
                     Referee Name
                     <input

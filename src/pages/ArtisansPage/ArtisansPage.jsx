@@ -5,9 +5,7 @@ import Nav from "../../components/Nav/Nav";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import Search from "../../components/Search/Search";
 
-import artisansData from "../../json/artisansDb.json";
 import "./ArtisansPage.scss";
-import PageLoading from "../../components/PageLoading/PageLoading";
 import { UserContext } from "../../context/UserContext";
 
 function ArtisansPage() {
@@ -35,7 +33,6 @@ function ArtisansPage() {
     getArtisans();
   }, []);
 
-  // console.log(artisans);
   return (
     <div className="ArtisansPage">
       <Nav />
@@ -63,10 +60,7 @@ function ArtisansPage() {
         apiUrl={apiUrl}
       />
       {pageLoading ? (
-        <div className="container loading">
-          {/* <PageLoading>Loading...</PageLoading> */}
-          Loading...
-        </div>
+        <div className="container loading">Loading...</div>
       ) : (
         <div className="container">
           {artisans.map((artisan) => (

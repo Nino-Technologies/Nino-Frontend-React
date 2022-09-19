@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 function RegisterPage() {
   const [displayForm, setDisplayForm] = useState(-1);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (searchParams.get("as") === "user") {
@@ -37,14 +37,12 @@ function RegisterPage() {
                 )}
               </>
             )}
-            {/* <br /> */}
             <hr className="w-100" />
             {displayForm === -1 ? (
               <>
                 Do You Want To
                 <Link to={"/register?as=artisan"}>Register Artisan</Link>
                 <Link to={"/register?as=user"}>Register User</Link>
-                {/* <hr className="w-100" /> */}
                 OR
                 <Link to={"/login?as=artisan"}>Login Artisan</Link>
                 <Link to={"/login?as=user"}>Login User</Link>
@@ -54,7 +52,6 @@ function RegisterPage() {
         </div>
 
         <div className="image-body">
-          {/* <!-- <img src="https://images.unsplash.com/photo-1550147760-44c9966d6bc7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" alt=""> --> */}
           <div className="container">
             <div className="m-box">
               <h1>Welcome Back!</h1>

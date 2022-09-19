@@ -1,27 +1,12 @@
-// .loading {
-//   // border: solid;
-//   font-size: 30px;
-//   text-align: center;
-//   margin-top: 40%;
-// }
-// .loading.error {
-//   color: red;
-// }
 .ArtisansProfile {
-  // border: solid 1px red;
   margin-top: 70px;
   text-align: start;
-  // height: 1000px;
-  // overflow: hidden;
   .containers {
     flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
-    // height: 500px !important;
     .main-area {
-      // border: solid 1px red;
       width: 70%;
-      // height: 500px;
 
       .profile-nav {
         list-style: none;
@@ -37,22 +22,18 @@
       }
       .top-section {
         display: flex;
-        // border: solid;
         .image-div {
           width: 200px;
           padding: 0;
-          // margin: 0 20px;
           margin-left: 25px;
           overflow: hidden;
           height: 200px;
-          // border: solid;
           img {
             border-radius: 3px;
           }
         }
         .name-div {
           padding: 10px;
-          // border: solid 1px red;
           width: 100%;
           max-width: 400px;
         }
@@ -73,9 +54,7 @@
         }
 
         position: relative;
-        // border: solid 1px red;
         .extra-button {
-          // border: solid 1px red;
           display: flex;
           position: absolute;
           top: 0;
@@ -86,7 +65,6 @@
       .introduction {
         text-align: start;
         line-height: 30px;
-        // font-size: 20px;
         padding: 25px;
       }
 
@@ -98,12 +76,10 @@
         }
       }
       .contact-div {
-        // border: solid;
         display: flex;
         justify-content: space-evenly;
         .contact-button {
           border: solid 1px var(--color-primary);
-          // width: 50%;
           width: 300px;
           background-color: transparent;
           height: 40px;
@@ -112,14 +88,11 @@
           width: 300px;
           background-color: var(--color-primary);
           min-width: 100%;
-          // color: red !important;
         }
       }
       .featured-projects {
-        // border: solid 1px red;
         overflow-x: hidden;
         .image-flex {
-          // border: solid;
           display: flex;
           overflow-x: scroll;
           img {
@@ -131,14 +104,12 @@
     }
 
     .card-area {
-      // border: solid;
       width: 30%;
       position: relative;
       .form-card {
         position: sticky;
         top: 95px;
         border: solid 1px #ddd;
-        // height: 300px;
         border-radius: 10px;
         padding: 20px;
         width: 100%;
@@ -183,17 +154,14 @@
     overflow: hidden;
     .containers {
       .main-area {
-        // width: 100%;
         padding: 10px;
         .profile-nav {
-          // border: solid;
           padding: 0;
           li {
             padding: 0 2px;
           }
         }
         .top-section {
-          // border: solid;
           flex-direction: column;
           text-align: center;
           .name-div {
@@ -224,7 +192,6 @@
         .more-info {
           ul {
             width: 100%;
-            // border: solid;
           }
           flex-direction: column;
         }

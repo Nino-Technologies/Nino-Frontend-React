@@ -12,7 +12,6 @@ function LandingPage() {
       <Nav />
       <div className="hero-section">
         <div className="text-div">
-          {/* <!-- <div className="box"> --> */}
           <div className="mobile-background"></div>
           <h1 className="hero-name">Hire Artisans With Grinders</h1>
           <p className="sub">Connecting people to trusted local services.</p>
