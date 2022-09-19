@@ -5,12 +5,7 @@ import {
   FaUserCheck,
   FaUserPlus,
 } from "react-icons/fa";
-import {
-  // BsAward,
-  BsBellFill,
-  BsHouseFill,
-  BsPerson,
-} from "react-icons/bs";
+import { BsBellFill, BsHouseFill, BsPerson } from "react-icons/bs";
 
 export const userNavLinkObject = [
   {
@@ -41,24 +36,24 @@ export const userNavLinkObject = [
     name: "Users",
     icon: <FaUser />,
     path: "/dashboard/users",
-    userPrivilege: 1,
+    userPrivilege: 3,
   },
   {
     name: "Verify accounts",
     icon: <FaUserCheck />,
     path: "/dashboard/verify-user",
-    userPrivilege: 1,
+    userPrivilege: 3,
   },
   {
     name: "Create admin",
     icon: <FaUserPlus />,
     path: "/dashboard/create-admin",
-    userPrivilege: 1,
+    userPrivilege: 3,
   },
   {
     name: "Payments",
     icon: <FaMoneyCheck />,
     path: "/dashboard/payments",
-    userPrivilege: 1,
+    userPrivilege: 3,
   },
 ];
