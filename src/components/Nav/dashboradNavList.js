@@ -1,4 +1,10 @@
-import { FaCamera, FaUser, FaUserCheck, FaUserPlus } from "react-icons/fa";
+import {
+  FaCamera,
+  FaMoneyCheck,
+  FaUser,
+  FaUserCheck,
+  FaUserPlus,
+} from "react-icons/fa";
 import {
   // BsAward,
   BsBellFill,
@@ -35,18 +41,24 @@ export const userNavLinkObject = [
     name: "Users",
     icon: <FaUser />,
     path: "/dashboard/users",
-    userPrivilege: 3,
+    userPrivilege: 1,
   },
   {
     name: "Verify accounts",
     icon: <FaUserCheck />,
     path: "/dashboard/verify-user",
-    userPrivilege: 3,
+    userPrivilege: 1,
   },
   {
     name: "Create admin",
     icon: <FaUserPlus />,
     path: "/dashboard/create-admin",
-    userPrivilege: 3,
+    userPrivilege: 1,
+  },
+  {
+    name: "Payments",
+    icon: <FaMoneyCheck />,
+    path: "/dashboard/payments",
+    userPrivilege: 1,
   },
 ];
