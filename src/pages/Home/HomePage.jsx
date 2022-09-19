@@ -22,6 +22,10 @@ function HomePage() {
   const {
     logOutFunction,
     userProfile,
+    notification,
+    pageLoading,
+    decodeDate,
+    getNotification,
     // apiUrl,
 
     // token,
@@ -33,6 +37,9 @@ function HomePage() {
     return <FaExclamation className="text-danger" />;
   }
 
+  useEffect(() => {
+    getNotification();
+  }, []);
   useEffect(() => {
     if (!userProfile.email_verified) {
       //  CLike the model button with js
@@ -224,9 +231,42 @@ function HomePage() {
               <a href="#" className="btn btn-primary">
                 Go somewhere
               </a> */}
-                <p className="empty">
+                {pageLoading ? (
+                  <li className="loading">Loading....</li>
+                ) : (
+                  <>
+                    {" "}
+                    {notification.length === 0 ? (
+                      <li className="loading">No Notification Found</li>
+                    ) : (
+                      notification.map((notification, i) => {
+                        const { _id, message, sentDate } = notification;
+                        return (
+                          <>
+                            {i <= 2 ? (
+                              <div key={_id}>
+                                <span className="w-100 me-4">
+                                  <sup className="d-inline d-md-flex justify-content-between  mt-2 mb-0 flex-wrap"></sup>
+                                  <div className="date ms-md-auto my-0 ">
+                                    {decodeDate(sentDate)[0]}
+                                    {/* , {decodeDate(sentDate)[1]} */}
+                                    {/* {date} */}
+                                  </div>
+                                  {message}{" "}
+                                </span>
+                                <hr className="my-0 mb-2" />
+                              </div>
+                            ) : null}
+                          </>
+                        );
+                      })
+                    )}
+                    <Link to={"dashboard/profile"}>Read More...</Link>
+                  </>
+                )}
+                {/* <p className="empty">
                   No Notification Yet Check out for later :){" "}
-                </p>
+                </p> */}
               </div>
             </div>
           </div>
@@ -283,7 +323,7 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <h4 className="mt-5">Resent Hairs</h4>
+      {/* <h4 className="mt-5">Resent Hairs</h4>
       <div className="container  table-responsive ">
         <table className="table">
           <thead className="table-dark">
@@ -323,7 +363,7 @@ function HomePage() {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 }
