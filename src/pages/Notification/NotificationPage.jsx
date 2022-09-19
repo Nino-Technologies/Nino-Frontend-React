@@ -1,35 +1,14 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import "./NotificationPage.css";
 import ModalComponent from "../../components/Modal/ModalComponent";
 import { UserContext } from "../../context/UserContext";
-import { useCookies } from "react-cookie";
 function NotificationPage() {
-  const [pageLoading, setPageLoading] = useState(true);
-  const [notification, setNotification] = useState([]);
-  const [cookies] = useCookies();
+  const { decodeDate, getNotification, notification, pageLoading } =
+    useContext(UserContext);
+
   useEffect(() => {
     getNotification();
   }, []);
-  const { apiUrl, decodeDate } = useContext(UserContext);
-
-  async function getNotification() {
-    // setPageLoading(true);
-    const { token } = cookies.grinderUser;
-    try {
-      const resp = await axios.get(`${apiUrl}/notification`, {
-        headers: {
-          authorization: token,
-        },
-      });
-      setPageLoading(false);
-      // console.log(resp.data);
-      setNotification(resp.data.data.reverse());
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
-    }
-  }
 
   return (
     <div className="NotificationPage pt-5">
@@ -54,8 +33,6 @@ function NotificationPage() {
                       <sup className="d-inline d-md-flex justify-content-between  mt-2 mb-0 flex-wrap">
                         <div className="date ms-md-auto my-2 ">
                           {decodeDate(sentDate)[0]}
-                          {/* , {decodeDate(sentDate)[1]} */}
-                          {/* {date} */}
                         </div>
                       </sup>
                       <hr className="my-0 mb-2" />
