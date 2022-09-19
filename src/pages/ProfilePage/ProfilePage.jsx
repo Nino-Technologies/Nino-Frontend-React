@@ -114,13 +114,13 @@ function ProfilePage() {
 
   return (
     <div className="ProfilePage">
-      {!userProfile.freeAccount ? (
+      {userProfile.freeAccount ? (
         <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
           <span className="my-auto">
             {" "}
             <FaInfoCircle className="my-auto" /> This Account is on Free trials
           </span>
-          {/* ============================= open Subcribtion modal button =============================== */}
+          {/* ============================= open Subscription modal button =============================== */}
           <button
             class="btn btn-primary"
             data-bs-toggle="modal"
@@ -149,7 +149,7 @@ function ProfilePage() {
             {!editForm ? "Update Profile" : "Cancel Edit"}
           </button>
         </div>
-        {/* ============================= open Subcribtion modal button =============================== * /} 
+        {/* ============================= open Subscription modal button =============================== * /} 
         <button
           class="btn btn-primary"
           data-bs-toggle="modal"
