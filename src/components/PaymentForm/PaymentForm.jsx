@@ -1,32 +1,129 @@
-import React from "react";
-import {
-  FaAddressBook,
-  FaAt,
-  FaCcAmex,
-  FaCcDiscover,
-  FaCcMastercard,
-  FaCcVisa,
-  FaDochub,
-  FaDotCircle,
-  FaIndustry,
-  FaShoppingCart,
-  FaUser,
-} from "react-icons/fa";
+import axios from "axios";
+import React, { useContext } from "react";
+import { useState } from "react";
+import { FaAt, FaDotCircle, FaShoppingCart, FaUser } from "react-icons/fa";
+import { usePaystackPayment } from "react-paystack";
+import { toast } from "react-toastify";
+import { useCookies } from "react-cookie";
+import { UserContext } from "../../context/UserContext";
 
-function PaymentForm({ selectedPlane, setSelectedPlane }) {
+function PaymentForm({ selectedPlane }) {
   function nairaSign() {
     return <> &#8358; </>;
   }
 
+  const [formInputFullName, setFormInputFullName] = useState("");
+  const [formInputEmail, setFormInputEmail] = useState("");
+  const [cookies] = useCookies();
+  const { apiUrl } = useContext(UserContext);
+
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: formInputEmail,
+    amount: selectedPlane.price * 100,
+    //save key in .env
+    publicKey: "pk_test_92b1b7eb4252a8e07614c90360e4412902ff8de4",
+  };
+  const initializePayment = usePaystackPayment(config);
+
+  async function savePayment(paymentData) {
+    const { token } = cookies.grinderUser;
+    try {
+      const options = {
+        // url: `http://localhost:5000/api/payments`,
+        url: `${apiUrl}/payments`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+        data: paymentData,
+      };
+
+      axios(options)
+        .then((response) => {
+          // console.log(response);
+
+          // console.log(paymentObject);
+          document.getElementById("closePaymentModal").click();
+          toast.success("Payment successful");
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response.status || error.response.status === 400) {
+            return toast.error(error.response.data.message);
+          }
+          toast.error(error.message);
+        });
+    } catch (error) {}
+  }
+
+  // you can call this function anything
+  const onSuccess = (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    // console.log(reference);
+    const { status, redirecturl, trxref, transaction } = reference;
+    const paymentObject = {
+      email: formInputEmail,
+      fullName: formInputFullName,
+      status: status,
+      redirectUrl: redirecturl,
+      reference: trxref,
+      transaction: transaction,
+      amount: selectedPlane.price,
+      payment_verified: true,
+    };
+    // console.log(paymentObject);
+
+    savePayment(paymentObject);
+  };
+
+  // you can call this function anything
+  // ================================= send mail to the user =================================================
+  const onClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    toast.info("Payment Canceled");
+  };
+  function handelSubmit(e) {
+    e.preventDefault();
+
+    if (
+      selectedPlane.price === "" ||
+      !selectedPlane.price ||
+      selectedPlane.price <= 0
+    ) {
+      toast.info("Invalid request; select a subscription plan");
+      return document.getElementById("selectSubscriptionPlan").click();
+    }
+    const formElement = e.target;
+    if (formElement[0].value === "") {
+      toast.info("Fill form fullname");
+    }
+    if (formElement[1].value === "") {
+      toast.info("Fill form email");
+    }
+    if (formElement[1].value === "" || formElement[0].value === "") {
+      return;
+    }
+
+    setFormInputFullName(formElement[0].value);
+    setFormInputEmail(formElement[1].value);
+    initializePayment(onSuccess, onClose);
+  }
   return (
-    <div class="row">
-      <div class="col-75">
-        <div class="container">
-          <form action="">
-            <div class="row">
-              <div class="col-50">
+    <div className="row">
+      <div className="col-75">
+        <div className="container">
+          <form
+            onSubmit={(e) => {
+              handelSubmit(e);
+            }}
+          >
+            <div className="row">
+              <div className="col-50 pt-4">
                 <h3>Billing Address</h3>
-                <label for="fname">
+                <label htmlFor="fname">
                   <FaUser /> Full Name
                 </label>
                 <input
@@ -35,7 +132,7 @@ function PaymentForm({ selectedPlane, setSelectedPlane }) {
                   name="firstname"
                   placeholder="John M. Doe"
                 />
-                <label for="email">
+                <label htmlFor="email">
                   <FaAt /> Email
                 </label>
                 <input
@@ -44,132 +141,33 @@ function PaymentForm({ selectedPlane, setSelectedPlane }) {
                   name="email"
                   placeholder="john@example.com"
                 />
-                <label for="adr">
-                  <FaAddressBook /> Address
-                </label>
-                <input
-                  type="text"
-                  id="adr"
-                  name="address"
-                  placeholder="542 W. 15th Street"
-                />
-                <label for="city">
-                  <i class="fa fa-institution"></i> <FaIndustry /> City
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  placeholder="New York"
-                />
-
-                <div class="row">
-                  <div class="col-50">
-                    <label for="state">State</label>
-                    <input
-                      type="text"
-                      id="state"
-                      name="state"
-                      placeholder="NY"
-                    />
-                  </div>
-                  <div class="col-50">
-                    <label for="zip">Zip</label>
-                    <input
-                      type="text"
-                      id="zip"
-                      name="zip"
-                      placeholder="10001"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-50">
-                <h3>Payment</h3>
-                <label for="fname">Accepted Cards</label>
-                <div class="icon-container">
-                  <FaCcVisa style={{ color: "navy" }} />
-
-                  <FaCcAmex style={{ color: "blue" }} />
-
-                  <FaCcMastercard style={{ color: "red" }} />
-
-                  <FaCcDiscover style={{ color: "orange" }} />
-                </div>
-                <label for="cname">Name on Card</label>
-                <input
-                  type="text"
-                  id="cname"
-                  name="cardname"
-                  placeholder="John More Doe"
-                />
-                <label for="ccnum">Credit card number</label>
-                <input
-                  type="text"
-                  id="ccnum"
-                  name="cardnumber"
-                  placeholder="1111-2222-3333-4444"
-                />
-                <label for="expmonth">Exp Month</label>
-                <input
-                  type="text"
-                  id="expmonth"
-                  name="expmonth"
-                  placeholder="September"
-                />
-                <div class="row">
-                  <div class="col-50">
-                    <label for="expyear">Exp Year</label>
-                    <input
-                      type="text"
-                      id="expyear"
-                      name="expyear"
-                      placeholder="2018"
-                    />
-                  </div>
-                  <div class="col-50">
-                    <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" name="cvv" placeholder="352" />
-                  </div>
-                </div>
               </div>
             </div>
-            <label>
-              <input type="checkbox" checked="checked" name="sameadr" />{" "}
-              Shipping address same as billing
-            </label>
-            <input type="submit" value="Continue to checkout" class="btn" />
+
+            <button className="btn">Pay with Paystack</button>
           </form>
         </div>
       </div>
 
-      <div class="col-25">
-        <div class="container">
+      <div className="col-25">
+        <div className="container pt-4">
           <h4>
             Cart{" "}
-            <span class="price" style={{ color: "black" }}>
+            <span className="price" style={{ color: "black" }}>
               <FaShoppingCart /> <b>1</b>
             </span>
           </h4>
-          {/* <p>
-          <a href="#">Product 1</a> <span class="price">$15</span>
-        </p>
-        <p>
-          <a href="#">Product 2</a> <span class="price">$5</span>
-        </p>*/}
           <p>
-            <b href="#">Selected Plan</b> <span class="price">Price</span>
+            <b href="#">Selected Plan</b> <span className="price">Price</span>
           </p>
           <p>
             <a href="#">{selectedPlane.name}</a>{" "}
-            <span class="price">
-              {" "}
+            <span className="price">
               {nairaSign()}
               {selectedPlane.price}
             </span>
           </p>
-          <ul className="nav">
+          <ul className="nav flex-column">
             {selectedPlane.offer.map((item, i) => (
               <li key={i} className="  my-auto d-flex">
                 <FaDotCircle className="me-2 mt-1" />{" "}
@@ -180,9 +178,8 @@ function PaymentForm({ selectedPlane, setSelectedPlane }) {
           <hr />
           <p>
             Total{" "}
-            <span class="price" style={{ color: "black" }}>
+            <span className="price" style={{ color: "black" }}>
               <b>
-                {" "}
                 {nairaSign()} {selectedPlane.price}
               </b>
             </span>
