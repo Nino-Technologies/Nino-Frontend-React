@@ -19,6 +19,8 @@ import UsersPage from "./pages/UserPage/UserPage";
 import CreateAdminPage from "./pages/CreateAdminPage/CreateAdminPage";
 import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
+import { PaymentModalComponent } from "./components/Modal/ModalComponent";
+import PaymentPage from "./pages/PaymentPage/PaymentPage";
 
 function App() {
   // check network
@@ -52,6 +54,7 @@ function App() {
         draggable
         pauseOnHover
       />
+      <PaymentModalComponent />
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/about-us" element={<AboutUsPage />} />
@@ -73,6 +76,8 @@ function App() {
           <Route path="verify-user" element={<VerifyUserPage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />
           <Route path="saved-artisan" element={<SavedArtisanPage />} />
+          <Route path="create-admin" element={<CreateAdminPage />} />
+          <Route path="payments" element={<PaymentPage />} />
         </Route>
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
