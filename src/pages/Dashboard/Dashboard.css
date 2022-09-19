@@ -100,6 +100,8 @@
   /* margin-left: 200px; */
   min-height: 100vh;
   /* border: red solid; */
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .page-body-wrapper main .row {
@@ -120,6 +122,8 @@
 .sideBarCheck:checked ~ .page-body-wrapper .main-dashboard-page {
   /* border: green solid; */
   margin-left: 55px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 @media screen and (max-width: 600px) {
@@ -128,8 +132,6 @@
   }
   .page-body-wrapper main {
     width: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
     /* border: brown solid; */
   }
   .page-body-wrapper .side-nav {
