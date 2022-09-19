@@ -5,6 +5,10 @@ nav {
   width: 100%;
   // border: solid;
 
+  .logo-image {
+    width: 150px;
+  }
+
   nav,
   .nav-item,
   .icon,
@@ -22,6 +26,11 @@ nav {
   button.navbar-toggler:focus {
     box-shadow: none;
   }
+
+  .nav-link {
+    font-size: 1.0em;
+  }
+
   .nav-item {
     color: #003049;
     cursor: pointer;
