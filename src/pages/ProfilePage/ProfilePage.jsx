@@ -1,10 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
+import { FaInfoCircle } from "react-icons/fa";
+import { PaymentModalComponent } from "../../components/Modal/ModalComponent";
 import { UserContext } from "../../context/UserContext";
 import "./ProfilePage.scss";
+{
+  /*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove any commented code on this page !!!!!!!!!!!!!!!!!!!!! */
+}
 
 function ProfilePage() {
   const [editForm, setEditForm] = useState(false);
-  const { userProfile } = useContext(UserContext);
+  const { userProfile, decodeDate } = useContext(UserContext);
   // console.log(userProfile);
   function getAccountType(role) {
     if (role === 0) {
@@ -112,6 +117,24 @@ function ProfilePage() {
 
   return (
     <div className="ProfilePage">
+      {userProfile.freeAccount ? (
+        <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
+          <span className="my-auto">
+            {" "}
+            <FaInfoCircle className="my-auto" /> This Account is on Free trials
+          </span>
+          {/* ============================= open Subscription modal button =============================== */}
+          <button
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            href="#paymentModalToggle"
+            role="button"
+          >
+            Buy Subscription
+          </button>
+          {/* ===================================== </> ================================================= */}
+        </div>
+      ) : null}
       <div className="header mt-5 mb-3 d-flex justify-content-between">
         <h3 className=" ms-4"> Profile</h3>
       </div>
@@ -129,19 +152,32 @@ function ProfilePage() {
             {!editForm ? "Update Profile" : "Cancel Edit"}
           </button>
         </div>
+        {/* ============================= open Subscription modal button =============================== * /} 
+        <button
+          className="btn btn-primary"
+          data-bs-toggle="modal"
+          href="#paymentModalToggle"
+          role="button"
+        >
+          Buy Subscription
+        </button>
+        {/* ===================================== </> ================================================= */}
         <div className="form-div ">
           <form className=" my-5">
             <div className="d-flex">
-              {/* <label className="w-100 mx-3 my-3" htmlFor="">
-                social ID
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder={userProfile.socialId || "Social ID"}
-                  disabled={!editForm}
-                  // value={editForm.socialId || "Social ID"}
-                />
-              </label> */}
+              {userProfile.role === 1 ? (
+                <label className="w-100 mx-3 my-3" htmlFor="">
+                  National Identity Number
+                  <input
+                    type="text"
+                    className="form-control"
+                    // placeholder={userProfile.socialId || "Social ID"}
+                    placeholder="NIN"
+                    disabled={!editForm}
+                    // value={editForm.socialId || "Social ID"}
+                  />
+                </label>
+              ) : null}
               <label className="w-100 mx-3 my-3" htmlFor="">
                 FullName
                 <input
@@ -201,7 +237,9 @@ function ProfilePage() {
                     />
                   </label>
                 </div>
-                <b>Social Contact</b>
+                {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
+
+                {/* <b>Social media  link</b>
                 <div className="d-flex">
                   <label className="w-100 mx-3 my-3" htmlFor="">
                     Facebook
@@ -223,8 +261,8 @@ function ProfilePage() {
                       // value={userProfile.joinDate}
                     />
                   </label>
-                </div>
-                <div className="d-flex">
+                </div> */}
+                {/* <div className="d-flex">
                   <label className="w-100 mx-3 my-3" htmlFor="">
                     Twitter
                     <input
@@ -245,7 +283,7 @@ function ProfilePage() {
                       // value={userProfile.joinDate}
                     />
                   </label>
-                </div>
+                </div>*/}
               </>
             ) : null}
             <div className="d-flex">
@@ -264,7 +302,7 @@ function ProfilePage() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder={userProfile.joinDate}
+                  placeholder={decodeDate(userProfile.joinDate)}
                   disabled={true}
                   // value={userProfile.joinDate}
                 />
@@ -292,7 +330,7 @@ function ProfilePage() {
               <form className=" my-5 px-3">
                 {/* <div className="d-flex"> */}
                 <label htmlFor="" className="w-100">
-                  Introduction
+                  Tell us about the service you render
                   <textarea
                     name="introduction"
                     id=""
@@ -306,22 +344,59 @@ function ProfilePage() {
                     // onChange={(e) => handleChange(e)}
                   ></textarea>
                 </label>
-                <label className="w-100 my-2">
-                  office location
-                  <input
-                    type="text"
-                    className="form-control"
-                    disabled={!editForm}
-                  />
-                </label>
-                <label className="w-100 my-2">
-                  Payment Method
-                  <input
-                    type="text"
-                    className="form-control"
-                    disabled={!editForm}
-                  />
-                </label>
+
+                <div className="d-flex flex-column flex-md-row">
+                  <label className="w-100 mx-0 mx-md-3 my-3">
+                    office address
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={!editForm}
+                    />
+                  </label>
+                  {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
+
+                  {/* <label className="w-100 mx-3 my-3" htmlFor="">
+                    Referee Name
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder={userProfile.location.city}
+                      disabled={!editForm}
+                      // value={userProfile.joinDate}
+                    />
+                  </label> */}
+                  <label className="w-100  mx-0 mx-md-3 my-3">
+                    Year of experience
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={!editForm}
+                    />
+                  </label>
+                </div>
+                <div className="d-flex flex-column flex-md-row">
+                  <label className="w-100  mx-0 mx-md-3 my-3" htmlFor="">
+                    Referee Name
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder={userProfile.location.city}
+                      disabled={!editForm}
+                      // value={userProfile.joinDate}
+                    />
+                  </label>
+                  <label className="w-100  mx-0 mx-md-3 my-3" htmlFor="">
+                    Referee Number
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder={userProfile.location.state}
+                      disabled={!editForm}
+                      // value={userProfile.joinDate}
+                    />
+                  </label>
+                </div>
 
                 {editForm ? (
                   <button className="w-50 m-auto mt-4 btn-primary btn">

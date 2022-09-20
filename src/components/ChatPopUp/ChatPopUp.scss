@@ -160,7 +160,7 @@
     align-items: center;
     font-size: 30px;
     .footer {
-      border: solid;
+      border: solid red;
       width: 100%;
       margin-bottom: 0;
       position: absolute;
@@ -171,12 +171,13 @@
       margin: 0;
       a,
       button {
-        position: static;
+        // position: static;
         width: 100px;
         height: 40px;
-        display: inline-block;
-        font-size: 20px;
-        border: none;
+        // display: inline-block;
+        font-size: 15px;
+        border: solid;
+
         border-radius: 5px;
         // left: 0;
         top: 0;

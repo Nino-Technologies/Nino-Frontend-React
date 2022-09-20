@@ -1,34 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Nav from "../../components/Nav/Nav";
 import StarComponent from "../../components/stars/Stars";
 import ChatPopUp from "../../components/ChatPopUp/ChatPopUp";
-import artisanJson from "../../json/artisansDb.json";
 import PageLoading from "../../components/PageLoading/PageLoading";
 import "./ArtisansProfile.scss";
 import ShareButton from "../../components/ShareButton/ShareButton";
 import SaveButton from "../../components/SaveButton/SaveButton";
+import { UserContext } from "../../context/UserContext";
 
 function ArtisansProfile() {
   const { id } = useParams();
   const [artisan, setArtisan] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
+  const navigate = useNavigate();
+  const { apiUrl } = useContext(UserContext);
+
+  // ======= THIS WILL SEND REQUEST to API with the ID form the user profile ===========
+
+  async function getProfile(profileId) {
+    if (profileId === "" || profileId === undefined) {
+      alert("this page requires an artisan ID ");
+      return navigate("/artisans");
+    }
+    let response = await fetch(`${apiUrl}/search/${profileId}`);
+    // let response = await fetch(`http://localhost:5000/api/search/${profileId}`);
+
+    if (response.ok) {
+      let json = await response.json();
+      setArtisan(json[0]);
+      setPageLoading(false);
+    } else {
+      console.log("error");
+      alert(" artisan with the ID provided is a not found");
+      navigate("/artisans");
+      return;
+    }
+  }
   useEffect(() => {
-    if (id === "" || id === undefined) {
-      return console.log("Error");
-    }
-    // ======= THIS WILL SEND REQUEST to API with the ID form the user profile ===========
-
-    let artisanProfile = artisanJson.find((artisan) => artisan._id === id);
-
-    if (artisanProfile === undefined) {
-      // return console.log("artisan profile not fund");
-      return alert(" artisan with the ID provided isa not found");
-    }
-
-    setArtisan(artisanProfile);
-    setPageLoading(false);
+    getProfile(id);
   }, []);
   return (
     <>
@@ -42,15 +53,6 @@ function ArtisansProfile() {
         <div className="ArtisansProfile">
           <div className="containers bor der h-100">
             <div className="main-area">
-              <ul className="profile-nav">
-                <li>About</li>
-                <li>Photos</li>
-                <li>Services</li>
-                <li>Reviews</li>
-                <li>Credentials</li>
-                <li>FAQs</li>
-              </ul>
-
               <div className="top-section">
                 {/* <!--  --> */}
                 <div className="image-div">
@@ -63,7 +65,7 @@ function ArtisansProfile() {
                         : artisan.avatar
                     }`}
                     alt="Profile picture"
-                    className="w-100"
+                    className="w-100 "
                   />
                 </div>
                 <div className="name-div">
@@ -74,19 +76,6 @@ function ArtisansProfile() {
                     <StarComponent rate="5" />
                     {/* <!-- (22) --> */}
                   </p>
-                  {artisan.offersRemoteServices ? (
-                    <span>Offers remote services</span>
-                  ) : null}
-                  {artisan.discountsAvailable ? (
-                    <span>Discounts available</span>
-                  ) : null}
-                  <p className="m-o">
-                    {" "}
-                    <b>categories</b> <br />
-                    {artisan.categories.map((categories) => (
-                      <>{categories} //</>
-                    ))}
-                  </p>
                   <b>Service</b> <br />
                   {artisan.service}
                   <div className="extra-button">
@@ -95,10 +84,12 @@ function ArtisansProfile() {
                   </div>
                 </div>
               </div>
+              <hr />
               <div className="introduction">
                 <p>
                   <b>Introduction</b>: {artisan.introduction}
                 </p>
+                <hr />
               </div>
               <div className="more-info d-flex px-3">
                 <div>
@@ -115,7 +106,7 @@ function ArtisansProfile() {
                       <span className="icon mx-2">
                         <font-awesome-icon icon="fas fa-location-dot" />
                       </span>
-                      {artisan.location.city},{artisan.location.state}
+                      {artisan.locationCity},{artisan.locationState}
                     </li>
 
                     <li v-if="artisanProfile.backgroundChecked">
@@ -154,36 +145,6 @@ function ArtisansProfile() {
                     </li>
                   </ul>
                 </div>
-                <div className="d-flex flex-column">
-                  <b>Payment Method</b>
-
-                  <div className="d-flex">
-                    {artisan.payment.map((payment, i) => (
-                      <span key={`payment${i}`}>{payment}, </span>
-                    ))}
-                  </div>
-                  <b>Social media</b>
-                  {/* // <!-- Facebook, Instagram, Twitter --> */}
-
-                  {artisan.socialContact.facebook !== null ? (
-                    <span>Facebook</span>
-                  ) : null}
-                  {artisan.socialContact.instagram !== null ? (
-                    <span>instagram</span>
-                  ) : null}
-                  {artisan.socialContact.tweeter !== null ? (
-                    <span>tweeter</span>
-                  ) : null}
-                  {artisan.socialContact.linkedin !== null ? (
-                    <span>linkedin</span>
-                  ) : null}
-                  {artisan.socialContact.facebook === null &&
-                  artisan.socialContact.instagram === null &&
-                  artisan.socialContact.tweeter === null &&
-                  artisan.socialContact.linkedin === null ? (
-                    <span>No Social network Linked</span>
-                  ) : null}
-                </div>
               </div>
 
               <div className="contact-div">
@@ -196,37 +157,39 @@ function ArtisansProfile() {
               </div>
 
               <hr />
-              <div className="featured-projects">
-                <h4>Featured Projects</h4>6 photos
-                <div className="image-flex">
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                </div>
-              </div>
+              {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
 
-              <hr />
+              {/* <div className="featured-projects">
+                <h4>Featured Projects</h4>
+                {/* 6 photos * /}
+                {/* <div className="image-flex">
+                  <img
+                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
+                    alt=""
+                  />
+                  <img
+                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
+                    alt=""
+                  />
+                  <img
+                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
+                    alt=""
+                  />
+                  <img
+                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
+                    alt=""
+                  />
+                  <img
+                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
+                    alt=""
+                  />
+                  <img
+                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
+                    alt=""
+                  />
+                </div> * /}
+              </div>
+              <hr /> */}
 
               <div className="reviews">
                 <h3>Reviews</h3>
@@ -246,7 +209,6 @@ function ArtisansProfile() {
               <hr />
 
               <div className="reviews-div">
-                {/* <!-- <div className="review" ></div> --> */}
                 {artisan.reviews.map((review, i) => (
                   <div className="review" key={`artisanReview${i}`}>
                     <div className="name-pix d-flex my-2">
@@ -276,10 +238,6 @@ function ArtisansProfile() {
                 <b>Fixture type</b> <br />
                 <ul className="nav my-auto">
                   <font-awesome-icon icon="fas fa-check" className="my-auto" />
-                  {/* 
-                  {artisan.specialties.map((specialty) => (
-                    <li className="mx-1 p-0">{specialty}, </li>
-                  ))} */}
                 </ul>
               </div>
 

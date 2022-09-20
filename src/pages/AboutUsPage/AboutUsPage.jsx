@@ -50,7 +50,6 @@ function AboutUsPage() {
             <div className="row">
               <div className="col-md-6 mb-3">
                 <div className="con">
-                  {/* <!-- <img className="img" src="https://images.unsplash.com/photo-1521097624001-0b8aaab53a59?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=876&q=80" alt=""> --> */}
                   <img
                     className="img"
                     src="https://images.unsplash.com/photo-1632392981396-eab641de07e4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"

@@ -14,6 +14,13 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import HomePage from "./pages/Home/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import NotificationPage from "./pages/Notification/NotificationPage";
+import VerifyUserPage from "./pages/VerifyUserPage/VerifyUserPage";
+import UsersPage from "./pages/UserPage/UserPage";
+import CreateAdminPage from "./pages/CreateAdminPage/CreateAdminPage";
+import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
+import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
+import { PaymentModalComponent } from "./components/Modal/ModalComponent";
+import PaymentPage from "./pages/PaymentPage/PaymentPage";
 
 function App() {
   // check network
@@ -47,6 +54,7 @@ function App() {
         draggable
         pauseOnHover
       />
+      <PaymentModalComponent />
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/about-us" element={<AboutUsPage />} />
@@ -63,6 +71,13 @@ function App() {
           <Route path="home" element={<HomePage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="notification" element={<NotificationPage />} />
+          <Route path="users" element={<UsersPage />} />
+          <Route path="verify-user" element={<VerifyUserPage />} />
+          <Route path="verify-user" element={<VerifyUserPage />} />
+          <Route path="upload-image" element={<ArtisanUploadPhoto />} />
+          <Route path="saved-artisan" element={<SavedArtisanPage />} />
+          <Route path="create-admin" element={<CreateAdminPage />} />
+          <Route path="payments" element={<PaymentPage />} />
         </Route>
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />

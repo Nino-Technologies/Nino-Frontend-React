@@ -1,17 +1,10 @@
 .about {
-  // .hero {
-  //   // min-height: 50vh;
-  //   /* background-color: #003049; */
-  // }
   .svg {
     margin-top: -100px;
   }
   #art {
     color: var(--color-secondary);
   }
-  /* .container {
-        border: 1px solid #003049;
-    } */
   .hero-name {
     font-size: 4em;
     font-weight: 600;
@@ -89,7 +82,6 @@
   @media only screen and (max-width: 480px) {
     .hero-name {
       font-size: 2.5em;
-      // text-align: center;
       padding-bottom: 7px;
     }
     .svg {

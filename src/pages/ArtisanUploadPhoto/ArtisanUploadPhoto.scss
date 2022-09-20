@@ -1,0 +1,44 @@
+#post-photo-form {
+  text-align: center;
+  /* display: flex; */
+  /* flex-direction: column; */
+  margin-top: 50px;
+}
+#post-photo-form .img-div {
+  /* border: solid 2px; */
+  /* display: flex; */
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  overflow: hidden;
+  max-height: auto;
+  /* max-height: 300px; */
+  padding: 3px 0 3px 0;
+  margin-bottom: 20px;
+  /* background-color: red; */
+}
+#post-photo-form label {
+  text-align: center;
+  width: 100%;
+  /* border: solid; */
+}
+#post-photo-form .img-div .img {
+  margin: auto;
+  border-radius: 10px;
+  width: 100%;
+}
+#post-photo-form .flexbox {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 425px) {
+  #post-photo-form .flexbox .item {
+    width: 40%;
+    margin: 10px auto;
+  }
+  #post-photo-form .img-div {
+    text-align: center;
+  }
+}

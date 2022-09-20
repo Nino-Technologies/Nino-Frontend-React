@@ -1,16 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useEffect } from "react";
 import Footer from "../../components/Footer/Footer";
 import Nav from "../../components/Nav/Nav";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import Search from "../../components/Search/Search";
 
-import artisansData from "../../json/artisansDb.json";
 import "./ArtisansPage.scss";
+import { UserContext } from "../../context/UserContext";
 
 function ArtisansPage() {
-  const [artisans, setArtisans] = useState(artisansData);
+  const { apiUrl } = useContext(UserContext);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [artisans, setArtisans] = useState([]);
 
-  // console.log(artisans);
+  async function getArtisans() {
+    setPageLoading(true);
+    fetch(`${apiUrl}/search`, { method: "POST" })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        setArtisans(data);
+        setPageLoading(false);
+        // console.log("data", data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    getArtisans();
+  }, []);
+
   return (
     <div className="ArtisansPage">
       <Nav />
@@ -32,14 +54,26 @@ function ArtisansPage() {
         ></path>
       </svg>
 
-      <Search />
-
-      <div className="container">
-        {artisans.map((artisan) => (
-          <ProfileCard artisan={artisan} />
-        ))}
+      <Search
+        setPageLoading={setPageLoading}
+        setArtisans={setArtisans}
+        apiUrl={apiUrl}
+      />
+      {pageLoading ? (
+        <div className="container loading">Loading...</div>
+      ) : (
+        <div className="container">
+          {artisans.map((artisan) => (
+            <ProfileCard artisan={artisan} />
+          ))}
+        </div>
+      )}
+      {!pageLoading && artisans.length === 0 ? (
+        <div className="container loading">No Artisan Found</div>
+      ) : null}
+      <div style={{ width: "100%", margin: 0 }}>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

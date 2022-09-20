@@ -7,6 +7,7 @@ import {
   FaShareSquare,
   FaTwitter,
 } from "react-icons/fa";
+import { toast } from "react-toastify";
 import "./ShareButton.scss";
 
 function ShareButton({ id }) {
@@ -14,13 +15,14 @@ function ShareButton({ id }) {
   function toggleVisibility() {
     setVisibility(!visibility);
   }
-  const profileUrl = "https://nino-tech.netlify.app/artisans-profile/" + id;
+  const profileUrl = "https://grinders.netlify.app/artisans-profile/" + id;
   async function copyURL(id) {
     try {
       await navigator.clipboard.writeText(profileUrl);
-      alert("Copied");
+      // alert("Copied");
+      toast.info("Link Copied");
     } catch {
-      alert("Cannot copy");
+      toast.error("Error copying link");
     }
   }
   return (

@@ -2,6 +2,8 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import moment from "moment";
+import axios from "axios";
 
 export const UserContext = createContext();
 
@@ -9,9 +11,11 @@ export function UserProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
   const [userProfile, setUserProfile] = useState([]);
+  const [notification, setNotification] = useState([]);
   const navigate = useNavigate();
   const apiUrl = "https://nino-technologies.herokuapp.com/api";
   // const apiUrl = "http://localhost:5000/api";
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
     if (cookies.grinderUser === undefined) {
@@ -28,6 +32,24 @@ export function UserProvider({ children }) {
     }
   });
 
+  async function getNotification() {
+    setPageLoading(true);
+    const { token } = cookies.grinderUser;
+    try {
+      const resp = await axios.get(`${apiUrl}/notification`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      setPageLoading(false);
+      // console.log(resp.data);
+      setNotification(resp.data.data.reverse());
+    } catch (err) {
+      // Handle Error Here
+      console.error(err);
+    }
+  }
+
   function logOutFunction() {
     if (window.confirm("You will be logged out of your account !!!")) {
       localStorage.removeItem("telecomMerchant");
@@ -40,6 +62,18 @@ export function UserProvider({ children }) {
     }
   }
 
+  // decodeDate();
+  function decodeDate(date) {
+    // moment()
+    const dateArray = moment(date)
+      .format("ddd, MMM Do YYYY T h:mm:ss a")
+      .split("T");
+    // console.log(dateArray);
+    const timeOnly = dateArray[1].split("+");
+    // console.log(dateArray);
+    return [dateArray[0], timeOnly[0]];
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -49,6 +83,10 @@ export function UserProvider({ children }) {
         setUserProfile,
         logOutFunction,
         apiUrl,
+        decodeDate,
+        getNotification,
+        notification,
+        pageLoading,
       }}
     >
       {children}

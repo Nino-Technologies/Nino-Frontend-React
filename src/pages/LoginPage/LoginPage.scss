@@ -25,7 +25,6 @@
     background-position-y: center;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
       url("https://images.pexels.com/photos/2760343/pexels-photo-2760343.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-    // url("https://images.unsplash.com/photo-1550147760-44c9966d6bc7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80");
   }
   .form-section {
     top: 0;
@@ -93,9 +92,6 @@
       background-size: cover;
       background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://images.pexels.com/photos/2760343/pexels-photo-2760343.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-      // // url("https://images.unsplash.com/photo-1550147760-44c9966d6bc7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80");
-      // background-image: none;
-      // background-color: #562804;
     }
     .form-layout {
       background-color: #fff;
@@ -138,7 +134,6 @@
 
 .BackComponent {
   border: solid;
-  // padding: ;
   height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -153,7 +148,6 @@
 
 @media only screen and (max-width: 768px) {
   .BackComponent {
-    // color: #ffffff;
     box-shadow: 1px 1px 5px rgba(11, 11, 11, 0.361);
   }
 }

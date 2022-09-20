@@ -13,19 +13,23 @@ function ProfileCard({ artisan }) {
     introduction,
     service,
     hired,
-    location,
+    locationCity,
+    locationState,
     _id,
     avatar,
     gender,
     backgroundChecked,
   } = artisan;
+  // console.log(artisan);
   return (
     <>
+      {/* ProfileCard */}
       <div className="ProfileCard">
         <div className="image-div">
           <img
             src={`${
-              avatar === ""
+              // remove the ! for proper use
+              avatar !== ""
                 ? gender === "male"
                   ? "https://st4.depositphotos.com/9998432/20073/v/1600/depositphotos_200738870-stock-illustration-default-placeholder-businessman-half-length.jpg"
                   : "https://st3.depositphotos.com/9998432/19099/v/1600/depositphotos_190990184-stock-illustration-default-placeholder-businesswoman-half-length.jpg"
@@ -62,7 +66,7 @@ function ProfileCard({ artisan }) {
                 <span className="icon mx-2">
                   <GoLocation />
                 </span>
-                {location.city}, {location.state}
+                {locationCity}, {locationState}
               </li>
               {backgroundChecked ? (
                 <li>

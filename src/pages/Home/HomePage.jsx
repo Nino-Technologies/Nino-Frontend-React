@@ -1,20 +1,10 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
-
-// import {
-//   BsDoorOpen,
-//   BsPeople,
-//   BsPersonBoundingBox,
-//   BsPersonCheck,
-//   BsPersonPlus,
-//   BsWallet,
-// } from "react-icons/bs";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
-// import { PopUpMessage } from "../../components/ChatPopUp/ChatPopUp";
 import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
-import { FaExclamation } from "react-icons/fa";
+import { FaExclamation, FaInfo, FaInfoCircle } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 
 function HomePage() {
@@ -22,9 +12,10 @@ function HomePage() {
   const {
     logOutFunction,
     userProfile,
-    // apiUrl,
-
-    // token,
+    notification,
+    pageLoading,
+    decodeDate,
+    getNotification,
   } = useContext(UserContext);
   function checkVerified(verify) {
     if (verify) {
@@ -33,6 +24,9 @@ function HomePage() {
     return <FaExclamation className="text-danger" />;
   }
 
+  useEffect(() => {
+    getNotification();
+  }, []);
   useEffect(() => {
     if (!userProfile.email_verified) {
       //  CLike the model button with js
@@ -59,7 +53,13 @@ function HomePage() {
         Your profile is not completed <br />
         Update Profile to get our top pro artisans
         <br />{" "}
-        <Link to="/dashboard/profile" className="btn btn-primary mt-2 ms-auto">
+        <Link
+          onClick={() => {
+            document.getElementById("closeModalComponent").click();
+          }}
+          to="/dashboard/profile"
+          className="btn btn-primary mt-2 ms-auto"
+        >
           Update Profile
         </Link>
       </ModalComponent>
@@ -75,84 +75,40 @@ function HomePage() {
           LogOut
         </button>
       </div>
-      <hr />
+      <hr className="mb-0" />
+      {userProfile.freeAccount ? (
+        <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
+          <span className="my-auto">
+            {" "}
+            <FaInfoCircle className="my-auto" /> This Account is on Free trials
+          </span>
+          {/* ============================= open Subscription modal button =============================== */}
+          <button
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            href="#paymentModalToggle"
+            role="button"
+          >
+            Buy Subscription
+          </button>
+          {/* ===================================== </> ================================================= */}
+        </div>
+      ) : null}
       <div className="container">
         <div className="d-flex flex-wrap ">
-          <div className="px-1">
-            {/* <DashboardCard
-            label={"Wallet Balance"}
-            icon={<BsWallet />}
-            figure={<div className="n">{userAccountInformation.amount}</div>}
-          /> */}
-          </div>
-          {/* {getUserPrivilege() > 1 ? (
-          <>
-            <div className="px-1">
-              <DashboardCard
-                label={"Total Customers"}
-                icon={<BsPersonCheck />}
-                figure={"0"}
-              />
-            </div>
-          </>
-        ) : null} */}
-          {/* {getUserPrivilege() > 2 ? (
-          <>
-            <div className="px-1">
-              <DashboardCard
-                label={"Total Users"}
-                icon={<BsPeople />}
-                figure={users.length}
-              />
-            </div>
-            <div className="px-1">
-              <DashboardCard
-                label={"Total Resellers"}
-                icon={<BsPersonPlus />}
-                figure={resellers.length}
-              />
-            </div>
-          </>
-        ) : null} */}
-          {/* {getUserPrivilege() > 3 ? (
-          <>
-            <div className="px-1">
-              <DashboardCard
-                label={"Total Admin"}
-                icon={<BsPersonBoundingBox />}
-                figure={admins.length}
-              />
-            </div>
-          </>
-        ) : null} */}
+          <div className="px-1"></div>
         </div>
       </div>
       <div className="container">
         {" "}
-        <div className="row">
-          {/* {actionList.map((link, i) => {
-          const { label, icon, path, userPrivilege } = link;
-          // console.log("userPrivilege");
-          return (
-            <>
-              {getUserPrivilege() >= userPrivilege ? (
-                <div className="col-6 col-md-3 px-1" key={i}>
-                  <Link to={path}>
-                    <DashboardActionCard label={label} icon={icon} />
-                  </Link>
-                </div>
-              ) : null}
-            </>
-          );
-        })} */}
-        </div>
+        <div className="row"></div>
       </div>
       <div className="container">
         {" "}
-        <div className="row mt-5">
-          <div className="col-sm-6">{/* Space */}</div>
+        <div className="row mt-1">
+          <div className="col-sm-6">{/* just for the col-6 Space */}</div>
           <div className="col-sm-6">
-            <div className="card mx-2">
+            <div className="card mx-2 mt-2">
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title tw-1">Profile Completeness</h5>
                 <p className="card-text">
@@ -167,13 +123,6 @@ function HomePage() {
                     {profileProgress}%
                   </div>
                 </div>
-                {/* <p className="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-              <a href="#" >
-                Go somewhere
-              </a> */}
                 <Link
                   to="/dashboard/profile"
                   className="btn btn-primary mt-2 ms-auto"
@@ -192,17 +141,38 @@ function HomePage() {
             <div className="card mx-2 notification">
               <div className="card-header">Notification</div>
               <div className="card-body">
-                {/* <h5 className="card-title">Special title treatment</h5>
-              <p className="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-              <a href="#" className="btn btn-primary">
-                Go somewhere
-              </a> */}
-                <p className="empty">
-                  No Notification Yet Check out for later :){" "}
-                </p>
+                {pageLoading ? (
+                  <li className="loading">Loading....</li>
+                ) : (
+                  <>
+                    {" "}
+                    {notification.length === 0 ? (
+                      <li className="loading">No Notification Found</li>
+                    ) : (
+                      notification.map((notification, i) => {
+                        const { _id, message, sentDate } = notification;
+                        return (
+                          <>
+                            {i <= 2 ? (
+                              <div key={_id}>
+                                <span className="w-100 me-4">
+                                  <sup className="d-inline d-md-flex justify-content-between  mt-2 mb-0 flex-wrap"></sup>
+                                  <sub className="date ms-md-auto my-0 ">
+                                    {decodeDate(sentDate)[0]}
+                                  </sub>{" "}
+                                  <br />
+                                  {message}{" "}
+                                </span>
+                                <hr className="my-0 mb-2" />
+                              </div>
+                            ) : null}
+                          </>
+                        );
+                      })
+                    )}
+                    <Link to={"/dashboard/notification"}>Read More...</Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -259,7 +229,8 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <h4 className="mt-5">Resent Hairs</h4>
+      {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
+      {/* <h4 className="mt-5">Resent Hairs</h4>
       <div className="container  table-responsive ">
         <table className="table">
           <thead className="table-dark">
@@ -299,7 +270,7 @@ function HomePage() {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import UserLoginForm from "../../components/LoginForm/UserLoginForm";
 import ArtisanLoginForm from "../../components/LoginForm/ArtisanLoginForm";
 import { FaArrowLeft } from "react-icons/fa";
+import AdminLoginForm from "../../components/LoginForm/AdminLoginForm";
 
 function LoginPage() {
   const [displayForm, setDisplayForm] = useState(-1);
@@ -17,6 +18,9 @@ function LoginPage() {
     }
     if (searchParams.get("as") === "artisan") {
       return setDisplayForm(2);
+    }
+    if (searchParams.get("as") === "admin") {
+      return setDisplayForm(3);
     }
     console.log("Invalid login request");
   }, [searchParams]);
@@ -34,7 +38,14 @@ function LoginPage() {
                 {displayForm === 2 ? (
                   <ArtisanLoginForm />
                 ) : (
-                  <>Invalid Login Request</>
+                  <>
+                    {" "}
+                    {displayForm === 3 ? (
+                      <AdminLoginForm />
+                    ) : (
+                      <>Invalid Login Request</>
+                    )}
+                  </>
                 )}
               </>
             )}{" "}
@@ -53,7 +64,6 @@ function LoginPage() {
           </div>
         </div>
         <div className="image-body">
-          {/* <!-- <img src="https://images.unsplash.com/photo-1550147760-44c9966d6bc7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" alt=""> --> */}
           <div className="container">
             <div className="m-box">
               <h1>Welcome Back!</h1>

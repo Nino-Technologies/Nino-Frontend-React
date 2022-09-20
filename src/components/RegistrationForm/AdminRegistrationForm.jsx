@@ -4,35 +4,52 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
+import { useCookies } from "react-cookie";
 
-function UserRegistrationForm() {
+function AdminRegistrationForm() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { apiUrl } = useContext(UserContext);
+  const [cookies, setCookie] = useCookies();
 
   async function registerUserFunction(e) {
     e.preventDefault();
 
+    const token = cookies.grinderUser.token;
     const formElement = e.target;
 
     if (formElement[0].value === "") {
-      toast.info("Email is Required");
+      toast.info("FullName is Required");
     }
     if (formElement[1].value === "") {
+      toast.info("Email is Required");
+    }
+    if (formElement[2].value === "") {
+      toast.info("Number is Required");
+    }
+    if (formElement[3].value === "") {
       toast.info("Password is Required");
     }
-    if (formElement[1].value === "" || formElement[0].value === "") {
+    if (
+      formElement[1].value === "" ||
+      formElement[0].value === "" ||
+      formElement[3].value === "" ||
+      formElement[2].value === ""
+    ) {
       return;
     }
-
+    setLoading(true);
     const data = {
-      email: formElement[0].value,
-      password: formElement[1].value,
+      fullName: formElement[0].value,
+      email: formElement[1].value,
+      number: formElement[2].value,
+      password: formElement[3].value,
     };
 
     // axios POST request
     const options = {
-      url: `${apiUrl}/auth/user/register`,
+      // url: `http://localhost:5000/api/auth/admin/register/${token}`,
+      url: `${apiUrl}/auth/admin/register/${token}`,
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -43,15 +60,18 @@ function UserRegistrationForm() {
 
     axios(options)
       .then((response) => {
-        console.log(response.data);
+        setLoading(false);
+        // console.log(response.data);
         toast.success("Registration Successful");
-        navigate("/login?as=user");
+        // navigate("/login?as=user");
       })
       .catch((error) => {
-        if (error.response.status === 400) {
-          return toast.error(error.response.data.message);
-        }
+        setLoading(false);
+        // if (error.response.status === 400) {
         toast.error(error.message);
+        toast.error(error.response.data.message);
+        // return
+        // }
       });
 
     // const rawResponse = await fetch(apiUrl, {
@@ -68,11 +88,17 @@ function UserRegistrationForm() {
   }
   return (
     <form
-      className="form-layout px-5"
+      className="form-layout px-2"
       onSubmit={(e) => registerUserFunction(e)}
     >
-      <h3 className="login-name">Register User</h3>
+      <h3 className="login-name">Register Admin</h3>
       <div className="">
+        {/* <label htmlFor="exampleInputEmail1" className="form-label">
+      
+        </label> */}
+        <input type="text" className="form-control" placeholder="Fullname" />
+      </div>
+      <div className="mt-3">
         {/* <label htmlFor="exampleInputEmail1" className="form-label">
       
         </label> */}
@@ -81,6 +107,12 @@ function UserRegistrationForm() {
           className="form-control"
           placeholder="Email address"
         />
+      </div>
+      <div className="mt-3">
+        {/* <label htmlFor="exampleInputEmail1" className="form-label">
+      
+        </label> */}
+        <input type="number" className="form-control" placeholder="Number" />
       </div>
 
       <div className="mt-3">
@@ -101,27 +133,8 @@ function UserRegistrationForm() {
       >
         {!loading ? <> Submit</> : <>Loading...</>}
       </button>
-      <div className="form-text mt-3">
-        <div>
-          have an account? <br />
-          <div className="d-flex justify-content-around mt-3 flex-colum n">
-            <Link to={"/login?as=user"} className="btn btn-outline-primary">
-              Login User
-            </Link>{" "}
-            <span className="my-auto">OR</span>
-            <Link
-              to={"/register?as=artisan"}
-              className="btn btn-outline-primary"
-            >
-              Register Artisan
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      <SocialLogin />
     </form>
   );
 }
 
-export default UserRegistrationForm;
+export default AdminRegistrationForm;
