@@ -1,14 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Nav.scss";
-<<<<<<< HEAD
 import navImage from "../../assets/images/grinders.png";
-import { BsCaretDownFill, BsHouse } from "react-icons/bs";
-=======
 import { BsCaretDownFill, BsHeart, BsHouse } from "react-icons/bs";
->>>>>>> 1764e2b919ea6704b3e579ebb4e5388e2772ef3b
 import { UserContext } from "../../context/UserContext";
-import navImage from "../../assets/images/grinders.png";
 import {
   BsArrowLeftSquareFill,
   BsArrowRightSquareFill,
