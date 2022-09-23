@@ -28,9 +28,9 @@ function Search({ setArtisans, setPageLoading, apiUrl }) {
 
   // }
   let filterSearch = {
-    search: formService,
-    state: formLocationCity,
-    city: formLocationState,
+    search: formService.toLowerCase().trim(),
+    state: formLocationCity.toLowerCase().trim(),
+    city: formLocationState.toLowerCase().trim(),
   };
   // Example POST method implementation:
   async function handelSearch(url = `${apiUrl}/search`) {
