@@ -3,6 +3,8 @@ import { useCookies } from "react-cookie";
 import { UserContext } from "../../context/UserContext";
 import "./VerifyUserPage.scss";
 import axios from "axios";
+import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
+import { FaExclamation } from "react-icons/fa";
 
 function VerifyUserPage() {
   const [pageLoading, setPageLoading] = useState(true);
@@ -11,7 +13,7 @@ function VerifyUserPage() {
   useEffect(() => {
     getArtisans();
   }, []);
-  const { apiUrl, decodeDate } = useContext(UserContext);
+  const { apiUrl, decodeDate, checkVerifiedFunction } = useContext(UserContext);
   async function getArtisans() {
     const { token } = cookies.grinderUser;
     try {
@@ -57,6 +59,7 @@ function VerifyUserPage() {
               <th scope="col">Full name</th>
               <th scope="col">Phone number</th>
               <th scope="col">Email</th>
+              <th scope="col">Service</th>
               <th scope="col">NIN</th>
               <th scope="col">
                 Location <br /> (city, state)
@@ -81,10 +84,11 @@ function VerifyUserPage() {
                       freeAccount,
                       locationState,
                       locationCity,
-                      status,
                       fullName,
                       email,
+                      email_verified,
                       phoneNumber,
+                      service,
                       nin,
                       joinDate,
                     } = artisan;
@@ -92,8 +96,16 @@ function VerifyUserPage() {
                       <tr key={_id}>
                         <th scope="row">{i + 1}</th>
                         <td>{fullName}</td>
-                        <td>{email}</td>
-                        <td>{phoneNumber}</td>
+                        <td>+234{phoneNumber}</td>
+                        <td>
+                          <div className="check-verify-div">
+                            <div className="check-verify-icon">
+                              {checkVerifiedFunction(email_verified)}
+                            </div>
+                            {email}
+                          </div>
+                        </td>
+                        <td>{service}</td>
                         <td>{nin ? nin : "-"}</td>
                         <td>
                           {locationCity}, {locationState}
