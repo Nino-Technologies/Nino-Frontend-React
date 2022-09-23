@@ -1,10 +1,9 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
-import { FaExclamation, FaInfo, FaInfoCircle } from "react-icons/fa";
+import { FaInfoCircle } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 
 function HomePage() {
@@ -16,21 +15,22 @@ function HomePage() {
     pageLoading,
     decodeDate,
     getNotification,
+    checkVerifiedFunction,
   } = useContext(UserContext);
-  function checkVerified(verify) {
-    if (verify) {
-      return <VerifiedBadge />;
-    }
-    return <FaExclamation className="text-danger" />;
-  }
 
   useEffect(() => {
     getNotification();
   }, []);
   useEffect(() => {
     if (!userProfile.email_verified) {
-      //  CLike the model button with js
-      window.document.getElementById("open_profile_completeness_modal").click();
+      if (userProfile.role === 3) {
+        setProfileProgress(100);
+      } else {
+        //  CLike the model button with js
+        window.document
+          .getElementById("open_profile_completeness_modal")
+          .click();
+      }
     }
   }, []);
   return (
@@ -51,7 +51,12 @@ function HomePage() {
         modalId={"profile_completeness_modal"}
       >
         Your profile is not completed <br />
-        Update Profile to get our top pro artisans
+        Update Profile{" "}
+        {userProfile.role === 0 ? (
+          <>to get our top pro artisans</>
+        ) : (
+          <>to become a verified artisan</>
+        )}
         <br />{" "}
         <Link
           onClick={() => {
@@ -109,8 +114,8 @@ function HomePage() {
           <div className="col-sm-6">{/* just for the col-6 Space */}</div>
           <div className="col-sm-6">
             <div className="card mx-2 mt-2">
+              <h5 className="card-header tw-1">Profile Completeness</h5>
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title tw-1">Profile Completeness</h5>
                 <p className="card-text">
                   Update Profile to get our top pro artisans
                 </p>
@@ -127,7 +132,11 @@ function HomePage() {
                   to="/dashboard/profile"
                   className="btn btn-primary mt-2 ms-auto"
                 >
-                  Update Profile
+                  {userProfile.role !== 3 ? (
+                    <>Update Profile</>
+                  ) : (
+                    <>View Profile</>
+                  )}
                 </Link>
               </div>
             </div>
@@ -182,35 +191,35 @@ function HomePage() {
               <div className="card-body d-flex flex-column">
                 <ul className="nav">
                   <li className="achievements-div my-1 w-100">
-                    {checkVerified(false)}
+                    {checkVerifiedFunction(false)}
                     <div className="text ms-2">
                       <b>Profile Completeness</b>
                       <>time</>
                     </div>
                   </li>
                   <li className="achievements-div my-1 w-100">
-                    {checkVerified(userProfile.email_verified)}
+                    {checkVerifiedFunction(userProfile.email_verified)}
                     <div className="text ms-2">
                       <b>email_verified</b>
                       <>time</>
                     </div>
                   </li>
                   <li className="achievements-div my-1 w-100">
-                    {checkVerified(userProfile.licensed)}
+                    {checkVerifiedFunction(userProfile.licensed)}
                     <div className="text ms-2">
                       <b>Licensed</b>
                       <>time</>
                     </div>
                   </li>
                   <li className="achievements-div my-1 w-100">
-                    {checkVerified(userProfile.backgroundChecked)}
+                    {checkVerifiedFunction(userProfile.backgroundChecked)}
                     <div className="text ms-2">
                       <b>background Checked</b>
                       <>time</>
                     </div>
                   </li>
                   <li className="achievements-div my-1 w-100">
-                    {checkVerified(userProfile.topPro)}
+                    {checkVerifiedFunction(userProfile.topPro)}
                     <div className="text ms-2">
                       <b>Top Pro</b>
                       <>time</>

@@ -11,7 +11,7 @@ function UsersPage() {
   useEffect(() => {
     getUsers();
   }, []);
-  const { apiUrl, decodeDate } = useContext(UserContext);
+  const { apiUrl, decodeDate, checkVerifiedFunction } = useContext(UserContext);
   async function getUsers() {
     const { token } = cookies.grinderUser;
     try {
@@ -71,13 +71,26 @@ function UsersPage() {
               ) : (
                 <tbody>
                   {users.map((user, i) => {
-                    const { _id, fullName, email, phoneNumber, joinDate } =
-                      user;
+                    const {
+                      _id,
+                      fullName,
+                      email,
+                      phoneNumber,
+                      joinDate,
+                      email_verified,
+                    } = user;
                     return (
                       <tr key={_id}>
                         <th scope="row">{i + 1}</th>
                         <td>{fullName ? fullName : "-"}</td>
-                        <td>{email}</td>
+                        <td>
+                          <div className="check-verify-div">
+                            <div className="check-verify-icon">
+                              {checkVerifiedFunction(email_verified)}
+                            </div>
+                            {email}
+                          </div>
+                        </td>
                         <td>{phoneNumber ? phoneNumber : "-"}</td>
                         <td>{decodeDate(joinDate)[0]}</td>
                         <td>
