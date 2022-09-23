@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Nav.scss";
+import navImage from "../../assets/images/grinders.png";
 import { BsCaretDownFill, BsHeart, BsHouse } from "react-icons/bs";
 import { UserContext } from "../../context/UserContext";
 import {
@@ -18,7 +19,7 @@ function Nav() {
     <nav className="navbar navbar-expand-lg navbar-light bg-white">
       <div className="container container-fluid px-4">
         <Link className="navbar-brand" to={"/"}>
-          Grinders
+        <img src={navImage} alt="working-man" className="logo-image" />
         </Link>
         <button
           className="navbar-toggler"
@@ -32,7 +33,7 @@ function Nav() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse text-center" id="navbarNav">
+        <div className="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item effect px-3 ">
               <Link to="/" className="nav-link active" aria-current="page">
