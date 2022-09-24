@@ -1,0 +1,23 @@
+.verify {
+    .form {
+        width:100%;
+        display: flex;
+        justify-content: center;
+        input {
+            width: 70px;
+            height: 70px;
+            font-size: 2em;
+            text-align: center;
+            border-radius: 0px;
+        }
+    }
+    button {
+        margin-left: 5px;
+        height: 40px;
+        width: 90px;
+        border: none;
+        background-color: #003049;
+        color: #ffffff;
+        margin-top: 10px;
+    }
+}
