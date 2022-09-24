@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import Footer from "../../components/Footer/Footer";
 import Nav from "../../components/Nav/Nav";
@@ -6,31 +6,15 @@ import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import Search from "../../components/Search/Search";
 
 import "./ArtisansPage.scss";
-import { UserContext } from "../../context/UserContext";
+// import { UserContext } from "../../context/UserContext";
+import { SearchContext } from "../../context/SearchContext";
 
 function ArtisansPage() {
-  const { apiUrl } = useContext(UserContext);
-  const [pageLoading, setPageLoading] = useState(true);
-  const [artisans, setArtisans] = useState([]);
-
-  async function getArtisans() {
-    setPageLoading(true);
-    fetch(`${apiUrl}/search`, { method: "POST" })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        setArtisans(data);
-        setPageLoading(false);
-        // console.log("data", data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+  const { pageLoading, artisans, getArtisansFunction } =
+    useContext(SearchContext);
 
   useEffect(() => {
-    getArtisans();
+    getArtisansFunction();
   }, []);
 
   return (
@@ -55,9 +39,9 @@ function ArtisansPage() {
       </svg>
 
       <Search
-        setPageLoading={setPageLoading}
-        setArtisans={setArtisans}
-        apiUrl={apiUrl}
+      // setPageLoading={setPageLoading}
+      // setArtisans={setArtisans}
+      // apiUrl={apiUrl}
       />
       {pageLoading ? (
         <div className="container loading">Loading...</div>
