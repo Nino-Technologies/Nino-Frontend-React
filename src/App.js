@@ -21,6 +21,7 @@ import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
+import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage"
 
 function App() {
   // check network
@@ -67,6 +68,7 @@ function App() {
         <Route exact path="/contact-us" element={<ContactUsPage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/register" element={<RegisterPage />} />
+        <Route path="/verify-code" element={<VerifyCodePage />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="home" element={<HomePage />} />
           <Route path="profile" element={<ProfilePage />} />
