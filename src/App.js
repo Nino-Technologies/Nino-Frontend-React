@@ -21,6 +21,10 @@ import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
+import ReactGa from "react-ga";
+
+const TRACKING_ID = "G-C3G25DKRJC";
+ReactGa.initialize(TRACKING_ID);
 
 function App() {
   // check network
