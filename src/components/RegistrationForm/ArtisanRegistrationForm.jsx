@@ -237,7 +237,7 @@ function ArtisanRegistrationForm() {
           Business Information:
           <input
             className="form-control"
-            placeholder="service"
+            placeholder="Service. Eg Tailor, Painter Etc"
             type={"text"}
             onChange={(e) => setService(e.target.value)}
           />
