@@ -6,7 +6,7 @@ import { FaStar } from "react-icons/fa";
 function StarComponent({ rate }) {
   return (
     <>
-      {[...Array(rate)].map((e, i) => (
+      {[...Array(parseInt(rate))].map((e, i) => (
         <span className="star" key={i}>
           <FaStar />
         </span>
