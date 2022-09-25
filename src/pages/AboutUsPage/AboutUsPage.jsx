@@ -33,13 +33,11 @@ function AboutUsPage() {
               <h4 className="sub-head-text">Who we Are</h4>
               <div className="line m-auto mb-4"></div>
               <p className="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Adipisci voluptatem incidunt consequatur in perferendis placeat
-                earum omnis aut neque autem. Culpa illum cumque enim eos velit
-                expedita laudantium eligendi voluptatem. Adipisci voluptatem
-                incidunt consequatur in perferendis placeat earum omnis aut
-                neque autem. Culpa illum cumque enim eos velit expedita
-                laudantium eligendi voluptatem.
+                Grinders is an online community that allows you hire all kind of handy 
+                help you need. We create a link between skilled and reliable Artisans and 
+                their potential client. Creating a trusted and legitimate mobile platform 
+                where local skilled professionals get hired for jobs, get reviews and are 
+                also recommended to other clients.
               </p>
             </div>
           </div>

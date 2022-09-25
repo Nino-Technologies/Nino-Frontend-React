@@ -40,7 +40,7 @@ function SocialLogin() {
     <div className="social-login-div mt-4">
       <div className="divider d-flex flex-col umn justify-content-around">
         <hr className="w-25 my-auto" />
-        Social Auth
+        {/* Login with */}
         <hr className="w-25 my-auto" />
       </div>
       <div className="d-flex justify-content-around mt-2 flex-column flex-md-row">
@@ -48,13 +48,13 @@ function SocialLogin() {
           className="btn btn-primary mx-1 mb-2 mb-md-0"
           onClick={(e) => loginWithFacebook(e)}
         >
-          <FaFacebook /> FaceBook
+          <FaFacebook /> Login with FaceBook
         </button>
         <button
           className="btn btn-primary mx-1 mt-2 mt-md-0"
           onClick={(e) => loginWithGoogle(e)}
         >
-          <FaGoogle /> Google
+          <FaGoogle /> Login with Google
         </button>
       </div>
     </div>

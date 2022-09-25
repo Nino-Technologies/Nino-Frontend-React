@@ -85,7 +85,7 @@ function HomePage() {
         <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
           <span className="my-auto">
             {" "}
-            <FaInfoCircle className="my-auto" /> This Account is on Free trials
+            <FaInfoCircle className="my-auto" /> This account is on free trial (You can only be hired 5 times)
           </span>
           {/* ============================= open Subscription modal button =============================== */}
           <button
