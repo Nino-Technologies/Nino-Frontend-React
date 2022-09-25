@@ -26,6 +26,34 @@
           }
         }
       }
+
+      tbody {
+        tr {
+          td {
+            .check-verify-div {
+              // position: relative;
+              // border: solid;
+              margin-top: auto;
+              display: flex;
+              justify-content: space-between;
+              padding-right: 0;
+              flex-direction: row-reverse;
+              .check-verify-icon {
+                // position: absolute;
+                top: 0;
+                right: 0;
+                font-size: 15px;
+                margin: auto 1px;
+                // border: solid;
+                img {
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -97,7 +97,7 @@ function ArtisanRegistrationForm() {
       locationCity: locationCity,
 
       officeLocation: officeLocation,
-      service: service,
+      service: service.toLowerCase().trim(),
       introduction: introduction,
       email: email,
       password: password,

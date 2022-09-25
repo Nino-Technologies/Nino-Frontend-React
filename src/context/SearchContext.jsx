@@ -1,0 +1,83 @@
+// require("dotenv").config();
+import React, { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
+
+export const SearchContext = createContext();
+
+export function SearchProvider({ children }) {
+  const { apiUrl } = useContext(UserContext);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [artisans, setArtisans] = useState([]);
+
+  const [formService, setFormService] = useState("");
+  const [formLocationCity, setFormLocationCity] = useState("");
+  const [formLocationState, setFormLocationState] = useState("");
+  const navigate = useNavigate();
+  async function getArtisansFunction() {
+    setPageLoading(true);
+    fetch(`${apiUrl}/search`, { method: "POST" })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        setArtisans(data);
+        setPageLoading(false);
+        // console.log("data", data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  let filterSearch = {
+    search: formService.toLowerCase().trim(),
+    state: formLocationCity.toLowerCase().trim(),
+    city: formLocationState.toLowerCase().trim(),
+  };
+  // Example POST method implementation:
+  async function handelSearchFunction(url = `${apiUrl}/search`) {
+    setPageLoading(true);
+    navigate(`/artisans`);
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(filterSearch), // body data type must match "Content-Type" header
+    });
+    const responseData = await response.json(); // parses JSON response into native JavaScript objects
+    setPageLoading(false);
+    setArtisans(responseData);
+    // console.log(responseData);
+    return;
+  }
+
+  return (
+    <SearchContext.Provider
+      value={{
+        pageLoading,
+        artisans,
+        setPageLoading,
+        getArtisansFunction,
+        setArtisans,
+        handelSearchFunction,
+        formService,
+        setFormService,
+        formLocationCity,
+        setFormLocationCity,
+        formLocationState,
+        setFormLocationState,
+      }}
+    >
+      {children}
+    </SearchContext.Provider>
+  );
+}

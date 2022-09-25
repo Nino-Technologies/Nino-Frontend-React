@@ -18,6 +18,9 @@ function ProfilePage() {
     if (role === 1) {
       return "Artisan";
     }
+    if (role === 3) {
+      return "Admin";
+    }
   }
   // const [editProfile, setEditProfile] = useState({
   //   accountInformation: [],

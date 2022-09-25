@@ -51,7 +51,7 @@ function AdminLoginForm() {
 
         setLoggedIn(true);
         const userToken = response.data.token;
-        const userProfile = response.data.user;
+        const userProfile = response.data.admin;
         const cookies = {
           profile: userProfile,
           token: userToken,

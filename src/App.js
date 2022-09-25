@@ -21,7 +21,6 @@ import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
-import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage"
 
 function App() {
   // check network

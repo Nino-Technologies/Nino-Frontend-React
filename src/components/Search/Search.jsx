@@ -1,73 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./Search.scss";
+import { SearchContext } from "../../context/SearchContext";
 
-function Search({ setArtisans, setPageLoading, apiUrl }) {
-  const [formService, setFormService] = useState("");
-  const [formLocationCity, setFormLocationCity] = useState("");
-  const [formLocationState, setFormLocationState] = useState("");
+function Search() {
+  const {
+    handelSearchFunction,
+    formService,
+    setFormService,
+    formLocationCity,
+    setFormLocationCity,
+    formLocationState,
+    setFormLocationState,
+  } = useContext(SearchContext);
 
-  // function handelSearch() {
-
-  //   // console.log("token", decode);
-  // let headers = {
-  //   Accept: "application/json",
-  //   "Content-Type": "application/json",
-  //   Authorization: cromos_user.token,
-  // };
-  // let apiUrl=`http://localhost:5000/api/search`;
-
-  // fetch(apiUrl, { headers })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-
-  // }
-  let filterSearch = {
-    search: formService,
-    state: formLocationCity,
-    city: formLocationState,
-  };
-  // Example POST method implementation:
-  async function handelSearch(url = `${apiUrl}/search`) {
-    setPageLoading(true);
-    // Default options are marked with *
-    const response = await fetch(url, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(filterSearch), // body data type must match "Content-Type" header
-    });
-    const responseData = await response.json(); // parses JSON response into native JavaScript objects
-    setPageLoading(false);
-    setArtisans(responseData);
-    // console.log(responseData);
-    return;
-  }
-
-  // handelSearch("", filterSearch).then(
-  //   (data) => {
-
-  //     // console.log(data); // JSON data parsed by `data.json()` call
-  //   }
-  // );
   return (
     <div className="search-form">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handelSearch();
+          handelSearchFunction();
         }}
       >
         <label>

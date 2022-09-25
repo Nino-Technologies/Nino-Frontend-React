@@ -168,6 +168,7 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
 
   const { logOutFunction } = useContext(UserContext);
   const { role } = userProfile;
+  // console.log(userProfile);
   return (
     <>
       <div

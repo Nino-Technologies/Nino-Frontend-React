@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import moment from "moment";
 import axios from "axios";
+import VerifiedBadge from "../components/verifiedBadge/verifiedBadge";
+import { FaExclamation } from "react-icons/fa";
 
 export const UserContext = createContext();
 
@@ -32,6 +34,12 @@ export function UserProvider({ children }) {
     }
   });
 
+  function checkVerifiedFunction(verify) {
+    if (verify) {
+      return <VerifiedBadge />;
+    }
+    return <FaExclamation className="text-danger" />;
+  }
   async function getNotification() {
     setPageLoading(true);
     const { token } = cookies.grinderUser;
@@ -86,6 +94,7 @@ export function UserProvider({ children }) {
         decodeDate,
         getNotification,
         notification,
+        checkVerifiedFunction,
         pageLoading,
       }}
     >
