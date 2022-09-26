@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { UserContext } from "../../context/UserContext";
 import "./UserPage.scss";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function UsersPage() {
   const [pageLoading, setPageLoading] = useState(true);
@@ -11,11 +12,14 @@ function UsersPage() {
   useEffect(() => {
     getUsers();
   }, []);
-  const { apiUrl, decodeDate, checkVerifiedFunction } = useContext(UserContext);
+  const { apiUrl, decodeDate, checkVerifiedFunction, adminActionFunction } =
+    useContext(UserContext);
+  const { token } = cookies.grinderUser;
   async function getUsers() {
-    const { token } = cookies.grinderUser;
+    setPageLoading(true);
     try {
       const resp = await axios.get(`${apiUrl}/users?role=0`, {
+        // const resp = await axios.get(`http://localhost:5000/api/users?role=0`, {
         headers: {
           authorization: token,
         },
@@ -57,6 +61,8 @@ function UsersPage() {
               <th scope="col">Full name</th>
               <th scope="col">Email</th>
               <th scope="col">Phone number</th>
+              <th scope="col">Account verified</th>
+              <th scope="col">Account Active</th>
               <th scope="col">Date Joined</th>
               <th scope="col">Handle</th>
             </tr>
@@ -78,7 +84,11 @@ function UsersPage() {
                       phoneNumber,
                       joinDate,
                       email_verified,
+                      account_verified,
+                      account_active,
+                      role,
                     } = user;
+                    console.log(account_active);
                     return (
                       <tr key={_id}>
                         <th scope="row">{i + 1}</th>
@@ -92,11 +102,113 @@ function UsersPage() {
                           </div>
                         </td>
                         <td>{phoneNumber ? phoneNumber : "-"}</td>
+                        <td>
+                          {/* {account_verified
+                            ?  */}
+                          {checkVerifiedFunction(account_verified)}
+                          {/* : "-"} */}
+                        </td>
+                        <td>
+                          {/* {account_active
+                            ? */}
+                          {checkVerifiedFunction(account_active)}
+                          {/* : "-"} */}
+                        </td>
                         <td>{decodeDate(joinDate)[0]}</td>
                         <td>
-                          <button className="btn btn-primary mx-auto">
+                          {/* <button className="btn btn-primary mx-auto">
                             Action
-                          </button>
+                          </button> */}
+                          <div class="btn-group" role="group">
+                            <button
+                              id="btnGroupDrop1"
+                              type="button"
+                              class="btn btn-primary btn-sm dropdown-toggle"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              Action
+                            </button>
+                            <ul
+                              class="dropdown-menu"
+                              aria-labelledby="btnGroupDrop1"
+                            >
+                              {account_verified ? (
+                                <>
+                                  <li>
+                                    <a
+                                      class="dropdown-item"
+                                      href="#"
+                                      onClick={() => {
+                                        // console.log("Verify Account: " + _id);
+                                        adminActionFunction(
+                                          "unVerify",
+                                          role,
+                                          _id
+                                        );
+                                      }}
+                                    >
+                                      UnVerify Account
+                                    </a>
+                                  </li>
+                                </>
+                              ) : (
+                                <>
+                                  <li>
+                                    <a
+                                      class="dropdown-item"
+                                      href="#"
+                                      onClick={() => {
+                                        // console.log("Verify Account: " + _id);
+                                        adminActionFunction(
+                                          "verify",
+                                          role,
+                                          _id
+                                        );
+                                      }}
+                                    >
+                                      Verify Account
+                                    </a>
+                                  </li>
+                                </>
+                              )}
+                              {account_active ? (
+                                <>
+                                  <li>
+                                    <a
+                                      class="dropdown-item"
+                                      href="#"
+                                      onClick={() => {
+                                        adminActionFunction("block", role, _id);
+                                      }}
+                                    >
+                                      Block Account
+                                    </a>
+                                  </li>
+                                </>
+                              ) : (
+                                <>
+                                  {" "}
+                                  <li>
+                                    <a
+                                      class="dropdown-item"
+                                      href="#"
+                                      onClick={() => {
+                                        // console.log("Verify Account: " + _id);
+                                        adminActionFunction(
+                                          "activate",
+                                          role,
+                                          _id
+                                        );
+                                      }}
+                                    >
+                                      Activate Account
+                                    </a>
+                                  </li>
+                                </>
+                              )}
+                            </ul>
+                          </div>
                         </td>
                       </tr>
                     );
