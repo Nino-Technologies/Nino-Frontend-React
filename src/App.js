@@ -23,6 +23,7 @@ import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import ReactGa from "react-ga";
 import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage";
+import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -79,7 +80,7 @@ function App() {
           <Route path="notification" element={<NotificationPage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="verify-user" element={<VerifyUserPage />} />
-          <Route path="verify-user" element={<VerifyUserPage />} />
+          <Route path="verify-admins" element={<VerifyAdminsPage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />
           <Route path="saved-artisan" element={<SavedArtisanPage />} />
           <Route path="create-admin" element={<CreateAdminPage />} />
