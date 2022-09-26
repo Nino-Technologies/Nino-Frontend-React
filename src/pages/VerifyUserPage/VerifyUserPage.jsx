@@ -5,6 +5,8 @@ import "./VerifyUserPage.scss";
 import axios from "axios";
 import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
 import { FaExclamation } from "react-icons/fa";
+import { toast } from "react-toastify";
+import AdminAction from "../../components/AdminAction/AdminAction";
 
 function VerifyUserPage() {
   const [pageLoading, setPageLoading] = useState(true);
@@ -14,8 +16,8 @@ function VerifyUserPage() {
     getArtisans();
   }, []);
   const { apiUrl, decodeDate, checkVerifiedFunction } = useContext(UserContext);
+  const { token } = cookies.grinderUser;
   async function getArtisans() {
-    const { token } = cookies.grinderUser;
     try {
       const resp = await axios.get(`${apiUrl}/users?role=1`, {
         // const resp = await axios.get(`http://localhost:5000/users?role=1`, {
@@ -66,6 +68,8 @@ function VerifyUserPage() {
                 Location <br /> (city, state)
               </th>
               <th scope="col">Subscription</th>
+              <th scope="col">Account verified</th>
+              <th scope="col">Account Active</th>
               <th scope="col">Date Joined</th>
               <th scope="col">Handle</th>
             </tr>
@@ -91,6 +95,9 @@ function VerifyUserPage() {
                       phoneNumber,
                       service,
                       nin,
+                      account_verified,
+                      account_active,
+                      role,
                       joinDate,
                     } = artisan;
                     return (
@@ -112,11 +119,17 @@ function VerifyUserPage() {
                           {locationCity}, {locationState}
                         </td>
                         <td>{freeAccount ? "none" : "paid"}</td>
+                        <td>{checkVerifiedFunction(account_verified)}</td>
+                        <td>{checkVerifiedFunction(account_active)}</td>
                         <td>{decodeDate(joinDate)[0]}</td>
                         <td>
-                          <button className="btn btn-primary mx-auto">
-                            Action
-                          </button>
+                          <AdminAction
+                            role={role}
+                            _id={_id}
+                            reLoadListFunction={getArtisans}
+                            account_verified={account_verified}
+                            account_active={account_active}
+                          />
                         </td>
                       </tr>
                     );
