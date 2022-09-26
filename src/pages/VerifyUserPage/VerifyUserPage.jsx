@@ -18,6 +18,7 @@ function VerifyUserPage() {
     const { token } = cookies.grinderUser;
     try {
       const resp = await axios.get(`${apiUrl}/users?role=1`, {
+        // const resp = await axios.get(`http://localhost:5000/users?role=1`, {
         headers: {
           authorization: token,
         },
