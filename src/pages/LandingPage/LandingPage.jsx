@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import heroImage from "../../assets/images/undraw_coffee_break_h3uu.svg";
 import smallHeroImage from "../../assets/images/hero-section-image-design-small.png";
 import "./LandingPage.scss";
 import Search from "../../components/Search/Search";
 import Nav from "../../components/Nav/Nav";
 import { Link } from "react-router-dom";
+import ReactGa from "react-ga";
 
 function LandingPage() {
+  useEffect(() => {
+    ReactGa.pageview(window.location.pathname);
+  }, []);
+
   return (
     <>
       <Nav />
