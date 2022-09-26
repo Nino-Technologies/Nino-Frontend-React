@@ -15,7 +15,7 @@ function ArtisansPage() {
     useContext(SearchContext);
 
   useEffect(() => {
-    getArtisans();
+    getArtisansFunction();
   }, []);
   useEffect(() => {
     ReactGa.pageview(window.location.pathname);

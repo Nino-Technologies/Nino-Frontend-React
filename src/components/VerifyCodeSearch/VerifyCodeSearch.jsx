@@ -1,4 +1,4 @@
-import React, { useContext, useState }, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import "./VerifyCodeSearch.scss";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -6,10 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import VerifyCodeFail from "../../components/VerifyCodeFail/VerifyCodeFail";
 import VerifyCodeSuccess from "../../components/VerifyCodeSuccess/VerifyCodeSuccess";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
+// import { toast } from "react-toastify";
 
 function VerifyCodeSearch() {
   const [loading, setLoading] = useState(false);
@@ -90,4 +87,3 @@ function VerifyCodeSearch() {
 }
 
 export default VerifyCodeSearch;
-
