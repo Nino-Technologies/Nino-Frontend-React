@@ -21,6 +21,11 @@ import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
+import ReactGa from "react-ga";
+import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage";
+
+const TRACKING_ID = "G-C3G25DKRJC";
+ReactGa.initialize(TRACKING_ID);
 
 function App() {
   // check network
@@ -58,7 +63,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/about-us" element={<AboutUsPage />} />
-        <Route exact path="/artisans/" element={<ArtisansPage />} />
+        <Route exact path="/artisans" element={<ArtisansPage />} />
         <Route
           exact
           path="/artisans-profile/:id"
