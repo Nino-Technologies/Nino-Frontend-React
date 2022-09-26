@@ -45,7 +45,8 @@ function UserRegistrationForm() {
       .then((response) => {
         console.log(response.data);
         toast.success("Registration Successful");
-        navigate("/login?as=user");
+        // navigate("/login?as=user");
+        navigate("/verify-code");
       })
       .catch((error) => {
         if (error.response.status === 400) {
