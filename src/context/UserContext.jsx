@@ -6,6 +6,7 @@ import moment from "moment";
 import axios from "axios";
 import VerifiedBadge from "../components/verifiedBadge/verifiedBadge";
 import { FaExclamation } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export const UserContext = createContext();
 
@@ -15,8 +16,8 @@ export function UserProvider({ children }) {
   const [userProfile, setUserProfile] = useState([]);
   const [notification, setNotification] = useState([]);
   const navigate = useNavigate();
-  const apiUrl = "https://nino-technologies.herokuapp.com/api";
-  // const apiUrl = "http://localhost:5000/api";
+  // const apiUrl = "https://nino-technologies.herokuapp.com/api";
+  const apiUrl = "http://localhost:5000/api";
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
@@ -40,9 +41,9 @@ export function UserProvider({ children }) {
     }
     return <FaExclamation className="text-danger" />;
   }
+  const { token } = cookies.grinderUser;
   async function getNotification() {
     setPageLoading(true);
-    const { token } = cookies.grinderUser;
     try {
       // const resp = await axios.get(`http://localhost:5000/api/notification`, {
       const resp = await axios.get(`${apiUrl}/notification`, {
@@ -83,50 +84,6 @@ export function UserProvider({ children }) {
     return [dateArray[0], timeOnly[0]];
   }
 
-  async function adminActionFunction(action, role, id) {
-    if (!action || action === "") {
-      return toast.info("Require action");
-    }
-    if (role === "") {
-      return toast.info("Require role");
-    }
-    if (!id || id === "") {
-      return toast.info("Require id");
-    }
-    // console.log(adminToken);
-    console.log(action, role, id);
-
-    const data = {
-      id: id,
-    };
-    // axios POST request
-    const options = {
-      // url: `http://localhost:5000/api/adminAction/${action}/${role}`,
-      url: `${apiUrl}/adminAction/${action}/${role}`,
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-        Authorization: token,
-      },
-      data: data,
-    };
-
-    axios(options)
-      .then((response) => {
-        getUsers();
-        toast.success(`User is now ${action}`);
-      })
-      .catch((error) => {
-        // setLoading(false);
-        // console.log(error.message);
-        if (error.response.status || error.response.status === 400) {
-          return toast.error(error.response.data.message);
-        }
-        toast.error(error.message);
-      });
-  }
-
   return (
     <UserContext.Provider
       value={{
@@ -141,7 +98,6 @@ export function UserProvider({ children }) {
         notification,
         checkVerifiedFunction,
         pageLoading,
-        adminActionFunction,
       }}
     >
       {children}
