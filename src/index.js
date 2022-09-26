@@ -8,6 +8,7 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import { UserProvider } from "./context/UserContext";
 import "react-toastify/dist/ReactToastify.css";
 import { CookiesProvider } from "react-cookie";
+import { SearchProvider } from "./context/SearchContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +16,9 @@ root.render(
     <CookiesProvider>
       <BrowserRouter>
         <UserProvider>
-          <App />
+          <SearchProvider>
+            <App />
+          </SearchProvider>
         </UserProvider>
       </BrowserRouter>
     </CookiesProvider>

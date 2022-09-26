@@ -1,7 +1,8 @@
 // require("dotenv").config();
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
+import ReactGa from "react-ga";
 
 export const SearchContext = createContext();
 
@@ -14,15 +15,32 @@ export function SearchProvider({ children }) {
   const [formLocationCity, setFormLocationCity] = useState("");
   const [formLocationState, setFormLocationState] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getArtisansFunction();
+  }, []);
+
   async function getArtisansFunction() {
     setPageLoading(true);
+
     fetch(`${apiUrl}/search`, { method: "POST" })
+      // fetch(`http://localhost:5000/api/search`, { method: "POST" })
       .then(function (response) {
         return response.json();
       })
       .then(function (data) {
         setArtisans(data);
         setPageLoading(false);
+        ReactGa.event({
+          /** Typically the object that was interacted with (e.g. 'Video') */
+          category: "Artisans-search",
+          /** The type of interaction (e.g. 'play') */
+          action: "search",
+          /** Useful for categorizing events (e.g. 'Fall Campaign') */
+          label: data.service,
+          /** A numeric value associated with the event (e.g. 42) */
+          value: data.length,
+        });
         // console.log("data", data);
       })
       .catch(function (error) {
@@ -36,6 +54,9 @@ export function SearchProvider({ children }) {
     city: formLocationState.toLowerCase().trim(),
   };
   // Example POST method implementation:
+  // async function handelSearchFunction(
+  //   url = `http://localhost:5000/api/search`
+  // ) {
   async function handelSearchFunction(url = `${apiUrl}/search`) {
     setPageLoading(true);
     navigate(`/artisans`);
