@@ -76,7 +76,7 @@ function ContactUsPage() {
                       for="exampleFormControlTextarea1"
                       className="form-label"
                     >
-                      Example textarea
+                      Leave a Message
                     </label>
                     <textarea
                       className="form-control"

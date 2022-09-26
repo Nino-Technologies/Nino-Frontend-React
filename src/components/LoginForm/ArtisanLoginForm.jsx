@@ -109,7 +109,7 @@ function ArtisanLoginForm() {
       </button>
       <div className="form-text mt-3">
         <div>
-          Don't have an account? <br />
+          {/* Don't have an account? <br /> */}
           <div className="d-flex justify-content-around mt-3">
             <Link
               to={"/register?as=artisan"}

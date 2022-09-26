@@ -8,4 +8,11 @@
             font-weight: 700;
         }
     }
+    @media only screen and (max-width: 480px) {
+        .search-text {
+            .verify-name {
+                font-weight: 600;
+            }
+        }
+    }
 }
