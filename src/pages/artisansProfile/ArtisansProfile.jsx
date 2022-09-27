@@ -9,7 +9,12 @@ import "./ArtisansProfile.scss";
 import ShareButton from "../../components/ShareButton/ShareButton";
 import SaveButton from "../../components/SaveButton/SaveButton";
 import { UserContext } from "../../context/UserContext";
-import { FaMapMarked, FaTrophy, FaUserCheck } from "react-icons/fa";
+import {
+  FaMapMarked,
+  FaShieldAlt,
+  FaTrophy,
+  FaUserCheck,
+} from "react-icons/fa";
 
 function ArtisansProfile() {
   const { id } = useParams();
@@ -109,27 +114,30 @@ function ArtisansProfile() {
                       </span>
                       {artisan.locationCity},{artisan.locationState}
                     </li>
-
-                    <li v-if="artisanProfile.backgroundChecked">
-                      <span className="icon mx-2">
-                        <FaUserCheck />
-                      </span>
-                      Background checked
-                    </li>
-
-                    <li v-if="artisanProfile.discountsAvailable">
-                      <span className="icon mx-2">
-                        <FaTrophy />
-                      </span>
-                      Verified business
-                    </li>
-
-                    <li v-if="artisanProfile.licensed">
-                      <span className="icon mx-2">
-                        <font-awesome-icon icon="fas fa-shield-halved" />{" "}
-                      </span>
-                      License verified
-                    </li>
+                    {artisan.backgroundChecked ? (
+                      <li>
+                        <span className="icon mx-2">
+                          <FaUserCheck />
+                        </span>
+                        Background checked
+                      </li>
+                    ) : null}
+                    {artisan.discountsAvailable ? (
+                      <li>
+                        <span className="icon mx-2">
+                          <FaTrophy />
+                        </span>
+                        Verified business
+                      </li>
+                    ) : null}
+                    {artisan.licensed ? (
+                      <li>
+                        <span className="icon mx-2">
+                          <FaShieldAlt />
+                        </span>
+                        License verified
+                      </li>
+                    ) : null}
 
                     <li>
                       <span className="icon mx-2">
