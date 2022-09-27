@@ -16,7 +16,7 @@ function UsersPage() {
   const { apiUrl, decodeDate, checkVerifiedFunction } = useContext(UserContext);
   const { token } = cookies.grinderUser;
   async function getUsers() {
-    setPageLoading(true);
+    // setPageLoading(true);
     try {
       const resp = await axios.get(`${apiUrl}/users?role=0`, {
         // const resp = await axios.get(`http://localhost:5000/api/users?role=0`, {
