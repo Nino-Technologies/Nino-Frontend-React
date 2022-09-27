@@ -4,6 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import Nav from "../../components/Nav/Nav";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import Search from "../../components/Search/Search";
+import ReactGa from "react-ga";
 
 import "./ArtisansPage.scss";
 // import { UserContext } from "../../context/UserContext";
@@ -15,6 +16,9 @@ function ArtisansPage() {
 
   useEffect(() => {
     getArtisansFunction();
+  }, []);
+  useEffect(() => {
+    ReactGa.pageview(window.location.pathname);
   }, []);
 
   return (

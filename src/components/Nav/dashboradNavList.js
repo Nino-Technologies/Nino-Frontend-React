@@ -51,6 +51,12 @@ export const userNavLinkObject = [
     userPrivilege: 3,
   },
   {
+    name: "Admins",
+    icon: <FaUserCheck />,
+    path: "/dashboard/verify-admins",
+    userPrivilege: 3,
+  },
+  {
     name: "Payments",
     icon: <FaMoneyCheck />,
     path: "/dashboard/payments",

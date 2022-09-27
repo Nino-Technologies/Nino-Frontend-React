@@ -9,6 +9,7 @@ import "./ArtisansProfile.scss";
 import ShareButton from "../../components/ShareButton/ShareButton";
 import SaveButton from "../../components/SaveButton/SaveButton";
 import { UserContext } from "../../context/UserContext";
+import { FaMapMarked, FaTrophy, FaUserCheck } from "react-icons/fa";
 
 function ArtisansProfile() {
   const { id } = useParams();
@@ -70,7 +71,7 @@ function ArtisansProfile() {
                 </div>
                 <div className="name-div">
                   <h1 className="m-0">{artisan.fullName}</h1>
-                  <p className="m-0">
+                  <p className="m-0 nav flex-row">
                     {/* <!-- Exceptional 5.0 --> */}
 
                     <StarComponent rate="5" />
@@ -97,28 +98,28 @@ function ArtisansProfile() {
                   <ul>
                     <li>
                       <span className="icon mx-2">
-                        <font-awesome-icon icon="fas fa-trophy" />
+                        <FaTrophy />
                       </span>
                       Hired {artisan.hired} times
                     </li>
 
                     <li>
                       <span className="icon mx-2">
-                        <font-awesome-icon icon="fas fa-location-dot" />
+                        <FaMapMarked />
                       </span>
                       {artisan.locationCity},{artisan.locationState}
                     </li>
 
                     <li v-if="artisanProfile.backgroundChecked">
                       <span className="icon mx-2">
-                        <font-awesome-icon icon="fas fa-user-check" />
+                        <FaUserCheck />
                       </span>
                       Background checked
                     </li>
 
                     <li v-if="artisanProfile.discountsAvailable">
                       <span className="icon mx-2">
-                        <font-awesome-icon icon="fas fa-trophy" />{" "}
+                        <FaTrophy />
                       </span>
                       Verified business
                     </li>
@@ -137,18 +138,18 @@ function ArtisansProfile() {
                       {artisan.employees} employees
                     </li>
 
-                    <li>
+                    {/* <li>
                       <span className="icon mx-2">
                         <font-awesome-icon icon="fas fa-clock" />{" "}
                       </span>
                       31 years in business
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
 
               <div className="contact-div">
-                <ChatPopUp />
+                <ChatPopUp artisan={artisan} />
 
                 <button className="contact-button">
                   <font-awesome-icon icon="fas fa-phone" />
@@ -197,10 +198,8 @@ function ArtisansProfile() {
                 quality, and responsiveness.
                 <div>
                   <span>
-                    <StarComponent rate="5" />
-                    34 reviews
+                    <StarComponent rate={5} />
                   </span>
-                  5 91% 4 3% 3 0% 2 3% 1 3%
                 </div>
                 Your trust means everything to us. Learn about our review
                 guidelines.
@@ -220,7 +219,7 @@ function ArtisansProfile() {
                       />
                       <div className="">
                         <h4>{review.fullName}</h4>
-                        <StarComponent rate="4" />
+                        <StarComponent rate="5" />
                         {review.hiredOnThumbtack ? (
                           <span>Hired on Thumbtack</span>
                         ) : null}
@@ -242,7 +241,7 @@ function ArtisansProfile() {
               </div>
 
               <hr />
-
+              {/* 
               <div className="credentials">
                 <h4>Credentials</h4>
                 <span v-if="artisanProfile.backgroundChecked">
@@ -259,7 +258,7 @@ function ArtisansProfile() {
               <hr />
               <div className="faqs">
                 <h4>FAQs</h4>
-              </div>
+              </div> */}
             </div>
             {/* main area */}
 

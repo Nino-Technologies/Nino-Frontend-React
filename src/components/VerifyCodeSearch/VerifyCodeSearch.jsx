@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import "./VerifyCodeSearch.scss";
-import VerifyCodeFail from "../../components/VerifyCodeFail/VerifyCodeFail";
-import VerifyCodeSuccess from "../../components/VerifyCodeSuccess/VerifyCodeSuccess";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import VerifyCodeFail from "../../components/VerifyCodeFail/VerifyCodeFail";
+import VerifyCodeSuccess from "../../components/VerifyCodeSuccess/VerifyCodeSuccess";
+// import { toast } from "react-toastify";
 
 function VerifyCodeSearch() {
   const [loading, setLoading] = useState(false);
@@ -72,13 +73,11 @@ function VerifyCodeSearch() {
         }}
       >
         <div className="form">
-            <input type="number" className="form-control search mx-3 py-3"/>
-            <input type="number" className="form-control search mx-3 py-3"/>
-            <input type="number" className="form-control search mx-3 py-3"/>
-            <input type="number" className="form-control search mx-3 py-3"/>          
-         </div>   
-         <VerifyCodeFail />
-         <VerifyCodeSuccess />
+          <input type="number" className="form-control" />
+          <input type="number" className="form-control" />
+          <input type="number" className="form-control" />
+          <input type="number" className="form-control" />
+        </div>
         <button type="submit">Verify</button>
         <br />
         <button type="button">Resend code</button>

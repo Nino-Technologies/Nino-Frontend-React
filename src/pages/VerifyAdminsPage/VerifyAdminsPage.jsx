@@ -1,32 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { UserContext } from "../../context/UserContext";
-import "./UserPage.scss";
+import "./VerifyAdminsPage.scss";
 import axios from "axios";
 import { toast } from "react-toastify";
 import AdminAction from "../../components/AdminAction/AdminAction";
 
-function UsersPage() {
+function VerifyAdminsPage() {
   const [pageLoading, setPageLoading] = useState(true);
-  const [users, setUsers] = useState([]);
+  const [admins, setAdmins] = useState([]);
   const [cookies] = useCookies();
   useEffect(() => {
-    getUsers();
+    getAdmins();
   }, []);
   const { apiUrl, decodeDate, checkVerifiedFunction } = useContext(UserContext);
   const { token } = cookies.grinderUser;
-  async function getUsers() {
+  async function getAdmins() {
     setPageLoading(true);
     try {
-      const resp = await axios.get(`${apiUrl}/users?role=0`, {
-        // const resp = await axios.get(`http://localhost:5000/api/users?role=0`, {
+      const resp = await axios.get(`${apiUrl}/users?role=3`, {
+        // const resp = await axios.get(`http://localhost:5000/api/users?role=3`, {
         headers: {
           authorization: token,
         },
       });
       setPageLoading(false);
       // console.log(resp.data);
-      setUsers(resp.data.data.reverse());
+      setAdmins(resp.data.data.reverse());
     } catch (err) {
       // Handle Error Here
       console.error(err);
@@ -36,7 +36,7 @@ function UsersPage() {
   return (
     <div className="VerifyUserPage">
       <div className="header d-flex flex-md-row flex-column justify-content-between">
-        <h3>Verify Accounts</h3>
+        <h3>Verify Admins Accounts</h3>
         <input
           type="text"
           className="form-control me-4"
@@ -45,7 +45,7 @@ function UsersPage() {
         />
       </div>
       <hr />
-      <div className="table-responsive-sm">
+      <div className="table-responsive-sm" style={{ minHeight: "200px" }}>
         <table className="table">
           <thead className="thead-dark">
             <tr>
@@ -63,6 +63,7 @@ function UsersPage() {
               <th scope="col">Phone number</th>
               <th scope="col">Account verified</th>
               <th scope="col">Account Active</th>
+              <th scope="col">Location</th>
               <th scope="col">Date Joined</th>
               <th scope="col">Handle</th>
             </tr>
@@ -72,20 +73,21 @@ function UsersPage() {
           ) : (
             <>
               {" "}
-              {users.length === 0 ? (
+              {admins.length === 0 ? (
                 <div className="loading">No user record Found</div>
               ) : (
                 <tbody>
-                  {users.map((user, i) => {
+                  {admins.map((user, i) => {
                     const {
                       _id,
                       fullName,
+                      location,
                       email,
-                      phoneNumber,
                       joinDate,
                       email_verified,
                       account_verified,
                       account_active,
+                      number,
                       role,
                     } = user;
                     console.log(account_active);
@@ -101,7 +103,7 @@ function UsersPage() {
                             {email}
                           </div>
                         </td>
-                        <td>{phoneNumber ? phoneNumber : "-"}</td>
+                        <td>{number ? number : "-"}</td>
                         <td>
                           {/* {account_verified
                             ?  */}
@@ -114,12 +116,13 @@ function UsersPage() {
                           {checkVerifiedFunction(account_active)}
                           {/* : "-"} */}
                         </td>
+                        <td>{location ? location : "-"}</td>
                         <td>{decodeDate(joinDate)[0]}</td>
                         <td>
                           <AdminAction
                             role={role}
                             _id={_id}
-                            reLoadListFunction={getUsers}
+                            reLoadListFunction={getAdmins}
                             account_verified={account_verified}
                             account_active={account_active}
                           />
@@ -137,4 +140,4 @@ function UsersPage() {
   );
 }
 
-export default UsersPage;
+export default VerifyAdminsPage;
