@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
@@ -11,6 +11,7 @@ function AdminAction({
   account_verified,
   account_active,
 }) {
+  const [actionLoading, setActionLoading] = useState(false);
   const [cookies] = useCookies();
   const { apiUrl } = useContext(UserContext);
 
@@ -27,7 +28,9 @@ function AdminAction({
       return toast.info("Require id");
     }
     // console.log(adminToken);
-    console.log(action, role, id);
+    // console.log(action, role, id);
+
+    setActionLoading(true);
 
     const data = {
       id: id,
@@ -49,9 +52,10 @@ function AdminAction({
       .then((response) => {
         reLoadListFunction();
         toast.success(`User is now ${action}`);
+        setActionLoading(false);
       })
       .catch((error) => {
-        // setLoading(false);
+        setActionLoading(false);
         // console.log(error.message);
         if (error.response.status || error.response.status === 400) {
           return toast.error(error.response.data.message);
@@ -69,68 +73,53 @@ function AdminAction({
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        Action
+        {actionLoading ? "Loading..." : "Action"}
       </button>
       <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
         {account_verified ? (
           <>
-            <li>
-              <a
-                class="dropdown-item"
-                href="#"
-                onClick={() => {
-                  // console.log("Verify Account: " + _id);
-                  adminActionFunction("unVerify", role, _id);
-                }}
-              >
-                UnVerify Account
-              </a>
+            <li
+              class="dropdown-item"
+              onClick={() => {
+                adminActionFunction("unVerify", role, _id);
+              }}
+            >
+              UnVerify Account
             </li>
           </>
         ) : (
           <>
-            <li>
-              <a
-                class="dropdown-item"
-                href="#"
-                onClick={() => {
-                  // console.log("Verify Account: " + _id);
-                  adminActionFunction("verify", role, _id);
-                }}
-              >
-                Verify Account
-              </a>
+            <li
+              class="dropdown-item"
+              onClick={() => {
+                adminActionFunction("verify", role, _id);
+              }}
+            >
+              Verify Account
             </li>
           </>
         )}
         {account_active ? (
           <>
-            <li>
-              <a
-                class="dropdown-item"
-                href="#"
-                onClick={() => {
-                  adminActionFunction("block", role, _id);
-                }}
-              >
-                Block Account
-              </a>
+            <li
+              class="dropdown-item"
+              onClick={() => {
+                adminActionFunction("block", role, _id);
+              }}
+            >
+              Block Account
             </li>
           </>
         ) : (
           <>
             {" "}
-            <li>
-              <a
-                class="dropdown-item"
-                href="#"
-                onClick={() => {
-                  // console.log("Verify Account: " + _id);
-                  adminActionFunction("activate", role, _id);
-                }}
-              >
-                Activate Account
-              </a>
+            <li
+              class="dropdown-item"
+              onClick={() => {
+                adminActionFunction("activate", role, _id);
+              }}
+            >
+              Activate Account
             </li>
           </>
         )}

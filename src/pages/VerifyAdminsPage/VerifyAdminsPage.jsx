@@ -16,7 +16,7 @@ function VerifyAdminsPage() {
   const { apiUrl, decodeDate, checkVerifiedFunction } = useContext(UserContext);
   const { token } = cookies.grinderUser;
   async function getAdmins() {
-    setPageLoading(true);
+    // setPageLoading(true);
     try {
       const resp = await axios.get(`${apiUrl}/users?role=3`, {
         // const resp = await axios.get(`http://localhost:5000/api/users?role=3`, {
