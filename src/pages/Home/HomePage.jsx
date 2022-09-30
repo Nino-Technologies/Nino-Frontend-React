@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
-import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
 import { FaInfoCircle } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 
@@ -85,7 +84,8 @@ function HomePage() {
         <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
           <span className="my-auto">
             {" "}
-            <FaInfoCircle className="my-auto" /> This account is on free trial (You can only be hired 5 times)
+            <FaInfoCircle className="my-auto" /> This account is on free trial
+            (You can only be hired 5 times)
           </span>
           {/* ============================= open Subscription modal button =============================== */}
           <button
@@ -204,34 +204,31 @@ function HomePage() {
                       <>time</>
                     </div>
                   </li>
-                  <li className="achievements-div my-1 w-100">
-                    {checkVerifiedFunction(userProfile.licensed)}
-                    <div className="text ms-2">
-                      <b>Licensed</b>
-                      <>time</>
-                    </div>
-                  </li>
-                  <li className="achievements-div my-1 w-100">
-                    {checkVerifiedFunction(userProfile.backgroundChecked)}
-                    <div className="text ms-2">
-                      <b>background Checked</b>
-                      <>time</>
-                    </div>
-                  </li>
-                  <li className="achievements-div my-1 w-100">
-                    {checkVerifiedFunction(userProfile.topPro)}
-                    <div className="text ms-2">
-                      <b>Top Pro</b>
-                      <>time</>
-                    </div>
-                  </li>
-                  <li className="achievements-div my-1 w-100">
-                    <VerifiedBadge />
-                    <div className="text ms-2">
-                      <b>Verified Badge</b>
-                      <>time</>
-                    </div>
-                  </li>
+                  {userProfile.role !== 3 ? (
+                    <>
+                      <li className="achievements-div my-1 w-100">
+                        {checkVerifiedFunction(userProfile.licensed)}
+                        <div className="text ms-2">
+                          <b>Licensed</b>
+                          <>time</>
+                        </div>
+                      </li>
+                      <li className="achievements-div my-1 w-100">
+                        {checkVerifiedFunction(userProfile.backgroundChecked)}
+                        <div className="text ms-2">
+                          <b>background Checked</b>
+                          <>time</>
+                        </div>
+                      </li>
+                      <li className="achievements-div my-1 w-100">
+                        {checkVerifiedFunction(userProfile.topPro)}
+                        <div className="text ms-2">
+                          <b>Top Pro</b>
+                          <>time</>
+                        </div>
+                      </li>{" "}
+                    </>
+                  ) : null}
                 </ul>
               </div>
             </div>

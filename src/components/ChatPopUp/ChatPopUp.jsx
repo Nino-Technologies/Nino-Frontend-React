@@ -1,15 +1,67 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaCommentDots } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./ChatPopUp.scss";
+import { UserContext } from "../../context/UserContext";
+import { toast } from "react-toastify";
+import axios from "axios";
 
-function ChatPopUpForm() {
+function ChatPopUpForm({ artisan }) {
   const [isVisible, setIsVisible] = useState(false);
+  const [popUpMessage, setPopUpMessage] = useState("");
+  // console.log(artisan);
+  const { loggedIn, userProfile, apiUrl } = useContext(UserContext);
+  function openChatPopUpFormFunction() {
+    if (!loggedIn) {
+      toast.info("you have to login to message an artisan");
+      return;
+    }
+
+    setIsVisible(true);
+  }
+
+  async function handelSubmit(e) {
+    e.preventDefault();
+
+    const sendMessage = {
+      sender: userProfile.email,
+      // receiver: "oladipupomayowa@gmail.com",
+      receiver: artisan.email,
+      message: popUpMessage,
+    };
+
+    // axios POST request
+    const options = {
+      url: `${apiUrl}/sendMail/message`,
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      data: sendMessage,
+    };
+
+    axios(options)
+      .then((response) => {
+        // console.log(response.data);
+        toast.success("Message sent Successfully");
+        // navigate("/login?as=user");
+        // navigate("/verify-code");
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
+
+    // console.log(sendMessage);
+  }
   return (
     <div className="ChatPopUp">
       {/* <!-- Button to open the modal login form --> */}
       <button
-        onClick={() => setIsVisible(true)}
+        onClick={() => openChatPopUpFormFunction()}
         // onclick="document.getElementById('chatPopUp').style.display='block'"
         className="contact-button ChatPopUpButton"
       >
@@ -32,58 +84,50 @@ function ChatPopUpForm() {
         </span>
 
         {/* <!-- Modal Content --> */}
-        <form className="modal-content animate" action="/action_page.php">
-          {/* <!-- <div className="imgcontainer">
-        <img src="img_avatar2.png" alt="Avatar" className="avatar" />
-      </div> --> */}
-
+        <form
+          className="modal-content animate"
+          onSubmit={(e) => {
+            handelSubmit(e);
+          }}
+        >
           <div className="container">
             <label htmlFor="uname">
               <b>Email</b>
             </label>
             <input
-              type="text"
+              type="email"
               className="form-control"
-              placeholder="Enter Username"
-              name="uname"
-              required
+              placeholder="Enter email"
+              name="email"
+              value={artisan.email}
+              disabled={true}
             />
 
-            <label htmlFor="psw">
+            <label htmlFor="popUpMessage">
               <b>Message</b>
             </label>
-            <textarea cols="5" rows="3" className="form-control"></textarea>
-            {/* <!-- <input
-          type="password"
-          placeholder="Enter Password"
-          name="psw"
-          required
-        /> --> */}
+            <textarea
+              cols="5"
+              rows="3"
+              id="popUpMessage"
+              className="form-control"
+              value={popUpMessage}
+              onChange={(e) => setPopUpMessage(e.target.value)}
+            ></textarea>
 
             <button type="submit" className="btn btn-primary w-100 mt-3">
               Send
             </button>
-            <label>
-              {/* <!-- <input type="checkbox" checked="checked" name="remember" /> Remember -->
-          <!-- me --> */}
-            </label>
           </div>
 
-          <div
-            className="container"
-            //  style="background-color: #f1f1f1"
-          >
+          <div className="container">
             <button
               type="button"
               onClick={() => setIsVisible(false)}
-              // onclick="document.getElementById('chatPopUp').style.display='none'"
               className="btn btn-danger w-25"
             >
               Cancel
             </button>
-            {/* <span className="psw">
-              Forgot <a href="#">password?</a>
-            </span> */}
           </div>
         </form>
       </div>

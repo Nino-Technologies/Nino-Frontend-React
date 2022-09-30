@@ -16,6 +16,7 @@ function PaymentPage() {
     const { token } = cookies.grinderUser;
     try {
       const resp = await axios.get(`${apiUrl}/payments`, {
+        // const resp = await axios.get(`http://localhost:5000/api/payments`, {
         headers: {
           authorization: token,
         },

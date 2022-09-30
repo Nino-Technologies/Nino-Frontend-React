@@ -22,6 +22,12 @@ import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
+import ReactGa from "react-ga";
+import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage";
+import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
+
+const TRACKING_ID = "G-C3G25DKRJC";
+ReactGa.initialize(TRACKING_ID);
 
 function App() {
   // check network
@@ -59,7 +65,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/about-us" element={<AboutUsPage />} />
-        <Route exact path="/artisans/" element={<ArtisansPage />} />
+        <Route exact path="/artisans" element={<ArtisansPage />} />
         <Route
           exact
           path="/artisans-profile/:id"
@@ -75,7 +81,7 @@ function App() {
           <Route path="notification" element={<NotificationPage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="verify-user" element={<VerifyUserPage />} />
-          <Route path="verify-user" element={<VerifyUserPage />} />
+          <Route path="verify-admins" element={<VerifyAdminsPage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />
           <Route path="saved-artisan" element={<SavedArtisanPage />} />
           <Route path="create-admin" element={<CreateAdminPage />} />

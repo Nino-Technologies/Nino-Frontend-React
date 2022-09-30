@@ -6,6 +6,7 @@ import moment from "moment";
 import axios from "axios";
 import VerifiedBadge from "../components/verifiedBadge/verifiedBadge";
 import { FaExclamation } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export const UserContext = createContext();
 
@@ -40,10 +41,11 @@ export function UserProvider({ children }) {
     }
     return <FaExclamation className="text-danger" />;
   }
+  const { token } = cookies.grinderUser;
   async function getNotification() {
     setPageLoading(true);
-    const { token } = cookies.grinderUser;
     try {
+      // const resp = await axios.get(`http://localhost:5000/api/notification`, {
       const resp = await axios.get(`${apiUrl}/notification`, {
         headers: {
           authorization: token,
