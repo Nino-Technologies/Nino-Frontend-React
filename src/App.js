@@ -15,6 +15,7 @@ import HomePage from "./pages/Home/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import NotificationPage from "./pages/Notification/NotificationPage";
 import VerifyUserPage from "./pages/VerifyUserPage/VerifyUserPage";
+import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage"
 import UsersPage from "./pages/UserPage/UserPage";
 import CreateAdminPage from "./pages/CreateAdminPage/CreateAdminPage";
 import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";

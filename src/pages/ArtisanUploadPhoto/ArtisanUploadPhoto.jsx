@@ -1,9 +1,11 @@
 // import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import Axios from 'axios'
 
 import "./ArtisanUploadPhoto.scss";
 import ModalImage from "../../components/ModalImage/ModalImage";
 import altImg from "../../assets/images/hero-design.png";
+// import {image} from 'cloudinary-react'
 import { toast } from "react-toastify";
 
 function ArtisanUploadPhoto() {
@@ -27,7 +29,21 @@ function ArtisanUploadPhoto() {
       toast.info("Select an image");
     }
   };
-  const imageHandler = (e) => {
+
+  const [imageSelected, setImageSelected]  = useState();
+
+  const imageHandler = () => {
+    const formData = new FormData()
+    formData.append("file", imageSelected) 
+    formData.append("upload_preset", "qmmjw5ce")
+
+    Axios.post("https://api.cloudinary.com/v1_1/dajfddyeg/image/upload", 
+    formData
+    ).then((response) => {
+      console.log(response);
+    })
+
+
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -36,7 +52,7 @@ function ArtisanUploadPhoto() {
       }
     };
 
-    reader.readAsDataURL(e.target.files[0]);
+    // reader.readAsDataURL(e.target.files[0]);
   };
 
   return (
@@ -61,7 +77,7 @@ function ArtisanUploadPhoto() {
               name=""
               style={{ display: "none" }}
               id="img-input"
-              onChange={(e) => imageHandler(e)}
+              onChange={(e) => setImageSelected(e.target.files[0])}
             />
           </div>
           <textarea
@@ -74,10 +90,12 @@ function ArtisanUploadPhoto() {
         </div>
         <button
           className="btn btn-secondary  my-4"
-          onClick={() => handelSubmit()}
+          onClick={() => imageHandler()}
         >
           submit
         </button>
+        {/* <image cloudName="dajfddyeg" 
+        publicId="https://res.cloudinary.com/dajfddyeg/image/upload/v1664413570/bhvra9kq46xinky0hxfy.jpg"/> */}
       </div>
       <hr />
       {photoList.map((photo) => (
