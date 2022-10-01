@@ -5,7 +5,6 @@ import Nav from "../../components/Nav/Nav";
 import {
   FaEnvelope,
   FaInstagram,
-  FaLinkedin,
   FaLocationArrow,
   FaTwitter,
 } from "react-icons/fa";
@@ -100,51 +99,30 @@ function ContactUsPage() {
                     <h3 className="title mb-4">Contact Information</h3>
                     <ul className="list-group">
                       <li className="list-group-item py-3">
-                        <font-awesome-icon
-                          icon="fa-solid fa-location-dot"
-                          className="contact-icon"
-                        />
                         <FaLocationArrow className="contact-icon" />
-                        <span className="px-4 text-white">Location</span>
+                        <span className="px-4 text-white">Abuja, Nigeria</span>
                       </li>
                       <li className="list-group-item py-3">
-                        <font-awesome-icon
-                          icon="fa-solid fa-mobile-button"
-                          className="contact-icon"
-                        />
                         <GoLocation className="contact-icon" />
-                        <span className="px-4 text-white">Number</span>
+                        <span className="px-4 text-white">+234817009713</span>
                       </li>
                       <li className="list-group-item py-3">
-                        <font-awesome-icon
-                          icon="fa-regular fa-envelope"
-                          className="contact-icon"
-                        />
                         <FaEnvelope className="contact-icon" />
-                        <span className="px-4 text-white">Email</span>
+                        <span className="px-4 text-white">
+                          support@grinders.ng
+                        </span>
                       </li>
                     </ul>
                     <ul className="list-group list-group-horizontal py-5">
                       <li className="list-group-item">
-                        <font-awesome-icon
-                          icon="fa-brands fa-instagram"
-                          className="contact-icon"
-                        />
-                        <FaInstagram className="contact-icon" />
+                        <a href="https://instagram.com/grinders.ng?igshid=NDRkN2NkYzU=">
+                          <FaInstagram className="contact-icon" />
+                        </a>
                       </li>
                       <li className="list-group-item">
-                        <font-awesome-icon
-                          icon="fa-brands fa-twitter"
-                          className="contact-icon"
-                        />
-                        <FaTwitter className="contact-icon" />
-                      </li>
-                      <li className="list-group-item">
-                        <font-awesome-icon
-                          icon="fa-brands fa-linkedin-in"
-                          className="contact-icon"
-                        />
-                        <FaLinkedin className="contact-icon" />
+                        <a href="https://twitter.com/grindersng?s=11&t=SFCC7Y_4_ex06S9A1Bd3TQ">
+                          <FaTwitter className="contact-icon" />
+                        </a>
                       </li>
                     </ul>
                   </div>
