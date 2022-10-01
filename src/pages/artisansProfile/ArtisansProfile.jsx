@@ -9,19 +9,31 @@ import "./ArtisansProfile.scss";
 import ShareButton from "../../components/ShareButton/ShareButton";
 import SaveButton from "../../components/SaveButton/SaveButton";
 import { UserContext } from "../../context/UserContext";
+import { toast } from "react-toastify";
 import {
   FaMapMarked,
+  FaNetworkWired,
+  FaPhone,
+  FaRegHandshake,
   FaShieldAlt,
   FaTrophy,
   FaUserCheck,
 } from "react-icons/fa";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import moment from "moment";
+import ModalImage from "./../../components/ModalImage/ModalImage";
 
 function ArtisansProfile() {
   const { id } = useParams();
   const [artisan, setArtisan] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
+  const [artisanReviewInput, setArtisanReviewInput] = useState("");
+  const [artisanRateInput, setArtisanRateInput] = useState("");
   const navigate = useNavigate();
-  const { apiUrl } = useContext(UserContext);
+  const { apiUrl, loggedIn, userProfile, getUserProfile } =
+    useContext(UserContext);
+  const [cookies] = useCookies();
 
   // ======= THIS WILL SEND REQUEST to API with the ID form the user profile ===========
 
@@ -44,6 +56,62 @@ function ArtisansProfile() {
       return;
     }
   }
+
+  useEffect(() => {
+    if (loggedIn) {
+      getUserProfile();
+    }
+  }, []);
+
+  function giveArtisanReview() {
+    if (!loggedIn) {
+      return toast.info("Login to give a review");
+    }
+    if (artisanReviewInput === "") {
+      return toast.info("Write a review");
+    }
+    if (artisanRateInput === "") {
+      return toast.info("Give a rate (1-5)");
+    }
+    if (artisanRateInput > 5 || artisanRateInput < 0) {
+      return toast.info("Rate is between 1-5");
+    }
+    const data = {
+      avatar: userProfile.avatar,
+      fullName: userProfile.fullName,
+      rate: artisanRateInput,
+      date: moment(Date.now())._d,
+      review: artisanReviewInput,
+    };
+    // console.log(moment(Date.now())._d);
+    console.log("Data", userProfile);
+    // axios PUT request
+    const options = {
+      // url: `http://localhost:5000/api/auth/user/login`,
+      url: `${apiUrl}/review/${id}`,
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: cookies.grinderUser.token,
+      },
+      data: data,
+    };
+
+    axios(options)
+      .then((response) => {
+        if (response.data.ok) {
+        }
+      })
+      .catch((error) => {
+        // setLoading(false);
+        console.log(error.message);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
+  }
   useEffect(() => {
     getProfile(id);
   }, []);
@@ -65,9 +133,7 @@ function ArtisansProfile() {
                   <img
                     src={`${
                       artisan.avatar === ""
-                        ? artisan.gender === "male"
-                          ? "https://st4.depositphotos.com/9998432/20073/v/1600/depositphotos_200738870-stock-illustration-default-placeholder-businessman-half-length.jpg"
-                          : "https://st3.depositphotos.com/9998432/19099/v/1600/depositphotos_190990184-stock-illustration-default-placeholder-businesswoman-half-length.jpg"
+                        ? "https://via.placeholder.com/100x100"
                         : artisan.avatar
                     }`}
                     alt="Profile picture"
@@ -155,51 +221,33 @@ function ArtisansProfile() {
                   </ul>
                 </div>
               </div>
-
               <div className="contact-div">
                 <ChatPopUp artisan={artisan} />
 
-                <button className="contact-button">
-                  <font-awesome-icon icon="fas fa-phone" />
-                  Request a Call
+                <button
+                  className="contact-button"
+                  onClick={() => {
+                    handelHire();
+                  }}
+                >
+                  <FaRegHandshake className="mx-1" />
+                  Hire
                 </button>
               </div>
-
               <hr />
               {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
-
-              {/* <div className="featured-projects">
+              <div className="featured-projects">
                 <h4>Featured Projects</h4>
-                {/* 6 photos * /}
-                {/* <div className="image-flex">
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                </div> * /}
-              </div>
-              <hr /> */}
+                {artisan.workImage.length} photos
+                <div className="image-flex">
+                  {artisan.workImage.map((work) => {
+                    const { image, about } = work;
 
+                    return <ModalImage imgUrl={image} about={about} />;
+                  })}
+                </div>
+              </div>
+              <hr />
               <div className="reviews">
                 <h3>Reviews</h3>
                 Customers rated this pro highly for professionalism, work
@@ -212,34 +260,67 @@ function ArtisansProfile() {
                 Your trust means everything to us. Learn about our review
                 guidelines.
               </div>
-
               <hr />
-
               <div className="reviews-div">
-                {artisan.reviews.map((review, i) => (
-                  <div className="review" key={`artisanReview${i}`}>
-                    <div className="name-pix d-flex my-2">
-                      <img
-                        src="https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp"
-                        alt=""
-                        className=""
-                        width="60"
-                      />
-                      <div className="">
-                        <h4>{review.fullName}</h4>
-                        <StarComponent rate="5" />
-                        {review.hiredOnThumbtack ? (
-                          <span>Hired on Thumbtack</span>
-                        ) : null}
+                {artisan.reviews.length === 0 ? (
+                  <h5 className="text-muted text-center">No Review</h5>
+                ) : (
+                  <>
+                    {" "}
+                    {artisan.reviews.map((review, i) => (
+                      <div className="review" key={`artisanReview${i}`}>
+                        <div className="name-pix d-flex my-2">
+                          <img
+                            src={review.avatar}
+                            alt=""
+                            className=""
+                            width="60"
+                          />
+                          <div className="">
+                            <h4>{review.fullName}</h4>
+                            <StarComponent rate={review.rate} />
+                          </div>
+                          <span className="ms-auto"> {review.date}</span>
+                        </div>
+                        <div className="distribution">{review.review}</div>
                       </div>
-                      <span className="ms-auto"> {review.date}</span>
-                    </div>
-                    <div className="distribution">{review.review}</div>
+                    ))}
+                  </>
+                )}
+                <div className="form-div">
+                  <hr />
+                  <div className="d-flex flex-column flex-md-row">
+                    <textarea
+                      className="form-control"
+                      placeholder="Write a review on this artisan"
+                      cols="5"
+                      rows="3"
+                      value={artisanReviewInput}
+                      onChange={(e) => {
+                        setArtisanReviewInput(e.target.value);
+                      }}
+                    ></textarea>
+                    <input
+                      type="text"
+                      className="form-control w-100 w-md-25"
+                      placeholder="rate  (1-5)"
+                      value={artisanRateInput}
+                      onChange={(e) => {
+                        setArtisanRateInput(e.target.value);
+                      }}
+                    />
+                    <button
+                      className="btn-primary btn h-25 mx-1 mt-auto"
+                      onClick={() => {
+                        giveArtisanReview();
+                      }}
+                    >
+                      Review
+                    </button>
                   </div>
-                ))}
+                </div>
               </div>
               <hr />
-
               <div className="specialties">
                 <h4>Specialties</h4>
                 <b>Fixture type</b> <br />
@@ -247,30 +328,11 @@ function ArtisansProfile() {
                   <font-awesome-icon icon="fas fa-check" className="my-auto" />
                 </ul>
               </div>
-
               <hr />
-              {/* 
-              <div className="credentials">
-                <h4>Credentials</h4>
-                <span v-if="artisanProfile.backgroundChecked">
-                  <b>
-                    Background Check
-                    <font-awesome-icon icon="fas fa-check" />
-                  </b>
-                  <p>Jonathan Mcconnell</p>
-                </span>
-
-                <a href="#">View credential details</a>
-              </div>
-
-              <hr />
-              <div className="faqs">
-                <h4>FAQs</h4>
-              </div> */}
             </div>
             {/* main area */}
 
-            <div className="card-area">
+            {/* <div className="card-area">
               <div className="form-card">
                 <form action="">
                   <font-awesome-icon icon="fas fa-comment" /> contact for price
@@ -301,7 +363,7 @@ function ArtisansProfile() {
                   </p>
                 </form>
               </div>
-            </div>
+            </div> */}
           </div>
           <Footer />
         </div>
