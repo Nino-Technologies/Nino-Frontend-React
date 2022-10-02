@@ -65,21 +65,21 @@ function AdminAction({
   }
 
   return (
-    <div class="btn-group" role="group">
+    <div className="btn-group" role="group">
       <button
         id="btnGroupDrop1"
         type="button"
-        class="btn btn-primary btn-sm dropdown-toggle"
+        className="btn btn-primary btn-sm dropdown-toggle"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
         {actionLoading ? "Loading..." : "Action"}
       </button>
-      <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <ul className="dropdown-menu" aria-labelledby="btnGroupDrop1">
         {account_verified ? (
           <>
             <li
-              class="dropdown-item"
+              className="dropdown-item"
               onClick={() => {
                 adminActionFunction("unVerify", role, _id);
               }}
@@ -90,7 +90,7 @@ function AdminAction({
         ) : (
           <>
             <li
-              class="dropdown-item"
+              className="dropdown-item"
               onClick={() => {
                 adminActionFunction("verify", role, _id);
               }}
@@ -102,7 +102,7 @@ function AdminAction({
         {account_active ? (
           <>
             <li
-              class="dropdown-item"
+              className="dropdown-item"
               onClick={() => {
                 adminActionFunction("block", role, _id);
               }}
@@ -114,7 +114,7 @@ function AdminAction({
           <>
             {" "}
             <li
-              class="dropdown-item"
+              className="dropdown-item"
               onClick={() => {
                 adminActionFunction("activate", role, _id);
               }}

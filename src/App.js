@@ -24,11 +24,20 @@ import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import ReactGa from "react-ga";
 import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
+import { useContext, useEffect } from "react";
+import { UserContext } from "./context/UserContext";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
 
 function App() {
+  const { getUserProfile, loggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    if (loggedIn) {
+      getUserProfile();
+    }
+  }, []);
   // check network
   // const [networkConnected, setNetworkConnected] = useState(true);
 
@@ -73,7 +82,7 @@ function App() {
         <Route exact path="/contact-us" element={<ContactUsPage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/register" element={<RegisterPage />} />
-        <Route path="/verify-code" element={<VerifyCodePage />} />
+        <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="home" element={<HomePage />} />
           <Route path="profile" element={<ProfilePage />} />

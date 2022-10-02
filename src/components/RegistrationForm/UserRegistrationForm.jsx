@@ -26,8 +26,9 @@ function UserRegistrationForm() {
     }
 
     const data = {
-      email: formElement[0].value,
-      password: formElement[1].value,
+      fullName: formElement[0].value,
+      email: formElement[1].value,
+      password: formElement[2].value,
     };
 
     // axios POST request
@@ -46,7 +47,7 @@ function UserRegistrationForm() {
         console.log(response.data);
         toast.success("Registration Successful");
         // navigate("/login?as=user");
-        navigate("/verify-code");
+        navigate(`/verify-code/${data.email}`);
       })
       .catch((error) => {
         if (error.response.status === 400) {
@@ -73,10 +74,10 @@ function UserRegistrationForm() {
       onSubmit={(e) => registerUserFunction(e)}
     >
       <h3 className="login-name">Register User</h3>
-      <div className="">
-        {/* <label htmlFor="exampleInputEmail1" className="form-label">
-      
-        </label> */}
+      <div className="pt-3">
+        <input type="textx" className="form-control" placeholder="Full name" />
+      </div>
+      <div className=" mt-3">
         <input
           type="email"
           className="form-control"

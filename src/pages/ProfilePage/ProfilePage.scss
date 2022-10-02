@@ -1,91 +1,110 @@
 .ProfilePage {
   height: 100%;
-  .profile-card {
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
-    background-color: #fff;
-    border-radius: 10px;
+  // .profile-card {
+  //   // box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+  //   // background-color: #fff;
+  //   // border-radius: 10px;
 
-    .btn-primary {
-      border-radius: 0;
-      background-color: var(--color-primary);
-      box-shadow: none;
-      outline: none;
-    }
-    .btn-primary:focus,
-    .btn-primary:hover {
-      background-color: var(--color-primary);
-      opacity: 1;
-      box-shadow: none;
-    }
+  //   .btn-primary {
+  //     border-radius: 0;
+  //     background-color: var(--color-primary);
+  //     box-shadow: none;
+  //     outline: none;
+  //   }
+  //   .btn-primary:focus,
+  //   .btn-primary:hover {
+  //     background-color: var(--color-primary);
+  //     opacity: 1;
+  //     box-shadow: none;
+  //   }
+  //   border: red solid;
+  //   .card {
+  //     .card-body {
+  //       .image-div {
+  //         align-items: center;
+  //         display: flex;
+  //         padding: 30px 0;
+  //         flex-direction: column;
+  //         img {
+  //           width: 150px;
+  //           height: 150px;
+  //           border: solid 1px var(--color-secondary);
+  //           border-radius: 50%;
+  //         }
+  //       }
+  //       .form-div {
+  //         padding: 0 20px;
+  //         form {
+  //           display: inline-flex;
+  //           flex-direction: column;
+  //           button {
+  //             background-color: var(--color-primary);
+  //           }
+  //           width: 100%;
+  //           label {
+  //             input {
+  //               border-radius: 0px;
+  //               border: 1px #ddd solid;
 
-    .image-div {
-      align-items: center;
+  //               padding: 15px;
+  //             }
+  //             :focus {
+  //               box-shadow: none;
+  //             }
+  //             input:disabled {
+  //               background-color: transparent;
+  //               border: none;
+  //               padding: 10px 5px;
+  //               font-size: 20px;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   @media screen and (max-width: 768px) {
+  //     flex-direction: column;
+  //     height: auto;
+  //     margin: 0 5px 0 0 !important;
+  //     border-radius: 10px;
+
+  //     .image-div,
+  //     .form-div {
+  //       width: 100%;
+  //     }
+  //     .form-div {
+  //       margin: 0;
+  //       padding: 0 10px;
+  //       form {
+  //         margin: 0 !important;
+  //         padding-bottom: 20px;
+  //         width: 100%;
+  //         .d-flex {
+  //           flex-direction: column;
+  //           padding: 0 5px;
+  //           label {
+  //             margin: 10px 0 !important;
+  //             input:disabled {
+  //               font-size: 16px;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  .card {
+    .card-body {
       display: flex;
-      padding: 30px 0;
       flex-direction: column;
-      img {
+      .image-div {
+        border: solid var(--color-secondary);
         width: 150px;
         height: 150px;
-        border: solid 1px var(--color-secondary);
         border-radius: 50%;
-      }
-    }
-    .form-div {
-      padding: 0 20px;
-      form {
-        display: inline-flex;
-        flex-direction: column;
-        button {
-          background-color: var(--color-primary);
-        }
-        width: 100%;
-        label {
-          input {
-            border-radius: 0px;
-            border: 1px #ddd solid;
-
-            padding: 15px;
-          }
-          :focus {
-            box-shadow: none;
-          }
-          input:disabled {
-            background-color: transparent;
-            border: none;
-            padding: 10px 5px;
-            font-size: 20px;
-          }
-        }
-      }
-    }
-    @media screen and (max-width: 768px) {
-      flex-direction: column;
-      height: auto;
-      margin: 0 5px 0 0 !important;
-      border-radius: 10px;
-
-      .image-div,
-      .form-div {
-        width: 100%;
-      }
-      .form-div {
-        margin: 0;
-        padding: 0 10px;
-        form {
-          margin: 0 !important;
-          padding-bottom: 20px;
-          width: 100%;
-          .d-flex {
-            flex-direction: column;
-            padding: 0 5px;
-            label {
-              margin: 10px 0 !important;
-              input:disabled {
-                font-size: 16px;
-              }
-            }
-          }
-        }
+        overflow: hidden;
+        margin: 0 auto;
       }
     }
   }

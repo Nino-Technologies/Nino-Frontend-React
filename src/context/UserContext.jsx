@@ -16,8 +16,8 @@ export function UserProvider({ children }) {
   const [userProfile, setUserProfile] = useState([]);
   const [notification, setNotification] = useState([]);
   const navigate = useNavigate();
-  const apiUrl = "https://nino-technologies.herokuapp.com/api";
-  // const apiUrl = "http://localhost:5000/api";
+  // const apiUrl = "https://nino-technologies.herokuapp.com/api";
+  const apiUrl = "http://localhost:5000/api";
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export function UserProvider({ children }) {
       return;
     }
     setLoggedIn(true);
-    setUserProfile(cookies.grinderUser.profile || null);
+    // setUserProfile(cookies.grinderUser.profile || null);
   }, []);
   useEffect(() => {
     if (userProfile === null) {
@@ -34,6 +34,33 @@ export function UserProvider({ children }) {
       return;
     }
   });
+  function getUserProfile() {
+    // axios GET request
+    const options = {
+      // url: `http://localhost:5000/api/auth/user/login`,
+      url: `${apiUrl}/users/profile/${cookies.grinderUser.profile._id}`,
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: cookies.grinderUser.token,
+      },
+    };
+
+    axios(options)
+      .then((response) => {
+        const userProfile = response.data.data;
+        setUserProfile(userProfile);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }
+  useEffect(() => {
+    if (loggedIn) {
+      getUserProfile();
+    }
+  }, []);
 
   function checkVerifiedFunction(verify) {
     if (verify) {
@@ -41,14 +68,13 @@ export function UserProvider({ children }) {
     }
     return <FaExclamation className="text-danger" />;
   }
-  const { token } = cookies.grinderUser;
   async function getNotification() {
     setPageLoading(true);
     try {
       // const resp = await axios.get(`http://localhost:5000/api/notification`, {
       const resp = await axios.get(`${apiUrl}/notification`, {
         headers: {
-          authorization: token,
+          authorization: cookies.grinderUser.token,
         },
       });
       setPageLoading(false);
@@ -68,7 +94,7 @@ export function UserProvider({ children }) {
       setUserProfile([]);
       setLoggedIn(false);
       removeCookie("grinderUser", { path: "/" });
-      navigate("/");
+      navigate("./");
     }
   }
 
@@ -98,6 +124,7 @@ export function UserProvider({ children }) {
         notification,
         checkVerifiedFunction,
         pageLoading,
+        getUserProfile,
       }}
     >
       {children}

@@ -1,49 +1,85 @@
 // import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import Axios from 'axios'
 
 import "./ArtisanUploadPhoto.scss";
 import ModalImage from "../../components/ModalImage/ModalImage";
 import altImg from "../../assets/images/hero-design.png";
-// import {image} from 'cloudinary-react'
 import { toast } from "react-toastify";
+import { UserContext } from "./../../context/UserContext";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 function ArtisanUploadPhoto() {
   const [photoList, setPhotoList] = useState([]);
   const [about, setAbout] = useState("");
 
   const [img_url, setImg_url] = useState("");
+  const [imageFile, setImageFile] = useState("");
+
+  const { apiUrl } = useContext(UserContext);
+  const [cookies] = useCookies();
+
+  function uploadImage(newPhoto) {
+    console.log(newPhoto);
+    // axios POST request
+    const options = {
+      // url: `http://localhost:5000/api/auth/user/login`,
+      url: `${apiUrl}/upload/workImage`,
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: cookies.grinderUser.token,
+      },
+      data: newPhoto,
+    };
+
+    axios(options)
+      .then((response) => {
+        if (response.data.ok) {
+          toast.success("Uploaded successfully");
+          setAbout("");
+          setImg_url("");
+          setImageFile("");
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
+  }
+
   const handelSubmit = () => {
-    if (img_url !== "") {
-      if (about !== "") {
+    if (img_url === "") {
+      return toast.info("Select an image");
+    }
+    if (about === "") {
+      return toast.info("fill fields before submit");
+    }
+
+    const imageData = new FormData();
+    imageData.append("file", imageFile);
+    imageData.append("upload_preset", "oyieaesl");
+    imageData.append("cloud_name", "dhvacnvek");
+
+    fetch("  https://api.cloudinary.com/v1_1/dhvacnvek/image/upload", {
+      method: "post",
+      body: imageData,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
         const newPhoto = {
           about,
-          imgUrl: img_url,
+          image: data.url,
         };
-        console.log(img_url);
-        setPhotoList([...photoList, newPhoto]);
-      } else {
-        toast.info("fill fields before submit");
-      }
-    } else {
-      toast.info("Select an image");
-    }
+        uploadImage(newPhoto);
+      })
+      .catch((err) => console.log(err));
   };
-
-  const [imageSelected, setImageSelected]  = useState();
-
-  const imageHandler = () => {
-    const formData = new FormData()
-    formData.append("file", imageSelected) 
-    formData.append("upload_preset", "qmmjw5ce")
-
-    Axios.post("https://api.cloudinary.com/v1_1/dajfddyeg/image/upload", 
-    formData
-    ).then((response) => {
-      console.log(response);
-    })
-
-
+  const imageHandler = (e) => {
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -52,7 +88,8 @@ function ArtisanUploadPhoto() {
       }
     };
 
-    // reader.readAsDataURL(e.target.files[0]);
+    reader.readAsDataURL(e.target.files[0]);
+    setImageFile(e.target.files[0]);
   };
 
   return (
@@ -77,7 +114,7 @@ function ArtisanUploadPhoto() {
               name=""
               style={{ display: "none" }}
               id="img-input"
-              onChange={(e) => setImageSelected(e.target.files[0])}
+              onChange={(e) => imageHandler(e)}
             />
           </div>
           <textarea
@@ -90,12 +127,10 @@ function ArtisanUploadPhoto() {
         </div>
         <button
           className="btn btn-secondary  my-4"
-          onClick={() => imageHandler()}
+          onClick={() => handelSubmit()}
         >
           submit
         </button>
-        {/* <image cloudName="dajfddyeg" 
-        publicId="https://res.cloudinary.com/dajfddyeg/image/upload/v1664413570/bhvra9kq46xinky0hxfy.jpg"/> */}
       </div>
       <hr />
       {photoList.map((photo) => (

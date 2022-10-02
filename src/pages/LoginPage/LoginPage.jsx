@@ -63,14 +63,14 @@ function LoginPage() {
             ) : null}
           </div>
         </div>
-        <div className="image-body">
+        {/* <div className="image-body" >
           <div className="container">
             <div className="m-box">
               <h1>Welcome Back!</h1>
               <p>Login and let's get connected with your clients</p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

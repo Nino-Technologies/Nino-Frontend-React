@@ -87,7 +87,6 @@ function PaymentForm({ selectedPlane }) {
   };
   function handelSubmit(e) {
     e.preventDefault();
-
     if (
       selectedPlane.price === "" ||
       !selectedPlane.price ||
@@ -96,19 +95,15 @@ function PaymentForm({ selectedPlane }) {
       toast.info("Invalid request; select a subscription plan");
       return document.getElementById("selectSubscriptionPlan").click();
     }
-    const formElement = e.target;
-    if (formElement[0].value === "") {
+    if (formInputFullName === "") {
       toast.info("Fill form fullname");
     }
-    if (formElement[1].value === "") {
+    if (formInputEmail === "") {
       toast.info("Fill form email");
     }
-    if (formElement[1].value === "" || formElement[0].value === "") {
+    if (formInputFullName === "" || formInputEmail === "") {
       return;
     }
-
-    setFormInputFullName(formElement[0].value);
-    setFormInputEmail(formElement[1].value);
     initializePayment(onSuccess, onClose);
   }
   return (
@@ -131,6 +126,8 @@ function PaymentForm({ selectedPlane }) {
                   id="fname"
                   name="firstname"
                   placeholder="John M. Doe"
+                  value={formInputFullName}
+                  onChange={(e) => setFormInputFullName(e.target.value)}
                 />
                 <label htmlFor="email">
                   <FaAt /> Email
@@ -140,11 +137,15 @@ function PaymentForm({ selectedPlane }) {
                   id="email"
                   name="email"
                   placeholder="john@example.com"
+                  value={formInputEmail}
+                  onChange={(e) => setFormInputEmail(e.target.value)}
                 />
               </div>
             </div>
 
-            <button className="btn">Pay with Paystack</button>
+            <button className="btn" type="submit">
+              Pay with Paystack
+            </button>
           </form>
         </div>
       </div>

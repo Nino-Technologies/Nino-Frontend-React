@@ -2,26 +2,40 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Nav from "../../components/Nav/Nav";
-import StarComponent from "../../components/stars/Stars";
+import StarComponent, {
+  ReviewStarComponent,
+} from "../../components/stars/Stars";
 import ChatPopUp from "../../components/ChatPopUp/ChatPopUp";
 import PageLoading from "../../components/PageLoading/PageLoading";
 import "./ArtisansProfile.scss";
 import ShareButton from "../../components/ShareButton/ShareButton";
 import SaveButton from "../../components/SaveButton/SaveButton";
 import { UserContext } from "../../context/UserContext";
+import { toast } from "react-toastify";
 import {
   FaMapMarked,
+  FaRegHandshake,
   FaShieldAlt,
   FaTrophy,
   FaUserCheck,
 } from "react-icons/fa";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import moment from "moment";
+import ModalImage from "./../../components/ModalImage/ModalImage";
+import ModalComponent from "./../../components/Modal/ModalComponent";
 
 function ArtisansProfile() {
   const { id } = useParams();
   const [artisan, setArtisan] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
+  const [showArtisansNumber, setShowArtisansNumber] = useState(false);
+  const [artisanReviewInput, setArtisanReviewInput] = useState("");
+  const [artisanRateInput, setArtisanRateInput] = useState(1);
   const navigate = useNavigate();
-  const { apiUrl } = useContext(UserContext);
+  const { apiUrl, loggedIn, userProfile, getUserProfile, decodeDate } =
+    useContext(UserContext);
+  const [cookies] = useCookies();
 
   // ======= THIS WILL SEND REQUEST to API with the ID form the user profile ===========
 
@@ -44,6 +58,165 @@ function ArtisansProfile() {
       return;
     }
   }
+
+  // copy link function
+  function copyLinkFunction(text) {
+    let copiedText = text;
+    navigator.clipboard.writeText(copiedText).then(
+      function () {
+        /* success */
+        toast.success("Number Copied");
+      },
+      function () {
+        /* failure */
+        toast.error("error copying number");
+      }
+    );
+  }
+
+  function phoneMessage(object) {
+    if (object.to === "" || !object.to) {
+      return toast.info("Artisan number not gotten");
+    }
+    if (object.message === "" || !object.message) {
+      return toast.info("Message not set not gotten");
+    }
+    let data = {
+      message: object.message,
+      to: `+${object.to}`,
+    };
+    const options = {
+      // url: `http://localhost:5000/api/notification`,
+      url: `${apiUrl}/sendMail/notify`,
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: cookies.grinderUser.token,
+      },
+      data: data,
+    };
+    if (
+      !window.confirm(
+        "A notification will be sent to artisan their number was requested"
+      )
+    ) {
+      return;
+    }
+    //  CLike the model button with js
+    window.document.getElementById("request_artisan_number_button").click();
+    // return;
+    axios(options)
+      .then((response) => {
+        if (response.ok) {
+          setShowArtisansNumber(true);
+        }
+      })
+      .catch((error) => {
+        // setLoading(false);
+        console.log(error.message);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
+  }
+
+  // console.log(artisan.phoneNumber);
+  function handelHire() {
+    if (!loggedIn) {
+      toast.info("Login First");
+    }
+    let data = {
+      message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
+      privilege: artisan._id,
+    };
+    const options = {
+      // url: `http://localhost:5000/api/notification`,
+      url: `${apiUrl}/notification`,
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: cookies.grinderUser.token,
+      },
+      data: data,
+    };
+    phoneMessage({
+      message: data.message,
+      to: artisan.phoneNumber,
+    });
+
+    axios(options)
+      .then((response) => {})
+      .catch((error) => {
+        // setLoading(false);
+        console.log(error.message);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
+  }
+  useEffect(() => {
+    if (loggedIn) {
+      getUserProfile();
+    }
+  }, []);
+
+  function giveArtisanReview() {
+    if (!loggedIn) {
+      return toast.info("Login to give a review");
+    }
+    if (artisanReviewInput === "") {
+      return toast.info("Write a review");
+    }
+    if (artisanRateInput === "") {
+      return toast.info("Give a rate (1-5)");
+    }
+    if (artisanRateInput > 5 || artisanRateInput < 0) {
+      return toast.info("Rate is between 1-5");
+    }
+    const data = {
+      avatar: userProfile.avatar,
+      fullName: userProfile.fullName,
+      rate: artisanRateInput,
+      date: moment(Date.now())._d,
+      review: artisanReviewInput,
+    };
+    // console.log(moment(Date.now())._d);
+    // console.log("Data", userProfile);
+    // axios PUT request
+    const options = {
+      // url: `http://localhost:5000/api/auth/user/login`,
+      url: `${apiUrl}/review/${id}`,
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: cookies.grinderUser.token,
+      },
+      data: data,
+    };
+
+    axios(options)
+      .then((response) => {
+        if (response.data.ok) {
+          toast.info("Review saved");
+          setArtisanReviewInput("");
+          setArtisanRateInput("");
+          getProfile(id);
+        }
+      })
+      .catch((error) => {
+        // setLoading(false);
+        console.log(error.message);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
+  }
   useEffect(() => {
     getProfile(id);
   }, []);
@@ -57,7 +230,57 @@ function ArtisansProfile() {
         </>
       ) : (
         <div className="ArtisansProfile">
-          <div className="containers bor der h-100">
+          {/* button to open model */}
+          <button
+            type="button"
+            className="button"
+            id="request_artisan_number_button"
+            // hide button; it will be clicked with js
+            style={{ display: "none" }}
+            data-bs-toggle="modal"
+            data-bs-target="#request_artisan_number"
+          ></button>
+          {/* model component;  */}
+          <ModalComponent
+            modalTitle={"Important Notification"}
+            modalId={"request_artisan_number"}
+          >
+            {artisan.phoneNumber !== "" ? (
+              <>
+                Artisan will be notified that their number is been request
+                <h5 className="border my-2 ps-3 py-2">
+                  +{artisan.phoneNumber}
+                </h5>{" "}
+                <div className="btn-group" role="group">
+                  <a href={`tel:+${artisan.phoneNumber}`}>
+                    {" "}
+                    <button type="button" className="btn btn-primary">
+                      Call
+                    </button>
+                  </a>
+                  {/* <!-- Use %20 instead of spaces, + for country code --> */}
+                  <a
+                    href={`sms:+${artisan.phoneNumber}?body=Question%20from%20me`}
+                  >
+                    <button type="button" className="btn btn-primary">
+                      SMS
+                    </button>
+                  </a>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => copyLinkFunction(`+${artisan.phoneNumber}`)}
+                  >
+                    Copy
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>to become a verified artisan</>
+            )}
+            <br />{" "}
+          </ModalComponent>
+          <div className="containers h-100">
             <div className="main-area">
               <div className="top-section">
                 {/* <!--  --> */}
@@ -65,9 +288,7 @@ function ArtisansProfile() {
                   <img
                     src={`${
                       artisan.avatar === ""
-                        ? artisan.gender === "male"
-                          ? "https://st4.depositphotos.com/9998432/20073/v/1600/depositphotos_200738870-stock-illustration-default-placeholder-businessman-half-length.jpg"
-                          : "https://st3.depositphotos.com/9998432/19099/v/1600/depositphotos_190990184-stock-illustration-default-placeholder-businesswoman-half-length.jpg"
+                        ? "https://via.placeholder.com/100x100"
                         : artisan.avatar
                     }`}
                     alt="Profile picture"
@@ -155,51 +376,33 @@ function ArtisansProfile() {
                   </ul>
                 </div>
               </div>
-
               <div className="contact-div">
                 <ChatPopUp artisan={artisan} />
 
-                <button className="contact-button">
-                  <font-awesome-icon icon="fas fa-phone" />
-                  Request a Call
+                <button
+                  className="contact-button"
+                  onClick={() => {
+                    handelHire();
+                  }}
+                >
+                  <FaRegHandshake className="mx-1" />
+                  Hire
                 </button>
               </div>
-
               <hr />
               {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
-
-              {/* <div className="featured-projects">
+              <div className="featured-projects">
                 <h4>Featured Projects</h4>
-                {/* 6 photos * /}
-                {/* <div className="image-flex">
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                  <img
-                    src="https://production-next-images-cdn.thumbtack.com/i/461310836399915022/desktop/retina/centered_large_thumb"
-                    alt=""
-                  />
-                </div> * /}
-              </div>
-              <hr /> */}
+                {artisan.workImage.length} photos
+                <div className="image-flex">
+                  {artisan.workImage.map((work) => {
+                    const { image, about } = work;
 
+                    return <ModalImage imgUrl={image} about={about} />;
+                  })}
+                </div>
+              </div>
+              <hr />
               <div className="reviews">
                 <h3>Reviews</h3>
                 Customers rated this pro highly for professionalism, work
@@ -212,65 +415,78 @@ function ArtisansProfile() {
                 Your trust means everything to us. Learn about our review
                 guidelines.
               </div>
-
               <hr />
-
               <div className="reviews-div">
-                {artisan.reviews.map((review, i) => (
-                  <div className="review" key={`artisanReview${i}`}>
-                    <div className="name-pix d-flex my-2">
-                      <img
-                        src="https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp"
-                        alt=""
-                        className=""
-                        width="60"
-                      />
-                      <div className="">
-                        <h4>{review.fullName}</h4>
-                        <StarComponent rate="5" />
-                        {review.hiredOnThumbtack ? (
-                          <span>Hired on Thumbtack</span>
-                        ) : null}
-                      </div>
-                      <span className="ms-auto"> {review.date}</span>
-                    </div>
-                    <div className="distribution">{review.review}</div>
-                  </div>
-                ))}
-              </div>
-              <hr />
+                <div className="reviews">
+                  {artisan.reviews.length === 0 ? (
+                    <h5 className="text-muted text-center">No Review</h5>
+                  ) : (
+                    <>
+                      {" "}
+                      {artisan.reviews.map((review, i) => (
+                        <div className="review" key={`artisanReview${i}`}>
+                          <div className="d-flex">
+                            <img src={review.avatar} width="60" height={"60"} />
+                            <div className="name-pix d-flex flex-column-reverse  w-100 flex-md-row my-2">
+                              <div className=" ">
+                                <h4 className="m-0">{review.fullName}</h4>
+                                <div className="star-div">
+                                  <StarComponent rate={review.rate} />
+                                </div>
+                              </div>
+                              <sup className="ms-md-auto ms-0 me-md-0 me-auto">
+                                {decodeDate(review.date)[0]}
+                              </sup>
+                            </div>
+                          </div>
+                          <div className="distribution">{review.review}</div>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+                <div className="form-div">
+                  {/* <hr /> */}
+                  <div className="d-flex flex-column flex-md-row">
+                    <textarea
+                      className="form-control"
+                      placeholder="Write a review on this artisan"
+                      cols="5"
+                      rows="3"
+                      value={artisanReviewInput}
+                      onChange={(e) => {
+                        setArtisanReviewInput(e.target.value);
+                      }}
+                    ></textarea>
 
-              <div className="specialties">
+                    <button
+                      className="btn-primary btn h-25 mx-1 mt-auto"
+                      onClick={() => {
+                        giveArtisanReview();
+                      }}
+                    >
+                      Review
+                    </button>
+                  </div>
+                  <ReviewStarComponent
+                    rate={artisanRateInput}
+                    setRate={setArtisanRateInput}
+                  />
+                </div>
+              </div>
+              {/*  <hr />
+               <div className="specialties">
                 <h4>Specialties</h4>
                 <b>Fixture type</b> <br />
                 <ul className="nav my-auto">
                   <font-awesome-icon icon="fas fa-check" className="my-auto" />
                 </ul>
-              </div>
-
-              <hr />
-              {/* 
-              <div className="credentials">
-                <h4>Credentials</h4>
-                <span v-if="artisanProfile.backgroundChecked">
-                  <b>
-                    Background Check
-                    <font-awesome-icon icon="fas fa-check" />
-                  </b>
-                  <p>Jonathan Mcconnell</p>
-                </span>
-
-                <a href="#">View credential details</a>
-              </div>
-
-              <hr />
-              <div className="faqs">
-                <h4>FAQs</h4>
               </div> */}
+              <hr />
             </div>
             {/* main area */}
 
-            <div className="card-area">
+            {/* <div className="card-area">
               <div className="form-card">
                 <form action="">
                   <font-awesome-icon icon="fas fa-comment" /> contact for price
@@ -301,7 +517,7 @@ function ArtisansProfile() {
                   </p>
                 </form>
               </div>
-            </div>
+            </div> */}
           </div>
           <Footer />
         </div>
