@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import PaymentForm from "../PaymentForm/PaymentForm";
 import "./ModalComponent.scss";
+import { FaCheckCircle } from "react-icons/fa";
 
 function ModalComponent({ btnText, modalTitle, children, modalId }) {
   return (
@@ -95,18 +96,24 @@ export function PaymentModalComponent() {
             </div>
             <div className="modal-body">
               {/*==================================== Show a second modal and hide this one with the button below. ==================================== */}
-              <h1>Select Subscription Plan</h1>
+              {/* <h1 >Select Subscription Plan</h1> */}
 
               <div className="container subscription-plane">
                 <div className="row">
-                  <div className="col-md-4">
-                    <div className="card">
-                      {/* <img src="img.jpg" alt="John" style="width:100%"> */}
-                      <h1>Starter Plan</h1>
-                      <p className="title">Free</p>
+                  {/* <div className="col-md-4">
+                    <div class="card shadow">
+                      {/* <img src="img.jpg" alt="John" style="width:100%"> * /}
+                      <h3 className="pt-3">Starter Plan</h3>
+                      <p class="title">Free</p>
                       <p>Give it a try</p>
                       <ul>
-                        <li>5 hires</li>
+                        <li>
+                          <span>
+                            <font-awesome-icon icon="fa-solid fa-circle-check" />
+                            <FaCheckCircle className="check-icon" />
+                          </span>
+                          <span className="px-3">5 hires</span>
+                        </li>
                         <li></li>
                         <li></li>
                         <li></li>
@@ -129,18 +136,35 @@ export function PaymentModalComponent() {
                         </button>
                       </p>
                     </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="card">
+                  </div> */}
+                  <div className="col-md-6">
+                    <div class="card shadow bg-dark text-white">
                       {/* <img src="img.jpg" alt="John" style="width:100%"> */}
-                      <h1>Grinder</h1>
-                      <p className="title">1000/monthly</p>
-                      <p>Become a Grinder</p>
+                      <h3 className="pt-3">Grinder</h3>
+                      <p class="title">1000/monthly</p>
+                      <p>Subscribe for “Grinders” and enjoy:</p>
                       <ul>
-                        <li>Unlimited hires</li>
-                        <li>Profile Promotion</li>
-                        <li></li>
-                        <li></li>
+                        <li>
+                          <span>
+                            <font-awesome-icon icon="fa-solid fa-circle-check" />
+                            <FaCheckCircle className="check-icon" />
+                          </span>
+                          <span className="px-3">Unlimited Job leads</span>
+                        </li>
+                        <li>
+                          <span>
+                            <font-awesome-icon icon="fa-solid fa-circle-check" />
+                            <FaCheckCircle className="check-icon" />
+                          </span>
+                          <span className="px-3">Profile Recommendation</span>
+                        </li>
+                        <li>
+                          <span>
+                            <font-awesome-icon icon="fa-solid fa-circle-check" />
+                            <FaCheckCircle className="check-icon" />
+                          </span>
+                          <span className="px-3">Profile Promotion</span>
+                        </li>
                       </ul>
                       <p>
                         <button
@@ -161,17 +185,36 @@ export function PaymentModalComponent() {
                       </p>
                     </div>
                   </div>
-                  <div className="col-md-4">
-                    <div className="card">
+                  <div className="col-md-6">
+                    <div class="card shadow">
                       {/* <img src="img.jpg" alt="John" style="width:100%"> */}
-                      <h1>Grinder Unique</h1>
-                      <p className="title">4500/6month</p>
-                      <p>Become Grinder Unique</p>
+                      <h3 className="pt-3">Grinder Unique</h3>
+                      <p class="title">4500/6month</p>
+                      <p className="text">
+                        Subscribe for “Grinders Unique” and enjoy:
+                      </p>
                       <ul>
-                        <li>Unlimited hires</li>
-                        <li>Profile Promotion</li>
-                        <li></li>
-                        <li></li>
+                        <li>
+                          <span>
+                            <font-awesome-icon icon="fa-solid fa-circle-check" />
+                            <FaCheckCircle className="check-icon" />
+                          </span>
+                          <span className="px-3">Unlimited Job leads</span>
+                        </li>
+                        <li>
+                          <span>
+                            <font-awesome-icon icon="fa-solid fa-circle-check" />
+                            <FaCheckCircle className="check-icon" />
+                          </span>
+                          <span className="px-3">Profile Recommendation</span>
+                        </li>
+                        <li>
+                          <span>
+                            <font-awesome-icon icon="fa-solid fa-circle-check" />
+                            <FaCheckCircle className="check-icon" />
+                          </span>
+                          <span className="px-3">Profile Promotion</span>
+                        </li>
                       </ul>
                       <p>
                         <button

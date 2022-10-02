@@ -15,6 +15,7 @@ import HomePage from "./pages/Home/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import NotificationPage from "./pages/Notification/NotificationPage";
 import VerifyUserPage from "./pages/VerifyUserPage/VerifyUserPage";
+import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage"
 import UsersPage from "./pages/UserPage/UserPage";
 import CreateAdminPage from "./pages/CreateAdminPage/CreateAdminPage";
 import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
@@ -22,7 +23,6 @@ import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import ReactGa from "react-ga";
-import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage";
 import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./context/UserContext";

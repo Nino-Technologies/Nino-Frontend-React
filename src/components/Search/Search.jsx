@@ -5,7 +5,7 @@ import { SearchContext } from "../../context/SearchContext";
 
 function Search() {
   const {
-    handelSearchFunction,
+    handleSearchFunction,
     formService,
     setFormService,
     formLocationCity,
@@ -19,7 +19,7 @@ function Search() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handelSearchFunction();
+          handleSearchFunction();
         }}
       >
         <label>

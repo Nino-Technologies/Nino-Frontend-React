@@ -133,12 +133,28 @@ function ContactUsPage() {
                     </ul>
                     <ul className="list-group list-group-horizontal py-5">
                       <li className="list-group-item">
-                        <a href="https://instagram.com/grinders.ng?igshid=NDRkN2NkYzU=">
+                        <a
+                          href="https://instagram.com/grinders.ng?igshid=NDRkN2NkYzU="
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <font-awesome-icon
+                            icon="fa-brands fa-instagram"
+                            className="contact-icon"
+                          />
                           <FaInstagram className="contact-icon" />
                         </a>
                       </li>
                       <li className="list-group-item">
-                        <a href="https://twitter.com/grindersng?s=11&t=SFCC7Y_4_ex06S9A1Bd3TQ">
+                        <a
+                          href="https://twitter.com/grindersng?s=11&t=SFCC7Y_4_ex06S9A1Bd3TQ"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <font-awesome-icon
+                            icon="fa-brands fa-twitter"
+                            className="contact-icon"
+                          />
                           <FaTwitter className="contact-icon" />
                         </a>
                       </li>
