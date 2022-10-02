@@ -3,16 +3,19 @@ import { Outlet, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import Nav, { DashboardSideNav } from "../../components/Nav/Nav";
 import { UserContext } from "../../context/UserContext";
+import { useEffect } from "react";
 
 function Dashboard() {
-  const { loggedIn } = useContext(UserContext);
+  const { loggedIn, getUserProfile } = useContext(UserContext);
   const [sideNavOpen, setSideNavOpen] = useState(false);
   const navigate = useNavigate();
 
   if (loggedIn === false) {
     navigate("/404");
   }
-
+  useEffect(() => {
+    getUserProfile();
+  }, []);
   return (
     <div className="Dashboard">
       <input

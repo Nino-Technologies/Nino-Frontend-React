@@ -28,12 +28,7 @@ function ProfileCard({ artisan }) {
         <div className="image-div">
           <img
             src={`${
-              // remove the ! for proper use
-              avatar !== ""
-                ? gender === "male"
-                  ? "https://st4.depositphotos.com/9998432/20073/v/1600/depositphotos_200738870-stock-illustration-default-placeholder-businessman-half-length.jpg"
-                  : "https://st3.depositphotos.com/9998432/19099/v/1600/depositphotos_190990184-stock-illustration-default-placeholder-businesswoman-half-length.jpg"
-                : avatar
+              avatar === "" ? "https://via.placeholder.com/100x100" : avatar
             }`}
             alt="Profile picture"
             className="w-100"

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Nav.scss";
 import navImage from "../../assets/images/grinders.png";
@@ -19,7 +19,7 @@ function Nav() {
     <nav className="navbar navbar-expand-lg navbar-light bg-white">
       <div className="container container-fluid px-4">
         <Link className="navbar-brand" to={"/"}>
-        <img src={navImage} alt="working-man" className="logo-image" />
+          <img src={navImage} alt="working-man" className="logo-image" />
         </Link>
         <button
           className="navbar-toggler"
@@ -33,7 +33,10 @@ function Nav() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse justify-content-center text-center" id="navbarNav">
+        <div
+          className="collapse navbar-collapse justify-content-center text-center"
+          id="navbarNav"
+        >
           <ul className="navbar-nav">
             <li className="nav-item effect px-3 ">
               <Link to="/" className="nav-link active" aria-current="page">
@@ -93,14 +96,14 @@ function Nav() {
 export default Nav;
 
 export const NavProfilePicture = () => {
-  // const { userInformation } = useContext(UserContext);
+  const { userProfile } = useContext(UserContext);
 
   return (
     <div className="ms-au to my-auto">
       {/* <b> {userInformation.userName}</b> */}
       <img
-        src="https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp"
-        // src={profilePicture}
+        // src="https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp"
+        src={userProfile.avatar}
         className="NavProfilePicture ms-2"
         alt="NavProfilePicture"
       />
@@ -110,15 +113,11 @@ export const NavProfilePicture = () => {
 
 export const NavMenuComponent = ({ setLoggedIn }) => {
   const [navMenuComponent, setNavMenuComponent] = useState(false);
-  const { logOutFunction } = useContext(UserContext);
+  const { logOutFunction, getUserProfile } = useContext(UserContext);
 
-  // const navigate = useNavigate();
-  // function logout() {
-  //   window.confirm("logout?") && setLoggedIn(false);
-  //   navigate("/");
-  // }
-
-  // const { logOut } = useContext(UserContext);
+  useEffect(() => {
+    getUserProfile();
+  }, []);
   return (
     <>
       {" "}
@@ -185,16 +184,16 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
         {userNavLinkObject.map((link, i) => {
           const { name, icon, path, userPrivilege } = link;
           return (
-            <>
+            <React.Fragment key={i}>
               {role >= userPrivilege ? (
-                <li key={i}>
+                <li>
                   <Link to={path}>
                     <div className="side-nav-icon">{icon}</div>
                     <span className="nav-link-name">{name}</span>
                   </Link>
                 </li>
               ) : null}
-            </>
+            </React.Fragment>
           );
         })}
         {role === 0 ? (
