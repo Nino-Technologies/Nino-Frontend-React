@@ -158,13 +158,6 @@ function ContactUsPage() {
                           <FaTwitter className="contact-icon" />
                         </a>
                       </li>
-                      <li className="list-group-item">
-                        <font-awesome-icon
-                          icon="fa-brands fa-linkedin-in"
-                          className="contact-icon"
-                        />
-                        <FaLinkedin className="contact-icon" />
-                      </li>
                     </ul>
                   </div>
                 </div>
