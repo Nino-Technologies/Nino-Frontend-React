@@ -23,7 +23,6 @@ import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import ReactGa from "react-ga";
-import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage";
 import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
 
 const TRACKING_ID = "G-C3G25DKRJC";
