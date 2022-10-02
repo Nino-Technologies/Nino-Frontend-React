@@ -12,27 +12,33 @@
     text-align: center;
     font-size: 2.5em;
   }
-  .image-body {
-    top: 0;
-    right: 0;
-    width: 50%;
-    min-height: 100vh;
-    padding: 45px 60px 60px 60px;
-    position: absolute;
-    /* z-index: 1; */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position-y: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("https://images.pexels.com/photos/2760343/pexels-photo-2760343.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-  }
+  // .image-body {
+  //   display: none;
+  //   margin: 0 auto;
+  //   // width: 100%;
+  //   top: 0;
+  //   right: 0;
+  //   width: 100%;
+  //   min-height: 100vh;
+  //   padding: 45px 60px 60px 60px;
+  //   position: absolute;
+  //   /* z-index: 1; */
+  //   background-size: cover;
+  //   background-repeat: no-repeat;
+  //   background-position-y: center;
+  //   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  //     url("https://images.pexels.com/photos/2760343/pexels-photo-2760343.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  // }
   .form-section {
     top: 0;
     left: 0;
-    width: 50%;
+    width: 100%;
     z-index: 1;
     min-height: 100vh;
     position: absolute;
+    .container {
+      max-width: 500px;
+    }
   }
   .btn-primary {
     width: 100%;
@@ -88,10 +94,10 @@
     .form-section {
       width: 100%;
       color: #ffffff;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("https://images.pexels.com/photos/2760343/pexels-photo-2760343.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+      // background-repeat: no-repeat;
+      // background-size: cover;
+      // background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      //   url("https://images.pexels.com/photos/2760343/pexels-photo-2760343.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
     }
     .form-layout {
       background-color: #fff;
@@ -113,9 +119,9 @@
       color: #ffffff;
       background-color: transparent;
     }
-    .image-body {
-      display: none;
-    }
+    // .image-body {
+    //   display: none;
+    // }
     .form-text {
       font-size: 1em;
       color: #ffffff;

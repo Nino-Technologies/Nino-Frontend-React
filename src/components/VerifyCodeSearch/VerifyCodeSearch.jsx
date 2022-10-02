@@ -11,37 +11,28 @@ import VerifyCodeSuccess from "../../components/VerifyCodeSuccess/VerifyCodeSucc
 function VerifyCodeSearch() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { apiUrl } = useContext(UserContext);
+  const { apiUrl, loggedIn } = useContext(UserContext);
 
   async function verifyEmailFunction(e) {
     e.preventDefault();
 
     const formElement = e.target;
 
-    if (
-      formElement[0].value === "" ||
-      formElement[1].value === "" ||
-      formElement[2].value === "" ||
-      formElement[3].value === ""
-    ) {
+    if (formElement[0].value === "") {
       toast.info("Fill verification code");
       return;
     }
 
-    const otp =
-      formElement[0].value +
-      formElement[1].value +
-      formElement[2].value +
-      formElement[3].value;
+    const otp = formElement[0].value;
     const data = {
       otp: otp,
-      email: "test email",
+      email: "victorjosiahm3@gmail.com",
     };
 
     console.log(data);
     // axios POST request
     const options = {
-      url: `${apiUrl}/auth/user/register`,
+      url: `${apiUrl}/sendMail/otp/verify`,
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -50,22 +41,29 @@ function VerifyCodeSearch() {
       data: data,
     };
 
-    // axios(options)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     toast.success("Registration Successful");
-    //     // navigate("/login?as=user");
-    //     navigate("/verify-code");
-    //   })
-    //   .catch((error) => {
-    //     if (error.response.status === 400) {
-    //       return toast.error(error.response.data.message);
-    //     }
-    //     toast.error(error.message);
-    //   });
+    axios(options)
+      .then((response) => {
+        console.log(response.data);
+        toast.success("Verification Successful");
+        {
+          loggedIn
+            ? navigate("./dashboard/profile")
+            : navigate("/login?as=user");
+        }
+        // navigate("/verify-code");
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
   }
   return (
     <div className="verify">
+      <p className="sub">
+        Enter Four digit verification code sent to your number or e-mail
+      </p>
       <form
         className="container"
         onSubmit={(e) => {
@@ -73,14 +71,14 @@ function VerifyCodeSearch() {
         }}
       >
         <div className="form">
-          <input type="number" className="form-control" />
-          <input type="number" className="form-control" />
-          <input type="number" className="form-control" />
-          <input type="number" className="form-control" />
+          <input
+            type="number"
+            className="form-control w-100 w-md-50"
+            style={{ maxWidth: "200px" }}
+          />
         </div>
         <button type="submit">Verify</button>
         <br />
-        <button type="button">Resend code</button>
       </form>
     </div>
   );

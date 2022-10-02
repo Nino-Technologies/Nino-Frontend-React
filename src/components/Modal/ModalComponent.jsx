@@ -2,9 +2,7 @@ import React from "react";
 import { useState } from "react";
 import PaymentForm from "../PaymentForm/PaymentForm";
 import "./ModalComponent.scss";
-import {
-  FaCheckCircle
-} from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 
 function ModalComponent({ btnText, modalTitle, children, modalId }) {
   return (
@@ -25,7 +23,7 @@ function ModalComponent({ btnText, modalTitle, children, modalId }) {
         id={`${modalId}`}
         data-bs-backdrop="static"
         data-bs-keyboard="false"
-        tabindex="-1"
+        tabIndex="-1"
         // aria-labelledby={`${modalId}Label`}
         aria-hidden="true"
       >
@@ -76,27 +74,27 @@ export function PaymentModalComponent() {
   return (
     <div className="PaymentModalComponent">
       <div
-        class="modal fade"
+        className="modal fade"
         id="paymentModalToggle"
         aria-hidden="true"
         aria-labelledby="paymentModalToggleLabel"
-        tabindex="-1"
+        tabIndex="-1"
       >
-        {/* <div class="modal-dialog modal-dialog-centered"> */}
-        <div class="modal-dialog modal-fullscreen">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="paymentModalToggleLabel">
+        {/* <div className="modal-dialog modal-dialog-centered"> */}
+        <div className="modal-dialog modal-fullscreen">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="paymentModalToggleLabel">
                 Select Subscription
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               {/*==================================== Show a second modal and hide this one with the button below. ==================================== */}
               <h1>Select Subscription Plan</h1>
 
@@ -112,11 +110,9 @@ export function PaymentModalComponent() {
                         <li>
                           <span>
                             <font-awesome-icon icon="fa-solid fa-circle-check" />
-                            <FaCheckCircle className="check-icon"/>
+                            <FaCheckCircle className="check-icon" />
                           </span>
-                          <span className="px-3">
-                            5 hires
-                          </span>
+                          <span className="px-3">5 hires</span>
                         </li>
                         <li></li>
                         <li></li>
@@ -151,29 +147,23 @@ export function PaymentModalComponent() {
                         <li>
                           <span>
                             <font-awesome-icon icon="fa-solid fa-circle-check" />
-                            <FaCheckCircle className="check-icon"/>
+                            <FaCheckCircle className="check-icon" />
                           </span>
-                          <span className="px-3">
-                            Unlimited Job leads
-                          </span>
+                          <span className="px-3">Unlimited Job leads</span>
                         </li>
                         <li>
                           <span>
                             <font-awesome-icon icon="fa-solid fa-circle-check" />
-                            <FaCheckCircle className="check-icon"/>
+                            <FaCheckCircle className="check-icon" />
                           </span>
-                          <span className="px-3">
-                            Profile Recommendation
-                          </span>
+                          <span className="px-3">Profile Recommendation</span>
                         </li>
                         <li>
                           <span>
                             <font-awesome-icon icon="fa-solid fa-circle-check" />
-                            <FaCheckCircle className="check-icon"/>
+                            <FaCheckCircle className="check-icon" />
                           </span>
-                          <span className="px-3">
-                            Profile Promotion
-                          </span>
+                          <span className="px-3">Profile Promotion</span>
                         </li>
                       </ul>
                       <p>
@@ -200,34 +190,30 @@ export function PaymentModalComponent() {
                       {/* <img src="img.jpg" alt="John" style="width:100%"> */}
                       <h3 className="pt-3">Grinder Unique</h3>
                       <p class="title">4500/6month</p>
-                      <p className="text">Subscribe for “Grinders Unique” and enjoy:</p>
+                      <p className="text">
+                        Subscribe for “Grinders Unique” and enjoy:
+                      </p>
                       <ul>
                         <li>
                           <span>
                             <font-awesome-icon icon="fa-solid fa-circle-check" />
-                            <FaCheckCircle className="check-icon"/>
+                            <FaCheckCircle className="check-icon" />
                           </span>
-                          <span className="px-3">
-                            Unlimited Job leads
-                          </span>
+                          <span className="px-3">Unlimited Job leads</span>
                         </li>
                         <li>
                           <span>
                             <font-awesome-icon icon="fa-solid fa-circle-check" />
-                            <FaCheckCircle className="check-icon"/>
+                            <FaCheckCircle className="check-icon" />
                           </span>
-                          <span className="px-3">
-                            Profile Recommendation
-                          </span>
+                          <span className="px-3">Profile Recommendation</span>
                         </li>
                         <li>
                           <span>
                             <font-awesome-icon icon="fa-solid fa-circle-check" />
-                            <FaCheckCircle className="check-icon"/>
+                            <FaCheckCircle className="check-icon" />
                           </span>
-                          <span className="px-3">
-                            Profile Promotion
-                          </span>
+                          <span className="px-3">Profile Promotion</span>
                         </li>
                       </ul>
                       <p>
@@ -253,9 +239,9 @@ export function PaymentModalComponent() {
               </div>
               {/* =========================================== </> =============================================== */}
             </div>
-            {/* <div class="modal-footer">
+            {/* <div className="modal-footer">
               <button
-                class="btn btn-primary"
+                className="btn btn-primary"
                 data-bs-target="#paymentModalToggle2"
                 data-bs-toggle="modal"
                 data-bs-dismiss="modal"
@@ -267,35 +253,35 @@ export function PaymentModalComponent() {
         </div>
       </div>
       <div
-        class="modal fade"
+        className="modal fade"
         id="paymentModalToggle2"
         aria-hidden="true"
         aria-labelledby="paymentModalToggleLabel2"
-        tabindex="-1"
+        tabIndex="-1"
       >
-        {/* <div class="modal-dialog modal-dialog-centered"> */}
-        <div class="modal-dialog modal-fullscreen">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="paymentModalToggleLabel2">
+        {/* <div className="modal-dialog modal-dialog-centered"> */}
+        <div className="modal-dialog modal-fullscreen">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="paymentModalToggleLabel2">
                 Pay for Subscription
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 id="closePaymentModal"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               {/* ======================================== Hide this modal and show the first with the button below. ================================ */}
               <PaymentForm selectedPlane={selectedPlane} />
               {/* ======================================== </> ================================ */}
             </div>
-            <div class="modal-footer p-1">
+            <div className="modal-footer p-1">
               <button
-                class="btn btn-primary m-0 btn-sm"
+                className="btn btn-primary m-0 btn-sm"
                 data-bs-target="#paymentModalToggle"
                 data-bs-toggle="modal"
                 data-bs-dismiss="modal"

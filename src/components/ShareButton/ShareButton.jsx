@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import {
   FaFacebook,
-  FaInstagram,
   FaRegClipboard,
   FaShareSquare,
   FaTwitter,
@@ -19,7 +18,6 @@ function ShareButton({ id }) {
   async function copyURL(id) {
     try {
       await navigator.clipboard.writeText(profileUrl);
-      // alert("Copied");
       toast.info("Link Copied");
     } catch {
       toast.error("Error copying link");
@@ -37,14 +35,9 @@ function ShareButton({ id }) {
           target="_blank"
           rel="noopener"
         >
-          {/* <i class="fab fa-2x fa-facebook-square"></i> */}
           <FaFacebook />
         </a>
-        {/* <a href="#">
-        </a> */}
-        {/* <a href="#">
-          <FaInstagram />
-        </a> */}
+
         <a
           title="Share on facebook"
           href={`
@@ -57,7 +50,7 @@ https://twitter.com/intent/tweet?text=Artisan%20profile ${profileUrl}&original_r
         </a>
         <FaRegClipboard onClick={() => copyURL(id)} className="my-auto" />
       </div>
-      <button for="toggle-share" onClick={() => toggleVisibility()}>
+      <button htmlFor="toggle-share" onClick={() => toggleVisibility()}>
         <FaShareSquare /> Share
       </button>
     </div>

@@ -4,7 +4,8 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 700px;
+  // min-height: 700px;
+  // max-height: 560px;
   overflow: hidden;
   .image-div,
   .text-div {
@@ -19,6 +20,9 @@
     flex-direction: column;
     justify-content: center;
     padding: 0 30px;
+    .smallHeroImage {
+      display: none;
+    }
     .box {
       border: solid;
     }
@@ -133,6 +137,9 @@
         position: absolute;
         background-repeat: no-repeat;
         background-image: url("../../assets/images/hero-section-image-design-small.png");
+      }
+      .smallHeroImage {
+        display: block;
       }
     }
   }
