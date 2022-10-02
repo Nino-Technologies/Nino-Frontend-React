@@ -2,7 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Nav from "../../components/Nav/Nav";
-import StarComponent from "../../components/stars/Stars";
+import StarComponent, {
+  ReviewStarComponent,
+} from "../../components/stars/Stars";
 import ChatPopUp from "../../components/ChatPopUp/ChatPopUp";
 import PageLoading from "../../components/PageLoading/PageLoading";
 import "./ArtisansProfile.scss";
@@ -12,8 +14,6 @@ import { UserContext } from "../../context/UserContext";
 import { toast } from "react-toastify";
 import {
   FaMapMarked,
-  FaNetworkWired,
-  FaPhone,
   FaRegHandshake,
   FaShieldAlt,
   FaTrophy,
@@ -31,9 +31,9 @@ function ArtisansProfile() {
   const [pageLoading, setPageLoading] = useState(true);
   const [showArtisansNumber, setShowArtisansNumber] = useState(false);
   const [artisanReviewInput, setArtisanReviewInput] = useState("");
-  const [artisanRateInput, setArtisanRateInput] = useState("");
+  const [artisanRateInput, setArtisanRateInput] = useState(1);
   const navigate = useNavigate();
-  const { apiUrl, loggedIn, userProfile, getUserProfile } =
+  const { apiUrl, loggedIn, userProfile, getUserProfile, decodeDate } =
     useContext(UserContext);
   const [cookies] = useCookies();
 
@@ -85,7 +85,6 @@ function ArtisansProfile() {
       message: object.message,
       to: `+${object.to}`,
     };
-    console.log(data);
     const options = {
       // url: `http://localhost:5000/api/notification`,
       url: `${apiUrl}/sendMail/notify`,
@@ -148,7 +147,6 @@ function ArtisansProfile() {
       to: artisan.phoneNumber,
     });
 
-    return;
     axios(options)
       .then((response) => {})
       .catch((error) => {
@@ -207,6 +205,7 @@ function ArtisansProfile() {
           toast.info("Review saved");
           setArtisanReviewInput("");
           setArtisanRateInput("");
+          getProfile(id);
         }
       })
       .catch((error) => {
@@ -418,33 +417,36 @@ function ArtisansProfile() {
               </div>
               <hr />
               <div className="reviews-div">
-                {artisan.reviews.length === 0 ? (
-                  <h5 className="text-muted text-center">No Review</h5>
-                ) : (
-                  <>
-                    {" "}
-                    {artisan.reviews.map((review, i) => (
-                      <div className="review" key={`artisanReview${i}`}>
-                        <div className="name-pix d-flex my-2">
-                          <img
-                            src={review.avatar}
-                            alt=""
-                            className=""
-                            width="60"
-                          />
-                          <div className="">
-                            <h4>{review.fullName}</h4>
-                            <StarComponent rate={review.rate} />
+                <div className="reviews">
+                  {artisan.reviews.length === 0 ? (
+                    <h5 className="text-muted text-center">No Review</h5>
+                  ) : (
+                    <>
+                      {" "}
+                      {artisan.reviews.map((review, i) => (
+                        <div className="review" key={`artisanReview${i}`}>
+                          <div className="d-flex">
+                            <img src={review.avatar} width="60" height={"60"} />
+                            <div className="name-pix d-flex flex-column-reverse  w-100 flex-md-row my-2">
+                              <div className=" ">
+                                <h4 className="m-0">{review.fullName}</h4>
+                                <div className="star-div">
+                                  <StarComponent rate={review.rate} />
+                                </div>
+                              </div>
+                              <sup className="ms-md-auto ms-0 me-md-0 me-auto">
+                                {decodeDate(review.date)[0]}
+                              </sup>
+                            </div>
                           </div>
-                          <span className="ms-auto"> {review.date}</span>
+                          <div className="distribution">{review.review}</div>
                         </div>
-                        <div className="distribution">{review.review}</div>
-                      </div>
-                    ))}
-                  </>
-                )}
+                      ))}
+                    </>
+                  )}
+                </div>
                 <div className="form-div">
-                  <hr />
+                  {/* <hr /> */}
                   <div className="d-flex flex-column flex-md-row">
                     <textarea
                       className="form-control"
@@ -456,15 +458,7 @@ function ArtisansProfile() {
                         setArtisanReviewInput(e.target.value);
                       }}
                     ></textarea>
-                    <input
-                      type="text"
-                      className="form-control w-100 w-md-25"
-                      placeholder="rate  (1-5)"
-                      value={artisanRateInput}
-                      onChange={(e) => {
-                        setArtisanRateInput(e.target.value);
-                      }}
-                    />
+
                     <button
                       className="btn-primary btn h-25 mx-1 mt-auto"
                       onClick={() => {
@@ -474,6 +468,10 @@ function ArtisansProfile() {
                       Review
                     </button>
                   </div>
+                  <ReviewStarComponent
+                    rate={artisanRateInput}
+                    setRate={setArtisanRateInput}
+                  />
                 </div>
               </div>
               {/*  <hr />

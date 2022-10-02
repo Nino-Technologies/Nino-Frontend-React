@@ -21,10 +21,10 @@ function ContactUsPage() {
 
     emailjs
       .sendForm(
-        "service_myg64tp", // "YOUR_SERVICE_ID",
-        "template_q2yam8k", // "YOUR_TEMPLATE_ID",
+        "service_4xoj8n8", // "YOUR_SERVICE_ID",
+        "template_do8d6pa", // "YOUR_TEMPLATE_ID",
         form.current,
-        "lZ3AlEihULIGJlYbV" // "YOUR_PUBLIC_KEY"
+        "HWU7Rd-qnGwJVtzBN" // "YOUR_PUBLIC_KEY"
       )
       .then(
         (result) => {
@@ -91,7 +91,7 @@ function ContactUsPage() {
                   </div>
 
                   <div className="mb-3">
-                    <label for="message" className="form-label">
+                    <label htmlFor="message" className="form-label">
                       Leave a Message
                     </label>
                     <textarea

@@ -27,9 +27,9 @@ const ModalImage = ({ imgUrl, about }) => {
       />
 
       {/* <!-- The Modal --> */}
-      <div id="myModal" style={showModel} class="modal">
+      <div id="myModal" style={showModel} className="modal">
         {/* <!-- The Close Button --> */}
-        <span class="close" onClick={close}>
+        <span className="close" onClick={close}>
           &times;
         </span>
 
