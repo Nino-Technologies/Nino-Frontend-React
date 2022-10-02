@@ -96,13 +96,13 @@ export function PaymentModalComponent() {
             </div>
             <div className="modal-body">
               {/*==================================== Show a second modal and hide this one with the button below. ==================================== */}
-              <h1>Select Subscription Plan</h1>
+              {/* <h1 >Select Subscription Plan</h1> */}
 
               <div className="container subscription-plane">
                 <div className="row">
-                  <div className="col-md-4">
+                  {/* <div className="col-md-4">
                     <div class="card shadow">
-                      {/* <img src="img.jpg" alt="John" style="width:100%"> */}
+                      {/* <img src="img.jpg" alt="John" style="width:100%"> * /}
                       <h3 className="pt-3">Starter Plan</h3>
                       <p class="title">Free</p>
                       <p>Give it a try</p>
@@ -136,8 +136,8 @@ export function PaymentModalComponent() {
                         </button>
                       </p>
                     </div>
-                  </div>
-                  <div className="col-md-4">
+                  </div> */}
+                  <div className="col-md-6">
                     <div class="card shadow bg-dark text-white">
                       {/* <img src="img.jpg" alt="John" style="width:100%"> */}
                       <h3 className="pt-3">Grinder</h3>
@@ -185,7 +185,7 @@ export function PaymentModalComponent() {
                       </p>
                     </div>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-6">
                     <div class="card shadow">
                       {/* <img src="img.jpg" alt="John" style="width:100%"> */}
                       <h3 className="pt-3">Grinder Unique</h3>
