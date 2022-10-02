@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useState } from "react";
 import "./ArtisanUploadPhoto.scss";
 import ModalImage from "../../components/ModalImage/ModalImage";
 import altImg from "../../assets/images/hero-design.png";
-// import {image} from 'cloudinary-react'
 import { toast } from "react-toastify";
 import { UserContext } from "./../../context/UserContext";
 import axios from "axios";
@@ -115,7 +114,7 @@ function ArtisanUploadPhoto() {
               name=""
               style={{ display: "none" }}
               id="img-input"
-              onChange={(e) => setImageSelected(e.target.files[0])}
+              onChange={(e) => imageHandler(e)}
             />
           </div>
           <textarea
@@ -128,12 +127,10 @@ function ArtisanUploadPhoto() {
         </div>
         <button
           className="btn btn-secondary  my-4"
-          onClick={() => imageHandler()}
+          onClick={() => handelSubmit()}
         >
           submit
         </button>
-        {/* <image cloudName="dajfddyeg" 
-        publicId="https://res.cloudinary.com/dajfddyeg/image/upload/v1664413570/bhvra9kq46xinky0hxfy.jpg"/> */}
       </div>
       <hr />
       {photoList.map((photo) => (
