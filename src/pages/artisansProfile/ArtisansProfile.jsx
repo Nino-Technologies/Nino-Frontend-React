@@ -23,11 +23,13 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import moment from "moment";
 import ModalImage from "./../../components/ModalImage/ModalImage";
+import ModalComponent from "./../../components/Modal/ModalComponent";
 
 function ArtisansProfile() {
   const { id } = useParams();
   const [artisan, setArtisan] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
+  const [showArtisansNumber, setShowArtisansNumber] = useState(false);
   const [artisanReviewInput, setArtisanReviewInput] = useState("");
   const [artisanRateInput, setArtisanRateInput] = useState("");
   const navigate = useNavigate();
@@ -57,6 +59,107 @@ function ArtisansProfile() {
     }
   }
 
+  // copy link function
+  function copyLinkFunction(text) {
+    let copiedText = text;
+    navigator.clipboard.writeText(copiedText).then(
+      function () {
+        /* success */
+        toast.success("Number Copied");
+      },
+      function () {
+        /* failure */
+        toast.error("error copying number");
+      }
+    );
+  }
+
+  function phoneMessage(object) {
+    if (object.to === "" || !object.to) {
+      return toast.info("Artisan number not gotten");
+    }
+    if (object.message === "" || !object.message) {
+      return toast.info("Message not set not gotten");
+    }
+    let data = {
+      message: object.message,
+      to: `+${object.to}`,
+    };
+    console.log(data);
+    const options = {
+      // url: `http://localhost:5000/api/notification`,
+      url: `${apiUrl}/sendMail/notify`,
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: cookies.grinderUser.token,
+      },
+      data: data,
+    };
+    if (
+      !window.confirm(
+        "A notification will be sent to artisan their number was requested"
+      )
+    ) {
+      return;
+    }
+    //  CLike the model button with js
+    window.document.getElementById("request_artisan_number_button").click();
+    // return;
+    axios(options)
+      .then((response) => {
+        if (response.ok) {
+          setShowArtisansNumber(true);
+        }
+      })
+      .catch((error) => {
+        // setLoading(false);
+        console.log(error.message);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
+  }
+
+  // console.log(artisan.phoneNumber);
+  function handelHire() {
+    if (!loggedIn) {
+      toast.info("Login First");
+    }
+    let data = {
+      message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
+      privilege: artisan._id,
+    };
+    const options = {
+      // url: `http://localhost:5000/api/notification`,
+      url: `${apiUrl}/notification`,
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: cookies.grinderUser.token,
+      },
+      data: data,
+    };
+    phoneMessage({
+      message: data.message,
+      to: artisan.phoneNumber,
+    });
+
+    return;
+    axios(options)
+      .then((response) => {})
+      .catch((error) => {
+        // setLoading(false);
+        console.log(error.message);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
+  }
   useEffect(() => {
     if (loggedIn) {
       getUserProfile();
@@ -84,7 +187,7 @@ function ArtisansProfile() {
       review: artisanReviewInput,
     };
     // console.log(moment(Date.now())._d);
-    console.log("Data", userProfile);
+    // console.log("Data", userProfile);
     // axios PUT request
     const options = {
       // url: `http://localhost:5000/api/auth/user/login`,
@@ -101,6 +204,9 @@ function ArtisansProfile() {
     axios(options)
       .then((response) => {
         if (response.data.ok) {
+          toast.info("Review saved");
+          setArtisanReviewInput("");
+          setArtisanRateInput("");
         }
       })
       .catch((error) => {
@@ -125,7 +231,57 @@ function ArtisansProfile() {
         </>
       ) : (
         <div className="ArtisansProfile">
-          <div className="containers bor der h-100">
+          {/* button to open model */}
+          <button
+            type="button"
+            className="button"
+            id="request_artisan_number_button"
+            // hide button; it will be clicked with js
+            style={{ display: "none" }}
+            data-bs-toggle="modal"
+            data-bs-target="#request_artisan_number"
+          ></button>
+          {/* model component;  */}
+          <ModalComponent
+            modalTitle={"Important Notification"}
+            modalId={"request_artisan_number"}
+          >
+            {artisan.phoneNumber !== "" ? (
+              <>
+                Artisan will be notified that their number is been request
+                <h5 className="border my-2 ps-3 py-2">
+                  +{artisan.phoneNumber}
+                </h5>{" "}
+                <div className="btn-group" role="group">
+                  <a href={`tel:+${artisan.phoneNumber}`}>
+                    {" "}
+                    <button type="button" className="btn btn-primary">
+                      Call
+                    </button>
+                  </a>
+                  {/* <!-- Use %20 instead of spaces, + for country code --> */}
+                  <a
+                    href={`sms:+${artisan.phoneNumber}?body=Question%20from%20me`}
+                  >
+                    <button type="button" className="btn btn-primary">
+                      SMS
+                    </button>
+                  </a>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => copyLinkFunction(`+${artisan.phoneNumber}`)}
+                  >
+                    Copy
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>to become a verified artisan</>
+            )}
+            <br />{" "}
+          </ModalComponent>
+          <div className="containers h-100">
             <div className="main-area">
               <div className="top-section">
                 {/* <!--  --> */}
@@ -320,14 +476,14 @@ function ArtisansProfile() {
                   </div>
                 </div>
               </div>
-              <hr />
-              <div className="specialties">
+              {/*  <hr />
+               <div className="specialties">
                 <h4>Specialties</h4>
                 <b>Fixture type</b> <br />
                 <ul className="nav my-auto">
                   <font-awesome-icon icon="fas fa-check" className="my-auto" />
                 </ul>
-              </div>
+              </div> */}
               <hr />
             </div>
             {/* main area */}
