@@ -67,6 +67,9 @@ function VerifyUserPage() {
               <th scope="col">
                 Location <br /> (city, state)
               </th>
+              <th scope="col">Referee Name</th>
+              <th scope="col">Referee Number</th>
+
               <th scope="col">Subscription</th>
               <th scope="col">Account verified</th>
               <th scope="col">Account Active</th>
@@ -91,10 +94,12 @@ function VerifyUserPage() {
                       locationCity,
                       fullName,
                       email,
+                      refereeName,
+                      refereeNumber,
                       email_verified,
                       phoneNumber,
                       service,
-                      nin,
+                      Nin,
                       account_verified,
                       account_active,
                       role,
@@ -104,7 +109,7 @@ function VerifyUserPage() {
                       <tr key={_id}>
                         <th scope="row">{i + 1}</th>
                         <td>{fullName}</td>
-                        <td>+234{phoneNumber}</td>
+                        <td>+{phoneNumber}</td>
                         <td>
                           <div className="check-verify-div">
                             <div className="check-verify-icon">
@@ -114,10 +119,12 @@ function VerifyUserPage() {
                           </div>
                         </td>
                         <td>{service}</td>
-                        <td>{nin ? nin : "-"}</td>
+                        <td>{Nin ? Nin : "-"}</td>
                         <td>
                           {locationCity}, {locationState}
                         </td>
+                        <td>{refereeName}</td>
+                        <td>{refereeNumber}</td>
                         <td>{freeAccount ? "none" : "paid"}</td>
                         <td>{checkVerifiedFunction(account_verified)}</td>
                         <td>{checkVerifiedFunction(account_active)}</td>

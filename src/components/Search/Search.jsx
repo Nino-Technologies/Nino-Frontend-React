@@ -55,7 +55,7 @@ function Search() {
             />
           </div>
         </label>
-        <button>
+        <button type="submit">
           <FaSearch className="me-1" />
           search
         </button>

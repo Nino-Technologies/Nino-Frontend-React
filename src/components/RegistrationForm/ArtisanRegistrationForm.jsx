@@ -13,7 +13,7 @@ function ArtisanRegistrationForm() {
   // form data
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("+234");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [locationState, setLocationState] = useState("");
@@ -91,7 +91,7 @@ function ArtisanRegistrationForm() {
       avatar: "",
       fullName: fullName,
       userName: userName,
-      phoneNumber: phoneNumber,
+      phoneNumber: `+234${Number(phoneNumber)}`,
       gender: gender,
       locationState: locationState,
       locationCity: locationCity,
@@ -103,8 +103,9 @@ function ArtisanRegistrationForm() {
       password: password,
     };
 
+    // console.log(profileOject);
     // ============= Send Request To Back End to save data ======================
-
+    // return;
     // axios POST request
     const options = {
       url: `${apiUrl}/auth/artisan/register`,
@@ -183,6 +184,7 @@ function ArtisanRegistrationForm() {
             className="form-control"
             placeholder="Phone Number"
             type={"number"}
+            value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
           <div className="option-box-div">

@@ -22,7 +22,7 @@ function AboutUsPage() {
       >
         <path
           fill="#003049"
-          fill-opacity="1"
+          fillOpacity="1"
           d="M0,224L60,224C120,224,240,224,360,202.7C480,181,600,139,720,117.3C840,96,960,96,1080,117.3C1200,139,1320,181,1380,202.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
         ></path>
       </svg>
@@ -33,11 +33,12 @@ function AboutUsPage() {
               <h4 className="sub-head-text">Who we Are</h4>
               <div className="line m-auto mb-4"></div>
               <p className="desc">
-                Grinders is an online community that allows you hire all kind of handy 
-                help you need. We create a link between skilled and reliable Artisans and 
-                their potential client. Creating a trusted and legitimate mobile platform 
-                where local skilled professionals get hired for jobs, get reviews and are 
-                also recommended to other clients.
+                Grinders is an online community that allows you hire all kind of
+                handy help you need. We create a link between skilled and
+                reliable Artisans and their potential client. Creating a trusted
+                and legitimate mobile platform where local skilled professionals
+                get hired for jobs, get reviews and are also recommended to
+                other clients.
               </p>
             </div>
           </div>

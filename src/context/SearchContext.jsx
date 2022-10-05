@@ -57,7 +57,7 @@ export function SearchProvider({ children }) {
   // async function handelSearchFunction(
   //   url = `http://localhost:5000/api/search`
   // ) {
-  async function handelSearchFunction(url = `${apiUrl}/search`) {
+  async function handleSearchFunction(url = `${apiUrl}/search`) {
     setPageLoading(true);
     navigate(`/artisans`);
     // Default options are marked with *
@@ -89,7 +89,7 @@ export function SearchProvider({ children }) {
         setPageLoading,
         getArtisansFunction,
         setArtisans,
-        handelSearchFunction,
+        handleSearchFunction,
         formService,
         setFormService,
         formLocationCity,

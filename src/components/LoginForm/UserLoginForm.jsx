@@ -63,7 +63,7 @@ function UserLoginForm() {
         });
         toast.success("Welcome Back User");
 
-        navigate("/dashboard/home");
+        navigate("/");
       })
       .catch((error) => {
         setLoading(false);
@@ -131,7 +131,7 @@ function UserLoginForm() {
             </Link>{" "}
           </div>
         </div>
-        <SocialLogin />
+        {/* <SocialLogin /> */}
       </div>
     </form>
   );

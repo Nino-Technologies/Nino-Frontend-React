@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
-import { FaInfoCircle } from "react-icons/fa";
+import { FaExclamation, FaInfoCircle } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 
 function HomePage() {
@@ -15,8 +15,12 @@ function HomePage() {
     decodeDate,
     getNotification,
     checkVerifiedFunction,
+    getUserProfile,
   } = useContext(UserContext);
 
+  useEffect(() => {
+    getUserProfile();
+  }, []);
   useEffect(() => {
     getNotification();
   }, []);
@@ -54,7 +58,25 @@ function HomePage() {
         {userProfile.role === 0 ? (
           <>to get our top pro artisans</>
         ) : (
-          <>to become a verified artisan</>
+          <>
+            to become a verified artisan
+            {userProfile.refereeNumber &&
+            userProfile.refereeNumber.trim() === "" ? (
+              <>
+                <br /> <FaExclamation className="text-danger" /> Fill Referee
+                Number for Account verification
+              </>
+            ) : null}{" "}
+            {userProfile.refereeName &&
+            userProfile.refereeName.trim() === "" ? (
+              <>
+                {" "}
+                <br />
+                <FaExclamation className="text-danger" /> Fill Referee Name for
+                Account verification
+              </>
+            ) : null}
+          </>
         )}
         <br />{" "}
         <Link
@@ -76,7 +98,7 @@ function HomePage() {
           className="btn-danger btn me-4 btn-sm"
           onClick={() => logOutFunction()}
         >
-          LogOut
+          Log Out
         </button>
       </div>
       <hr className="mb-0" />
@@ -204,7 +226,7 @@ function HomePage() {
                       <>time</>
                     </div>
                   </li>
-                  {userProfile.role !== 3 ? (
+                  {userProfile.role !== 3 && userProfile.role !== 0 ? (
                     <>
                       <li className="achievements-div my-1 w-100">
                         {checkVerifiedFunction(userProfile.licensed)}

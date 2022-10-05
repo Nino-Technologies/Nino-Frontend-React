@@ -123,6 +123,33 @@ function ArtisansProfile() {
   }
 
   // console.log(artisan.phoneNumber);
+
+  function countHireFunction(artisan) {
+    const newHire = artisan.hired + 1;
+    const options = {
+      // url: `http://localhost:5000/api/notification`,
+      url: `${apiUrl}/notification/hireCount/${artisan._id}`,
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: cookies.grinderUser.token,
+      },
+      data: { hired: newHire },
+    };
+    axios(options)
+      .then((response) => {
+        getProfile(id);
+      })
+      .catch((error) => {
+        // setLoading(false);
+        console.log(error.message);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        toast.error(error.message);
+      });
+  }
   function handelHire() {
     if (!loggedIn) {
       toast.info("Login First");
@@ -148,7 +175,9 @@ function ArtisansProfile() {
     });
 
     axios(options)
-      .then((response) => {})
+      .then((response) => {
+        countHireFunction(artisan);
+      })
       .catch((error) => {
         // setLoading(false);
         console.log(error.message);
@@ -359,13 +388,14 @@ function ArtisansProfile() {
                         License verified
                       </li>
                     ) : null}
-
-                    <li>
-                      <span className="icon mx-2">
-                        <font-awesome-icon icon="fas fa-people-group" />{" "}
-                      </span>
-                      {artisan.employees} employees
-                    </li>
+                    {artisan.YearsOfExperience ? (
+                      <li>
+                        <span className="icon mx-2">
+                          <FaShieldAlt />
+                        </span>
+                        {artisan.YearsOfExperience} Years
+                      </li>
+                    ) : null}
 
                     {/* <li>
                       <span className="icon mx-2">

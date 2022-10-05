@@ -121,7 +121,7 @@ function UserRegistrationForm() {
         </div>
       </div>
 
-      <SocialLogin />
+      {/* <SocialLogin /> */}
     </form>
   );
 }

@@ -101,10 +101,10 @@ export function PaymentModalComponent() {
               <div className="container subscription-plane">
                 <div className="row">
                   {/* <div className="col-md-4">
-                    <div class="card shadow">
+                    <div className="card shadow">
                       {/* <img src="img.jpg" alt="John" style="width:100%"> * /}
                       <h3 className="pt-3">Starter Plan</h3>
-                      <p class="title">Free</p>
+                      <p className="title">Free</p>
                       <p>Give it a try</p>
                       <ul>
                         <li>
@@ -138,10 +138,10 @@ export function PaymentModalComponent() {
                     </div>
                   </div> */}
                   <div className="col-md-6">
-                    <div class="card shadow bg-dark text-white">
+                    <div className="card shadow bg-dark text-white">
                       {/* <img src="img.jpg" alt="John" style="width:100%"> */}
-                      <h3 className="pt-3">Grinder</h3>
-                      <p class="title">1000/monthly</p>
+                      <h3 className="pt-3">Grinders</h3>
+                      <p className="title">1000/monthly</p>
                       <p>Subscribe for “Grinders” and enjoy:</p>
                       <ul>
                         <li>
@@ -186,10 +186,10 @@ export function PaymentModalComponent() {
                     </div>
                   </div>
                   <div className="col-md-6">
-                    <div class="card shadow">
+                    <div className="card shadow">
                       {/* <img src="img.jpg" alt="John" style="width:100%"> */}
-                      <h3 className="pt-3">Grinder Unique</h3>
-                      <p class="title">4500/6month</p>
+                      <h3 className="pt-3">Grinders Unique</h3>
+                      <p className="title">4500/6month</p>
                       <p className="text">
                         Subscribe for “Grinders Unique” and enjoy:
                       </p>
