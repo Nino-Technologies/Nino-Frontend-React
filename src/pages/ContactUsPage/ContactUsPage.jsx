@@ -122,7 +122,7 @@ function ContactUsPage() {
                       </li>
                       <li className="list-group-item py-3">
                         <GoLocation className="contact-icon" />
-                        <span className="px-4 text-white">+234817009713</span>
+                        <span className="px-4 text-white">+2348037009713</span>
                       </li>
                       <li className="list-group-item py-3">
                         <FaEnvelope className="contact-icon" />

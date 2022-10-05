@@ -92,23 +92,47 @@ export function ShowProfile({ userProfile, decodeDate }) {
   }
   return (
     <div className="ProfilePage">
-      {userProfile.freeAccount ? (
-        <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
-          <span className="my-auto">
-            {" "}
-            <FaInfoCircle className="my-auto" /> This Account is on Free trials
-          </span>
-          {/* ============================= open Subscription modal button =============================== */}
-          <button
+      {userProfile.role === 1 ? (
+        <>
+          {userProfile.freeAccount ? (
+            <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
+              <span className="my-auto">
+                {" "}
+                <FaInfoCircle className="my-auto" /> This account is on free
+                trial (You can only be hired 5 times)
+              </span>
+              {/* ============================= open Subscription modal button =============================== */}
+              <button
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                href="#paymentModalToggle"
+                role="button"
+              >
+                Buy Subscription
+              </button>
+              {/* ===================================== </> ================================================= */}
+            </div>
+          ) : (
+            <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
+              <span className="my-auto">
+                {" "}
+                <FaInfoCircle className="my-auto" /> This account is on "
+                {userProfile.accountPlan ? userProfile.accountPlan.name : null}"
+                Subscription
+              </span>
+              {/* ============================= open Subscription modal button =============================== */}
+              {/* <button
             className="btn btn-primary"
             data-bs-toggle="modal"
             href="#paymentModalToggle"
             role="button"
           >
             Buy Subscription
-          </button>
-          {/* ===================================== </> ================================================= */}
-        </div>
+          </button> */}
+              {/* ===================================== </> ================================================= */}
+            </div>
+          )}
+        </>
       ) : null}
       <div className="card d-flex ">
         <div className="card-header py-3 fw-bold">Profile</div>
@@ -145,8 +169,7 @@ export function ShowProfile({ userProfile, decodeDate }) {
               </div>
               <div className="d-flex flex-column flex-md-row">
                 <label className="w-100 mx-3 my-3" htmlFor="">
-                  <b> Phone number</b> <br />
-                  {userProfile.phoneNumber}
+                  <b> Phone number</b> <br />+{userProfile.phoneNumber}
                 </label>
                 <label className="w-100 mx-3 my-3" htmlFor="">
                   <b> Email</b>
@@ -181,82 +204,54 @@ export function ShowProfile({ userProfile, decodeDate }) {
           </div>
         </div>
       </div>
-      {/* {userProfile.role === 0 ? (
+      {userProfile.role === 1 ? (
         <>
           <div className="card  my-5">
             <div className="card-header py-3 fw-bold"> Business Info</div>
             <div className="card-body">
               <div className=" w-100 py-2">
                 <form className=" my-5 px-3">
-                  {/* <div className="d-flex"> * /}
-                  <label htmlFor="" className="w-100">
-                    Tell us about the service you render
-                    <textarea
-                      name="introduction"
-                      id=""
-                      className="form-control"
-                      cols="15"
-                      rows="3"
-                      // value={userProfile.introduction}
-                      placeholder={userProfile.introduction}
-                      // disabled={!editForm}
-
-                      // onChange={(e) => handleChange(e)}
-                    ></textarea>
-                  </label>
+                  <p>
+                    <b>Introduction</b> <br />
+                    {userProfile.introduction}
+                  </p>
 
                   <div className="d-flex flex-column flex-md-row">
-                    <label className="w-100 mx-0 mx-md-3 my-3">
-                      office address
-                      <input
-                        type="text"
-                        className="form-control"
-                        // disabled={!editForm}
-                      />
-                    </label>
-                    <label className="w-100  mx-0 mx-md-3 my-3">
-                      Year of experience
-                      <input
-                        type="text"
-                        className="form-control"
-                        // disabled={!editForm}
-                      />
-                    </label>
+                    <p className="w-100 mx-0 me-md-3 my-3">
+                      <b> office address</b> <br />
+                      {console.log(userProfile)}
+                      {userProfile.officeLocation}
+                    </p>
+                    <p className="w-100 mx-0 ms-md-3 my-3">
+                      <b> Year of experience</b> <br />
+                      {/* {console.log(userProfile)} */}
+                      {userProfile.YearsOfExperience} Years
+                    </p>
                   </div>
                   <div className="d-flex flex-column flex-md-row">
-                    <label className="w-100  mx-0 mx-md-3 my-3" htmlFor="">
-                      Referee Name
-                      <input
-                        type="text"
-                        className="form-control"
-                        // placeholder={userProfile.location.city}
-                        // disabled={!editForm}
-                        // value={userProfile.joinDate}
-                      />
-                    </label>
-                    <label className="w-100  mx-0 mx-md-3 my-3" htmlFor="">
-                      Referee Number
-                      <input
-                        type="text"
-                        className="form-control"
-                        // placeholder={userProfile.location.state}
-                        // disabled={!editForm}
-                        // value={userProfile.joinDate}
-                      />
-                    </label>
+                    <p className="w-100 mx-0 me-md-3 my-3">
+                      <b> Referee Name</b> <br />
+                      {/* {console.log(userProfile)} */}
+                      {userProfile.refereeName}
+                    </p>
+                    <p className="w-100 mx-0 ms-md-3 my-3">
+                      <b> Referee Number</b> <br />
+                      {/* {console.log(userProfile)} */}
+                      {userProfile.refereeNumber}
+                    </p>
                   </div>
 
                   {/* {editForm ? (
                   <button className="w-50 m-auto mt-4 btn-primary btn">
                     Save
                   </button>
-                ) : null} * /}
+                ) : null} */}
                 </form>
               </div>
             </div>
           </div>
         </>
-      ) : null} */}
+      ) : null}
     </div>
   );
 }
@@ -325,82 +320,6 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
     companyName: "",
   });
 
-  // useEffect(() => {
-  //   console.log(userProfile);
-
-  //   setEditProfileFormDate({
-  //     ...editProfileFormData,
-  //     ["fullName"]: userProfile.fullName,
-  //   });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["fullName"]: userProfile.fullName,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["email"]: userProfile.email,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["phoneNumber"]: userProfile.phoneNumber,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["password"]: userProfile.password,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["userName"]: userProfile.userName,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["officeLocation"]: userProfile.officeLocation,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["refereeNumber"]: userProfile.refereeNumber,
-  //   // });
-  //   setEditProfileFormDate({
-  //     ...editProfileFormData,
-  //     ["locationState"]: userProfile.locationState,
-  //   });
-  //   setEditProfileFormDate({
-  //     ...editProfileFormData,
-  //     ["locationCity"]: userProfile.locationCity,
-  //   });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["service"]: userProfile.service,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["gender"]: userProfile.gender,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["introduction"]: userProfile.introduction,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["Nin"]: userProfile.Nin,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["YearsOfExperience"]: userProfile.YearsOfExperience,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["refereeName"]: userProfile.refereeName,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["refereeNo"]: userProfile.refereeNo,
-  //   // });
-  //   // setEditProfileFormDate({
-  //   //   ...editProfileFormData,
-  //   //   ["companyName"]: userProfile.companyName,
-  //   // });
-  // }, []);
   const [img_url, setImg_url] = useState("");
   const [imageFile, setImageFile] = useState("");
   const [cookies] = useCookies();
@@ -447,7 +366,8 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
       },
       data: data,
     };
-
+    // console.log(data);
+    // return;
     axios(options)
       .then((response) => {
         getUserProfile();
@@ -520,25 +440,28 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
       locationCity = editProfileFormData.locationCity;
     }
     if (editProfileFormData.locationState === "") {
-      locationState = e.target[4].placeholder;
+      locationState = e.target[5].placeholder;
     } else {
       locationState = editProfileFormData.locationState;
     }
+    let changeNumber = `+234${Number(phoneNumber)}`;
     let updateData = {
       Nin,
       fullName,
-      phoneNumber,
+      phoneNumber: changeNumber,
       email,
       locationCity,
       locationState,
     };
 
+    console.log(updateData);
+    // return;
     updateChanges(updateData);
   }
   function updateBusinessInformation(e) {
     e.preventDefault();
 
-    if (userProfile.role !== 2) {
+    if (userProfile.role !== 1) {
       return toast.info("Account don`t have access to this profile section");
     }
 
@@ -585,7 +508,8 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
       refereeName,
       refereeNumber,
     };
-
+    // console.log(updateData);
+    // return;
     // console.log(updateData);
     updateChanges(updateData);
   }
@@ -809,7 +733,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                       value={editProfileFormData.phoneNumber}
                       onChange={(e) => handleChange(e)}
                       name="phoneNumber"
-                      placeholder={userProfile.phoneNumber}
+                      placeholder={`+${userProfile.phoneNumber}`}
                     />
                   </div>
                   <div className="mb-3 col-xl-6 col-md-6 px-1">
@@ -912,7 +836,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                       <label className="w-50 w-md-100  mx-0 mx-md-1 my-3">
                         Year of experience
                         <input
-                          type="text"
+                          type="number"
                           className="form-control"
                           name="YearsOfExperience"
                           placeholder={userProfile.YearsOfExperience}
@@ -936,7 +860,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                       <label className="w-100  mx-0 mx-md-1 my-3" htmlFor="">
                         Referee Number
                         <input
-                          type="text"
+                          type="number"
                           className="form-control"
                           name="refereeNumber"
                           placeholder={userProfile.refereeNumber}

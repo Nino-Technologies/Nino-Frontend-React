@@ -40,8 +40,7 @@ function ProfileCard({ artisan }) {
           <StarComponent rate="5" />
 
           <p className="my-0 introduction">
-            <b>Introduction</b>
-            {introduction}
+            <b>Introduction: </b> {introduction}
           </p>
           <p className="m-0">
             <b>Service</b> <br />
@@ -82,8 +81,8 @@ function ProfileCard({ artisan }) {
           <p className="d-flex w-100">
             <Link to={`/artisans-profile/${_id}`} className="me-auto mt-2">
               <FaUser />
-              <span className="d-none d-md-inline">View</span>
-              Profile
+              <span className="d-none d-md-inline">View </span>
+              profile
             </Link>
           </p>
         </div>

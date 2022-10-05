@@ -15,7 +15,7 @@ function PaymentForm({ selectedPlane }) {
   const [formInputFullName, setFormInputFullName] = useState("");
   const [formInputEmail, setFormInputEmail] = useState("");
   const [cookies] = useCookies();
-  const { apiUrl } = useContext(UserContext);
+  const { apiUrl, getUserProfile } = useContext(UserContext);
 
   const config = {
     reference: new Date().getTime().toString(),
@@ -48,6 +48,7 @@ function PaymentForm({ selectedPlane }) {
           // console.log(paymentObject);
           document.getElementById("closePaymentModal").click();
           toast.success("Payment successful");
+          getUserProfile();
         })
         .catch((error) => {
           console.log(error);

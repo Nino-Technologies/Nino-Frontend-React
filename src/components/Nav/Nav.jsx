@@ -79,7 +79,7 @@ function Nav() {
               </li>
               <li className="nav-item mx-3">
                 <Link
-                  to="/login?as=user"
+                  to="/register?as=user"
                   className="btn btn-outline-success signin px-3 w-100"
                 >
                   Sign up
@@ -206,19 +206,16 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
             </Link>
           </li>
         ) : null}
-        <li>
-          <Link
-            to="#"
-            onClick={() => {
-              logOutFunction();
-            }}
-          >
-            <div className="side-nav-icon text-danger">
-              {" "}
-              <BsFillDoorOpenFill />
-            </div>
-            <span className="nav-link-name text-danger">LogOut</span>
-          </Link>
+        <li
+          onClick={() => {
+            logOutFunction();
+          }}
+        >
+          <div className="side-nav-icon text-danger">
+            {" "}
+            <BsFillDoorOpenFill />
+          </div>
+          <span className="nav-link-name text-danger">LogOut</span>
         </li>
       </ul>
     </>
