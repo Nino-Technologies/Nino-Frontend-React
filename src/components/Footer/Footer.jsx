@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaInstagram, FaTwitter } from "react-icons/fa";
 
 function Footer() {
   return (
@@ -16,19 +16,24 @@ function Footer() {
             <span className="text-muted">© 2021 Company, Inc</span>
           </div>
 
-          <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
+          <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">  
             <li className="ms-3">
-              <a className="text-muted" href="#">
-                <FaFacebook />
-              </a>
-            </li>
-            <li className="ms-3">
-              <a className="text-muted" href="#">
+              <a 
+                className="text-muted" 
+                href="https://instagram.com/grinders.ng?igshid=NDRkN2NkYzU="
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaInstagram />
               </a>
             </li>
             <li className="ms-3">
-              <a className="text-muted" href="#">
+              <a 
+                className="text-muted" 
+                href="https://twitter.com/grindersng?s=11&t=SFCC7Y_4_ex06S9A1Bd3TQ"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaTwitter />
               </a>
             </li>

@@ -6,6 +6,7 @@ import { usePaystackPayment } from "react-paystack";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import { UserContext } from "../../context/UserContext";
+import "./PaymentForm.scss";
 
 function PaymentForm({ selectedPlane }) {
   function nairaSign() {
