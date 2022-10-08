@@ -22,13 +22,15 @@ function VerifyCodePage() {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTF-8",
       },
-      data: { email: "victorjosiahm3@gmail.com" },
+      data: { to: "victorjosiahm3@gmail.com" },
     };
 
     axios(options)
       .then((response) => {
         console.log(response.data);
-        toast.success("OTP Successful sent");
+        if (response.data.ok) {
+          toast.success("OTP Successful sent");
+        }
         // navigate("/login?as=user");
         // navigate("/verify-code");
       })

@@ -6,7 +6,7 @@ import { FaExclamation, FaInfoCircle } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 
 function HomePage() {
-  const [profileProgress, setProfileProgress] = useState(30);
+  const [profileProgress, setProfileProgress] = useState(0);
   const {
     logOutFunction,
     userProfile,
@@ -17,6 +17,55 @@ function HomePage() {
     checkVerifiedFunction,
     getUserProfile,
   } = useContext(UserContext);
+
+  function checkProperty(property) {
+    if (property !== "" && property) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  useEffect(() => {
+    // {
+    //   Nin: "123456";
+    //   account_active: true;
+    //   account_verified: false;
+    //   avatar: "http://res.cloudinary.com/dhvacnvek/image/upload/v1664505887/vrnyf1d809ouq4cipfyb.png";
+    //   email: "victorjosiahm3@gmail.com";
+    //   email_verified: false;
+    //   fullName: "Josiah Victor";
+    //   joinDate: "2022-09-30T02:07:26.342Z";
+    //   locationCity: "Bako";
+    //   locationState: "Bako";
+    //   password: "$2b$12$mUt2FCMHqRCVXm747XOite10EG1CMnMwxTx8W/iZ/hjGjZjtOYdlu";
+    //   phoneNumber: 2348137297150;
+    //   role: 0;
+    // }
+    let getProgress = profileProgress;
+    if (userProfile || userProfile.role === 0) {
+      if (checkProperty(userProfile.account_active)) {
+        getProgress += 10;
+      }
+      if (checkProperty(userProfile.account_verified)) {
+        getProgress += 10;
+      }
+      if (checkProperty(userProfile.email_verified)) {
+        getProgress += 10;
+      }
+      if (checkProperty(userProfile.Nin)) {
+        getProgress += 10;
+      }
+      if (
+        checkProperty(userProfile.locationCity) &&
+        checkProperty(userProfile.locationState)
+      ) {
+        getProgress += 10;
+      }
+      console.log(getProgress);
+    }
+    setProfileProgress(getProgress);
+    console.log(userProfile);
+  }, []);
 
   useEffect(() => {
     getUserProfile();
@@ -35,7 +84,7 @@ function HomePage() {
           .click();
       }
     }
-  }, []);
+  }, [userProfile]);
   return (
     <div className="HomePage">
       {/* button to open model */}
