@@ -432,7 +432,7 @@ function ArtisansProfile() {
                   })}
                 </div>
               </div>
-              <hr />
+              {/* <hr />
               <div className="reviews">
                 <h3>Reviews</h3>
                 Customers rated this pro highly for professionalism, work
@@ -444,7 +444,7 @@ function ArtisansProfile() {
                 </div>
                 Your trust means everything to us. Learn about our review
                 guidelines.
-              </div>
+              </div> */}
               <hr />
               <div className="reviews-div">
                 <div className="reviews">
