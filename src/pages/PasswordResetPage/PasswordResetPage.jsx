@@ -7,9 +7,7 @@ function PasswordResetPage() {
     return (
         <div className="reset">
             <Nav />
-            <div className="container">
                 <PasswordResetForm />
-            </div>
         </div>
     )
 }

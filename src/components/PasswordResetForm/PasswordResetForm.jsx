@@ -5,12 +5,14 @@ import "./PasswordResetForm.scss";
 function PasswordResetForm() {
     return (
         <div className="reset">
-            <form className="container">
-                <div className="form bg-dark">
-                    <input type="password" className="form-control w-100 w-md-50" placeholder="Enter Password"/>
-                    <input type="password" class="form-control" placeholder="Confirm Password"/>
-                </div>
-            </form>
+            <div className="container house-div">
+                <form className="py-5 px-5 shadow">
+                    <h3 className="pb-4">Reset Password</h3>
+                    <input type="password" className="form-control mb-3" placeholder="Enter Password"/>
+                    <input type="password" class="form-control mb-4" placeholder="Confirm Password"/>
+                    <button className="rounded btn btn-primary">Change</button>
+                </form>
+            </div>
         </div>
     )
 }
