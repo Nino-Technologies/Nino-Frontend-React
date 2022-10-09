@@ -356,7 +356,6 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
     // console.log("Data", data);
     // axios PUT request
     const options = {
-      // url: `http://localhost:5000/api/auth/user/login`,
       url: `${apiUrl}/users`,
       method: "PUT",
       headers: {
@@ -375,11 +374,13 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
       })
       .catch((error) => {
         // setLoading(false);
-        console.log(error.message);
-        // if (error.response.status || error.response.status === 400) {
-        //   return toast.error(error.response.data.message);
-        // }
-        // toast.error(error.message);
+        console.log(error);
+        if (error.response.status || error.response.status === 400) {
+          return toast.error(error.response.data.message);
+        }
+        if (!error.response.data.ok) {
+          toast.error(error.response.data.message);
+        }
       });
   }
   function uploadImageToCloudinary() {
