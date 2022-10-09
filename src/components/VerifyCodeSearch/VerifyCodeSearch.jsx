@@ -8,7 +8,7 @@ import VerifyCodeFail from "../../components/VerifyCodeFail/VerifyCodeFail";
 import VerifyCodeSuccess from "../../components/VerifyCodeSuccess/VerifyCodeSuccess";
 // import { toast } from "react-toastify";
 
-function VerifyCodeSearch() {
+function VerifyCodeSearch({ email }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { apiUrl, loggedIn } = useContext(UserContext);
@@ -26,7 +26,7 @@ function VerifyCodeSearch() {
     const otp = formElement[0].value;
     const data = {
       otp: otp,
-      to: "victorjosiahm3@gmail.com",
+      to: email,
     };
 
     console.log(data);

@@ -22,7 +22,7 @@ function VerifyCodePage() {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTF-8",
       },
-      data: { to: "victorjosiahm3@gmail.com" },
+      data: { to: email },
     };
 
     axios(options)
@@ -50,7 +50,7 @@ function VerifyCodePage() {
           <h1 className="verify-name">Verification Code</h1>
           {confirmEmail ? (
             <>
-              <VerifyCodeSearch />
+              <VerifyCodeSearch email={email} />
               <button className="mt-2" onClick={() => sendOtp()}>
                 resend
               </button>
