@@ -8,6 +8,7 @@ import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
 import ArtisansProfile from "./pages/artisansProfile/ArtisansProfile";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import PasswordResetPage from "./pages/PasswordResetPage/PasswordResetPage";
 import { ToastContainer } from "react-toastify";
 // import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -82,6 +83,7 @@ function App() {
         <Route exact path="/contact-us" element={<ContactUsPage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/register" element={<RegisterPage />} />
+        <Route path="/password-reset" element={<PasswordResetPage />} />
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="home" element={<HomePage />} />
