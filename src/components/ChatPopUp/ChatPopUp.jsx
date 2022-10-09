@@ -24,7 +24,8 @@ function ChatPopUpForm({ artisan }) {
     e.preventDefault();
 
     const sendMessage = {
-      sender: userProfile.email,
+      senderEmail: userProfile.email,
+      name: userProfile.fullName,
       // receiver: "oladipupomayowa@gmail.com",
       receiver: artisan.email,
       message: popUpMessage,
@@ -45,11 +46,11 @@ function ChatPopUpForm({ artisan }) {
       .then((response) => {
         // console.log(response.data);
         toast.success("Message sent Successfully");
-        // navigate("/login?as=user");
-        // navigate("/verify-code");
       })
       .catch((error) => {
-        if (error.response.status === 400) {
+        // if (error.response.status === 400) {
+        // }
+        if (!error.response.data.ok) {
           return toast.error(error.response.data.message);
         }
         toast.error(error.message);
