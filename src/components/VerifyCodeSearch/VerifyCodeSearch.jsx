@@ -26,13 +26,13 @@ function VerifyCodeSearch() {
     const otp = formElement[0].value;
     const data = {
       otp: otp,
-      email: "victorjosiahm3@gmail.com",
+      to: "victorjosiahm3@gmail.com",
     };
 
     console.log(data);
     // axios POST request
     const options = {
-      url: `${apiUrl}/sendMail/otp/verify`,
+      url: `${apiUrl}/verifyOtp/email`,
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -47,7 +47,7 @@ function VerifyCodeSearch() {
         toast.success("Verification Successful");
         {
           loggedIn
-            ? navigate("./dashboard/profile")
+            ? navigate("/dashboard/profile")
             : navigate("/login?as=user");
         }
         // navigate("/verify-code");
