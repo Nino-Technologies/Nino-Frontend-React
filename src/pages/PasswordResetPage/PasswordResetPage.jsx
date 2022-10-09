@@ -1,15 +1,15 @@
 import React from "react";
 import "./PasswordResetPage.scss";
 import Nav from "../../components/Nav/Nav";
-import PasswordResetForm from '../../components/PasswordResetForm/PasswordResetForm'
+import PasswordReset from "../../components/PasswordResetForm/PasswordResetForm";
 
 function PasswordResetPage() {
-    return (
-        <div className="reset">
-            <Nav />
-                <PasswordResetForm />
-        </div>
-    )
+  return (
+    <div className="reset">
+      <Nav />
+      <PasswordReset />
+    </div>
+  );
 }
 
 export default PasswordResetPage;
