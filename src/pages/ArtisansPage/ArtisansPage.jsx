@@ -27,7 +27,7 @@ function ArtisansPage() {
 
       <div className="hero">
         <div className="container">
-          <h3 className="hero-name">Artisans</h3>
+          <h3 className="hero-name">Service provider</h3>
         </div>
       </div>
       <svg
@@ -57,7 +57,7 @@ function ArtisansPage() {
         </div>
       )}
       {!pageLoading && artisans.length === 0 ? (
-        <div className="container loading">No Artisan Found</div>
+        <div className="container loading">No service provider found</div>
       ) : null}
       <div style={{ width: "100%", margin: 0 }}>
         <Footer />

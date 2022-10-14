@@ -45,7 +45,7 @@ function Nav() {
             </li>
             <li className="nav-item effect px-3 ">
               <Link to="/artisans" className="nav-link">
-                Artisans
+                Service Providers
               </Link>
             </li>
             <li className="nav-item effect px-3 ">
@@ -71,7 +71,7 @@ function Nav() {
             <ul className="navbar-nav">
               <li className="nav-item mx-3">
                 <Link
-                  to="/login?as=user"
+                  to="/login?as=artisan"
                   className="btn btn-outline-success px-3 mb-2 mb-md-0  w-100"
                 >
                   Login
@@ -79,7 +79,7 @@ function Nav() {
               </li>
               <li className="nav-item mx-3">
                 <Link
-                  to="/register?as=user"
+                  to="/register?as=artisan"
                   className="btn btn-outline-success signin px-3 w-100"
                 >
                   Sign up
@@ -202,7 +202,7 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
               <div className="side-nav-icon">
                 <BsHeart />
               </div>
-              <span className="nav-link-name">Saved Artisan</span>
+              <span className="nav-link-name">Saved Service Provider</span>
             </Link>
           </li>
         ) : null}

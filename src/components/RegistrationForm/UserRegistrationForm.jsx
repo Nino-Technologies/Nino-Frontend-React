@@ -16,19 +16,26 @@ function UserRegistrationForm() {
     const formElement = e.target;
 
     if (formElement[0].value === "") {
-      toast.info("Email is Required");
+      return toast.info("Full Name is Required");
     }
     if (formElement[1].value === "") {
-      toast.info("Password is Required");
+      return toast.info("Email is Required");
     }
-    if (formElement[1].value === "" || formElement[0].value === "") {
-      return;
+    if (formElement[2].value === "") {
+      return toast.info("Phone Number is Required");
     }
+    if (formElement[3].value === "") {
+      return toast.info("Password is Required");
+    }
+    // if (formElement[1].value === "" || formElement[0].value === "") {
+    //   return;
+    // }
 
     const data = {
       fullName: formElement[0].value,
       email: formElement[1].value,
-      password: formElement[2].value,
+      phoneNumber: formElement[2].value,
+      password: formElement[3].value,
     };
 
     // axios POST request
@@ -84,6 +91,13 @@ function UserRegistrationForm() {
           placeholder="Email address"
         />
       </div>
+      <div className=" mt-3">
+        <input
+          type="number"
+          className="form-control"
+          placeholder="Phone Number"
+        />
+      </div>
 
       <div className="mt-3">
         {/* <label htmlFor="exampleInputPassword1" className="form-label">
@@ -107,15 +121,15 @@ function UserRegistrationForm() {
         <div>
           have an account? <br />
           <div className="d-flex justify-content-around mt-3 flex-colum n">
-            <Link to={"/login?as=user"} className="btn btn-outline-primary">
+            {/* <Link to={"/login?as=user"} className="btn btn-outline-primary">
               Login User
             </Link>{" "}
-            <span className="my-auto">OR</span>
+            <span className="my-auto">OR</span> */}
             <Link
               to={"/register?as=artisan"}
               className="btn btn-outline-primary"
             >
-              Register Artisan
+              Register as a service provider
             </Link>
           </div>
         </div>

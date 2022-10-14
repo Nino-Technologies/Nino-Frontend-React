@@ -110,6 +110,9 @@ function UserLoginForm() {
           placeholder="Password"
         />
       </div>
+      <Link to={"/password-reset"} className="m-2 d-block">
+        Forgot Password?
+      </Link>
 
       <button
         type="submit"
@@ -127,7 +130,7 @@ function UserLoginForm() {
             </Link>
             <span className="my-auto">OR</span>
             <Link to={"/login?as=artisan"} className="btn btn-outline-primary">
-              Login Artisan
+              Login service provider
             </Link>{" "}
           </div>
         </div>

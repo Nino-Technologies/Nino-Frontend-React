@@ -41,11 +41,15 @@ function RegisterPage() {
             {displayForm === -1 ? (
               <>
                 Do You Want To
-                <Link to={"/register?as=artisan"}>Register Artisan</Link>
-                <Link to={"/register?as=user"}>Register User</Link>
+                <Link to={"/register?as=artisan"}>
+                  Register has a Service Provider
+                </Link>
+                {/* <Link to={"/register?as=user"}>Register User</Link> */}
                 OR
-                <Link to={"/login?as=artisan"}>Login Artisan</Link>
-                <Link to={"/login?as=user"}>Login User</Link>
+                <Link to={"/login?as=artisan"}>
+                  Login has a service provider
+                </Link>
+                {/* <Link to={"/login?as=user"}>Login User</Link> */}
               </>
             ) : null}
           </div>

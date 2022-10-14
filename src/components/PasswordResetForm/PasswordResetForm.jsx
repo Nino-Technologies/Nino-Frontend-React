@@ -80,6 +80,7 @@ export function PasswordResetEmailForm({ setPasswordTab, email, setEmail }) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+      <sup className="text-info">Make sure it is the email on your account</sup>
       <button
         className="rounded btn btn-primary w-100"
         onClick={() => {

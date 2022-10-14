@@ -23,7 +23,7 @@ function PaymentForm({ selectedPlane }) {
     email: formInputEmail,
     amount: selectedPlane.price * 100,
     //save key in .env
-    publicKey: "pk_test_92b1b7eb4252a8e07614c90360e4412902ff8de4",
+    publicKey: "pk_live_e109e2fcfae6ad6a12d44d9d3d0833abd80b4cc4",
   };
   const initializePayment = usePaystackPayment(config);
 

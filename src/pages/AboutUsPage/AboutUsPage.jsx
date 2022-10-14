@@ -11,7 +11,7 @@ function AboutUsPage() {
         <div className="container">
           <h3 className="hero-name">
             We Help Users Connect <br />
-            to <span id="art">Artisans</span>
+            to <span id="art">Service Providers</span>
           </h3>
         </div>
       </div>
@@ -35,10 +35,10 @@ function AboutUsPage() {
               <p className="desc">
                 Grinders is an online community that allows you hire all kind of
                 handy help you need. We create a link between skilled and
-                reliable Artisans and their potential client. Creating a trusted
-                and legitimate mobile platform where local skilled professionals
-                get hired for jobs, get reviews and are also recommended to
-                other clients.
+                reliable service provider and their potential client. Creating a
+                trusted and legitimate mobile platform where local skilled
+                professionals get hired for jobs, get reviews and are also
+                recommended to other clients.
               </p>
             </div>
           </div>
@@ -60,20 +60,22 @@ function AboutUsPage() {
                 <h4 className="sub-head-text1 text-start mb-2">Our Vision</h4>
                 <div className="line mb-4"></div>
                 <p className="desc text-start mb-5">
-                  Is to create a lasting avenue where all artisans/handicraft
-                  and skilled worker can make a living and improve their
-                  standard of living by connecting to various client on our
-                  platform
+                  Is to create a lasting avenue where all Service
+                  Providers/handicraft and skilled worker can make a living and
+                  improve their standard of living by connecting to various
+                  client on our platform
                 </p>
                 <h4 className="sub-head-text1 text-start mb-2">Our Mission</h4>
                 <div className="line mb-4"></div>
 
                 <ul className="list-group">
                   <li className="list-group-item">
-                    Connect artisans to various clients around their location
+                    Connect local service provider to various clients around
+                    their location
                   </li>
                   <li className="list-group-item">
-                    Create a platform where artisans can make a living
+                    Create a platform where local service provider can make a
+                    living
                   </li>
                   <li className="list-group-item">
                     Render instant handy help to the populace

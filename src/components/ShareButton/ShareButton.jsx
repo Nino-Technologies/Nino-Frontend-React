@@ -14,7 +14,7 @@ function ShareButton({ id }) {
   function toggleVisibility() {
     setVisibility(!visibility);
   }
-  const profileUrl = "https://grinders.netlify.app/artisans-profile/" + id;
+  const profileUrl = "https://www.grinders.ng/artisans-profile/" + id;
   async function copyURL(id) {
     try {
       await navigator.clipboard.writeText(profileUrl);
@@ -41,7 +41,7 @@ function ShareButton({ id }) {
         <a
           title="Share on facebook"
           href={`
-https://twitter.com/intent/tweet?text=Artisan%20profile ${profileUrl}&original_referer=${profileUrl}&related=clicktotweet
+https://twitter.com/intent/tweet?text=Service Provider%20profile ${profileUrl}&original_referer=${profileUrl}&related=clicktotweet
 `}
           target="_blank"
           rel="noopener"

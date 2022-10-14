@@ -22,7 +22,7 @@ function LandingPage() {
         <div className="hero-section">
           <div className="text-div">
             <div className="mobile-background"></div>
-            <h1 className="hero-name">Hire Artisans With Grinders</h1>
+            <h1 className="hero-name">Hire service providers With Grinders</h1>
             <p className="sub">Connecting people to trusted local services.</p>
             <Search />
             {loggedIn ? null : (

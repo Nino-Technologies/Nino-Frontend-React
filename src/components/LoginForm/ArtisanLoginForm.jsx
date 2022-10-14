@@ -74,7 +74,7 @@ function ArtisanLoginForm() {
   }
   return (
     <form className="form-layout px-5" onSubmit={(e) => loginUserFunction(e)}>
-      <h3 className="login-name">Login Artisan</h3>
+      <h3 className="login-name">Login as a Service Provider</h3>
       <div className="">
         {/* <label htmlFor="exampleInputEmail1" className="form-label">
           
@@ -99,6 +99,9 @@ function ArtisanLoginForm() {
           placeholder="Password"
         />
       </div>
+      <Link to={"/password-reset"} className="m-2 d-block">
+        Forgot Password?
+      </Link>
 
       <button
         type="submit"
@@ -115,7 +118,7 @@ function ArtisanLoginForm() {
               to={"/register?as=artisan"}
               className="btn btn-outline-primary"
             >
-              Register Artisan
+              Register as a Service Provider
             </Link>
             <span className="my-auto">OR</span>
             <Link to={"/login?as=user"} className="btn btn-outline-primary">

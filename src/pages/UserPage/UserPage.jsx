@@ -101,7 +101,7 @@ function UsersPage() {
                             {email}
                           </div>
                         </td>
-                        <td>{phoneNumber ? phoneNumber : "-"}</td>
+                        <td>{phoneNumber !== "" ? phoneNumber : "-"}</td>
                         <td>
                           {/* {account_verified
                             ?  */}

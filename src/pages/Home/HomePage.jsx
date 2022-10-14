@@ -105,10 +105,10 @@ function HomePage() {
         Your profile is not completed <br />
         Update Profile{" "}
         {userProfile.role === 0 ? (
-          <>to get our top pro artisans</>
+          <>to get our top pro service provider</>
         ) : (
           <>
-            to become a verified artisan
+            to become a verified service providers
             {userProfile.refereeNumber &&
             userProfile.refereeNumber.trim() === "" ? (
               <>
@@ -188,7 +188,7 @@ function HomePage() {
               <h5 className="card-header tw-1">Profile Completeness</h5>
               <div className="card-body d-flex flex-column">
                 <p className="card-text">
-                  Update Profile to get our top pro artisans
+                  Update Profile to get our top pro service providers
                 </p>
                 <div className="progress" style={{ height: "30px" }}>
                   <div

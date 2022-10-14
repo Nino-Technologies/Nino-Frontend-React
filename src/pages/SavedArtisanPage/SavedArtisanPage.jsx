@@ -9,7 +9,7 @@ function SavedArtisanPage() {
         <h3>Saved Artisan</h3>
       </div>
       <hr />
-      <div className="main-div">SavedArtisanPage</div>
+      <div className="main-div mt-3">Page under construction</div>
     </div>
   );
 }

@@ -53,12 +53,16 @@ function LoginPage() {
             {displayForm === -1 ? (
               <>
                 Do You Want To
-                <Link to={"/register?as=artisan"}>Register Artisan</Link>
-                <Link to={"/register?as=user"}>Register User</Link>
+                <Link to={"/register?as=artisan"}>
+                  Register has a Service Provider{" "}
+                </Link>
+                {/* <Link to={"/register?as=user"}>Register User</Link> */}
                 {/* <hr className="w-100" /> */}
                 OR
-                <Link to={"/login?as=artisan"}>Login Artisan</Link>
-                <Link to={"/login?as=user"}>Login User</Link>
+                <Link to={"/login?as=artisan"}>
+                  Login has a Service Provider
+                </Link>
+                {/* <Link to={"/login?as=user"}>Login User</Link> */}
               </>
             ) : null}
           </div>

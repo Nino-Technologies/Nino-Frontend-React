@@ -76,7 +76,7 @@ function ArtisansProfile() {
 
   function phoneMessage(object) {
     if (object.to === "" || !object.to) {
-      return toast.info("Artisan number not gotten");
+      return toast.info("Service Provider`s number not gotten");
     }
     if (object.message === "" || !object.message) {
       return toast.info("Message not set not gotten");
@@ -98,7 +98,7 @@ function ArtisansProfile() {
     };
     if (
       !window.confirm(
-        "A notification will be sent to artisan their number was requested"
+        "A notification will be sent to the Service Provider that their number was requested"
       )
     ) {
       return;
@@ -276,7 +276,8 @@ function ArtisansProfile() {
           >
             {artisan.phoneNumber !== "" ? (
               <>
-                Artisan will be notified that their number is been request
+                This Service Provider will be notified that their number is been
+                request
                 <h5 className="border my-2 ps-3 py-2">
                   +{artisan.phoneNumber}
                 </h5>{" "}
@@ -305,7 +306,7 @@ function ArtisansProfile() {
                 </div>
               </>
             ) : (
-              <>to become a verified artisan</>
+              <>to become a verified Service Provider</>
             )}
             <br />{" "}
           </ModalComponent>

@@ -19,7 +19,7 @@ function ArtisanRegistrationForm() {
   const [locationState, setLocationState] = useState("");
   const [locationCity, setLocationCity] = useState("");
   const [officeLocation, setOfficeLocation] = useState("");
-  const [userName, setUserName] = useState("");
+  // const [userName, setUserName] = useState("");
   const [gender, setGender] = useState("");
   // const [discountsAvailable, setDiscountsAvailable] = useState(false);
   // const [offersRemoteServices, setOffersRemoteServices] = useState(false);
@@ -90,7 +90,7 @@ function ArtisanRegistrationForm() {
     const profileOject = {
       avatar: "",
       fullName: fullName,
-      userName: userName,
+      // userName: userName,
       phoneNumber: `+234${Number(phoneNumber)}`,
       gender: gender,
       locationState: locationState,
@@ -159,7 +159,7 @@ function ArtisanRegistrationForm() {
             setCurrentTab={setCurrentTab}
           />
         </div>
-        <h3 className="login-name">Register Artisan</h3>
+        <h3 className="login-name">Register as a Service Provider</h3>
 
         {/* <!-- One "tab" for each step in the form: --> */}
         <div
@@ -174,12 +174,12 @@ function ArtisanRegistrationForm() {
             onChange={(e) => setFullName(e.target.value)}
             value={fullName}
           />
-          <input
+          {/* <input
             className="form-control"
             placeholder="Username..."
             type="text"
             onChange={(e) => setUserName(e.target.value)}
-          />
+          /> */}
           <input
             className="form-control"
             placeholder="Phone Number"
@@ -352,15 +352,15 @@ function ArtisanRegistrationForm() {
                 to={"/login?as=artisan"}
                 className="btn btn-outline-primary"
               >
-                Login Artisan
+                Login has a Service Provider
               </Link>{" "}
-              <span className="my-auto">OR</span>
+              {/* <span className="my-auto">OR</span>
               <Link
                 to={"/register?as=user"}
                 className="btn btn-outline-primary"
               >
                 Register User
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

@@ -157,11 +157,11 @@ export function ShowProfile({ userProfile, decodeDate }) {
           <div className="form-div ">
             <form className="my-5">
               <div className="d-flex flex-column flex-md-row">
-                <label className="w-100 mx-3 my-3" htmlFor="">
+                {/* <label className="w-100 mx-3 my-3" htmlFor="">
                   <b> National Identity Number</b>
                   <br />
                   {userProfile.Nin}
-                </label>
+                </label> */}
                 <label className="w-100 mx-3 my-3" htmlFor="">
                   <b> FullName:</b> <br />
                   {userProfile.fullName || "Full Name"}
@@ -314,7 +314,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
     service: "",
     gender: "",
     introduction: "",
-    Nin: "",
+    // Nin: "",
     YearsOfExperience: "",
     refereeName: "",
     companyName: "",
@@ -413,13 +413,13 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
   function updatePersonalInformation(e) {
     e.preventDefault();
 
-    let Nin, fullName, phoneNumber, email, locationCity, locationState;
+    let /*Nin, */ fullName, phoneNumber, email, locationCity, locationState;
 
-    if (editProfileFormData.Nin === "") {
-      Nin = e.target[0].placeholder;
-    } else {
-      Nin = editProfileFormData.Nin;
-    }
+    // if (editProfileFormData.Nin === "") {
+    //   Nin = e.target[0].placeholder;
+    // } else {
+    //   Nin = editProfileFormData.Nin;
+    // }
     if (editProfileFormData.fullName === "") {
       fullName = e.target[1].placeholder;
     } else {
@@ -447,7 +447,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
     }
     let changeNumber = `+234${Number(phoneNumber)}`;
     let updateData = {
-      Nin,
+      // Nin,
       fullName,
       phoneNumber: changeNumber,
       email,
@@ -702,7 +702,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                   <div className="text-info">
                     FIll only the Fields you want to Update
                   </div>
-                  <div className="mb-3 col-xl-6 col-md-6 px-1">
+                  {/* <div className="mb-3 col-xl-6 col-md-6 px-1">
                     <label className="form-label">
                       National Identity Number
                     </label>
@@ -714,7 +714,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                       onChange={(e) => handleChange(e)}
                       name="Nin"
                     />
-                  </div>
+                  </div> */}
                   <div className="mb-3 col-xl-6 col-md-6 px-1">
                     <label className="form-label">Full Name</label>
                     <input
