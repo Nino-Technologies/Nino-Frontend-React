@@ -5,159 +5,49 @@ import { SearchContext } from "../../context/SearchContext";
 
 function Search() {
   const {
-    // handleSearchFunction,
     artisans,
-    // filterDataFunction,
     formService,
     setFormService,
     formLocationCity,
     setFormLocationCity,
     formLocationState,
     setFormLocationState,
-    setSearch,
-    search,
     setSearchArtisans,
     searchArtisans,
   } = useContext(SearchContext);
-  const [artisanServiceArray, setArtisanServiceArray] = useState([]);
-  const [gestureList, setGestureList] = useState([]);
-  const [stateGestureList, setStateGestureList] = useState([]);
-  const [cityGestureList, setCityGestureList] = useState([]);
-  // useEffect(() => {
-  //   if (formService !== "") {
-  //     console.log(gestureList);
-  //     // filterDataFunction(formService);
-  //   }
-  // }, [formService]);
 
-  // useEffect(() => {
-  //   artisans.forEach((artisan) => {
-  //     artisanServiceArrayVar.push(artisan.service);
-  //   });
-  //   setArtisanServiceArray([...new Set(artisanServiceArrayVar)]);
-  //   console.log(artisanServiceArray);
-  // }, [artisans]);
-  let searchResult = [];
-  let artisanServiceArrayVar = [];
-  let artisanStateArrayVar = [];
-  let artisanCityArrayVar = [];
-
-  function filterDataFunction(search) {
-    if (search === "") {
-      setShowGesture(false);
-      setSearch(false);
-    } else {
-      setShowGesture(true);
-      setSearch(true);
-    }
-    // artisanServiceArray.map((artisanService) => {
-    //   if (artisanService.indexOf(search) !== -1) {
-    //     searchResult.push(artisanService);
-    //   }
-    // });
-    // setGestureList(searchResult);
-    artisans.map((artisan) => {
-      if (artisan.service.indexOf(search) !== -1) {
-        searchResult.push(artisan);
-        artisanServiceArrayVar.push(artisan.service);
-        artisanStateArrayVar.push(artisan.locationState);
-        artisanCityArrayVar.push(artisan.locationCity);
-        // console.log(artisanServiceArrayVar);
-      }
-    });
-    setSearchArtisans(searchResult);
-    // console.log(artisanServiceArrayVar);
-    setGestureList([...new Set(artisanServiceArrayVar)]);
-    setStateGestureList([...new Set(artisanStateArrayVar)]);
-    setCityGestureList([...new Set(artisanCityArrayVar)]);
-  }
-
-  const [showGesture, setShowGesture] = useState(false);
-
-  // function toggleGestureFunction() {}
-  function selectGesture(e) {
-    filterDataFunction(e.target.textContent);
-    setFormService(e.target.textContent);
-    setShowGesture(false);
-  }
-  // console.log(gestureList);
   return (
     <div className="search-form">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          // handleSearchFunction();
-          // filterDataFunction();
         }}
       >
-        <label>
-          {/* {search ? (
-            // <div className="search-result-count">{searchArtisans.length}</div>
-          ) : null} */}
-          <b>
-            Looking for a Service? <br />{" "}
-          </b>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Eg. Plumber, carpenter, Etc"
-            value={formService}
-            // onChange={(e) => filterDataFunction(e.target.value)}
-            onChange={(e) => {
-              setFormService(e.target.value);
-              filterDataFunction(e.target.value);
-            }}
-          />
-
-          {showGesture ? (
-            <div className="dropdown-list">
-              <ul>
-                <li className="search-result-count">
-                  Found {searchArtisans.length} {formService}`s from Search
-                </li>
-                {gestureList.length === 0 ? (
-                  <li className="text-muted fs-5 py-1 px-3">
-                    Service Not found
-                  </li>
-                ) : (
-                  <>
-                    {gestureList.map((gesture, i) => {
-                      return (
-                        <li key={i}>
-                          <button
-                            onClick={(e) => {
-                              selectGesture(e);
-                            }}
-                          >
-                            {gesture}
-                          </button>
-                        </li>
-                      );
-                    })}{" "}
-                  </>
-                )}
-              </ul>
-            </div>
-          ) : null}
-        </label>
+        <ServiceSearchInput
+          formService={formService}
+          setFormService={setFormService}
+          artisans={artisans}
+          setSearchArtisans={setSearchArtisans}
+          searchArtisans={searchArtisans}
+        />
         <label>
           <b>
             Location <br />{" "}
           </b>
           <div className="d-flex">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="City"
-              value={`${formLocationCity}`}
-              onChange={(e) => setFormLocationCity(e.target.value)}
+            <CitySearchInput
+              formLocationCity={formLocationCity}
+              setFormLocationCity={setFormLocationCity}
+              artisans={artisans}
+              setSearchArtisans={setSearchArtisans}
+              searchArtisans={searchArtisans}
             />
-            <input
-              type="text"
-              className="form-control"
-              placeholder="State"
-              value={`${formLocationState}`}
-              onChange={(e) => setFormLocationState(e.target.value)}
+            <StateSearchInput
+              formLocationState={formLocationState}
+              setFormLocationState={setFormLocationState}
+              artisans={artisans}
+              setSearchArtisans={setSearchArtisans}
+              searchArtisans={searchArtisans}
             />
           </div>
         </label>
@@ -192,3 +82,296 @@ function Search() {
 }
 
 export default Search;
+
+export function ServiceSearchInput({
+  formService,
+  setFormService,
+  artisans,
+  setSearchArtisans,
+  searchArtisans,
+}) {
+  const [showGesture, setShowGesture] = useState(false);
+  const [gestureList, setGestureList] = useState([]);
+
+  let searchResult = [];
+  let artisanServiceArrayVar = [];
+
+  function filterDataFunction(search) {
+    if (search === "") {
+      setShowGesture(false);
+    } else {
+      setShowGesture(true);
+    }
+    artisans.map((artisan) => {
+      if (
+        artisan.service
+          .toLowerCase()
+          .trim()
+          .indexOf(search.toLowerCase().trim()) !== -1
+      ) {
+        searchResult.push(artisan);
+        artisanServiceArrayVar.push(artisan.service.toLowerCase().trim());
+      }
+    });
+    setSearchArtisans(searchResult);
+    setGestureList([...new Set(artisanServiceArrayVar)]);
+  }
+
+  function selectGesture(e) {
+    filterDataFunction(e.target.textContent);
+    setFormService(e.target.textContent);
+    setShowGesture(false);
+  }
+
+  const [focused, setFocused] = useState(false);
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
+
+  useEffect(() => {
+    if (!focused) {
+      setShowGesture(false);
+    }
+  }, [focused]);
+
+  return (
+    <label>
+      <b>
+        Looking for a Service? <br />{" "}
+      </b>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Eg. Plumber, carpenter, Etc"
+        value={formService}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onChange={(e) => {
+          setFormService(e.target.value);
+          filterDataFunction(e.target.value);
+        }}
+      />
+
+      {showGesture ? (
+        <div className="dropdown-list">
+          <ul>
+            <li className="search-result-count">
+              Found {searchArtisans.length} {formService}`s from Search
+            </li>
+            {gestureList.length === 0 ? (
+              <li className="text-muted fs-5 py-1 px-3">Service Not found</li>
+            ) : (
+              <>
+                {gestureList.map((gesture, i) => {
+                  return (
+                    <li key={i}>
+                      <button
+                        onClick={(e) => {
+                          selectGesture(e);
+                        }}
+                      >
+                        {gesture}
+                      </button>
+                    </li>
+                  );
+                })}{" "}
+              </>
+            )}
+          </ul>
+        </div>
+      ) : null}
+    </label>
+  );
+}
+
+export function CitySearchInput({
+  formLocationCity,
+  setFormLocationCity,
+  artisans,
+  setSearchArtisans,
+  searchArtisans,
+}) {
+  const [showGesture, setShowGesture] = useState(false);
+
+  const [cityGestureList, setCityGestureList] = useState([]);
+  let artisanCityArrayVar = [];
+
+  let searchResult = [];
+  function filterDataFunction(search) {
+    if (search === "") {
+      setShowGesture(false);
+    } else {
+      setShowGesture(true);
+    }
+    artisans.map((artisan) => {
+      if (
+        artisan.locationCity
+          .toLowerCase()
+          .trim()
+          .indexOf(search.toLowerCase().trim()) !== -1
+      ) {
+        searchResult.push(artisan);
+        artisanCityArrayVar.push(artisan.locationCity.toLowerCase().trim());
+      }
+    });
+    setSearchArtisans(searchResult);
+    setCityGestureList([...new Set(artisanCityArrayVar)]);
+  }
+
+  function selectGesture(e) {
+    filterDataFunction(e.target.textContent);
+    setFormLocationCity(e.target.textContent);
+    setShowGesture(false);
+  }
+
+  const [focused, setFocused] = useState(false);
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
+
+  useEffect(() => {
+    if (!focused) {
+      setShowGesture(false);
+    }
+  }, [focused]);
+
+  return (
+    <div>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="City"
+        value={`${formLocationCity}`}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onChange={(e) => {
+          setFormLocationCity(e.target.value);
+          filterDataFunction(e.target.value);
+        }}
+      />
+      {showGesture ? (
+        <div className="dropdown-list">
+          <ul>
+            <li className="search-result-count">
+              Found {searchArtisans.length} {formLocationCity}`s from Search
+            </li>
+            {cityGestureList.length === 0 ? (
+              <li className="text-muted fs-5 py-1 px-3">City Not found</li>
+            ) : (
+              <>
+                {cityGestureList.map((gesture, i) => {
+                  return (
+                    <li key={i}>
+                      <button
+                        onClick={(e) => {
+                          selectGesture(e);
+                        }}
+                      >
+                        {gesture}
+                      </button>
+                    </li>
+                  );
+                })}{" "}
+              </>
+            )}
+          </ul>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export function StateSearchInput({
+  formLocationState,
+  setFormLocationState,
+  artisans,
+  setSearchArtisans,
+  searchArtisans,
+}) {
+  const [showGesture, setShowGesture] = useState(false);
+  // const [gestureList, setGestureList] = useState([]);
+
+  const [stateGestureList, setStateGestureList] = useState([]);
+
+  let artisanStateArrayVar = [];
+  let searchResult = [];
+  function filterDataFunction(search) {
+    if (search === "") {
+      setShowGesture(false);
+    } else {
+      setShowGesture(true);
+    }
+    artisans.map((artisan) => {
+      if (
+        artisan.locationState
+          .toLowerCase()
+          .trim()
+          .indexOf(search.toLowerCase().trim()) !== -1
+      ) {
+        searchResult.push(artisan);
+        artisanStateArrayVar.push(artisan.locationState.toLowerCase().trim());
+      }
+    });
+    setSearchArtisans(searchResult);
+    setStateGestureList([...new Set(artisanStateArrayVar)]);
+  }
+
+  function selectGesture(e) {
+    filterDataFunction(e.target.textContent);
+    setFormLocationState(e.target.textContent);
+    setShowGesture(false);
+  }
+
+  const [focused, setFocused] = useState(false);
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
+
+  useEffect(() => {
+    if (!focused) {
+      setShowGesture(false);
+    }
+  }, [focused]);
+
+  return (
+    <div>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="State"
+        value={`${formLocationState}`}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onChange={(e) => {
+          setFormLocationState(e.target.value);
+          filterDataFunction(e.target.value);
+        }}
+      />
+      {showGesture ? (
+        <div className="dropdown-list">
+          <ul>
+            <li className="search-result-count">
+              Found {searchArtisans.length} {formLocationState}`s from Search
+            </li>
+            {stateGestureList.length === 0 ? (
+              <li className="text-muted fs-5 py-1 px-3">State Not found</li>
+            ) : (
+              <>
+                {stateGestureList.map((gesture, i) => {
+                  return (
+                    <li key={i}>
+                      <button
+                        onClick={(e) => {
+                          selectGesture(e);
+                        }}
+                      >
+                        {gesture}
+                      </button>
+                    </li>
+                  );
+                })}{" "}
+              </>
+            )}
+          </ul>
+        </div>
+      ) : null}
+    </div>
+  );
+}
