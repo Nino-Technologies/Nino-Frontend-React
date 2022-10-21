@@ -4,7 +4,7 @@ import { UserContext } from "../../context/UserContext";
 import "./VerifyUserPage.scss";
 import axios from "axios";
 import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
-import { FaExclamation } from "react-icons/fa";
+import { FaArrowUp, FaExclamation } from "react-icons/fa";
 import { toast } from "react-toastify";
 import AdminAction from "../../components/AdminAction/AdminAction";
 import ModalComponent from "../../components/Modal/ModalComponent";
@@ -207,7 +207,7 @@ function VerifyUserPage() {
               {artisans.length === 0 ? (
                 <div className="loading">No payments record Found</div>
               ) : (
-                <tbody>
+                <tbody id="top-table">
                   {artisans.map((artisan, i) => {
                     const {
                       _id,
@@ -271,6 +271,9 @@ function VerifyUserPage() {
           )}
         </table>
       </div>
+      <a href="#top-table" className="back-to-top">
+        <FaArrowUp />
+      </a>
     </div>
   );
 }

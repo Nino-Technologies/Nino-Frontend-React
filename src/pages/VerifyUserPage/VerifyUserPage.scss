@@ -1,5 +1,7 @@
 .VerifyUserPage {
   padding-top: 40px;
+  // border: solid;
+  position: relative;
   .tableFixHead {
     overflow-y: auto;
     height: 400px;
@@ -39,5 +41,25 @@
         }
       }
     }
+  }
+  .back-to-top{
+    border: solid;  
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: #fff;
+    cursor: pointer;
+    &:hover{
+      background-color: #0d7085;
+    }
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    z-index: 999;
+
   }
 }
