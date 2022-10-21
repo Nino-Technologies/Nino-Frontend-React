@@ -28,14 +28,16 @@ function ProfileCard({ artisan }) {
         <div className="image-div">
           <img
             src={`${
-              avatar === "" ? "https://via.placeholder.com/100x100" : avatar
+              avatar === ""
+                ? "https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png"
+                : avatar
             }`}
             alt="Profile picture"
             className="w-100"
           />
         </div>
         <div className="text-div">
-          <h1>{fullName}</h1>
+          <h3>{fullName}</h3>
           {/* <!-- send {{ review.length}} has pros --> */}
           <StarComponent rate="5" />
 

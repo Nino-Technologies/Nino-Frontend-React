@@ -15,16 +15,23 @@
     overflow: hidden;
     width: 50%;
     max-width: 200px;
+     min-width: 200px;
     // margin: auto 0;
     max-height: 260px;
   }
   .text-div {
     width: 100%;
+    max-width: 560px;
     text-align: start;
     padding: 0 20px;
     // flex-direction: column;
-    // h1 {
-    // }
+    h3 {
+      margin-top: 10px;
+      max-width: 400px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     // p {
     // display: inline-flex;
     a {
@@ -58,6 +65,9 @@
       overflow: hidden;
       position: relative;
       cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .introduction:hover ::after {
@@ -70,9 +80,32 @@
     }
   }
 
+  @media (max-width: 992px) {
+    .text-div {
+     h3{
+      max-width: 300px;
+     }
+    }
+  }
+  @media (max-width: 788px) {
+    .text-div {
+          .extra-button {
+      position: static;
+    }
+      max-width: 530px;
+     h3{
+      max-width: unset;
+     }
+    }
+  }
   @media (max-width: 650px) {
     display: flex;
     flex-wrap: wrap;
+    .text-div {
+      h3{
+       max-width: 300px;
+      }
+     }
     .image-div {
       // border: solid red;
       overflow: hidden;
@@ -83,6 +116,11 @@
   }
   @media (max-width: 425px) {
     .text-div {
+      .h3{
+        max-width: none;
+        width: 100%;
+      text-align: center;
+      }
       a {
         max-width: none;
       }
