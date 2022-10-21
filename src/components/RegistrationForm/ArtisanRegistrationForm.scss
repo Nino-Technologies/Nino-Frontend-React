@@ -90,4 +90,47 @@
       background-color: #04aa6d;
     }
   }
+  .edit-image-register-form{
+    // border: solid;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    max-height: 620px;
+    // max-height: 800px;
+    // overflow: hidden;
+    position: relative;
+    .reactEasyCrop_CropArea{
+      border: 2px solid var(--color-primary);
+    }
+    .ImageCropper-cropContainer-33{
+      background-color: unset;
+    }
+    // .ImageCropper-controls-35{
+    .ImageCropper-controls-div{
+      flex-direction: column;
+      align-items: unset;
+      padding: 0;
+      position: static;
+      margin-top: 10px;
+      .ImageCropper-sliderContainer-4{
+        margin: 5px 0;
+      }
+    }
+    .ImageCropper-controls-button{
+      margin: 0;
+    }
+    // .ImageCropper-controls-3{
+    //   // border: solid red;
+    //   position: absolute;
+    // }
+    .ImageCropper-cropContainer-1 {
+      max-height: 500px !important;
+    }
+    .avatar-image{
+      // border: solid red;
+      .image-div{
+        // border: solid green;
+        width: 100%;
+      }
+    }
+  }
 }
