@@ -161,8 +161,8 @@ function VerifyUserPage() {
         />
       </div>
       <hr />
-      <div className="table-responsive-sm">
-        <table className="table">
+      <div class="tableFixHead">
+        <table>
           <thead className="thead-dark table-head">
             <tr>
               <th
@@ -188,7 +188,14 @@ function VerifyUserPage() {
               <th scope="col">Subscription</th>
               <th scope="col">Account verified</th>
               <th scope="col">Account Active</th>
-              <th scope="col">Date Joined</th>
+              <th
+                scope="col"
+                style={{
+                  minWidth: "200px",
+                }}
+              >
+                Date Joined
+              </th>
               <th scope="col">Handle</th>
             </tr>
           </thead>
