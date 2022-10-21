@@ -3,6 +3,7 @@ import { useState } from "react";
 import PaymentForm from "../PaymentForm/PaymentForm";
 import "./ModalComponent.scss";
 import { FaCheckCircle } from "react-icons/fa";
+import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper";
 
 function ModalComponent({ btnText, modalTitle, children, modalId }) {
   return (
@@ -289,6 +290,44 @@ export function PaymentModalComponent() {
               >
                 Select Subscription Plan
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+export function ProfilePictureModalComponent({ currentImage }) {
+  // const [selectedPlane, setSelectedPlane] = useState({
+  //   name: "",
+  //   price: "",
+  //   offer: [],
+  // });
+
+  return (
+    <div className="ProfilePictureModalComponent w-100">
+      <div
+        className="modal fade p-0"
+        id="profilePictureModalToggle"
+        aria-hidden="true"
+        aria-labelledby="profilePictureModalToggleLabel"
+        tabIndex="-1"
+      >
+        <div className="modal-dialog modal-fullscreen">
+          <div className="modal-content modal-fullscreen">
+            <div className="modal-header">
+              <h5 className="modal-title" id="profilePictureModalToggleLabel">
+                Edit Picture
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body p-0">
+              <ImageCropperWithStyle currentImage={currentImage} />
             </div>
           </div>
         </div>
