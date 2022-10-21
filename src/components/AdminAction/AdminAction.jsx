@@ -10,6 +10,8 @@ function AdminAction({
   reLoadListFunction,
   account_verified,
   account_active,
+  setArtisanProfile,
+  artisan,
 }) {
   const [actionLoading, setActionLoading] = useState(false);
   const [cookies] = useCookies();
@@ -66,6 +68,14 @@ function AdminAction({
 
   return (
     <div className="btn-group" role="group">
+      {/* // hide button; it will be clicked with js */}
+      <button
+        type="button"
+        id="open_EditProfileModel"
+        style={{ display: "none" }}
+        data-bs-toggle="modal"
+        data-bs-target="#EditProfileModel"
+      ></button>
       <button
         id="btnGroupDrop1"
         type="button"
@@ -76,6 +86,17 @@ function AdminAction({
         {actionLoading ? "Loading..." : "Action"}
       </button>
       <ul className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        <li
+          className="dropdown-item"
+          onClick={() => {
+            setArtisanProfile(artisan);
+            window.document.getElementById("open_EditProfileModel").click();
+          }}
+          data-bs-toggle="modal"
+          // data-bs-target="#EditProfileModel"
+        >
+          Edit Profile
+        </li>
         {account_verified ? (
           <>
             <li
