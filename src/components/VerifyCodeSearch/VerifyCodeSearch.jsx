@@ -48,7 +48,7 @@ function VerifyCodeSearch({ email }) {
         {
           loggedIn
             ? navigate("/dashboard/profile")
-            : navigate("/login?as=user");
+            : navigate("/login?as=artisan");
         }
         // navigate("/verify-code");
       })
