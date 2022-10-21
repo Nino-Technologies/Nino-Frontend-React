@@ -21,12 +21,17 @@ import UsersPage from "./pages/UserPage/UserPage";
 import CreateAdminPage from "./pages/CreateAdminPage/CreateAdminPage";
 import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
-import { PaymentModalComponent } from "./components/Modal/ModalComponent";
+import {
+  PaymentModalComponent,
+  ProfilePictureModalComponent,
+} from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import ReactGa from "react-ga";
 import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./context/UserContext";
+import ImageCropper from "./pages/ImageCropper/ImageCropper";
+import ImageCropperWithStyle from "./pages/ImageCropper/ImageCropper";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -85,6 +90,7 @@ function App() {
         <Route exact path="/register" element={<RegisterPage />} />
         <Route path="/password-reset" element={<PasswordResetPage />} />
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
+        <Route path="/image-cropper" element={<ImageCropperWithStyle />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="home" element={<HomePage />} />
           <Route path="profile" element={<ProfilePage />} />

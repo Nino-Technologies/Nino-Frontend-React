@@ -65,6 +65,8 @@ function ArtisanUploadPhoto() {
     imageData.append("upload_preset", "oyieaesl");
     imageData.append("cloud_name", "dhvacnvek");
 
+    console.log(imageFile);
+    return;
     fetch("  https://api.cloudinary.com/v1_1/dhvacnvek/image/upload", {
       method: "post",
       body: imageData,
