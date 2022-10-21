@@ -51,7 +51,10 @@ function VerifyCodePage() {
           {confirmEmail ? (
             <>
               <VerifyCodeSearch email={email} />
-              <button className="mt-2" onClick={() => sendOtp()}>
+              <button
+                className="mt-2 btn btn-primary"
+                onClick={() => sendOtp()}
+              >
                 resend
               </button>
             </>

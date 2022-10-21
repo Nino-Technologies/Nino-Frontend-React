@@ -391,7 +391,9 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
     imageData.append("upload_preset", "oyieaesl");
     imageData.append("cloud_name", "dhvacnvek");
 
-    // console.log(imageData);
+    console.log(imageData.append("file", imageFile));
+    return;
+    // console.log(imageFile);
     // return;
     fetch("  https://api.cloudinary.com/v1_1/dhvacnvek/image/upload", {
       method: "post",
@@ -612,6 +614,15 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                   >
                     Upload Picture
                   </button>
+
+                  <button
+                    className="btn btn-primary"
+                    data-bs-toggle="modal"
+                    href="#profilePictureModalToggle"
+                    role="button"
+                  >
+                    Upload Picture
+                  </button>
                 </div>
               </div>
               {/* <!-- </form> --> */}
@@ -728,14 +739,22 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                   </div>
                   <div className="mb-3 col-xl-6 col-md-6 px-1">
                     <label className="form-label">Phone Number</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={editProfileFormData.phoneNumber}
-                      onChange={(e) => handleChange(e)}
-                      name="phoneNumber"
-                      placeholder={`+${userProfile.phoneNumber}`}
-                    />
+                    <div className="d-flex">
+                      <input
+                        className="form-control w-25"
+                        type={"text"}
+                        value="+234"
+                        readOnly
+                      />
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={editProfileFormData.phoneNumber}
+                        onChange={(e) => handleChange(e)}
+                        name="phoneNumber"
+                        placeholder={`+${userProfile.phoneNumber}`}
+                      />
+                    </div>
                   </div>
                   <div className="mb-3 col-xl-6 col-md-6 px-1">
                     <label className="form-label">Email</label>

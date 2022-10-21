@@ -37,7 +37,7 @@ function RegisterPage() {
                 )}
               </>
             )}
-            <hr className="w-100" />
+            {/* <hr className="w-100" /> */}
             {displayForm === -1 ? (
               <>
                 Do You Want To
