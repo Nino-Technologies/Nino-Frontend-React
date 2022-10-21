@@ -226,7 +226,8 @@
           .image-div {
             width: 100%;
             max-width: 300px;
-
+            // remove this height
+            height: unset;
             margin: auto;
             img {
               width: 100%;

@@ -4,8 +4,13 @@
   .table-responsive-sm {
     overflow: scroll;
     width: 100%;
+    // border: solid;
+    // position: sticky;
+    // top: 0;
+    // height: 76vh;
 
     table {
+      position: relative;
       width: 100%;
       .loading {
         position: absolute;
@@ -26,8 +31,15 @@
           }
         }
       }
+//       .table-head{
+// // position: fixed;
+// top: 177px;
+// // position:sticky;
+// // display: ;
+      // }
 
       tbody {
+        margin-top: 30px;
         tr {
           td {
             .check-verify-div {

@@ -32,7 +32,7 @@
       color: var(--color-primary);
     }
     .hero-name {
-      font-size: 3em;
+      font-size: 2em;
       padding-top: 90px;
       font-weight: 700;
     }
@@ -96,7 +96,7 @@
   @media (max-width: 850px) {
     .text-div {
       .hero-name {
-        font-size: 2em;
+        font-size: 1.5em;
         text-align: left;
         color: #003049;
         padding-top: 90px;
@@ -159,7 +159,6 @@
       padding: 0;
       .hero-name {
         margin-top: 50px;
-        font-size: 1.5  rem;
       }
     }
   }
