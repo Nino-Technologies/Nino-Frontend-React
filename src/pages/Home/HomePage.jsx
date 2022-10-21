@@ -61,10 +61,10 @@ function HomePage() {
       ) {
         getProgress += 10;
       }
-      console.log(getProgress);
+      // console.log(getProgress);
     }
+    // console.log(userProfile);
     setProfileProgress(getProgress);
-    console.log(userProfile);
   }, []);
 
   useEffect(() => {
