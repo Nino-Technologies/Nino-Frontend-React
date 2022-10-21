@@ -11,8 +11,14 @@ import "./ArtisansPage.scss";
 import { SearchContext } from "../../context/SearchContext";
 
 function ArtisansPage() {
-  const { pageLoading, artisans, getArtisansFunction } =
-    useContext(SearchContext);
+  const {
+    pageLoading,
+    artisans,
+    getArtisansFunction,
+    searchArtisans,
+    // {/* -------------------- use this line for auto filter  ---------------------------*/}
+    formService,
+  } = useContext(SearchContext);
 
   useEffect(() => {
     getArtisansFunction();
@@ -42,21 +48,35 @@ function ArtisansPage() {
         ></path>
       </svg>
 
-      <Search
-      // setPageLoading={setPageLoading}
-      // setArtisans={setArtisans}
-      // apiUrl={apiUrl}
-      />
+      <Search />
       {pageLoading ? (
         <div className="container loading">Loading...</div>
       ) : (
-        <div className="container">
-          {artisans.map((artisan) => (
-            <ProfileCard artisan={artisan} />
-          ))}
+        <div className="container image-list-container">
+          {/* -------------------- use this line for auto filter  ---------------------------*/}
+          {formService !== "" ? (
+            <>
+              {searchArtisans.map((artisan) => (
+                <ProfileCard artisan={artisan} key={artisan._id} />
+              ))}
+            </>
+          ) : (
+            <>
+              {" "}
+              {artisans.map((artisan) => (
+                <ProfileCard artisan={artisan} key={artisan._id} />
+              ))}
+            </>
+          )}
         </div>
       )}
-      {!pageLoading && artisans.length === 0 ? (
+      {/* -------------------- use this line for auto filter  ---------------------------*/}
+      {!pageLoading && formService !== "" && artisans.length === 0 ? (
+        <div className="container loading">No service provider found</div>
+      ) : null}
+      {/* -------------------- use this line for auto filter  ---------------------------*/}
+      {!pageLoading && formService === "" && searchArtisans.length === 0 ? (
+        // {!pageLoading && searchArtisans.length === 0 ? (
         <div className="container loading">No service provider found</div>
       ) : null}
       <div style={{ width: "100%", margin: 0 }}>
