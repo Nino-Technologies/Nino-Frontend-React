@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import React, { useContext, useState } from "react";
+import { FaRegWindowClose, FaSearch } from "react-icons/fa";
 import "./Search.scss";
 import { SearchContext } from "../../context/SearchContext";
 import { toast } from "react-toastify";
@@ -16,69 +16,21 @@ function Search() {
     setFormLocationState,
     setSearchArtisans,
     searchArtisans,
-    handleSearchFunction
   } = useContext(SearchContext);
   const navigate = useNavigate();
-  let searchResult = [];
-  let searchService = [];
 
-  // function filterSearch() {
-  //   if (formService === "") {
-  //     return toast.info("fill search fields");
-  //   }
-  //   navigate(`/artisans`);
-  //   artisans.map((artisan) => {
-  //     if (
-  //       artisan.service
-  //         .toLowerCase()
-  //         .trim()
-  //         .indexOf(formService.toLowerCase().trim()) !== -1
-  //     ) {
-  //       searchService.push(artisan);
-  //     }
-  //   });
-  //   let searchState = [];
-  //   if (formLocationState !== "") {
-  //     searchService.map((artisan) => {
-  //       if (
-  //         artisan.locationState
-  //           .toLowerCase()
-  //           .trim()
-  //           .indexOf(formService.toLowerCase().trim()) !== -1
-  //       ) {
-  //         searchState.push(artisan);
-  //       }
-  //     });
-  //   }
-
-  //   let searchCity = [];
-  //   if (formLocationCity !== "") {
-  //     searchState.map((artisan) => {
-  //       if (
-  //         artisan.locationCity
-  //           .toLowerCase()
-  //           .trim()
-  //           .indexOf(formService.toLowerCase().trim()) !== -1
-  //       ) {
-  //         searchCity.push(artisan);
-  //       }
-  //     });
-  //   }
-  //   if (formLocationCity === "" && formLocationState === "") {
-  //     return setSearchArtisans(searchService);
-  //   }
-  //   searchResult = [...searchCity, ...searchState];
-  //   // setSearchArtisans(searchResult);
-  //   console.log(searchResult);
-  // }
-
+  function clearSearch() {
+    setFormService("");
+    setFormLocationCity("");
+    setFormLocationState("");
+    setSearchArtisans(artisans);
+  }
   return (
     <div className="search-form">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleSearchFunction()
-          // filterSearch();
+          navigate(`/artisans`);
         }}
       >
         <ServiceSearchInput
@@ -115,31 +67,24 @@ function Search() {
             />
           </div>
         </label>
-        <button type="submit">
-          <FaSearch className="me-1" />
-          search
-        </button>
-
-        {/* <div class="dropdown">
-          <button onclick="myFunction()" class="dropbtn">
-            Dropdown
+        <div className="d-flex">
+          <button type="submit">
+            <FaSearch className="me-1" />
+            search
           </button>
-          <div id="myDropdown" class="dropdown-content">
-            <input
-              type="text"
-              placeholder="Search.."
-              id="myInput"
-              onkeyup="filterFunction()"
-            />
-            <a href="#about">About</a>
-            <a href="#base">Base</a>
-            <a href="#blog">Blog</a>
-            <a href="#contact">Contact</a>
-            <a href="#custom">Custom</a>
-            <a href="#support">Support</a>
-            <a href="#tools">Tools</a>
-          </div>
-        </div> */}
+          {formService !== "" ||
+          formLocationState !== "" ||
+          formLocationCity !== "" ? (
+            <button
+              type="button"
+              className="d-inline-flex "
+              onClick={() => clearSearch()}
+            >
+              <FaRegWindowClose className="m-auto fs-4" />
+              <div className="d-none d-md-inline m-auto">Clear</div>
+            </button>
+          ) : null}
+        </div>
       </form>
     </div>
   );
@@ -162,48 +107,40 @@ export function ServiceSearchInput({
   let searchResult = [];
   let artisanServiceArrayVar = [];
 
-  // function filterDataFunction(search) {
-  //   setFormLocationState("");
-  //   setFormLocationCity("");
-  //   if (search === "") {
-  //     setShowGesture(false);
-  //   } else {
-  //     setShowGesture(true);
-  //   }
-  //   artisans.map((artisan) => {
-  //     if (
-  //       artisan.service
-  //         .toLowerCase()
-  //         .trim()
-  //         .indexOf(search.toLowerCase().trim()) !== -1
-  //     ) {
-  //       searchResult.push(artisan);
-  //       artisanServiceArrayVar.push(artisan.service.toLowerCase().trim());
-  //     }
-  //   });
-  //   setSearchArtisans(searchResult);
-  //   setGestureList([...new Set(artisanServiceArrayVar)]);
-  // }
+  function filterDataFunction(search) {
+    setFormLocationState("");
+    setFormLocationCity("");
+    if (search === "") {
+      setShowGesture(false);
+    } else {
+      setShowGesture(true);
+    }
+    artisans.map((artisan) => {
+      if (
+        artisan.service
+          .toLowerCase()
+          .trim()
+          .indexOf(search.toLowerCase().trim()) !== -1
+      ) {
+        searchResult.push(artisan);
+        artisanServiceArrayVar.push(artisan.service.toLowerCase().trim());
+      }
+    });
+
+    setGestureList([...new Set(artisanServiceArrayVar)]);
+  }
 
   function selectGesture(e) {
-    // filterDataFunction(e.target.textContent);
+    filterDataFunction(e.target.textContent);
     setFormService(e.target.textContent);
     setShowGesture(false);
-    // setFocused(false);
+    setFocused(false);
+    setSearchArtisans(searchResult);
   }
 
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
-
-  useEffect(() => {
-    // if (!focused) {
-    //   setShowGesture(false);
-    // }
-    // if (focused && formService !== "") {
-    //   setShowGesture(true);
-    // }
-  }, [focused]);
 
   return (
     <label>
@@ -215,11 +152,11 @@ export function ServiceSearchInput({
         className="form-control"
         placeholder="Eg. Plumber, carpenter, Etc"
         value={formService}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={() => onFocus()}
+        onBlur={() => onBlur()}
         onChange={(e) => {
           setFormService(e.target.value);
-          // filterDataFunction(e.target.value);
+          filterDataFunction(e.target.value);
         }}
       />
 
@@ -259,7 +196,6 @@ export function CitySearchInput({
   formService,
   formLocationCity,
   setFormLocationCity,
-  artisans,
   setSearchArtisans,
   searchArtisans,
   formLocationState,
@@ -270,60 +206,45 @@ export function CitySearchInput({
   let artisanCityArrayVar = [];
 
   let searchResult = [];
-  // function filterDataFunction(search) {
-  //   if (formService === "") {
-  //     return toast.info("fill Service");
-  //   }
-  //   if (formLocationState === "") {
-  //     return toast.info("fill state");
-  //   }
-  //   if (search === "") {
-  //     setShowGesture(false);
-  //   } else {
-  //     setShowGesture(true);
-  //   }
-  //   artisans.map((artisan) => {
-  //     if (
-  //       artisan.service
-  //         .toLowerCase()
-  //         .trim()
-  //         .indexOf(search.toLowerCase().trim()) !== -1 &&
-  //       artisan.locationState
-  //         .toLowerCase()
-  //         .trim()
-  //         .indexOf(search.toLowerCase().trim()) !== -1 &&
-  //       artisan.locationCity
-  //         .toLowerCase()
-  //         .trim()
-  //         .indexOf(search.toLowerCase().trim()) !== -1
-  //     ) {
-  //       searchResult.push(artisan);
-  //       artisanCityArrayVar.push(artisan.locationCity.toLowerCase().trim());
-  //     }
-  //   });
-  //   setSearchArtisans(searchResult);
-  //   setCityGestureList([...new Set(artisanCityArrayVar)]);
-  // }
+  function filterDataFunction(search) {
+    if (formService === "") {
+      return toast.info("fill Service");
+    }
+    if (formLocationState === "") {
+      return toast.info("fill state");
+    }
+    if (search === "") {
+      setShowGesture(false);
+    } else {
+      setShowGesture(true);
+    }
+
+    searchArtisans.map((artisan) => {
+      if (
+        artisan.locationCity
+          .toLowerCase()
+          .trim()
+          .indexOf(search.toLowerCase().trim()) !== -1
+      ) {
+        searchResult.push(artisan);
+        artisanCityArrayVar.push(artisan.locationCity.toLowerCase().trim());
+      }
+    });
+
+    setCityGestureList([...new Set(artisanCityArrayVar)]);
+  }
 
   function selectGesture(e) {
-    // filterDataFunction(e.target.textContent);
+    filterDataFunction(e.target.textContent);
     setFormLocationCity(e.target.textContent);
     setShowGesture(false);
-    // setFocused(false);
+    setFocused(false);
+    setSearchArtisans(searchResult);
   }
 
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
-
-  useEffect(() => {
-    // if (!focused) {
-    //   setShowGesture(false);
-    // }
-    // if (focused && formLocationCity !== "") {
-    //   setShowGesture(true);
-    // }
-  }, [focused]);
 
   return (
     <div className="ms-2 w-100">
@@ -332,14 +253,15 @@ export function CitySearchInput({
         className="form-control"
         placeholder="City"
         value={`${formLocationCity}`}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={() => onFocus()}
+        onBlur={() => onBlur()}
         onChange={(e) => {
           if (formService === "") {
             return toast.info("fill service first");
+          } else {
+            setFormLocationCity(e.target.value);
+            filterDataFunction(e.target.value);
           }
-          setFormLocationCity(e.target.value);
-          // filterDataFunction(e.target.value);
         }}
       />
       {showGesture ? (
@@ -378,70 +300,51 @@ export function StateSearchInput({
   formService,
   formLocationState,
   setFormLocationState,
-  artisans,
   setSearchArtisans,
   searchArtisans,
-  setFormLocationCity,
 }) {
   const [showGesture, setShowGesture] = useState(false);
-  // const [gestureList, setGestureList] = useState([]);
 
   const [stateGestureList, setStateGestureList] = useState([]);
 
   let artisanStateArrayVar = [];
   let searchResult = [];
-  // function filterDataFunction(search) {
-  //   setFormLocationCity("");
-  //   if (formService === "") {
-  //     return toast.info("fill service");
-  //   }
-  //   if (search === "") {
-  //     setShowGesture(false);
-  //   } else {
-  //     setShowGesture(true);
-  //   }
-  //   artisans.map((artisan) => {
-  //     if (
-  //       artisan.service
-  //         .toLowerCase()
-  //         .trim()
-  //         .indexOf(search.toLowerCase().trim()) !== -1 &&
-  //       artisan.locationState
-  //         .toLowerCase()
-  //         .trim()
-  //         .indexOf(search.toLowerCase().trim()) !== -1
-  //     ) {
-  //       searchResult.push(artisan);
-  //       artisanStateArrayVar.push(artisan.locationState.toLowerCase().trim());
-  //     }
-  //   });
-  //   setSearchArtisans(searchResult);
-  //   setStateGestureList([...new Set(artisanStateArrayVar)]);
-  // }
+  function filterDataFunction(search) {
+    if (formService === "") {
+      return toast.info("fill service");
+    }
+    if (search === "") {
+      setShowGesture(false);
+    } else {
+      setShowGesture(true);
+    }
+
+    searchArtisans.map((artisan) => {
+      if (
+        artisan.locationState
+          .toLowerCase()
+          .trim()
+          .indexOf(search.toLowerCase().trim()) !== -1
+      ) {
+        searchResult.push(artisan);
+        artisanStateArrayVar.push(artisan.locationState.toLowerCase().trim());
+      }
+    });
+
+    setStateGestureList([...new Set(artisanStateArrayVar)]);
+  }
 
   function selectGesture(e) {
-    // filterDataFunction(e.target.textContent);
+    filterDataFunction(e.target.textContent);
     setFormLocationState(e.target.textContent);
     setShowGesture(false);
-    // setFocused(false);
+    setSearchArtisans(searchResult);
+    setFocused(false);
   }
 
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
-
-  // useEffect(() => {
-  //   if (!focused && formLocationState === "") {
-  //     setShowGesture(false);
-  //   }
-  //   if (!focused && formLocationState !== "") {
-  //     setShowGesture(false);
-  //     filterDataFunction(formLocationState);
-  //   }
-  //   // if (focused && formLocationState !== "") {
-  //   //   setShowGesture(true);
-  //   // }
-  // }, [focused]);
 
   return (
     <div className="me-2 w-100">
@@ -450,14 +353,14 @@ export function StateSearchInput({
         className="form-control"
         placeholder="State"
         value={`${formLocationState}`}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={() => onFocus()}
+        onBlur={() => onBlur()}
         onChange={(e) => {
           if (formService === "") {
             return toast.info("fill service first");
           }
           setFormLocationState(e.target.value);
-          // filterDataFunction(e.target.value);
+          filterDataFunction(e.target.value);
         }}
       />
       {showGesture ? (
