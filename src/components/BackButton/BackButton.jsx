@@ -5,10 +5,10 @@ import { FaArrowLeft } from "react-icons/fa";
 function BackButton() {
   const navigate = useNavigate();
   return (
-    <button onClick={() => console.log(navigate(-1))}>
-      <FaArrowLeft /> <span className="d-none d-md-block">Back</span>
+    <button className="btn p-3" onClick={() => navigate(-1)}>
+      <FaArrowLeft /> <span className="d-none d-md-inline">Back</span>
     </button>
-  );
+  ); 
 }
 
 export default BackButton;
