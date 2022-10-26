@@ -24,6 +24,8 @@ import { useCookies } from "react-cookie";
 import moment from "moment";
 import ModalImage from "./../../components/ModalImage/ModalImage";
 import ModalComponent from "./../../components/Modal/ModalComponent";
+import BackButton from "../../components/BackButton/BackButton";
+import { SearchContext } from "./../../context/SearchContext";
 
 function ArtisansProfile() {
   const { id } = useParams();
@@ -35,6 +37,7 @@ function ArtisansProfile() {
   const navigate = useNavigate();
   const { apiUrl, loggedIn, userProfile, getUserProfile, decodeDate } =
     useContext(UserContext);
+  const { artisans } = useContext(SearchContext);
   const [cookies] = useCookies();
 
   // ======= THIS WILL SEND REQUEST to API with the ID form the user profile ===========
@@ -44,18 +47,33 @@ function ArtisansProfile() {
       alert("this page requires an artisan ID ");
       return navigate("/artisans");
     }
-    let response = await fetch(`${apiUrl}/search/${profileId}`);
-    // let response = await fetch(`http://localhost:5000/api/search/${profileId}`);
 
-    if (response.ok) {
-      let json = await response.json();
-      setArtisan(json[0]);
-      setPageLoading(false);
-    } else {
-      console.log("error");
-      alert(" artisan with the ID provided is a not found");
-      navigate("/artisans");
+    if (artisans.length !== 0) {
+      var profile = artisans.find((artisan) => artisan._id === profileId);
+
+      // print
+      if (!profile) {
+        // toast.info("Artesian profile not found");
+        toast.info(" artisan with the ID provided is a not found");
+        navigate("/artisans");
+      } else {
+        setArtisan(profile);
+        setPageLoading(false);
+      }
       return;
+    } else {
+      let response = await fetch(`${apiUrl}/search/${profileId}`);
+
+      if (response.ok) {
+        let json = await response.json();
+        setArtisan(json[0]);
+        setPageLoading(false);
+      } else {
+        console.log("error");
+        alert(" artisan with the ID provided is a not found");
+        navigate("/artisans");
+        return;
+      }
     }
   }
 
@@ -86,7 +104,6 @@ function ArtisansProfile() {
       to: `+${object.to}`,
     };
     const options = {
-      // url: `http://localhost:5000/api/notification`,
       url: `${apiUrl}/sendMail/notify`,
       method: "POST",
       headers: {
@@ -121,8 +138,6 @@ function ArtisansProfile() {
         toast.error(error.message);
       });
   }
-
-  // console.log(artisan.phoneNumber);
 
   function countHireFunction(artisan) {
     const newHire = artisan.hired + 1;
@@ -213,8 +228,6 @@ function ArtisansProfile() {
       date: moment(Date.now())._d,
       review: artisanReviewInput,
     };
-    // console.log(moment(Date.now())._d);
-    // console.log("Data", userProfile);
     // axios PUT request
     const options = {
       // url: `http://localhost:5000/api/auth/user/login`,
@@ -252,7 +265,6 @@ function ArtisansProfile() {
   return (
     <>
       <Nav />
-
       {pageLoading ? (
         <>
           <PageLoading loadingStateError={false}>Loading..</PageLoading>
@@ -312,6 +324,7 @@ function ArtisansProfile() {
           </ModalComponent>
           <div className="containers h-100">
             <div className="main-area">
+              <BackButton />
               <div className="top-section">
                 {/* <!--  --> */}
                 <div className="image-div">
