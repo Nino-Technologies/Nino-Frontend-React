@@ -9,6 +9,7 @@ export const SearchContext = createContext();
 export function SearchProvider({ children }) {
   const { apiUrl } = useContext(UserContext);
   const [pageLoading, setPageLoading] = useState(true);
+  const [copyArtisans, setCopyArtisans] = useState([]);
   const [artisans, setArtisans] = useState([]);
   const [searchArtisans, setSearchArtisans] = useState([]);
 
@@ -54,30 +55,30 @@ export function SearchProvider({ children }) {
     city: formLocationState.toLowerCase().trim(),
   };
   // Example POST method implementation:
-  async function handleSearchFunction(url = `${apiUrl}/search`) {
-    setPageLoading(true);
-    navigate(`/artisans`);
-    // Default options are marked with *
-    const response = await fetch(url, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      // body: JSON.stringify(filterSearch), // body data type must match "Content-Type" header
-      body: JSON.stringify(filterData), // body data type must match "Content-Type" header
-    });
-    const responseData = await response.json(); // parses JSON response into native JavaScript objects
-    setPageLoading(false);
-    setArtisans(responseData);
-    // console.log(responseData);
-    return;
-  }
+  // async function handleSearchFunction(url = `${apiUrl}/search`) {
+  //   setPageLoading(true);
+  //   navigate(`/artisans`);
+  //   // Default options are marked with *
+  //   const response = await fetch(url, {
+  //     method: "POST", // *GET, POST, PUT, DELETE, etc.
+  //     mode: "cors", // no-cors, *cors, same-origin
+  //     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+  //     credentials: "same-origin", // include, *same-origin, omit
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       // 'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //     redirect: "follow", // manual, *follow, error
+  //     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  //     // body: JSON.stringify(filterSearch), // body data type must match "Content-Type" header
+  //     body: JSON.stringify(filterData), // body data type must match "Content-Type" header
+  //   });
+  //   const responseData = await response.json(); // parses JSON response into native JavaScript objects
+  //   setPageLoading(false);
+  //   setArtisans(responseData);
+  //   // console.log(responseData);
+  //   return;
+  // }
 
   return (
     <SearchContext.Provider
@@ -95,7 +96,7 @@ export function SearchProvider({ children }) {
         setFormLocationState,
         searchArtisans,
         setSearchArtisans,
-        handleSearchFunction,
+        // handleSearchFunction,
       }}
     >
       {children}
