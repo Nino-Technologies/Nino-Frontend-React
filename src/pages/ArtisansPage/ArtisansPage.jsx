@@ -1,31 +1,15 @@
 import React, { useContext } from "react";
-import { useEffect } from "react";
 import Footer from "../../components/Footer/Footer";
 import Nav from "../../components/Nav/Nav";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import Search from "../../components/Search/Search";
-import ReactGa from "react-ga";
 
 import "./ArtisansPage.scss";
-// import { UserContext } from "../../context/UserContext";
 import { SearchContext } from "../../context/SearchContext";
 
 function ArtisansPage() {
-  const {
-    pageLoading,
-    artisans,
-    getArtisansFunction,
-    searchArtisans,
-    // {/* -------------------- use this line for auto filter  ---------------------------*/}
-    formService,
-  } = useContext(SearchContext);
-
-  // useEffect(() => {
-  //   getArtisansFunction();
-  // }, []);
-  // useEffect(() => {
-  //   ReactGa.pageview(window.location.pathname);
-  // }, []);
+  const { pageLoading, artisans, searchArtisans, formService } =
+    useContext(SearchContext);
 
   return (
     <div className="ArtisansPage">
@@ -35,20 +19,11 @@ function ArtisansPage() {
       ) : (
         <div className="container image-list-container">
           {/* -------------------- use this line for auto filter  ---------------------------*/}
-          {formService !== "" ? (
-            <>
-              {searchArtisans.map((artisan) => (
-                <ProfileCard artisan={artisan} key={artisan._id} />
-              ))}
-            </>
-          ) : (
-            <>
-              {" "}
-              {artisans.map((artisan) => (
-                <ProfileCard artisan={artisan} key={artisan._id} />
-              ))}
-            </>
-          )}
+          <>
+            {searchArtisans.map((artisan) => (
+              <ProfileCard artisan={artisan} key={artisan._id} />
+            ))}
+          </>
         </div>
       )}
       {/* -------------------- use this line for auto filter  ---------------------------*/}
@@ -56,10 +31,6 @@ function ArtisansPage() {
         <div className="container loading">No service provider found</div>
       ) : null}
       {/* -------------------- use this line for auto filter  ---------------------------*/}
-      {!pageLoading && formService === "" && searchArtisans.length === 0 ? (
-        // {!pageLoading && searchArtisans.length === 0 ? (
-        <div className="container loading">No service provider found</div>
-      ) : null}
       <div style={{ width: "100%", margin: 0 }}>
         <Footer />
       </div>
