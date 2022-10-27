@@ -163,9 +163,9 @@ export function ServiceSearchInput({
       {showGesture ? (
         <div className="dropdown-list">
           <ul>
-            <li className="search-result-count">
+            {/* <li className="search-result-count">
               Found {searchArtisans.length} {formService}`s from Search
-            </li>
+            </li> */}
             {gestureList.length === 0 ? (
               <li className="text-muted fs-5 py-1 px-3">Service Not found</li>
             ) : (
@@ -267,9 +267,9 @@ export function CitySearchInput({
       {showGesture ? (
         <div className="dropdown-list">
           <ul>
-            <li className="search-result-count">
+            {/* <li className="search-result-count">
               Found {searchArtisans.length} {formLocationCity}`s from Search
-            </li>
+            </li> */}
             {cityGestureList.length === 0 ? (
               <li className="text-muted fs-5 py-1 px-3">City Not found</li>
             ) : (
@@ -366,9 +366,9 @@ export function StateSearchInput({
       {showGesture ? (
         <div className="dropdown-list state">
           <ul>
-            <li className="search-result-count">
+            {/* <li className="search-result-count">
               Found {searchArtisans.length} {formLocationState}`s from Search
-            </li>
+            </li> */}
             {stateGestureList.length === 0 ? (
               <li className="text-muted fs-5 py-1 px-3">State Not found</li>
             ) : (
