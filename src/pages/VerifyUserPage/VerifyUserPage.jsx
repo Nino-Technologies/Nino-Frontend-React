@@ -4,7 +4,7 @@ import { UserContext } from "../../context/UserContext";
 import "./VerifyUserPage.scss";
 import axios from "axios";
 import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
-import { FaExclamation } from "react-icons/fa";
+import { FaArrowUp, FaExclamation } from "react-icons/fa";
 import { toast } from "react-toastify";
 import AdminAction from "../../components/AdminAction/AdminAction";
 import ModalComponent from "../../components/Modal/ModalComponent";
@@ -161,8 +161,8 @@ function VerifyUserPage() {
         />
       </div>
       <hr />
-      <div className="table-responsive-sm">
-        <table className="table">
+      <div class="tableFixHead">
+        <table>
           <thead className="thead-dark table-head">
             <tr>
               <th
@@ -188,7 +188,14 @@ function VerifyUserPage() {
               <th scope="col">Subscription</th>
               <th scope="col">Account verified</th>
               <th scope="col">Account Active</th>
-              <th scope="col">Date Joined</th>
+              <th
+                scope="col"
+                style={{
+                  minWidth: "200px",
+                }}
+              >
+                Date Joined
+              </th>
               <th scope="col">Handle</th>
             </tr>
           </thead>
@@ -200,7 +207,7 @@ function VerifyUserPage() {
               {artisans.length === 0 ? (
                 <div className="loading">No payments record Found</div>
               ) : (
-                <tbody>
+                <tbody id="top-table">
                   {artisans.map((artisan, i) => {
                     const {
                       _id,
@@ -264,6 +271,9 @@ function VerifyUserPage() {
           )}
         </table>
       </div>
+      <a href="#top-table" className="back-to-top">
+        <FaArrowUp />
+      </a>
     </div>
   );
 }

@@ -4,13 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
-import { ProfilePictureModalComponent } from "../Modal/ModalComponent";
-import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper";
+// import { ProfilePictureModalComponent } from "../Modal/ModalComponent";
+// import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper";
+import CloudinaryUploadProfileButton from "../CloudnaryUploadButton/CloudnaryUploadButton";
 
 function ArtisanRegistrationForm() {
   const [currentTab, setCurrentTab] = useState(1);
   // change this to "5" to add imageCropper
-  const [maxTab] = useState(4);
+  const [maxTab] = useState(5);
   const [formComplete, setFormComplete] = useState(false);
   const [loading, setLoading] = useState(false);
   // form data
@@ -29,25 +30,14 @@ function ArtisanRegistrationForm() {
   // const [offersRemoteServices, setOffersRemoteServices] = useState(false);
   const [service, setService] = useState("");
   const [introduction, setIntroduction] = useState("");
-  // const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
   // const [profileImageFile, setProfileImageFile] = useState(null);
 
-  // function updateProfilePicture(img) {
-  //   setProfileImage(img);
-  // }
+  function updateProfilePicture(img) {
+    setAvatar(img);
+  }
   const { apiUrl } = useContext(UserContext);
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   console.log(profileImage);
-  //   // console.log(blob2file(profileImage));
-  //   if (profileImage) {
-  //     const randomNumber = new Date().getTime();
-  //     const fileName = "newFIle-" + randomNumber;
-  //     setProfileImageFile(blobToFile(profileImage, fileName));
-  //     // setProfileImageFile(blob2file(profileImage));
-  //   }
-  // }, [profileImage]);
   useEffect(() => {
     if (
       email === "" ||
@@ -65,58 +55,8 @@ function ArtisanRegistrationForm() {
     setFormComplete(true);
   }, [email, fullName, phoneNumber, locationCity, locationState, password]);
 
-  // // ==================================== generate file ================================================
-
-  // function blobToFile(theBlob, fileName) {
-  //   return new File([theBlob], fileName, {
-  //     lastModified: new Date().getTime(),
-  //     type: "image/png",
-  //   });
-  // }
-
-  // function blob2file(blobData) {
-  //   const fd = new FormData();
-  //   fd.set("a", blobData);
-  //   console.log(fd.get("a"));
-  //   return fd.get("a");
-  // }
-  // // ==================================== < generate file />================================================
-  // function uploadImageToCloudinary() {
-  //   if (!profileImage || profileImage === "")
-  //     return toast.info("Image has not be edited to size");
-
-  //   if (!profileImageFile || profileImageFile === "")
-  //     return toast.info("No image selected; try again");
-
-  //   const imageData = new FormData();
-  //   imageData.append("file", profileImageFile);
-  //   imageData.append("upload_preset", "oyieaesl");
-  //   imageData.append("cloud_name", "dhvacnvek");
-
-  //   // console.log(imageData.append("file", imageFile));
-  //   // return;
-  //   console.log(profileImageFile);
-
-  //   return;
-  //   fetch("  https://api.cloudinary.com/v1_1/dhvacnvek/image/upload", {
-  //     method: "post",
-  //     body: imageData,
-  //   })
-  //     .then((resp) => resp.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       setAvatar(data.url);
-  //       // return;
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
-
   async function handelSubmit(e) {
     e.preventDefault();
-
-    // console.dir();
-
-    // const formElements = e.target;
 
     // Validate input
     if (email === "") {
@@ -154,7 +94,7 @@ function ArtisanRegistrationForm() {
     }
 
     if (!avatar || avatar === "") {
-      toast.info("Select an image before submitting");
+      return toast.info("Select an image before submitting");
     }
     setLoading(true);
 
@@ -371,12 +311,9 @@ function ArtisanRegistrationForm() {
               value={rePassword}
               onChange={(e) => setRePassword(e.target.value)}
             />
-            {formComplete ? null : (
-              <span className="text-danger my-2">Complete Form to Submit</span>
-            )}
           </div>
 
-          {/* <div
+          <div
             className="tab"
             style={
               currentTab === 5
@@ -386,25 +323,18 @@ function ArtisanRegistrationForm() {
           >
             Profile Picture
             <div className="edit-image-register-form">
-              <ImageCropperWithStyle
+              <CloudinaryUploadProfileButton
+                formComplete={formComplete}
+                avatar={avatar}
                 updateProfilePicture={updateProfilePicture}
-                setProfileImageFile={setProfileImageFile}
-                profileImage={profileImage}
               />
-              {profileImage ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    uploadImageToCloudinary();
-                  }}
-                  className="btn btn-primary mx-1 mt-4"
-                >
-                  use Image
-                </button>
-              ) : null}
             </div>
-          </div> */}
-
+          </div>
+          {formComplete ? null : (
+            <sup className="text-danger text-end mt-4 d-block my-2">
+              Complete Form to Submit
+            </sup>
+          )}
           <div style={{ overflow: "auto" }}>
             <div style={{ float: "right" }} className="d-flex">
               {currentTab !== 1 ? (
@@ -428,7 +358,15 @@ function ArtisanRegistrationForm() {
                     >
                       {!loading ? <> Submit</> : <>Loading...</>}
                     </button>
-                  ) : null}
+                  ) : (
+                    <button
+                      type="submit"
+                      disabled={formComplete || loading ? false : true}
+                      className="btn btn-primary mx-1"
+                    >
+                      Submit
+                    </button>
+                  )}
                 </>
               ) : (
                 <button

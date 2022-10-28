@@ -33,7 +33,6 @@ function ProfileCard({ artisan }) {
                 : avatar
             }`}
             alt="Profile picture"
-            className="w-100"
           />
         </div>
         <div className="text-div">

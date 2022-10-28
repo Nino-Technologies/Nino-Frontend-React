@@ -1,71 +1,65 @@
 .VerifyUserPage {
   padding-top: 40px;
+  // border: solid;
   position: relative;
-  .table-responsive-sm {
-    overflow: scroll;
+  .tableFixHead {
+    overflow-y: auto;
+    height: 400px;
+  }
+  .tableFixHead thead th {
+    position: sticky;
+    top: -1px;
+    background-color: var(--color-primary);
+    color: #fff;
+    z-index: 2;
+  }
+  table {
+    border-collapse: collapse;
     width: 100%;
-    // border: solid;
-    // position: sticky;
-    // top: 0;
-    // height: 76vh;
-
-    table {
-      position: relative;
-      width: 100%;
-      .loading {
-        position: absolute;
-        height: 250px;
-        width: 100%;
-        font-size: 25px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: rgb(90, 90, 90);
-      }
-      thead {
-        background-color: var(--color-primary);
-        color: #fff;
-        tr {
-          th {
-            min-width: 150px;
-          }
-        }
-      }
-//       .table-head{
-// // position: fixed;
-// top: 177px;
-// // position:sticky;
-// // display: ;
-      // }
-
-      tbody {
-        margin-top: 30px;
-        tr {
-          td {
-            .check-verify-div {
-              // position: relative;
-              // border: solid;
-              margin-top: auto;
-              display: flex;
-              justify-content: space-between;
-              padding-right: 0;
-              flex-direction: row-reverse;
-              .check-verify-icon {
-                // position: absolute;
-                top: 0;
-                right: 0;
-                font-size: 15px;
-                margin: auto 1px;
-                // border: solid;
-                img {
-                  width: 20px;
-                  height: 20px;
-                }
-              }
-            }
-          }
+    border: none !important;
+  }
+  thead {
+  }
+  th,
+  td {
+    border: none !important;
+    padding: 8px 16px;
+    .check-verify-div {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 0;
+      flex-direction: row-reverse;
+      .check-verify-icon {
+        top: 0;
+        right: 0;
+        font-size: 15px;
+        margin: auto 1px;
+        img {
+          width: 20px;
+          height: 20px;
         }
       }
     }
+  }
+  .back-to-top{
+    border: solid;  
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: #fff;
+    cursor: pointer;
+    &:hover{
+      background-color: #0d7085;
+    }
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    z-index: 999;
+
   }
 }
