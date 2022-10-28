@@ -335,7 +335,6 @@ function ArtisansProfile() {
                         : artisan.avatar
                     }`}
                     alt="Profile picture"
-                    className="w-100 "
                   />
                 </div>
                 <div className="name-div">
