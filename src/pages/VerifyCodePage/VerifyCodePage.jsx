@@ -74,7 +74,7 @@ function VerifyCodePage() {
             {loggedIn ? (
               <Link to={"/dashboard/profile"}>Cancel</Link>
             ) : (
-              <Link to={"/login?as=user"}>Skip</Link>
+              <Link to={"/login?as=artisan"}>Skip</Link>
             )}
           </div>
         </div>
