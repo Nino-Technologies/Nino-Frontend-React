@@ -92,7 +92,7 @@ function AdminAction({
             setArtisanProfile(artisan);
             window.document.getElementById("open_EditProfileModel").click();
           }}
-          data-bs-toggle="modal"
+          // data-bs-toggle="modal"
           // data-bs-target="#EditProfileModel"
         >
           Edit Profile

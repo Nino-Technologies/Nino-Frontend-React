@@ -46,7 +46,7 @@ function ModalComponent({ btnText, modalTitle, children, modalId }) {
               ></button>
             </div>
             <div className="modal-body">{children}</div>
-            <div className="modal-footer">
+            {/* <div className="modal-footer">
               <button
                 type="button"
                 className="btn-danger btn btn-sm"
@@ -55,7 +55,7 @@ function ModalComponent({ btnText, modalTitle, children, modalId }) {
               >
                 Close
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
