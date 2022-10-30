@@ -16,6 +16,8 @@ function CloudinaryUploadProfileButton({
         folder: "ProfileImage",
         cropping: true,
         croppingCoordinatesMode: "face",
+        sources: ["local", "camera"],
+        croppingShowDimensions: true,
       },
       (error, result) => {
         // console.log(error, result);
@@ -25,8 +27,10 @@ function CloudinaryUploadProfileButton({
         // if (result.event === "success" && result.info.files.length!== 0){
         if (result.event === "success" && result.info) {
           // console.log(result.info.eager[0].url);
+          toast.success("image uploaded successfully");
           console.log(result.info.url);
           updateProfilePicture(result.info.url);
+          myCropWidget.hide();
         }
       }
     );
