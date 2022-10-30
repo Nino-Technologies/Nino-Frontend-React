@@ -161,7 +161,7 @@ function VerifyUserPage() {
         />
       </div>
       <hr />
-      <div class="tableFixHead">
+      <div className="tableFixHead">
         <table>
           <thead className="thead-dark table-head">
             <tr>
