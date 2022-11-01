@@ -7,7 +7,7 @@ import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper";
 
 function ModalComponent({ btnText, modalTitle, children, modalId }) {
   return (
-    <>
+    <div className="ModalComponent">
       {/* <!-- Button trigger modal --> */}
       {/* <button
         type="button"
@@ -41,7 +41,7 @@ function ModalComponent({ btnText, modalTitle, children, modalId }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

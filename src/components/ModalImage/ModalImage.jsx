@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import "./modalImage.scss";
 
 const ModalImage = ({ imgUrl, about }) => {
@@ -15,7 +15,7 @@ const ModalImage = ({ imgUrl, about }) => {
       display: "none",
     }));
   return (
-    <Fragment>
+    <div className="ModalImageComponent">
       {/* <!-- Trigger the Modal --> */}
       {/* {console.log(about)} */}
       <img
@@ -48,7 +48,7 @@ const ModalImage = ({ imgUrl, about }) => {
           {about ? about : "Some quick example text to build on the card title"}
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 

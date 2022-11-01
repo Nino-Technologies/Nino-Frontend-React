@@ -1,3 +1,8 @@
+.ModalComponent{
+  .modal{
+    z-index: 1051; /* Sit on top */
+  }
+}
 .PaymentModalComponent {
   .modal {
     padding: 0;
