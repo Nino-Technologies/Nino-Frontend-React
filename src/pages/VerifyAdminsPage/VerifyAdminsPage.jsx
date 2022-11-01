@@ -5,9 +5,11 @@ import "./VerifyAdminsPage.scss";
 import axios from "axios";
 import { toast } from "react-toastify";
 import AdminAction from "../../components/AdminAction/AdminAction";
+import { SendMessageModalForm } from "../VerifyUserPage/VerifyUserPage";
 
 function VerifyAdminsPage() {
   const [pageLoading, setPageLoading] = useState(true);
+  const [profileNumber, setProfileNumber] = useState("");
   const [admins, setAdmins] = useState([]);
   const [cookies] = useCookies();
   useEffect(() => {
@@ -35,6 +37,10 @@ function VerifyAdminsPage() {
 
   return (
     <div className="VerifyUserPage">
+      <SendMessageModalForm
+        profileNumber={profileNumber}
+        setProfileNumber={setProfileNumber}
+      />
       <div className="header d-flex flex-md-row flex-column justify-content-between">
         <h3>Verify Admins Accounts</h3>
         <input
@@ -90,7 +96,6 @@ function VerifyAdminsPage() {
                       number,
                       role,
                     } = user;
-                    console.log(account_active);
                     return (
                       <tr key={_id}>
                         <th scope="row">{i + 1}</th>
@@ -120,9 +125,11 @@ function VerifyAdminsPage() {
                         <td>{decodeDate(joinDate)[0]}</td>
                         <td>
                           <AdminAction
+                            phoneNumber={number}
                             role={role}
                             _id={_id}
                             reLoadListFunction={getAdmins}
+                            setProfileNumber={setProfileNumber}
                             account_verified={account_verified}
                             account_active={account_active}
                           />
