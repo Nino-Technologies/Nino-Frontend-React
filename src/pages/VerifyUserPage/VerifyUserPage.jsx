@@ -191,6 +191,7 @@ function VerifyUserPage() {
               <th scope="col">Referee Number</th>
 
               <th scope="col">Subscription</th>
+              <th scope="col">Hire count</th>
               <th scope="col">Account verified</th>
               <th scope="col">Account Active</th>
               <th
@@ -230,6 +231,7 @@ function VerifyUserPage() {
                       account_verified,
                       account_active,
                       role,
+                      hired,
                       joinDate,
                     } = artisan;
                     return (
@@ -253,6 +255,7 @@ function VerifyUserPage() {
                         <td>{refereeName}</td>
                         <td>{refereeNumber}</td>
                         <td>{freeAccount ? "none" : "paid"}</td>
+                        <td>{hired}</td>
                         <td>{checkVerifiedFunction(account_verified)}</td>
                         <td>{checkVerifiedFunction(account_active)}</td>
                         <td>{decodeDate(joinDate)[0]}</td>
