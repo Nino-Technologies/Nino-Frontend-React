@@ -22,7 +22,7 @@ function ModalComponent({ btnText, modalTitle, children, modalId }) {
       <div
         className="modal fade"
         id={`${modalId}`}
-        tabindex="-1"
+        tabIndex="-1"
         aria-hidden="true"
       >
         <div className="modal-dialog">
