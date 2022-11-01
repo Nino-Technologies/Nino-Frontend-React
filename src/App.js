@@ -32,6 +32,7 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "./context/UserContext";
 import ImageCropper from "./pages/ImageCropper/ImageCropper";
 import ImageCropperWithStyle from "./pages/ImageCropper/ImageCropper";
+import SendMessagePage from "./components/SendMessages/SendMessagePage";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -91,6 +92,7 @@ function App() {
         <Route path="/password-reset" element={<PasswordResetPage />} />
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/image-cropper" element={<ImageCropperWithStyle />} />
+        <Route path="/sendMessage" element={<SendMessagePage />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="home" element={<HomePage />} />
           <Route path="profile" element={<ProfilePage />} />
