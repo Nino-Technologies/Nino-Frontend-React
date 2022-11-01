@@ -13,6 +13,7 @@ function VerifyUserPage() {
   const [pageLoading, setPageLoading] = useState(true);
   const [artisans, setArtisans] = useState([]);
   const [artisanProfile, setArtisanProfile] = useState({});
+  const [profileNumber, setProfileNumber] = useState("");
   const [cookies] = useCookies();
   useEffect(() => {
     getArtisans();
@@ -151,6 +152,10 @@ function VerifyUserPage() {
           Update
         </button>
       </ModalComponent>
+      <SendMessageModalForm
+        profileNumber={profileNumber}
+        setProfileNumber={setProfileNumber}
+      />
       <div className="header d-flex flex-md-row flex-column justify-content-between">
         <h3>Verify Accounts</h3>
         <input
@@ -256,10 +261,12 @@ function VerifyUserPage() {
                             role={role}
                             _id={_id}
                             artisan={artisan}
+                            phoneNumber={phoneNumber}
                             setArtisanProfile={setArtisanProfile}
                             reLoadListFunction={getArtisans}
                             account_verified={account_verified}
                             account_active={account_active}
+                            setProfileNumber={setProfileNumber}
                           />
                         </td>
                       </tr>
@@ -279,3 +286,96 @@ function VerifyUserPage() {
 }
 
 export default VerifyUserPage;
+
+export function SendMessageModalForm({ profileNumber, setProfileNumber }) {
+  const [sendLoading, setSendLoading] = useState(false);
+  const [editNumber, setEditNumber] = useState(false);
+  const [artisanProfileMessage, setArtisanProfileMessage] = useState("");
+
+  function sendMessageFunction(object) {
+    if (object.to === "") return toast.error("Receivers Number is required");
+    if (object.message === "") return toast.error("Message is required");
+    setSendLoading(true);
+    const options = {
+      method: "POST",
+      url: "https://api.sendchamp.com/api/v1/sms/send",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+        Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
+      },
+      data: {
+        to: object.to,
+        message: object.message,
+        sender_name: "Grinders",
+        route: "international",
+      },
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        toast.success("Message sent successfully");
+        console.log(response.data);
+        setSendLoading(false);
+      })
+      .catch(function (error) {
+        toast.error(error.response.data.message);
+        setSendLoading(false);
+
+        console.error(error);
+      });
+  }
+  return (
+    <ModalComponent modalId={"SendMessage"} modalTitle="Send SMS">
+      <div className="mb-3 col-12 px-1">
+        <label className="form-label">Contact</label>
+        <div className="d-flex border rounded">
+          <div className="btn fs-3 p-0 m-0 my-auto ms-2"> + </div>
+          <input
+            type="text"
+            className="form-control"
+            style={{
+              border: "none",
+              outline: "none",
+              paddingLeft: "0",
+            }}
+            disabled={!editNumber}
+            value={profileNumber}
+            onChange={(e) => setProfileNumber(e.target.value)}
+          />
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => {
+              setEditNumber(!editNumber);
+            }}
+          >
+            {editNumber ? "Disable" : "Edit"}
+          </button>
+        </div>
+      </div>
+      <div>
+        <label className="form-label">Message</label>
+        <textarea
+          className="form-control"
+          cols="5"
+          rows="5"
+          value={artisanProfileMessage}
+          placeholder={"Type message"}
+          onChange={(e) => setArtisanProfileMessage(e.target.value)}
+        ></textarea>
+      </div>
+      <button
+        className="btn btn-primary mt-2"
+        onClick={() => {
+          sendMessageFunction({
+            to: [`${Number(profileNumber)}`],
+            message: artisanProfileMessage,
+          });
+        }}
+        disabled={sendLoading}
+      >
+        {sendLoading ? "Sending..." : "Send SMS"}
+      </button>
+    </ModalComponent>
+  );
+}
