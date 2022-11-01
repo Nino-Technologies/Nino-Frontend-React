@@ -4,9 +4,15 @@ import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import { FaExclamation, FaInfoCircle } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
+import axios from "axios";
 
 function HomePage() {
   const [profileProgress, setProfileProgress] = useState(0);
+  const [sendChampAccount, setSendChampAccount] = useState({
+    loading: true,
+    business_amount: "",
+    business_currency: "",
+  });
   const {
     logOutFunction,
     userProfile,
@@ -25,6 +31,34 @@ function HomePage() {
       return false;
     }
   }
+
+  useEffect(() => {
+    const options = {
+      method: "POST",
+      url: "https://api.sendchamp.com/api/v1/wallet/wallet_balance",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae",
+      },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        const { business_amount, business_currency } =
+          response.data.data.details;
+        setSendChampAccount({
+          loading: false,
+          business_amount,
+          business_currency,
+        });
+        console.log();
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
   useEffect(() => {
     // {
     //   Nin: "123456";
@@ -182,7 +216,33 @@ function HomePage() {
       <div className="container">
         {" "}
         <div className="row mt-1">
-          <div className="col-sm-6">{/* just for the col-6 Space */}</div>
+          <div className="col-sm-6">
+            <div
+              class="card text-dark mx-2 mt-2"
+              // style={{ maxWidth: "18rem" }}
+            >
+              <div class="card-header">SendChamp Wallet</div>
+              <div class="card-body">
+                <h5 class="card-title">Wallet Balance</h5>
+                {userProfile.role === 3 ? (
+                  <>
+                    {sendChampAccount.loading ? (
+                      <>Loading...</>
+                    ) : (
+                      <>
+                        <b>
+                          {sendChampAccount.business_currency}{" "}
+                          {sendChampAccount.business_amount}
+                          <br />
+                        </b>
+                        <sup>Balance for sms and emails</sup>
+                      </>
+                    )}
+                  </>
+                ) : null}
+              </div>
+            </div>
+          </div>
           <div className="col-sm-6">
             <div className="card mx-2 mt-2">
               <h5 className="card-header tw-1">Profile Completeness</h5>
