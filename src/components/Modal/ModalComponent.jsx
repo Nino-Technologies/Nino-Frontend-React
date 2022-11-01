@@ -11,32 +11,24 @@ function ModalComponent({ btnText, modalTitle, children, modalId }) {
       {/* <!-- Button trigger modal --> */}
       {/* <button
         type="button"
-        className="button"
+        className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#staticBackdrop"
+        data-bs-target="#exampleModal"
       >
-        {btnText}
+        Launch demo modal
       </button> */}
 
       {/* <!-- Modal --> */}
       <div
         className="modal fade"
         id={`${modalId}`}
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex="-1"
-        // aria-labelledby={`${modalId}Label`}
+        tabindex="-1"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5
-                className="modal-title"
-                // id={`${modalId}Label`}
-              >
-                {modalTitle}
-              </h5>
+              <h5 className="modal-title">{modalTitle}</h5>
               <button
                 type="button"
                 className="btn-close"
@@ -46,16 +38,6 @@ function ModalComponent({ btnText, modalTitle, children, modalId }) {
               ></button>
             </div>
             <div className="modal-body">{children}</div>
-            {/* <div className="modal-footer">
-              <button
-                type="button"
-                className="btn-danger btn btn-sm"
-                data-bs-dismiss="modal"
-                id="closeModalComponent"
-              >
-                Close
-              </button>
-            </div> */}
           </div>
         </div>
       </div>
