@@ -12,6 +12,8 @@ function AdminAction({
   account_active,
   setArtisanProfile,
   artisan,
+  setProfileNumber,
+  phoneNumber,
 }) {
   const [actionLoading, setActionLoading] = useState(false);
   const [cookies] = useCookies();
@@ -77,6 +79,13 @@ function AdminAction({
         data-bs-target="#EditProfileModel"
       ></button>
       <button
+        type="button"
+        id="open_SendMessage"
+        style={{ display: "none" }}
+        data-bs-toggle="modal"
+        data-bs-target="#SendMessage"
+      ></button>
+      <button
         id="btnGroupDrop1"
         type="button"
         className="btn btn-primary btn-sm dropdown-toggle"
@@ -89,14 +98,27 @@ function AdminAction({
         <li
           className="dropdown-item"
           onClick={() => {
-            setArtisanProfile(artisan);
-            window.document.getElementById("open_EditProfileModel").click();
+            setProfileNumber(phoneNumber);
+
+            window.document.getElementById("open_SendMessage").click();
           }}
-          // data-bs-toggle="modal"
-          // data-bs-target="#EditProfileModel"
         >
-          Edit Profile
+          Send Message to user
         </li>
+        {role == 1 ? (
+          <>
+            {" "}
+            <li
+              className="dropdown-item"
+              onClick={() => {
+                setArtisanProfile(artisan);
+                window.document.getElementById("open_EditProfileModel").click();
+              }}
+            >
+              Edit Profile
+            </li>
+          </>
+        ) : null}
         {account_verified ? (
           <>
             <li
@@ -113,7 +135,8 @@ function AdminAction({
             <li
               className="dropdown-item"
               onClick={() => {
-                adminActionFunction("verify", role, _id);
+                console.log(artisan);
+                // adminActionFunction("verify", role, _id);
               }}
             >
               Verify Account
