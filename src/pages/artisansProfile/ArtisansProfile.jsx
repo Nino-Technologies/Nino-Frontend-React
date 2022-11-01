@@ -31,7 +31,7 @@ function ArtisansProfile() {
   const { id } = useParams();
   const [artisan, setArtisan] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
-  const [showArtisansNumber, setShowArtisansNumber] = useState(false);
+  // const [showArtisansNumber, setShowArtisansNumber] = useState(false);
   const [artisanReviewInput, setArtisanReviewInput] = useState("");
   const [artisanRateInput, setArtisanRateInput] = useState(1);
   const navigate = useNavigate();
@@ -92,57 +92,56 @@ function ArtisansProfile() {
     );
   }
 
-  function phoneMessage(object) {
-    if (object.to === "" || !object.to) {
-      return toast.info("Service Provider`s number not gotten");
-    }
-    if (object.message === "" || !object.message) {
-      return toast.info("Message not set not gotten");
-    }
-    let data = {
-      message: object.message,
-      to: `+${object.to}`,
-    };
-    const options = {
-      url: `${apiUrl}/sendMail/notify`,
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-        authorization: cookies.grinderUser.token,
-      },
-      data: data,
-    };
-    if (
-      !window.confirm(
-        "A notification will be sent to the Service Provider that their number was requested"
-      )
-    ) {
-      return;
-    }
-    //  CLike the model button with js
-    window.document.getElementById("request_artisan_number_button").click();
-    // return;
-    axios(options)
-      .then((response) => {
-        if (response.ok) {
-          setShowArtisansNumber(true);
-        }
-      })
-      .catch((error) => {
-        // setLoading(false);
-        console.log(error.message);
-        if (error.response.status || error.response.status === 400) {
-          return toast.error(error.response.data.message);
-        }
-        toast.error(error.message);
-      });
-  }
+  // function phoneMessage(object) {
+  //   if (object.to === "" || !object.to) {
+  //     return toast.info("Service Provider`s number not gotten");
+  //   }
+  //   if (object.message === "" || !object.message) {
+  //     return toast.info("Message not set not gotten");
+  //   }
+  //   let data = {
+  //     message: object.message,
+  //     to: `+${object.to}`,
+  //   };
+  //   const options = {
+  //     url: `${apiUrl}/sendMail/notify`,
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json;charset=UTF-8",
+  //       authorization: cookies.grinderUser.token,
+  //     },
+  //     data: data,
+  //   };
+  //   if (
+  //     !window.confirm(
+  //       "A notification will be sent to the Service Provider that their number was requested"
+  //     )
+  //   ) {
+  //     return;
+  //   }
+  //   //  CLike the model button with js
+  //   window.document.getElementById("request_artisan_number_button").click();
+  //   // return;
+  //   axios(options)
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         setShowArtisansNumber(true);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       // setLoading(false);
+  //       console.log(error.message);
+  //       if (error.response.status || error.response.status === 400) {
+  //         return toast.error(error.response.data.message);
+  //       }
+  //       toast.error(error.message);
+  //     });
+  // }
 
   function countHireFunction(artisan) {
     const newHire = artisan.hired + 1;
     const options = {
-      // url: `http://localhost:5000/api/notification`,
       url: `${apiUrl}/notification/hireCount/${artisan._id}`,
       method: "PUT",
       headers: {
@@ -165,43 +164,85 @@ function ArtisansProfile() {
         toast.error(error.message);
       });
   }
-  function handelHire() {
-    if (!loggedIn) {
-      toast.info("Login First");
+  function sendMessageFunction(object) {
+    if (
+      !window.confirm(
+        "A notification will be sent to the Service Provider that their number was requested"
+      )
+    ) {
+      return;
     }
-    let data = {
-      message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
-      privilege: artisan._id,
-    };
+    if (object.to.length === 0)
+      return toast.error("Receivers Number is required");
+    if (object.message === "") return toast.error("Message is required");
     const options = {
-      // url: `http://localhost:5000/api/notification`,
-      url: `${apiUrl}/notification`,
       method: "POST",
+      url: "https://api.sendchamp.com/api/v1/sms/send",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-        authorization: cookies.grinderUser.token,
+        accept: "application/json",
+        "content-type": "application/json",
+        Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
       },
-      data: data,
+      data: {
+        to: object.to,
+        message: object.message,
+        sender_name: "Grinders",
+        route: "international",
+      },
     };
-    phoneMessage({
-      message: data.message,
-      to: artisan.phoneNumber,
-    });
+    // console.log(object.to);
+    window.document.getElementById("request_artisan_number_button").click();
+    axios
+      .request(options)
+      .then(function (response) {
+        toast.success("Notification sent successfully");
+        console.log(response.data);
 
-    axios(options)
-      .then((response) => {
         countHireFunction(artisan);
       })
-      .catch((error) => {
-        // setLoading(false);
-        console.log(error.message);
-        if (error.response.status || error.response.status === 400) {
-          return toast.error(error.response.data.message);
-        }
-        toast.error(error.message);
+      .catch(function (error) {
+        toast.error(error.response.data.message);
+
+        console.error(error);
       });
   }
+  // function handelHire() {
+  //   if (!loggedIn) {
+  //     toast.info("Login First");
+  //   }
+  //   let data = {
+  //     message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
+  //     privilege: artisan._id,
+  //   };
+  //   const options = {
+  //     // url: `http://localhost:5000/api/notification`,
+  //     url: `${apiUrl}/notification`,
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json;charset=UTF-8",
+  //       authorization: cookies.grinderUser.token,
+  //     },
+  //     data: data,
+  //   };
+  //   phoneMessage({
+  //     message: data.message,
+  //     to: artisan.phoneNumber,
+  //   });
+
+  //   axios(options)
+  //     .then((response) => {
+  //       countHireFunction(artisan);
+  //     })
+  //     .catch((error) => {
+  //       // setLoading(false);
+  //       console.log(error.message);
+  //       if (error.response.status || error.response.status === 400) {
+  //         return toast.error(error.response.data.message);
+  //       }
+  //       toast.error(error.message);
+  //     });
+  // }
   useEffect(() => {
     if (loggedIn) {
       getUserProfile();
@@ -425,7 +466,11 @@ function ArtisansProfile() {
                 <button
                   className="contact-button"
                   onClick={() => {
-                    handelHire();
+                    // handelHire();
+                    sendMessageFunction({
+                      to: [`${artisan.phoneNumber}`],
+                      message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
+                    });
                   }}
                 >
                   <FaRegHandshake className="mx-1" />
