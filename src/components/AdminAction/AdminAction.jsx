@@ -136,7 +136,7 @@ function AdminAction({
               className="dropdown-item"
               onClick={() => {
                 console.log(artisan);
-                // adminActionFunction("verify", role, _id);
+                adminActionFunction("verify", role, _id);
               }}
             >
               Verify Account
