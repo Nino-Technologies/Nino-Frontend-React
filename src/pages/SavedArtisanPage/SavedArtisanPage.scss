@@ -1,0 +1,24 @@
+.SavedArtisanPage{
+  min-height: 100vh;
+  .image-div{
+
+  // border: solid;
+  height: 80px;
+  width: 80px;
+  overflow: hidden;
+  margin: auto;
+  img{
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+// .social-div{
+//   height: 100px;
+// }
+  a{
+    text-decoration: none;
+    color:#000
+  }
+}
