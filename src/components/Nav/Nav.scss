@@ -82,6 +82,14 @@ nav {
     color: #ffffff;
     background-color: var(--color-secondary);
   }
+  .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active,
+  .btn:focus-visible {
+       color: #ffffff;
+    background-color: var(--color-secondary);
+    border-color:var(--color-secondary);
+    // outline: 0;
+    // box-shadow: var(--bs-btn-focus-box-shadow);
+}
 }
 
 /* ###### NavMenuComponent ###### */

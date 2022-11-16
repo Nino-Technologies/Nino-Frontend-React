@@ -69,21 +69,61 @@ function Nav() {
             <NavMenuComponent />
           ) : (
             <ul className="navbar-nav">
-              <li className="nav-item mx-3">
-                <Link
-                  to="/login?as=artisan"
-                  className="btn btn-outline-success px-3 mb-2 mb-md-0  w-100"
-                >
-                  Login
-                </Link>
+              <li className="nav-item m-2">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Login Account
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li>
+                      <Link to="/login?as=user" className="dropdown-item">
+                        Login as a User
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/login?as=artisan" className="dropdown-item">
+                        Login as a Service Provider
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </li>
-              <li className="nav-item mx-3">
-                <Link
-                  to="/register?as=artisan"
-                  className="btn btn-outline-success signin px-3 w-100"
-                >
-                  Sign up
-                </Link>
+              <li className="nav-item m-2 ">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Register new Account
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li>
+                      <Link to="/register?as=user" className="dropdown-item">
+                        Register as a User
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/register?as=artisan" className="dropdown-item">
+                        Register as a Service Provider
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </ul>
           )}
@@ -120,7 +160,34 @@ export const NavMenuComponent = ({ setLoggedIn }) => {
   }, []);
   return (
     <>
-      {" "}
+      {/* <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Dropdown button
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <a class="dropdown-item" href="#">
+              Action
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              Another action
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              Something else here
+            </a>
+          </li>
+        </ul>
+      </div>{" "} */}
       <div
         className="NavMenuComponent"
         onClick={() => {
