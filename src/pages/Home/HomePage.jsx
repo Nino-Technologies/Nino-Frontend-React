@@ -226,12 +226,12 @@ function HomePage() {
               <>
                 {" "}
                 <div
-                  class="card text-dark mx-2 mt-2"
+                  className="card text-dark mx-2 mt-2"
                   // style={{ maxWidth: "18rem" }}
                 >
-                  <div class="card-header">SendChamp Wallet</div>
-                  <div class="card-body">
-                    <h5 class="card-title">Wallet Balance</h5>
+                  <div className="card-header">SendChamp Wallet</div>
+                  <div className="card-body">
+                    <h5 className="card-title">Wallet Balance</h5>
 
                     {sendChampAccount.loading ? (
                       <>Loading...</>

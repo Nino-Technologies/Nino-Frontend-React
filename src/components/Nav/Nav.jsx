@@ -70,9 +70,9 @@ function Nav() {
           ) : (
             <ul className="navbar-nav">
               <li className="nav-item m-2">
-                <div class="dropdown">
+                <div className="dropdown">
                   <button
-                    class="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
+                    className="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
                     type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
@@ -81,7 +81,7 @@ function Nav() {
                     Login Account
                   </button>
                   <ul
-                    class="dropdown-menu"
+                    className="dropdown-menu"
                     aria-labelledby="dropdownMenuButton1"
                   >
                     <li>
@@ -98,9 +98,9 @@ function Nav() {
                 </div>
               </li>
               <li className="nav-item m-2 ">
-                <div class="dropdown">
+                <div className="dropdown">
                   <button
-                    class="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
+                    className="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
                     type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
@@ -109,7 +109,7 @@ function Nav() {
                     Register new Account
                   </button>
                   <ul
-                    class="dropdown-menu"
+                    className="dropdown-menu"
                     aria-labelledby="dropdownMenuButton1"
                   >
                     <li>
@@ -160,9 +160,9 @@ export const NavMenuComponent = ({ setLoggedIn }) => {
   }, []);
   return (
     <>
-      {/* <div class="dropdown">
+      {/* <div className="dropdown">
         <button
-          class="btn btn-secondary dropdown-toggle"
+          className="btn btn-secondary dropdown-toggle"
           type="button"
           id="dropdownMenuButton1"
           data-bs-toggle="dropdown"
@@ -170,19 +170,19 @@ export const NavMenuComponent = ({ setLoggedIn }) => {
         >
           Dropdown button
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Action
             </a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Another action
             </a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Something else here
             </a>
           </li>
