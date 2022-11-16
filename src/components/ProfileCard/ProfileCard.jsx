@@ -77,7 +77,7 @@ function ProfileCard({ artisan }) {
           <div className="extra-button">
             <ShareButton id={`${_id}`} />
 
-            <SaveButton />
+            <SaveButton artisan={artisan} />
           </div>
           <p className="d-flex w-100">
             <Link to={`/artisans-profile/${_id}`} className="me-auto mt-2">

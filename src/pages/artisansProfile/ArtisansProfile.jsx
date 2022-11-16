@@ -390,7 +390,7 @@ function ArtisansProfile() {
                   {artisan.service}
                   <div className="extra-button">
                     <ShareButton id={`${artisan._id}`} />
-                    <SaveButton />
+                    <SaveButton artisan={artisan} />
                   </div>
                 </div>
               </div>
@@ -483,10 +483,9 @@ function ArtisansProfile() {
                 <h4>Featured Projects</h4>
                 {artisan.workImage.length} photos
                 <div className="image-flex">
-                  {artisan.workImage.map((work) => {
+                  {artisan.workImage.map((work, i) => {
                     const { image, about } = work;
-
-                    return <ModalImage imgUrl={image} about={about} />;
+                    return <ModalImage imgUrl={image} about={about} key={i} />;
                   })}
                 </div>
               </div>
