@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
 
-function UserRegistrationForm() {
+function UserRegistrationForm({ saveAccountType }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { apiUrl } = useContext(UserContext);
@@ -54,6 +54,7 @@ function UserRegistrationForm() {
         console.log(response.data);
         toast.success("Registration Successful");
         // navigate("/login?as=user");
+        saveAccountType();
         navigate(`/verify-code/${data.email}`);
       })
       .catch((error) => {
@@ -121,10 +122,10 @@ function UserRegistrationForm() {
         <div>
           have an account? <br />
           <div className="d-flex justify-content-around mt-3 flex-colum n">
-            {/* <Link to={"/login?as=user"} className="btn btn-outline-primary">
+            <Link to={"/login?as=user"} className="btn btn-outline-primary">
               Login User
             </Link>{" "}
-            <span className="my-auto">OR</span> */}
+            <span className="my-auto">OR</span>
             <Link
               to={"/register?as=artisan"}
               className="btn btn-outline-primary"

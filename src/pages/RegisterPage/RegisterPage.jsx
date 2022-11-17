@@ -19,6 +19,19 @@ function RegisterPage() {
     }
     toast.info("Invalid login request");
   }, [searchParams]);
+
+
+  function saveAccountType() {
+    var Your_Current_URL = window.location.href;
+    let path = Your_Current_URL.split("/");
+    let last = Your_Current_URL.split("/").length - 1;
+    var query = path[last].split("?");
+    let accountType = query[1].split("=");
+    console.log(accountType);
+    sessionStorage.setItem("accountType", accountType[1]);
+
+    console.log("accountType", sessionStorage.getItem("accountType"));
+  }
   return (
     <div className="RegisterPage">
       <div className="login">
@@ -26,12 +39,12 @@ function RegisterPage() {
           <BackComponent />
           <div className="container ">
             {displayForm === 1 ? (
-              <UserRegistrationForm />
+              <UserRegistrationForm saveAccountType={saveAccountType} />
             ) : (
               <>
                 {" "}
                 {displayForm === 2 ? (
-                  <ArtisanRegistrationForm />
+                  <ArtisanRegistrationForm saveAccountType={saveAccountType} />
                 ) : (
                   <>Invalid Login Request</>
                 )}

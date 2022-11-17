@@ -2,9 +2,10 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import SocialLogin from "./SocialLogin";
+// import SocialLogin from "./SocialLogin";
 import { UserContext } from "../../context/UserContext";
 import { useCookies } from "react-cookie";
+import { ForgotPasswordLink } from "./../BackButton/BackButton";
 
 function UserLoginForm() {
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,6 @@ function UserLoginForm() {
     };
     // axios POST request
     const options = {
-      // url: `http://localhost:5000/api/auth/user/login`,
       url: `${apiUrl}/auth/user/login`,
       method: "POST",
       headers: {
@@ -110,9 +110,7 @@ function UserLoginForm() {
           placeholder="Password"
         />
       </div>
-      <Link to={"/password-reset"} className="m-2 d-block">
-        Forgot Password?
-      </Link>
+      <ForgotPasswordLink />
 
       <button
         type="submit"

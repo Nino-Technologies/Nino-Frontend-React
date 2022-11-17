@@ -8,7 +8,7 @@ import axios from "axios";
 // import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper";
 import CloudinaryUploadProfileButton from "../CloudnaryUploadButton/CloudnaryUploadButton";
 
-function ArtisanRegistrationForm() {
+function ArtisanRegistrationForm({ saveAccountType }) {
   const [currentTab, setCurrentTab] = useState(1);
   // change this to "5" to add imageCropper
   const [maxTab] = useState(5);
@@ -135,6 +135,7 @@ function ArtisanRegistrationForm() {
         toast.success("Registration successfully");
         //   navigate("/login?as=artisan");
         // navigate("/login?as=artisan");
+        saveAccountType();
         navigate(`/verify-code/${response.data.user.email}`);
         console.log(response);
       })
@@ -390,13 +391,13 @@ function ArtisanRegistrationForm() {
                 >
                   Login as a Service Provider
                 </Link>{" "}
-                {/* <span className="my-auto">OR</span>
-              <Link
-                to={"/register?as=user"}
-                className="btn btn-outline-primary"
-              >
-                Register User
-              </Link> */}
+                <span className="my-auto">OR</span>
+                <Link
+                  to={"/register?as=user"}
+                  className="btn btn-outline-primary"
+                >
+                  Register User
+                </Link>
               </div>
             </div>
           </div>
