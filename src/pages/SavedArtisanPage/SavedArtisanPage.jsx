@@ -5,14 +5,18 @@ import "./SavedArtisanPage.scss";
 import { SaveArtisanContext } from "../../context/saveUserContext";
 import { GiHeartMinus } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function SavedArtisanPage() {
   const { userProfile } = useContext(UserContext);
-
+  const [saveLoading, setSaveLoading] = useState(false);
   const [savedArtisans, setSavedArtisans] = useState({
     loading: true,
     data: [],
   });
+  function toggleRemove(id) {
+    removeArtisan(id);
+  }
   const { removeArtisan } = useContext(SaveArtisanContext);
   useEffect(() => {
     if (userProfile.saved_artisans) {
@@ -69,10 +73,14 @@ function SavedArtisanPage() {
                         <div className="col my-auto social-div d-flex justify-content-end">
                           {" "}
                           <div className="SaveButton">
-                            <GiHeartMinus
-                              className="icon remove ms-3"
-                              onClick={() => removeArtisan(artisan.artisanId)}
-                            />
+                            {saveLoading ? (
+                              <>...</>
+                            ) : (
+                              <GiHeartMinus
+                                className="icon remove ms-3"
+                                onClick={() => toggleRemove(artisan.artisanId)}
+                              />
+                            )}
                           </div>
                         </div>
                       </div>
