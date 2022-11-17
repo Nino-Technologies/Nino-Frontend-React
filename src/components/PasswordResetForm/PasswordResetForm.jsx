@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../BackButton/BackButton";
 
 export default function PasswordReset() {
   const [passwordTab, setPasswordTab] = useState(1);
@@ -15,6 +16,7 @@ export default function PasswordReset() {
   return (
     <div className="reset">
       <div className="container house-div">
+        <BackButton />
         {passwordTab === 1 ? (
           <PasswordResetEmailForm
             setPasswordTab={setPasswordTab}

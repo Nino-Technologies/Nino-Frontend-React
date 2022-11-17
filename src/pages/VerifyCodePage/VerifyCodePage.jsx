@@ -7,6 +7,7 @@ import { UserContext } from "./../../context/UserContext";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { SkipButton } from "../../components/BackButton/BackButton";
 
 function VerifyCodePage() {
   const { loggedIn, apiUrl } = useContext(UserContext);
@@ -74,7 +75,7 @@ function VerifyCodePage() {
             {loggedIn ? (
               <Link to={"/dashboard/profile"}>Cancel</Link>
             ) : (
-              <Link to={"/login?as=artisan"}>Skip</Link>
+              <SkipButton />
             )}
           </div>
         </div>
