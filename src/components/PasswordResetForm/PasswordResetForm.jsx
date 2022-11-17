@@ -138,7 +138,7 @@ export function PasswordResetOTPForm({ setPasswordTab, Otp, setOtp, email }) {
       <h3 className="py-4">Enter OTP</h3>
       <input
         type="number"
-        class="form-control mb-4"
+        className="form-control mb-4"
         placeholder="OTP"
         value={Otp}
         onChange={(e) => setOtp(e.target.value)}
@@ -214,7 +214,7 @@ export function PasswordResetForm({ setPasswordTab, email }) {
       />
       <input
         type="password"
-        class="form-control mb-4"
+        className="form-control mb-4"
         placeholder="Confirm Password"
         value={cPassword}
         onChange={(e) => setCPassword(e.target.value)}

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FaExclamation, FaInfoCircle } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 import axios from "axios";
+import { TestContext } from "../../context/ContextTest";
 
 function HomePage() {
   const [profileProgress, setProfileProgress] = useState(0);
@@ -23,7 +24,8 @@ function HomePage() {
     checkVerifiedFunction,
     getUserProfile,
   } = useContext(UserContext);
-
+  const { testName } = useContext(TestContext);
+  console.log(useContext(TestContext));
   function checkProperty(property) {
     if (property !== "" && property) {
       return true;
@@ -33,13 +35,16 @@ function HomePage() {
   }
 
   useEffect(() => {
+    if (userProfile.role !== 3) {
+      return;
+    }
     const options = {
       method: "POST",
       url: "https://api.sendchamp.com/api/v1/wallet/wallet_balance",
       headers: {
         accept: "application/json",
         Authorization:
-          "Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae",
+          "Bearer sendchamp_test_$2a$10$Skta2MmUp0lwG/WSea.XE.lvWSvtK45oXm7HY9R.2wYy1V2uGLxrG",
       },
     };
 
@@ -217,15 +222,17 @@ function HomePage() {
         {" "}
         <div className="row mt-1">
           <div className="col-sm-6">
-            <div
-              class="card text-dark mx-2 mt-2"
-              // style={{ maxWidth: "18rem" }}
-            >
-              <div class="card-header">SendChamp Wallet</div>
-              <div class="card-body">
-                <h5 class="card-title">Wallet Balance</h5>
-                {userProfile.role === 3 ? (
-                  <>
+            {userProfile.role === 3 ? (
+              <>
+                {" "}
+                <div
+                  className="card text-dark mx-2 mt-2"
+                  // style={{ maxWidth: "18rem" }}
+                >
+                  <div className="card-header">SendChamp Wallet</div>
+                  <div className="card-body">
+                    <h5 className="card-title">Wallet Balance</h5>
+
                     {sendChampAccount.loading ? (
                       <>Loading...</>
                     ) : (
@@ -238,10 +245,10 @@ function HomePage() {
                         <sup>Balance for sms and emails</sup>
                       </>
                     )}
-                  </>
-                ) : null}
-              </div>
-            </div>
+                  </div>
+                </div>{" "}
+              </>
+            ) : null}
           </div>
           <div className="col-sm-6">
             <div className="card mx-2 mt-2">

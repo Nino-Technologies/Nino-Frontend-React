@@ -33,6 +33,8 @@ import { UserContext } from "./context/UserContext";
 import ImageCropper from "./pages/ImageCropper/ImageCropper";
 import ImageCropperWithStyle from "./pages/ImageCropper/ImageCropper";
 import SendMessagePage from "./components/SendMessages/SendMessagePage";
+import { TestProvider } from "./context/ContextTest";
+import { SaveArtisanProvider } from "./context/saveUserContext";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -80,11 +82,23 @@ function App() {
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/about-us" element={<AboutUsPage />} />
-        <Route exact path="/artisans" element={<ArtisansPage />} />
+        <Route
+          exact
+          path="/artisans"
+          element={
+            <SaveArtisanProvider>
+              <ArtisansPage />
+            </SaveArtisanProvider>
+          }
+        />
         <Route
           exact
           path="/artisans-profile/:id"
-          element={<ArtisansProfile />}
+          element={
+            <SaveArtisanProvider>
+              <ArtisansProfile />
+            </SaveArtisanProvider>
+          }
         />
         <Route exact path="/contact-us" element={<ContactUsPage />} />
         <Route exact path="/login" element={<LoginPage />} />
@@ -93,7 +107,14 @@ function App() {
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/image-cropper" element={<ImageCropperWithStyle />} />
         <Route path="/sendMessage" element={<SendMessagePage />} />
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route
+          path="/dashboard"
+          element={
+            <TestProvider>
+              <Dashboard />
+            </TestProvider>
+          }
+        >
           <Route path="home" element={<HomePage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="notification" element={<NotificationPage />} />
@@ -101,7 +122,14 @@ function App() {
           <Route path="verify-user" element={<VerifyUserPage />} />
           <Route path="verify-admins" element={<VerifyAdminsPage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />
-          <Route path="saved-artisan" element={<SavedArtisanPage />} />
+          <Route
+            path="saved-artisan"
+            element={
+              <SaveArtisanProvider>
+                <SavedArtisanPage />
+              </SaveArtisanProvider>
+            }
+          />
           <Route path="create-admin" element={<CreateAdminPage />} />
           <Route path="payments" element={<PaymentPage />} />
         </Route>
