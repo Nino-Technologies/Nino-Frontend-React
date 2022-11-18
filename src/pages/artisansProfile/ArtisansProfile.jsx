@@ -165,6 +165,9 @@ function ArtisansProfile() {
       });
   }
   function sendMessageFunction(object) {
+    if (!loggedIn) {
+      return toast.info("Login account to hire a service provider");
+    }
     if (
       !window.confirm(
         "A notification will be sent to the Service Provider that their number was requested"
