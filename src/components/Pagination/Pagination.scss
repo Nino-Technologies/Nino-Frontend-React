@@ -1,0 +1,30 @@
+nav.pagination-nav {
+  position: static !important;
+}
+
+ul[role="navigation"] {
+
+  li {
+    padding: 1px;
+  }
+
+.next-btn, .prev-btn{
+  a{
+font-size: 25px;
+padding: 1px 6px;
+
+  }
+}
+  .page-link {
+
+   color: #003049 ;
+  }
+  .active {
+    .page-link {
+
+      color: #fff !important;
+      background-color: #003049 ;
+      border-color: #003049 ;
+    }
+  }
+}
