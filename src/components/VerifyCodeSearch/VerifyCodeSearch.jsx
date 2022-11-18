@@ -40,24 +40,24 @@ function VerifyCodeSearch({ email }) {
       },
       data: data,
     };
+ let accountType = sessionStorage.getItem("accountType");
 
-    axios(options)
-      .then((response) => {
-        console.log(response.data);
-        toast.success("Verification Successful");
-        {
-          loggedIn
-            ? navigate("/dashboard/profile")
-            : navigate("/login?as=artisan");
-        }
-        // navigate("/verify-code");
-      })
-      .catch((error) => {
-        if (error.response.status === 400) {
-          return toast.error(error.response.data.message);
-        }
-        toast.error(error.message);
-      });
+ axios(options)
+   .then((response) => {
+     console.log(response.data);
+     toast.success("Verification Successful");
+     {
+       loggedIn
+         ? navigate("/dashboard/profile")
+         : navigate(`/login?as=${accountType}`);
+     }
+   })
+   .catch((error) => {
+     if (error.response.status === 400) {
+       return toast.error(error.response.data.message);
+     }
+     toast.error(error.message);
+   });
   }
   return (
     <div className="verify">
