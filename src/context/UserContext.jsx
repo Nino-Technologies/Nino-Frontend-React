@@ -16,8 +16,8 @@ export function UserProvider({ children }) {
   const [userProfile, setUserProfile] = useState([]);
   const [notification, setNotification] = useState([]);
   const navigate = useNavigate();
-  // const apiUrl = "https://nino-technologies.herokuapp.com/api";
-  const apiUrl = "http://localhost:5000/api";
+  const apiUrl = "https://nino-technologies.herokuapp.com/api";
+  // const apiUrl = "http://localhost:5000/api";
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
