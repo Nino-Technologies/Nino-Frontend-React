@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
 import { Link } from "react-router-dom";
+import CloudinaryUploadProfileButton from "../../components/CloudnaryUploadButton/CloudnaryUploadButton";
 {
   /*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove any commented code on this page !!!!!!!!!!!!!!!!!!!!! */
 }
@@ -319,8 +320,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
     refereeName: "",
     companyName: "",
   });
-
-  const [img_url, setImg_url] = useState("");
+  const [img_url, setImg_url] = useState(null);
   const [imageFile, setImageFile] = useState("");
   const [cookies] = useCookies();
 
@@ -332,20 +332,23 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
   useEffect(() => {
     setEditIntroduction(userProfile.introduction);
   }, []);
+  useEffect(() => {
+    setImg_url(userProfile.avatar);
+  }, []);
   // function
 
-  const imageHandler = (e) => {
-    const reader = new FileReader();
+  // const imageHandler = (e) => {
+  //   const reader = new FileReader();
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setImg_url(reader.result);
-      }
-    };
+  //   reader.onload = () => {
+  //     if (reader.readyState === 2) {
+  //       setImg_url(reader.result);
+  //     }
+  //   };
 
-    reader.readAsDataURL(e.target.files[0]);
-    setImageFile(e.target.files[0]);
-  };
+  //   reader.readAsDataURL(e.target.files[0]);
+  //   setImageFile(e.target.files[0]);
+  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -383,29 +386,30 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
         }
       });
   }
-  function uploadImageToCloudinary() {
-    if (imageFile === "") return toast.info("No image selected");
+  // use cloudinary Widget
+  // function uploadImageToCloudinary() {
+  //   if (imageFile === "") return toast.info("No image selected");
 
-    const imageData = new FormData();
-    imageData.append("file", imageFile);
-    imageData.append("upload_preset", "oyieaesl");
-    imageData.append("cloud_name", "dhvacnvek");
+  //   const imageData = new FormData();
+  //   imageData.append("file", imageFile);
+  //   imageData.append("upload_preset", "oyieaesl");
+  //   imageData.append("cloud_name", "dhvacnvek");
 
-    console.log(imageData.append("file", imageFile));
-    return;
-    // console.log(imageFile);
-    // return;
-    fetch("  https://api.cloudinary.com/v1_1/dhvacnvek/image/upload", {
-      method: "post",
-      body: imageData,
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        updatePicture(data.url);
-        // return;
-      })
-      .catch((err) => console.log(err));
-  }
+  //   console.log(imageData.append("file", imageFile));
+  //   return;
+  //   // console.log(imageFile);
+  //   // return;
+  //   fetch("  https://api.cloudinary.com/v1_1/dhvacnvek/image/upload", {
+  //     method: "post",
+  //     body: imageData,
+  //   })
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       updatePicture(data.url);
+  //       // return;
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   async function updatePicture(imgURL) {
     let updateData = { avatar: imgURL };
@@ -568,6 +572,11 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
         toast.error(error.message);
       });
   }
+
+  function updateProfilePicture(img) {
+    setImg_url(img);
+    updatePicture(img);
+  }
   return (
     <div className="col-xl-12 ">
       <div className="row">
@@ -578,10 +587,10 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
             </div>
             <div className="card-body">
               {/* <form method="post"> */}
-              <div className="row">
+              {/* <div className="row">
                 <div className="mb-3 col-xl-12">
                   <div className="d-flex align-items-center mb-3">
-                    {/* image preview */}
+                    {/* image preview * /}
                     <img
                       className="me-3 rounded-circle me-0 me-sm-3"
                       src={
@@ -594,7 +603,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                       alt=""
                     />
                     <div className="flex-grow-1">
-                      {/* <h5 className="mb-0">Josiah Victor</h5> */}
+                      {/* <h5 className="mb-0">Josiah Victor</h5> * /}
                       <sup className="mb-0">Max file size is 20mb</sup>
                     </div>
                   </div>
@@ -624,7 +633,13 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                     Upload Picture
                   </button>
                 </div>
-              </div>
+              </div> */}
+
+              <CloudinaryUploadProfileButton
+                formComplete={true}
+                avatar={img_url}
+                updateProfilePicture={updateProfilePicture}
+              />
               {/* <!-- </form> --> */}
               {/* </form> */}
             </div>
