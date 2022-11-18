@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { FaUpload } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -7,8 +8,9 @@ function CloudinaryUploadProfileButton({
   avatar,
   formComplete,
 }) {
-  // function handelOpenWidget() {}
+  // const [widgetLoading, setWidgetLoading] = useState(false);
   function handelOpenWidget() {
+    // setWidgetLoading(true);
     var myCropWidget = window.cloudinary.createUploadWidget(
       {
         cloudName: "dhvacnvek",
@@ -28,8 +30,9 @@ function CloudinaryUploadProfileButton({
         if (result.event === "success" && result.info) {
           // console.log(result.info.eager[0].url);
           toast.success("image uploaded successfully");
-          console.log(result.info.url);
+          // console.log(result.info.url);
           updateProfilePicture(result.info.url);
+          // setWidgetLoading(false);
           myCropWidget.hide();
         }
       }
@@ -51,7 +54,9 @@ function CloudinaryUploadProfileButton({
             />
           </div>
           <label htmlFor="selectImageInput1" className="icon">
+            {/* {widgetLoading ? <span className="fs-5">...</span> :  */}
             <FaUpload />
+            {/*  } */}
           </label>
         </div>
         <input
