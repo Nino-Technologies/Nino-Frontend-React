@@ -6,6 +6,7 @@ import Search from "../../components/Search/Search";
 
 import "./ArtisansPage.scss";
 import { SearchContext } from "../../context/SearchContext";
+import PaginatedItems from "../../components/Pagination/Pagination";
 
 function ArtisansPage() {
   const { pageLoading, artisans, searchArtisans, formService } =
@@ -20,9 +21,11 @@ function ArtisansPage() {
         <div className="container image-list-container">
           {/* -------------------- use this line for auto filter  ---------------------------*/}
           <>
-            {searchArtisans.map((artisan) => (
+            {/* {searchArtisans.map((artisan) => (
               <ProfileCard artisan={artisan} key={artisan._id} />
-            ))}
+            ))} */}
+            {/* pass array into PaginatedItems */}
+            <PaginatedItems itemsPerPage={5} items={searchArtisans} />
           </>
         </div>
       )}
