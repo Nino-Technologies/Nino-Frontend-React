@@ -25,7 +25,7 @@ function ArtisansPage() {
               <ProfileCard artisan={artisan} key={artisan._id} />
             ))} */}
             {/* pass array into PaginatedItems */}
-            <PaginatedItems itemsPerPage={5} items={searchArtisans} />
+            <PaginatedItems itemsPerPage={10} items={searchArtisans} />
           </>
         </div>
       )}
