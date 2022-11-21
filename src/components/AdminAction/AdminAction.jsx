@@ -21,6 +21,40 @@ function AdminAction({
 
   const { token } = cookies.grinderUser;
 
+
+
+  function sendMessageFunction(object) {
+    if (object.to.length === 0)
+      return toast.error("Receivers Number is required");
+    if (object.message === "") return toast.error("Message is required");
+    const options = {
+      method: "POST",
+      url: "https://api.sendchamp.com/api/v1/sms/send",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+        Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
+      },
+      data: {
+        to: object.to,
+        message: object.message,
+        sender_name: "Grinders",
+        route: "international",
+      },
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        toast.success("Notification sent successfully");
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        toast.error(error.response.data.message);
+
+        console.error(error);
+      });
+  }
+
   async function adminActionFunction(action, role, id) {
     if (!action || action === "") {
       return toast.info("Require action");
@@ -137,6 +171,14 @@ function AdminAction({
               onClick={() => {
                 console.log(artisan);
                 adminActionFunction("verify", role, _id);
+                sendMessageFunction({
+                  to: [`${artisan.phoneNumber}`],
+                  message: `Hello, ${artisan.fullName} 
+
+Your Registration has been verified and you are now live on Grinders.ng 
+
+Subscribe to our premium plan and increase your chances of getting job leads. `,
+                });
               }}
             >
               Verify Account
