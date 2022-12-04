@@ -59,12 +59,6 @@ function Nav() {
               </Link>
             </li>
           </ul>
-        </div>
-
-        <div
-          className="collapse navbar-collapse justify-content-end text-center"
-          id="navbarNav"
-        >
           {loggedIn ? (
             <NavMenuComponent />
           ) : (
@@ -74,7 +68,7 @@ function Nav() {
                   <button
                     className="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
                     type="button"
-                    id="dropdownMenuButton1"
+                    id="loginAccountButton"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
@@ -82,7 +76,7 @@ function Nav() {
                   </button>
                   <ul
                     className="dropdown-menu"
-                    aria-labelledby="dropdownMenuButton1"
+                    aria-labelledby="loginAccountButton"
                   >
                     <li>
                       <Link to="/login?as=user" className="dropdown-item">
@@ -102,7 +96,7 @@ function Nav() {
                   <button
                     className="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
                     type="button"
-                    id="dropdownMenuButton1"
+                    id="registerAccountButton"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
@@ -110,7 +104,7 @@ function Nav() {
                   </button>
                   <ul
                     className="dropdown-menu"
-                    aria-labelledby="dropdownMenuButton1"
+                    aria-labelledby="registerAccountButton"
                   >
                     <li>
                       <Link to="/register?as=user" className="dropdown-item">
