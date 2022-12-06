@@ -2,18 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
-import { FaExclamation, FaInfoCircle } from "react-icons/fa";
+import { FaExclamation, FaInfoCircle, FaRetweet } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
-import axios from "axios";
-import { TestContext } from "../../context/ContextTest";
+import { TermiiSMSContext } from "../../context/TermiiContext";
 
 function HomePage() {
   const [profileProgress, setProfileProgress] = useState(0);
-  const [sendChampAccount, setSendChampAccount] = useState({
-    loading: true,
-    business_amount: "",
-    business_currency: "",
-  });
   const {
     logOutFunction,
     userProfile,
@@ -24,8 +18,8 @@ function HomePage() {
     checkVerifiedFunction,
     getUserProfile,
   } = useContext(UserContext);
-  const { testName } = useContext(TestContext);
-  console.log(useContext(TestContext));
+  const { getBalance, smsBalance } = useContext(TermiiSMSContext);
+  console.log();
   function checkProperty(property) {
     if (property !== "" && property) {
       return true;
@@ -34,36 +28,6 @@ function HomePage() {
     }
   }
 
-  useEffect(() => {
-    if (userProfile.role !== 3) {
-      return;
-    }
-    const options = {
-      method: "POST",
-      url: "https://api.sendchamp.com/api/v1/wallet/wallet_balance",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer sendchamp_test_$2a$10$Skta2MmUp0lwG/WSea.XE.lvWSvtK45oXm7HY9R.2wYy1V2uGLxrG",
-      },
-    };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        const { business_amount, business_currency } =
-          response.data.data.details;
-        setSendChampAccount({
-          loading: false,
-          business_amount,
-          business_currency,
-        });
-        console.log();
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  }, []);
   useEffect(() => {
     // {
     //   Nin: "123456";
@@ -229,20 +193,29 @@ function HomePage() {
                   className="card text-dark mx-2 mt-2"
                   // style={{ maxWidth: "18rem" }}
                 >
-                  <div className="card-header">SendChamp Wallet</div>
+                  <div className="card-header d-flex justify-content-between">
+                    <span className="my-auto">SMS Wallet</span>
+                    <button
+                      className="btn btn-outline-primary btn-sm"
+                      onClick={() => {
+                        getBalance();
+                      }}
+                    >
+                      <FaRetweet />
+                      <span className="d-none d-lg-inline ml-1">Refresh</span>
+                    </button>
+                  </div>
                   <div className="card-body">
                     <h5 className="card-title">Wallet Balance</h5>
-
-                    {sendChampAccount.loading ? (
+                    {smsBalance.loading ? (
                       <>Loading...</>
                     ) : (
                       <>
                         <b>
-                          {sendChampAccount.business_currency}{" "}
-                          {sendChampAccount.business_amount}
+                          {smsBalance.currency} {smsBalance.balance}
                           <br />
                         </b>
-                        <sup>Balance for sms and emails</sup>
+                        <sup>Balance for sms</sup>
                       </>
                     )}
                   </div>
