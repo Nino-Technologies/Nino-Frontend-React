@@ -21,10 +21,7 @@ import UsersPage from "./pages/UserPage/UserPage";
 import CreateAdminPage from "./pages/CreateAdminPage/CreateAdminPage";
 import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
-import {
-  PaymentModalComponent,
-  ProfilePictureModalComponent,
-} from "./components/Modal/ModalComponent";
+import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import ReactGa from "react-ga";
 import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
@@ -35,6 +32,7 @@ import ImageCropperWithStyle from "./pages/ImageCropper/ImageCropper";
 import SendMessagePage from "./components/SendMessages/SendMessagePage";
 import { TestProvider } from "./context/ContextTest";
 import { SaveArtisanProvider } from "./context/saveUserContext";
+import { TermiiSMSProvider } from "./context/TermiiContext";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -110,9 +108,9 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <TestProvider>
+            <TermiiSMSProvider>
               <Dashboard />
-            </TestProvider>
+            </TermiiSMSProvider>
           }
         >
           <Route path="home" element={<HomePage />} />
