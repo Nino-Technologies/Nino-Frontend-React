@@ -69,13 +69,15 @@ export function TermiiSMSProvider({ children }) {
       headers: {
         accept: "application/json",
         "content-type": "application/json",
-        Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
+        Authorization: `https://api.ng.termii.com/api/sms/send`,
       },
       data: {
         to: object.to,
-        message: object.message,
-        sender_name: "Grinders",
-        route: "international",
+        from: "Grinders",
+        sms: object.message,
+        type: "plain",
+        channel: "generic",
+        api_key: termiiAPIKey,
       },
     };
     axios
@@ -83,6 +85,11 @@ export function TermiiSMSProvider({ children }) {
       .then(function (response) {
         toast.success("Notification sent successfully");
         console.log(response.data);
+        setSmsBalance({
+          loading: true,
+          balance: response.data.balance,
+          currency: "NGN",
+        });
       })
       .catch(function (error) {
         toast.error(error.response.data.message);
