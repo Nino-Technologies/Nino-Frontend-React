@@ -94,7 +94,9 @@ function App() {
           path="/artisans-profile/:id"
           element={
             <SaveArtisanProvider>
-              <ArtisansProfile />
+              <TermiiSMSProvider>
+                <ArtisansProfile />
+              </TermiiSMSProvider>
             </SaveArtisanProvider>
           }
         />
@@ -104,7 +106,6 @@ function App() {
         <Route path="/password-reset" element={<PasswordResetPage />} />
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/image-cropper" element={<ImageCropperWithStyle />} />
-        <Route path="/sendMessage" element={<SendMessagePage />} />
         <Route
           path="/dashboard"
           element={
@@ -119,6 +120,7 @@ function App() {
           <Route path="users" element={<UsersPage />} />
           <Route path="verify-user" element={<VerifyUserPage />} />
           <Route path="verify-admins" element={<VerifyAdminsPage />} />
+          <Route path="sendMessage" element={<SendMessagePage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />
           <Route
             path="saved-artisan"
