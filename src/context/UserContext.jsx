@@ -18,6 +18,7 @@ export function UserProvider({ children }) {
   const navigate = useNavigate();
   const apiUrl = "https://nino-technologies.herokuapp.com/api";
   // const apiUrl = "http://localhost:5000/api";
+  // const apiUrl = "https://api.grinders.ng/api";
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {

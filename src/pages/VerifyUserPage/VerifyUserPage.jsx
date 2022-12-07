@@ -8,6 +8,7 @@ import { FaArrowUp, FaExclamation } from "react-icons/fa";
 import { toast } from "react-toastify";
 import AdminAction from "../../components/AdminAction/AdminAction";
 import ModalComponent from "../../components/Modal/ModalComponent";
+import { TermiiSMSContext } from "../../context/TermiiContext";
 
 function VerifyUserPage() {
   const [pageLoading, setPageLoading] = useState(true);
@@ -294,42 +295,46 @@ export function SendMessageModalForm({ profileNumber, setProfileNumber }) {
   const [sendLoading, setSendLoading] = useState(false);
   const [editNumber, setEditNumber] = useState(false);
   const [artisanProfileMessage, setArtisanProfileMessage] = useState("");
+  const { sendMessageFunction, smsBalance } = useContext(TermiiSMSContext);
 
-  function sendMessageFunction(object) {
-    if (object.to === "") return toast.error("Receivers Number is required");
-    if (object.message === "") return toast.error("Message is required");
-    setSendLoading(true);
-    const options = {
-      method: "POST",
-      url: "https://api.sendchamp.com/api/v1/sms/send",
-      headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
-      },
-      data: {
-        to: object.to,
-        message: object.message,
-        sender_name: "Grinders",
-        route: "international",
-      },
-    };
-    axios
-      .request(options)
-      .then(function (response) {
-        toast.success("Message sent successfully");
-        console.log(response.data);
-        setSendLoading(false);
-      })
-      .catch(function (error) {
-        toast.error(error.response.data.message);
-        setSendLoading(false);
+  // function sendMessageFunction(object) {
+  //   if (object.to === "") return toast.error("Receivers Number is required");
+  //   if (object.message === "") return toast.error("Message is required");
+  //   setSendLoading(true);
+  //   const options = {
+  //     method: "POST",
+  //     url: "https://api.sendchamp.com/api/v1/sms/send",
+  //     headers: {
+  //       accept: "application/json",
+  //       "content-type": "application/json",
+  //       Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
+  //     },
+  //     data: {
+  //       to: object.to,
+  //       message: object.message,
+  //       sender_name: "Grinders",
+  //       route: "international",
+  //     },
+  //   };
+  //   axios
+  //     .request(options)
+  //     .then(function (response) {
+  //       toast.success("Message sent successfully");
+  //       console.log(response.data);
+  //       setSendLoading(false);
+  //     })
+  //     .catch(function (error) {
+  //       toast.error(error.response.data.message);
+  //       setSendLoading(false);
 
-        console.error(error);
-      });
-  }
+  //       console.error(error);
+  //     });
+  // }
   return (
-    <ModalComponent modalId={"SendMessage"} modalTitle="Send SMS">
+    <ModalComponent
+      modalId={"SendMessage"}
+      modalTitle={`Send SMS. - { ₦${smsBalance.balance} }`}
+    >
       <div className="mb-3 col-12 px-1">
         <label className="form-label">Contact</label>
         <div className="d-flex border rounded">
@@ -371,9 +376,10 @@ export function SendMessageModalForm({ profileNumber, setProfileNumber }) {
         className="btn btn-primary mt-2"
         onClick={() => {
           sendMessageFunction({
-            to: [`${Number(profileNumber)}`],
+            to: `${Number(profileNumber)}`,
             message: artisanProfileMessage,
           });
+          setSendLoading(false);
         }}
         disabled={sendLoading}
       >

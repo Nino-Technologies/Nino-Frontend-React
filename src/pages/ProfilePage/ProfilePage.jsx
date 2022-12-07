@@ -95,14 +95,25 @@ export function ShowProfile({ userProfile, decodeDate }) {
     <div className="ProfilePage">
       {userProfile.role === 1 ? (
         <>
-          {userProfile.freeAccount ? (
-            <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
-              <span className="my-auto">
-                {" "}
-                <FaInfoCircle className="my-auto" /> This account is on free
-                trial (You can only be hired 5 times)
-              </span>
-              {/* ============================= open Subscription modal button =============================== */}
+          <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
+            {/* <span className="my-auto">
+              {" "}
+              <FaInfoCircle className="my-auto" /> This account is on free trial
+              (You can only be hired 5 times)
+            </span> */}
+            <span className="my-auto">
+              {" "}
+              <FaInfoCircle className="my-auto" /> This account is on
+              {userProfile.freeAccount ? (
+                <> free trial (You can only be hired 5 times)</>
+              ) : (
+                <>
+                  <b> {userProfile.accountPlan.name}</b> Subscription
+                </>
+              )}
+            </span>
+            {/* ============================= open Subscription modal button =============================== */}
+            {userProfile.freeAccount || userProfile.subscriptionExpired ? (
               <button
                 className="btn btn-primary"
                 data-bs-toggle="modal"
@@ -111,30 +122,12 @@ export function ShowProfile({ userProfile, decodeDate }) {
               >
                 Buy Subscription
               </button>
-              {/* ===================================== </> ================================================= */}
-            </div>
-          ) : (
-            <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
-              <span className="my-auto">
-                {" "}
-                <FaInfoCircle className="my-auto" /> This account is on "
-                {userProfile.accountPlan ? userProfile.accountPlan.name : null}"
-                Subscription
-              </span>
-              {/* ============================= open Subscription modal button =============================== */}
-              {/* <button
-            className="btn btn-primary"
-            data-bs-toggle="modal"
-            href="#paymentModalToggle"
-            role="button"
-          >
-            Buy Subscription
-          </button> */}
-              {/* ===================================== </> ================================================= */}
-            </div>
-          )}
+            ) : null}
+            {/* ===================================== </> ================================================= */}
+          </div>
         </>
       ) : null}
+
       <div className="card d-flex ">
         <div className="card-header py-3 fw-bold">Profile</div>
         <div className="card-body">
@@ -220,7 +213,7 @@ export function ShowProfile({ userProfile, decodeDate }) {
                   <div className="d-flex flex-column flex-md-row">
                     <p className="w-100 mx-0 me-md-3 my-3">
                       <b> office address</b> <br />
-                      {console.log(userProfile)}
+                      {/* {console.log(userProfile)} */}
                       {userProfile.officeLocation}
                     </p>
                     <p className="w-100 mx-0 ms-md-3 my-3">

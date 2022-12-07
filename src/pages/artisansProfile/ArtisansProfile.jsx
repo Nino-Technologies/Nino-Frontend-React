@@ -26,6 +26,7 @@ import ModalImage from "./../../components/ModalImage/ModalImage";
 import ModalComponent from "./../../components/Modal/ModalComponent";
 import BackButton from "../../components/BackButton/BackButton";
 import { SearchContext } from "./../../context/SearchContext";
+import { TermiiSMSContext } from "../../context/TermiiContext";
 
 function ArtisansProfile() {
   const { id } = useParams();
@@ -39,6 +40,7 @@ function ArtisansProfile() {
     useContext(UserContext);
   const { artisans } = useContext(SearchContext);
   const [cookies] = useCookies();
+  const { sendMessageFunction, smsBalance } = useContext(TermiiSMSContext);
 
   // ======= THIS WILL SEND REQUEST to API with the ID form the user profile ===========
 
@@ -164,7 +166,8 @@ function ArtisansProfile() {
         toast.error(error.message);
       });
   }
-  function sendMessageFunction(object) {
+
+  function handelSendMessage(object) {
     if (
       !window.confirm(
         "A notification will be sent to the Service Provider that their number was requested"
@@ -172,40 +175,52 @@ function ArtisansProfile() {
     ) {
       return;
     }
-    if (object.to.length === 0)
-      return toast.error("Receivers Number is required");
-    if (object.message === "") return toast.error("Message is required");
-    const options = {
-      method: "POST",
-      url: "https://api.sendchamp.com/api/v1/sms/send",
-      headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
-      },
-      data: {
-        to: object.to,
-        message: object.message,
-        sender_name: "Grinders",
-        route: "international",
-      },
-    };
-    // console.log(object.to);
-    window.document.getElementById("request_artisan_number_button").click();
-    axios
-      .request(options)
-      .then(function (response) {
-        toast.success("Notification sent successfully");
-        console.log(response.data);
 
-        countHireFunction(artisan);
-      })
-      .catch(function (error) {
-        toast.error(error.response.data.message);
-
-        console.error(error);
-      });
+    sendMessageFunction(object);
+    countHireFunction(artisan);
   }
+  // function sendMessageFunction(object) {
+  //   if (
+  //     !window.confirm(
+  //       "A notification will be sent to the Service Provider that their number was requested"
+  //     )
+  //   ) {
+  //     return;
+  //   }
+  //   if (object.to.length === 0)
+  //     return toast.error("Receivers Number is required");
+  //   if (object.message === "") return toast.error("Message is required");
+  //   const options = {
+  //     method: "POST",
+  //     url: "https://api.sendchamp.com/api/v1/sms/send",
+  //     headers: {
+  //       accept: "application/json",
+  //       "content-type": "application/json",
+  //       Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
+  //     },
+  //     data: {
+  //       to: object.to,
+  //       message: object.message,
+  //       sender_name: "Grinders",
+  //       route: "international",
+  //     },
+  //   };
+  //   // console.log(object.to);
+  //   window.document.getElementById("request_artisan_number_button").click();
+  //   axios
+  //     .request(options)
+  //     .then(function (response) {
+  //       toast.success("Notification sent successfully");
+  //       console.log(response.data);
+
+  //
+  //     })
+  //     .catch(function (error) {
+  //       toast.error(error.response.data.message);
+
+  //       console.error(error);
+  //     });
+  // }
   // function handelHire() {
   //   if (!loggedIn) {
   //     toast.info("Login First");
@@ -467,8 +482,8 @@ function ArtisansProfile() {
                   className="contact-button"
                   onClick={() => {
                     // handelHire();
-                    sendMessageFunction({
-                      to: [`${artisan.phoneNumber}`],
+                    handelSendMessage({
+                      to: `${artisan.phoneNumber}`,
                       message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
                     });
                   }}

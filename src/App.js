@@ -21,10 +21,7 @@ import UsersPage from "./pages/UserPage/UserPage";
 import CreateAdminPage from "./pages/CreateAdminPage/CreateAdminPage";
 import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
-import {
-  PaymentModalComponent,
-  ProfilePictureModalComponent,
-} from "./components/Modal/ModalComponent";
+import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import ReactGa from "react-ga";
 import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
@@ -35,6 +32,7 @@ import ImageCropperWithStyle from "./pages/ImageCropper/ImageCropper";
 import SendMessagePage from "./components/SendMessages/SendMessagePage";
 import { TestProvider } from "./context/ContextTest";
 import { SaveArtisanProvider } from "./context/saveUserContext";
+import { TermiiSMSProvider } from "./context/TermiiContext";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -78,7 +76,9 @@ function App() {
         draggable
         pauseOnHover
       />
-      <PaymentModalComponent />
+      <TermiiSMSProvider>
+        <PaymentModalComponent />
+      </TermiiSMSProvider>
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/about-us" element={<AboutUsPage />} />
@@ -96,7 +96,9 @@ function App() {
           path="/artisans-profile/:id"
           element={
             <SaveArtisanProvider>
-              <ArtisansProfile />
+              <TermiiSMSProvider>
+                <ArtisansProfile />
+              </TermiiSMSProvider>
             </SaveArtisanProvider>
           }
         />
@@ -106,13 +108,12 @@ function App() {
         <Route path="/password-reset" element={<PasswordResetPage />} />
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/image-cropper" element={<ImageCropperWithStyle />} />
-        <Route path="/sendMessage" element={<SendMessagePage />} />
         <Route
           path="/dashboard"
           element={
-            <TestProvider>
+            <TermiiSMSProvider>
               <Dashboard />
-            </TestProvider>
+            </TermiiSMSProvider>
           }
         >
           <Route path="home" element={<HomePage />} />
@@ -121,6 +122,7 @@ function App() {
           <Route path="users" element={<UsersPage />} />
           <Route path="verify-user" element={<VerifyUserPage />} />
           <Route path="verify-admins" element={<VerifyAdminsPage />} />
+          <Route path="sendMessage" element={<SendMessagePage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />
           <Route
             path="saved-artisan"

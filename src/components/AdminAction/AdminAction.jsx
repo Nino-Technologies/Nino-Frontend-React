@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
+import { TermiiSMSContext } from "./../../context/TermiiContext";
 
 function AdminAction({
   role,
@@ -18,42 +19,41 @@ function AdminAction({
   const [actionLoading, setActionLoading] = useState(false);
   const [cookies] = useCookies();
   const { apiUrl } = useContext(UserContext);
+  const { sendMessageFunction } = useContext(TermiiSMSContext);
 
   const { token } = cookies.grinderUser;
 
+  // function sendMessageFunction(object) {
+  //   if (object.to.length === 0)
+  //     return toast.error("Receivers Number is required");
+  //   if (object.message === "") return toast.error("Message is required");
+  //   const options = {
+  //     method: "POST",
+  //     url: "https://api.sendchamp.com/api/v1/sms/send",
+  //     headers: {
+  //       accept: "application/json",
+  //       "content-type": "application/json",
+  //       Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
+  //     },
+  //     data: {
+  //       to: object.to,
+  //       message: object.message,
+  //       sender_name: "Grinders",
+  //       route: "international",
+  //     },
+  //   };
+  //   axios
+  //     .request(options)
+  //     .then(function (response) {
+  //       toast.success("Notification sent successfully");
+  //       console.log(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       toast.error(error.response.data.message);
 
-
-  function sendMessageFunction(object) {
-    if (object.to.length === 0)
-      return toast.error("Receivers Number is required");
-    if (object.message === "") return toast.error("Message is required");
-    const options = {
-      method: "POST",
-      url: "https://api.sendchamp.com/api/v1/sms/send",
-      headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        Authorization: `Bearer sendchamp_live_$2y$10$.lpAz0y5oNTtuwrvbWqOdevgYa7DRO.2Zn1zM40TsVbU4wkFL09ae`,
-      },
-      data: {
-        to: object.to,
-        message: object.message,
-        sender_name: "Grinders",
-        route: "international",
-      },
-    };
-    axios
-      .request(options)
-      .then(function (response) {
-        toast.success("Notification sent successfully");
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        toast.error(error.response.data.message);
-
-        console.error(error);
-      });
-  }
+  //       console.error(error);
+  //     });
+  // }
 
   async function adminActionFunction(action, role, id) {
     if (!action || action === "") {
@@ -172,7 +172,7 @@ function AdminAction({
                 console.log(artisan);
                 adminActionFunction("verify", role, _id);
                 sendMessageFunction({
-                  to: [`${artisan.phoneNumber}`],
+                  to: `${artisan.phoneNumber}`,
                   message: `Hello, ${artisan.fullName} 
 
 Your Registration has been verified and you are now live on Grinders.ng 

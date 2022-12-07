@@ -1,20 +1,29 @@
 import axios from "axios";
 import React, { useContext } from "react";
 import { useState } from "react";
-import { FaAt, FaDotCircle, FaShoppingCart, FaUser } from "react-icons/fa";
+import {
+  FaAt,
+  FaDotCircle,
+  FaPhone,
+  FaShoppingCart,
+  FaUser,
+} from "react-icons/fa";
 import { usePaystackPayment } from "react-paystack";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import { UserContext } from "../../context/UserContext";
 import "./PaymentForm.scss";
+import { TermiiSMSContext } from "../../context/TermiiContext";
 
 function PaymentForm({ selectedPlane }) {
+  const { sendMessageFunction } = useContext(TermiiSMSContext);
   function nairaSign() {
     return <> &#8358; </>;
   }
 
   const [formInputFullName, setFormInputFullName] = useState("");
   const [formInputEmail, setFormInputEmail] = useState("");
+  const [formInputNumber, setFormInputNumber] = useState("");
   const [cookies] = useCookies();
   const { apiUrl, getUserProfile } = useContext(UserContext);
 
@@ -49,6 +58,13 @@ function PaymentForm({ selectedPlane }) {
           // console.log(paymentObject);
           document.getElementById("closePaymentModal").click();
           toast.success("Payment successful");
+          sendMessageFunction({
+            to: `${paymentData.number}`,
+            message: `
+            Hello ${paymentData.fullName}
+            Welcome To Grinders premium model.
+            Your subscription for Grinders  ${selectedPlane.name} was successfully. You are now live on Grinders premium search service. Kindly make sure your profile is up to date.`,
+          });
           getUserProfile();
         })
         .catch((error) => {
@@ -67,6 +83,7 @@ function PaymentForm({ selectedPlane }) {
     // console.log(reference);
     const { status, redirecturl, trxref, transaction } = reference;
     const paymentObject = {
+      number: `234${formInputNumber}`,
       email: formInputEmail,
       fullName: formInputFullName,
       status: status,
@@ -135,13 +152,32 @@ function PaymentForm({ selectedPlane }) {
                   <FaAt /> Email
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   name="email"
                   placeholder="john@example.com"
                   value={formInputEmail}
                   onChange={(e) => setFormInputEmail(e.target.value)}
                 />
+                <label htmlFor="number">
+                  <FaPhone /> Number
+                </label>
+                <div className="d-flex">
+                  <input
+                    type="text"
+                    style={{ width: "65px" }}
+                    value="+234"
+                    disabled
+                  />
+                  <input
+                    type="number"
+                    id="number"
+                    name="number"
+                    placeholder="Contact Number"
+                    value={formInputNumber}
+                    onChange={(e) => setFormInputNumber(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
 
