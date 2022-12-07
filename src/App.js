@@ -76,7 +76,9 @@ function App() {
         draggable
         pauseOnHover
       />
-      <PaymentModalComponent />
+      <TermiiSMSProvider>
+        <PaymentModalComponent />
+      </TermiiSMSProvider>
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/about-us" element={<AboutUsPage />} />
