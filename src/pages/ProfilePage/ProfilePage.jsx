@@ -93,41 +93,7 @@ export function ShowProfile({ userProfile, decodeDate }) {
   }
   return (
     <div className="ProfilePage">
-      {userProfile.role === 1 ? (
-        <>
-          <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
-            {/* <span className="my-auto">
-              {" "}
-              <FaInfoCircle className="my-auto" /> This account is on free trial
-              (You can only be hired 5 times)
-            </span> */}
-            <span className="my-auto">
-              {" "}
-              <FaInfoCircle className="my-auto" /> This account is on
-              {userProfile.freeAccount ? (
-                <> free trial (You can only be hired 5 times)</>
-              ) : (
-                <>
-                  <b> {userProfile.accountPlan.name}</b> Subscription
-                </>
-              )}
-            </span>
-            {/* ============================= open Subscription modal button =============================== */}
-            {userProfile.freeAccount || userProfile.subscriptionExpired ? (
-              <button
-                className="btn btn-primary"
-                data-bs-toggle="modal"
-                href="#paymentModalToggle"
-                role="button"
-              >
-                Buy Subscription
-              </button>
-            ) : null}
-            {/* ===================================== </> ================================================= */}
-          </div>
-        </>
-      ) : null}
-
+      <ProfileSubscriptionAlertCard userProfile={userProfile} />
       <div className="card d-flex ">
         <div className="card-header py-3 fw-bold">Profile</div>
         <div className="card-body">
@@ -908,5 +874,68 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
         ) : null}
       </div>
     </div>
+  );
+}
+
+export function ProfileSubscriptionAlertCard({ userProfile }) {
+  return (
+    <>
+      {" "}
+      {userProfile.role === 1 ? (
+        <>
+          <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
+            <span className="my-auto">
+              <FaInfoCircle className="my-auto" />{" "}
+              {userProfile.subscriptionExpired ? (
+                <>Your Account Subscription has expired</>
+              ) : (
+                <>
+                  This account is on
+                  {userProfile.freeAccount ? (
+                    <> free trial (You can only be hired 5 times)</>
+                  ) : (
+                    <>
+                      <b> {userProfile.accountPlan.name}</b> Subscription
+                    </>
+                  )}
+                </>
+              )}{" "}
+            </span>
+            {/* ============================= open Subscription modal button =============================== */}
+            {userProfile.freeAccount || userProfile.subscriptionExpired ? (
+              <button
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                href="#paymentModalToggle"
+                role="button"
+              >
+                Buy Subscription
+              </button>
+            ) : null}
+            {/* ===================================== </> ================================================= */}
+          </div>
+        </>
+      ) : null}
+    </>
+  );
+}
+export function ProfileSVerificationAlertCard({ userProfile }) {
+  return (
+    <>
+      {!userProfile.account_verified ? (
+        <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
+          <span
+            className="
+          my-auto w-100 w-md-75"
+          >
+            <FaInfoCircle className="my-auto" /> Account Has not been verified,
+            if verification is taking more than 24 - 48 Hrs contact an admin
+          </span>
+          <Link to={"/contact-us"} className="btn btn-primary  mt-3 my-md-auto">
+            Contact Us
+          </Link>
+        </div>
+      ) : null}
+    </>
   );
 }
