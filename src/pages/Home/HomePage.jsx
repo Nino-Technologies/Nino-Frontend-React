@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { FaExclamation, FaInfoCircle, FaRetweet } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 import { TermiiSMSContext } from "../../context/TermiiContext";
+import { ProfileSubscriptionAlertCard } from "../ProfilePage/ProfilePage";
+import { ProfileSVerificationAlertCard } from "./../ProfilePage/ProfilePage";
 
 function HomePage() {
   const [profileProgress, setProfileProgress] = useState(0);
@@ -69,7 +71,50 @@ function HomePage() {
     // console.log(userProfile);
     setProfileProgress(getProgress);
   }, []);
+  // const [count, setCount] = useState(0);
+  // const [distance, setDistance] = useState(0);
+  // const [date, setDate] = useState("");
 
+  // useEffect(() => {
+  //   //  // Set the date we're counting down to
+  //   var countDownDate = new Date(1670510319633).getTime();
+  //   // var countDownDate = new Date("Jan 7, 2023 15:37:25").getTime();
+
+  //   //  // Update the count down every 1 second
+  //   const interval = setInterval(() => {
+  //     setCount(count + 1);
+  //     // Get today's date and time
+  //     var now = new Date().getTime();
+
+  //     // Find the distance between now and the count down date
+  //     //  var distance =
+  //     setDistance(countDownDate - now);
+  //     // setDistance(1670510319633);
+
+  //     // console.log(distance);
+
+  //     // Time calculations for days, hours, minutes and seconds
+  //     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  //     var hours = Math.floor(
+  //       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  //     );
+  //     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  //     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  //     // Output the result in an element with id="demo"
+  //     //  document.getElementById("demo").innerHTML =
+  //     //    minutes + "m " + seconds + "s ";
+  //     setDate(`${days}d ${hours}h ${minutes} m ${seconds} s`);
+  //     // If the count down is over, write some text
+  //     // if (distance < 0) {
+  //     //   clearInterval(x);
+  //     //   // document.getElementById("demo").innerHTML = "EXPIRED";
+  //     // }
+  //   }, 1000);
+
+  //   // Clean up the interval when the component unmounts
+  //   return () => clearInterval(interval);
+  // }, [count, distance]);
   useEffect(() => {
     getUserProfile();
   }, []);
@@ -141,10 +186,9 @@ function HomePage() {
           Update Profile
         </Link>
       </ModalComponent>
-
       <div className="header my-4  d-flex justify-content-between">
         <div className="welcome ms-4">
-          Welcome {userProfile.userName || "User"}
+          Welcome {userProfile.fullName || "User"}
         </div>
         <button
           className="btn-danger btn me-4 btn-sm"
@@ -154,25 +198,11 @@ function HomePage() {
         </button>
       </div>
       <hr className="mb-0" />
-      {userProfile.freeAccount ? (
-        <div className="alert alert-info d-flex justify-content-between flex-column flex-md-row">
-          <span className="my-auto">
-            {" "}
-            <FaInfoCircle className="my-auto" /> This account is on free trial
-            (You can only be hired 5 times)
-          </span>
-          {/* ============================= open Subscription modal button =============================== */}
-          <button
-            className="btn btn-primary"
-            data-bs-toggle="modal"
-            href="#paymentModalToggle"
-            role="button"
-          >
-            Buy Subscription
-          </button>
-          {/* ===================================== </> ================================================= */}
-        </div>
-      ) : null}
+      <ProfileSVerificationAlertCard userProfile={userProfile} />
+      <ProfileSubscriptionAlertCard userProfile={userProfile} />
+      {/* We have {count}s left <br />
+      {distance < 0 ? "Expired" : date} <br />
+      {date} */}
       <div className="container">
         <div className="d-flex flex-wrap ">
           <div className="px-1"></div>
