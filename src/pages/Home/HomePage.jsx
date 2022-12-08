@@ -10,6 +10,7 @@ import { ProfileSVerificationAlertCard } from "./../ProfilePage/ProfilePage";
 
 function HomePage() {
   const [profileProgress, setProfileProgress] = useState(0);
+  const [nonCompleted, setNonCompleted] = useState([]);
   const {
     logOutFunction,
     userProfile,
@@ -21,9 +22,23 @@ function HomePage() {
     getUserProfile,
   } = useContext(UserContext);
   const { getBalance, smsBalance } = useContext(TermiiSMSContext);
-  console.log();
-  function checkProperty(property) {
-    if (property !== "" && property) {
+  // console.log();
+  function checkTextProperty(property) {
+    if (property && property.trim() !== "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function checkNumberProperty(property) {
+    if (Number(property) > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function checkBooleanProperty(property) {
+    if (property) {
       return true;
     } else {
       return false;
@@ -31,46 +46,310 @@ function HomePage() {
   }
 
   useEffect(() => {
-    // {
-    //   Nin: "123456";
-    //   account_active: true;
-    //   account_verified: false;
-    //   avatar: "http://res.cloudinary.com/dhvacnvek/image/upload/v1664505887/vrnyf1d809ouq4cipfyb.png";
-    //   email: "victorjosiahm3@gmail.com";
-    //   email_verified: false;
-    //   fullName: "Josiah Victor";
-    //   joinDate: "2022-09-30T02:07:26.342Z";
-    //   locationCity: "Bako";
-    //   locationState: "Bako";
-    //   password: "$2b$12$mUt2FCMHqRCVXm747XOite10EG1CMnMwxTx8W/iZ/hjGjZjtOYdlu";
-    //   phoneNumber: 2348137297150;
-    //   role: 0;
-    // }
-    let getProgress = profileProgress;
-    if (userProfile || userProfile.role === 0) {
-      if (checkProperty(userProfile.account_active)) {
-        getProgress += 10;
+    let progressCount = 0;
+    let nonCompleted = [];
+    if (userProfile.role === 1) {
+      const {
+        avatar,
+        email,
+        fullName,
+        phoneNumber,
+        password,
+        officeLocation,
+        refereeNumber,
+        locationState,
+        locationCity,
+        service,
+        gender,
+        introduction,
+        Nin,
+        YearsOfExperience,
+        refereeName,
+        email_verified,
+        account_verified,
+        account_active,
+        freeAccount,
+        subscriptionExpired,
+      } = userProfile;
+
+      if (!email && !password) return;
+
+      // console.log(userProfile);
+
+      if (checkTextProperty(email)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Email");
       }
-      if (checkProperty(userProfile.account_verified)) {
-        getProgress += 10;
+
+      if (checkTextProperty(Nin)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Nin");
       }
-      if (checkProperty(userProfile.email_verified)) {
-        getProgress += 10;
+
+      if (checkTextProperty(fullName)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Full name");
       }
-      if (checkProperty(userProfile.Nin)) {
-        getProgress += 10;
+
+      if (checkTextProperty(avatar)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Profile picture");
       }
-      if (
-        checkProperty(userProfile.locationCity) &&
-        checkProperty(userProfile.locationState)
-      ) {
-        getProgress += 10;
+
+      if (checkTextProperty(password)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Password");
       }
-      // console.log(getProgress);
+
+      if (checkTextProperty(service)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Service");
+      }
+
+      if (checkTextProperty(officeLocation)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Office location");
+      }
+
+      if (checkTextProperty(locationCity)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Location city");
+      }
+
+      if (checkTextProperty(locationState)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Location state");
+      }
+
+      if (checkTextProperty(gender)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Gender");
+      }
+
+      if (checkTextProperty(introduction)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Introduction");
+      }
+
+      if (checkTextProperty(refereeName)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Referee name");
+      }
+
+      if (checkNumberProperty(YearsOfExperience)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Years of experience");
+      }
+
+      if (checkNumberProperty(phoneNumber)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Phone number");
+      }
+
+      if (checkNumberProperty(refereeNumber)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Referee number");
+      }
+
+      if (checkBooleanProperty(subscriptionExpired)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Subscription expired");
+      }
+
+      if (checkBooleanProperty(freeAccount)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Account Subscription");
+      }
+
+      if (checkBooleanProperty(account_active)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Account inactive ");
+      }
+
+      if (checkBooleanProperty(account_verified)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Account verification");
+      }
+
+      if (checkBooleanProperty(email_verified)) {
+        progressCount += 5;
+      } else {
+        nonCompleted.push("Email verification");
+      }
     }
-    // console.log(userProfile);
-    setProfileProgress(getProgress);
-  }, []);
+
+    if (userProfile.role === 3) {
+      const {
+        fullName,
+        avatar,
+        location,
+        email,
+        email_verified,
+        account_verified,
+        account_active,
+        password,
+        number,
+        role,
+      } = userProfile;
+
+      if (checkTextProperty(email)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Email");
+      }
+
+      if (checkTextProperty(fullName)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Full name");
+      }
+
+      if (checkTextProperty(avatar)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Profile picture");
+      }
+
+      if (checkTextProperty(password)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Password");
+      }
+
+      if (checkTextProperty(location)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Location");
+      }
+
+      if (checkNumberProperty(number)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Number");
+      }
+
+      if (checkNumberProperty(role)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Role");
+      }
+
+      if (checkBooleanProperty(account_active)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Account inactive");
+      }
+
+      if (checkBooleanProperty(account_verified)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Account verification");
+      }
+
+      if (checkBooleanProperty(email_verified)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Email verification");
+      }
+    }
+
+    if (userProfile.role === 0) {
+      const {
+        fullName,
+        avatar,
+        locationCity,
+        locationState,
+        email,
+        email_verified,
+        account_verified,
+        account_active,
+        password,
+        phoneNumber,
+      } = userProfile;
+
+      if (checkTextProperty(email)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Email");
+      }
+
+      if (checkTextProperty(fullName)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Full name");
+      }
+
+      if (checkTextProperty(avatar)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Profile picture");
+      }
+
+      if (checkTextProperty(password)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Password");
+      }
+
+      if (checkTextProperty(locationState)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Location state");
+      }
+
+      if (checkTextProperty(locationCity)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Location city");
+      }
+
+      if (checkNumberProperty(phoneNumber)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Phone number");
+      }
+
+      if (checkBooleanProperty(account_active)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("account_active");
+      }
+
+      if (checkBooleanProperty(account_verified)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Account verification");
+      }
+
+      if (checkBooleanProperty(email_verified)) {
+        progressCount += 10;
+      } else {
+        nonCompleted.push("Email verification");
+      }
+    }
+
+    setNonCompleted(nonCompleted);
+    setProfileProgress(progressCount);
+  }, [userProfile]);
   // const [count, setCount] = useState(0);
   // const [distance, setDistance] = useState(0);
   // const [date, setDate] = useState("");
@@ -121,18 +400,18 @@ function HomePage() {
   useEffect(() => {
     getNotification();
   }, []);
-  useEffect(() => {
-    if (!userProfile.email_verified) {
-      if (userProfile.role === 3) {
-        setProfileProgress(100);
-      } else {
-        //  CLike the model button with js
-        window.document
-          .getElementById("open_profile_completeness_modal")
-          .click();
-      }
-    }
-  }, [userProfile]);
+  // useEffect(() => {
+  //   if (!userProfile.email_verified) {
+  //     if (userProfile.role === 3) {
+  //       setProfileProgress(100);
+  //     } else {
+  //       //  CLike the model button with js
+  //       window.document
+  //         .getElementById("open_profile_completeness_modal")
+  //         .click();
+  //     }
+  //   }
+  // }, [userProfile]);
   return (
     <div className="HomePage">
       {/* button to open model */}
@@ -255,7 +534,7 @@ function HomePage() {
           </div>
           <div className="col-sm-6">
             <div className="card mx-2 mt-2">
-              <h5 className="card-header tw-1">Profile Completeness</h5>
+              <div className="card-header">Profile Completeness</div>
               <div className="card-body d-flex flex-column">
                 <p className="card-text">
                   Update Profile to get our top pro service providers
@@ -269,16 +548,40 @@ function HomePage() {
                     {profileProgress}%
                   </div>
                 </div>
-                <Link
-                  to="/dashboard/profile"
-                  className="btn btn-primary mt-2 ms-auto"
-                >
-                  {userProfile.role !== 3 ? (
-                    <>Update Profile</>
-                  ) : (
-                    <>View Profile</>
-                  )}
-                </Link>
+                <div className="d-flex flex-wrap">
+                  {profileProgress !== 100 ? (
+                    <div className="dropdown mt-2">
+                      <button
+                        className="btn btn-outline-primary px-3 w-100 dropdown-toggle"
+                        type="button"
+                        id="whatLeftDropdownId"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        What is left?
+                      </button>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="whatLeftDropdownId"
+                        style={{ width: "200px" }}
+                      >
+                        {nonCompleted.map((item) => (
+                          <li className="ps-3">{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                  <Link
+                    to="/dashboard/profile"
+                    className="btn btn-primary mt-2 ms-auto"
+                  >
+                    {profileProgress !== 100 ? (
+                      <>Update Profile</>
+                    ) : (
+                      <>View Profile</>
+                    )}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -332,44 +635,66 @@ function HomePage() {
               <div className="card-body d-flex flex-column">
                 <ul className="nav">
                   <li className="achievements-div my-1 w-100">
-                    {checkVerifiedFunction(false)}
+                    {profileProgress !== 100
+                      ? checkVerifiedFunction(false)
+                      : checkVerifiedFunction(true)}
                     <div className="text ms-2">
                       <b>Profile Completeness</b>
-                      <>time</>
+                      {/* <>time</> */}
                     </div>
                   </li>
                   <li className="achievements-div my-1 w-100">
                     {checkVerifiedFunction(userProfile.email_verified)}
                     <div className="text ms-2">
-                      <b>email_verified</b>
-                      <>time</>
+                      <b>Email verified</b>
+                      {/* <>time</> */}
+                    </div>
+                  </li>
+                  <li className="achievements-div my-1 w-100">
+                    {checkVerifiedFunction(userProfile.account_verified)}
+                    <div className="text ms-2">
+                      <b> Account verified</b>
                     </div>
                   </li>
                   {userProfile.role !== 3 && userProfile.role !== 0 ? (
                     <>
                       <li className="achievements-div my-1 w-100">
+                        {userProfile.freeAccount === false &&
+                        userProfile.subscriptionExpired === false
+                          ? checkVerifiedFunction(true)
+                          : checkVerifiedFunction(false)}
+                        {/* {checkVerifiedFunction(userProfile.freeAccount)} */}
+                        <div className="text ms-2">
+                          <b>Account Subscription</b>
+                        </div>
+                      </li>
+                    </>
+                  ) : null}
+                  {/* {userProfile.role !== 3 && userProfile.role !== 0 ? (
+                    <>
+                      <li className="achievements-div my-1 w-100">
                         {checkVerifiedFunction(userProfile.licensed)}
                         <div className="text ms-2">
                           <b>Licensed</b>
-                          <>time</>
+                          {/* <>time</> * /}
                         </div>
                       </li>
                       <li className="achievements-div my-1 w-100">
                         {checkVerifiedFunction(userProfile.backgroundChecked)}
                         <div className="text ms-2">
                           <b>background Checked</b>
-                          <>time</>
+                          {/* <>time</> * /}
                         </div>
                       </li>
                       <li className="achievements-div my-1 w-100">
                         {checkVerifiedFunction(userProfile.topPro)}
                         <div className="text ms-2">
                           <b>Top Pro</b>
-                          <>time</>
+                          {/* <>time</> * /}
                         </div>
                       </li>{" "}
                     </>
-                  ) : null}
+                  ) : null} */}
                 </ul>
               </div>
             </div>
