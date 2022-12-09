@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 import { FaExclamation, FaInfoCircle, FaRetweet } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 import { TermiiSMSContext } from "../../context/TermiiContext";
-import { ProfileSubscriptionAlertCard } from "../ProfilePage/ProfilePage";
+import {
+  ProfileCompletenessProgressBar,
+  ProfileCompletenessWhatLeftDropdown,
+  ProfileSubscriptionAlertCard,
+} from "../ProfilePage/ProfilePage";
 import { ProfileSVerificationAlertCard } from "./../ProfilePage/ProfilePage";
 
 function HomePage() {
-  const [profileProgress, setProfileProgress] = useState(0);
   const {
     logOutFunction,
     userProfile,
@@ -19,58 +22,11 @@ function HomePage() {
     getNotification,
     checkVerifiedFunction,
     getUserProfile,
+    profileCompletenessCheck,
+    profileProgress,
   } = useContext(UserContext);
   const { getBalance, smsBalance } = useContext(TermiiSMSContext);
-  console.log();
-  function checkProperty(property) {
-    if (property !== "" && property) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
-  useEffect(() => {
-    // {
-    //   Nin: "123456";
-    //   account_active: true;
-    //   account_verified: false;
-    //   avatar: "http://res.cloudinary.com/dhvacnvek/image/upload/v1664505887/vrnyf1d809ouq4cipfyb.png";
-    //   email: "victorjosiahm3@gmail.com";
-    //   email_verified: false;
-    //   fullName: "Josiah Victor";
-    //   joinDate: "2022-09-30T02:07:26.342Z";
-    //   locationCity: "Bako";
-    //   locationState: "Bako";
-    //   password: "$2b$12$mUt2FCMHqRCVXm747XOite10EG1CMnMwxTx8W/iZ/hjGjZjtOYdlu";
-    //   phoneNumber: 2348137297150;
-    //   role: 0;
-    // }
-    let getProgress = profileProgress;
-    if (userProfile || userProfile.role === 0) {
-      if (checkProperty(userProfile.account_active)) {
-        getProgress += 10;
-      }
-      if (checkProperty(userProfile.account_verified)) {
-        getProgress += 10;
-      }
-      if (checkProperty(userProfile.email_verified)) {
-        getProgress += 10;
-      }
-      if (checkProperty(userProfile.Nin)) {
-        getProgress += 10;
-      }
-      if (
-        checkProperty(userProfile.locationCity) &&
-        checkProperty(userProfile.locationState)
-      ) {
-        getProgress += 10;
-      }
-      // console.log(getProgress);
-    }
-    // console.log(userProfile);
-    setProfileProgress(getProgress);
-  }, []);
   // const [count, setCount] = useState(0);
   // const [distance, setDistance] = useState(0);
   // const [date, setDate] = useState("");
@@ -121,18 +77,18 @@ function HomePage() {
   useEffect(() => {
     getNotification();
   }, []);
-  useEffect(() => {
-    if (!userProfile.email_verified) {
-      if (userProfile.role === 3) {
-        setProfileProgress(100);
-      } else {
-        //  CLike the model button with js
-        window.document
-          .getElementById("open_profile_completeness_modal")
-          .click();
-      }
-    }
-  }, [userProfile]);
+  // useEffect(() => {
+  //   if (!userProfile.email_verified) {
+  //     if (userProfile.role === 3) {
+  //       setProfileProgress(100);
+  //     } else {
+  //       //  CLike the model button with js
+  //       window.document
+  //         .getElementById("open_profile_completeness_modal")
+  //         .click();
+  //     }
+  //   }
+  // }, [userProfile]);
   return (
     <div className="HomePage">
       {/* button to open model */}
@@ -255,30 +211,37 @@ function HomePage() {
           </div>
           <div className="col-sm-6">
             <div className="card mx-2 mt-2">
-              <h5 className="card-header tw-1">Profile Completeness</h5>
+              {/* <div className="card-header"</div> */}
+              <div className="card-header d-flex justify-content-between">
+                <span className="my-auto">Profile Completeness</span>
+                <button
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() => {
+                    profileCompletenessCheck();
+                  }}
+                >
+                  <FaRetweet />
+                  <span className="d-none d-lg-inline ml-1">Refresh</span>
+                </button>
+              </div>
               <div className="card-body d-flex flex-column">
                 <p className="card-text">
                   Update Profile to get our top pro service providers
                 </p>
-                <div className="progress" style={{ height: "30px" }}>
-                  <div
-                    className="progress-bar progress-bar-striped bg-info "
-                    role="progressbar"
-                    style={{ width: `${profileProgress}%` }}
+                <ProfileCompletenessProgressBar />
+                <div className="d-flex flex-wrap">
+                  <ProfileCompletenessWhatLeftDropdown />
+                  <Link
+                    to="/dashboard/profile"
+                    className="btn btn-primary mt-2 ms-auto"
                   >
-                    {profileProgress}%
-                  </div>
+                    {profileProgress !== 100 ? (
+                      <>Update Profile</>
+                    ) : (
+                      <>View Profile</>
+                    )}
+                  </Link>
                 </div>
-                <Link
-                  to="/dashboard/profile"
-                  className="btn btn-primary mt-2 ms-auto"
-                >
-                  {userProfile.role !== 3 ? (
-                    <>Update Profile</>
-                  ) : (
-                    <>View Profile</>
-                  )}
-                </Link>
               </div>
             </div>
           </div>
@@ -332,44 +295,66 @@ function HomePage() {
               <div className="card-body d-flex flex-column">
                 <ul className="nav">
                   <li className="achievements-div my-1 w-100">
-                    {checkVerifiedFunction(false)}
+                    {profileProgress !== 100
+                      ? checkVerifiedFunction(false)
+                      : checkVerifiedFunction(true)}
                     <div className="text ms-2">
                       <b>Profile Completeness</b>
-                      <>time</>
+                      {/* <>time</> */}
                     </div>
                   </li>
                   <li className="achievements-div my-1 w-100">
                     {checkVerifiedFunction(userProfile.email_verified)}
                     <div className="text ms-2">
-                      <b>email_verified</b>
-                      <>time</>
+                      <b>Email verified</b>
+                      {/* <>time</> */}
+                    </div>
+                  </li>
+                  <li className="achievements-div my-1 w-100">
+                    {checkVerifiedFunction(userProfile.account_verified)}
+                    <div className="text ms-2">
+                      <b> Account verified</b>
                     </div>
                   </li>
                   {userProfile.role !== 3 && userProfile.role !== 0 ? (
                     <>
                       <li className="achievements-div my-1 w-100">
+                        {userProfile.freeAccount === false &&
+                        userProfile.subscriptionExpired === false
+                          ? checkVerifiedFunction(true)
+                          : checkVerifiedFunction(false)}
+                        {/* {checkVerifiedFunction(userProfile.freeAccount)} */}
+                        <div className="text ms-2">
+                          <b>Account Subscription</b>
+                        </div>
+                      </li>
+                    </>
+                  ) : null}
+                  {/* {userProfile.role !== 3 && userProfile.role !== 0 ? (
+                    <>
+                      <li className="achievements-div my-1 w-100">
                         {checkVerifiedFunction(userProfile.licensed)}
                         <div className="text ms-2">
                           <b>Licensed</b>
-                          <>time</>
+                          {/* <>time</> * /}
                         </div>
                       </li>
                       <li className="achievements-div my-1 w-100">
                         {checkVerifiedFunction(userProfile.backgroundChecked)}
                         <div className="text ms-2">
                           <b>background Checked</b>
-                          <>time</>
+                          {/* <>time</> * /}
                         </div>
                       </li>
                       <li className="achievements-div my-1 w-100">
                         {checkVerifiedFunction(userProfile.topPro)}
                         <div className="text ms-2">
                           <b>Top Pro</b>
-                          <>time</>
+                          {/* <>time</> * /}
                         </div>
                       </li>{" "}
                     </>
-                  ) : null}
+                  ) : null} */}
                 </ul>
               </div>
             </div>

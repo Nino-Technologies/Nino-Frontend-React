@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { FaCogs, FaInfoCircle, FaUser, FaUserCheck } from "react-icons/fa";
-import { PaymentModalComponent } from "../../components/Modal/ModalComponent";
+// import { PaymentModalComponent } from "../../components/Modal/ModalComponent";
 import { UserContext } from "../../context/UserContext";
 import "./ProfilePage.scss";
 import { toast } from "react-toastify";
@@ -94,6 +94,15 @@ export function ShowProfile({ userProfile, decodeDate }) {
   return (
     <div className="ProfilePage">
       <ProfileSubscriptionAlertCard userProfile={userProfile} />
+      <div className="d-flex justify-content-between flex-column flex-md-row w-100 mb-2">
+        <span>
+          <b>Profile completeness</b>
+          <ProfileCompletenessProgressBar />
+        </span>
+        <span className="mt-1 my-md-auto">
+          <ProfileCompletenessWhatLeftDropdown />
+        </span>
+      </div>
       <div className="card d-flex ">
         <div className="card-header py-3 fw-bold">Profile</div>
         <div className="card-body">
@@ -715,7 +724,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                     <label className="form-label">Phone Number</label>
                     <div className="d-flex">
                       <input
-                        className="form-control w-25"
+                        className="form-control w-25 ps-1 px-0"
                         type={"text"}
                         value="+234"
                         readOnly
@@ -934,6 +943,52 @@ export function ProfileSVerificationAlertCard({ userProfile }) {
           <Link to={"/contact-us"} className="btn btn-primary  mt-3 my-md-auto">
             Contact Us
           </Link>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+export function ProfileCompletenessProgressBar() {
+  const { profileProgress } = useContext(UserContext);
+  return (
+    <div className="progress" style={{ height: "30px" }}>
+      <div
+        className="progress-bar progress-bar-striped bg-info "
+        role="progressbar"
+        style={{ width: `${profileProgress}%` }}
+      >
+        {profileProgress}%
+      </div>
+    </div>
+  );
+}
+
+export function ProfileCompletenessWhatLeftDropdown() {
+  const { profileProgress, nonCompleted } = useContext(UserContext);
+  return (
+    <>
+      {" "}
+      {profileProgress !== 100 ? (
+        <div className="dropdown mt-2">
+          <button
+            className="btn btn-outline-primary px-3 w-100 dropdown-toggle"
+            type="button"
+            id="whatLeftDropdownId"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            What is left?
+          </button>
+          <ul
+            className="dropdown-menu"
+            aria-labelledby="whatLeftDropdownId"
+            style={{ width: "200px" }}
+          >
+            {nonCompleted.map((item) => (
+              <li className="ps-3">{item}</li>
+            ))}
+          </ul>
         </div>
       ) : null}
     </>

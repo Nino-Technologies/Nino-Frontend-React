@@ -94,6 +94,20 @@
   //   }
   // }
 
+  .progress{
+    min-width: 250px;
+    width: 100%;
+    margin: auto 0;
+  }
+  .dropdown{
+    button{
+        text-align: start;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+  }
+
   .card {
     .card-body {
       display: flex;
