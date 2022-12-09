@@ -270,7 +270,8 @@ export function CitySearchInput({
   formService,
   formLocationCity,
   setFormLocationCity,
-  // setSearchArtisans,
+  artisans,
+  setSearchArtisans,
   // searchArtisans,
   // formLocationState,
 }) {
@@ -332,10 +333,13 @@ export function CitySearchInput({
         onChange={(e) => {
           if (formService === "") {
             return toast.info("fill service first");
-          } else {
-            setFormLocationCity(e.target.value);
-            // filterDataFunction(e.target.value);
           }
+
+          if (e.target.value) {
+            setSearchArtisans(artisans);
+          }
+          setFormLocationCity(e.target.value);
+          // filterDataFunction(e.target.value);
         }}
       />
       {/* {showGesture ? (
@@ -374,7 +378,8 @@ export function StateSearchInput({
   formService,
   formLocationState,
   setFormLocationState,
-  // setSearchArtisans,
+  artisans,
+  setSearchArtisans,
   // searchArtisans,
 }) {
   // const [showGesture, setShowGesture] = useState(false);
@@ -432,6 +437,9 @@ export function StateSearchInput({
         onChange={(e) => {
           if (formService === "") {
             return toast.info("fill service first");
+          }
+          if (e.target.value === "") {
+            setSearchArtisans(artisans);
           }
           setFormLocationState(e.target.value);
           // filterDataFunction(e.target.value);
