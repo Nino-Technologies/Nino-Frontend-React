@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { FaCogs, FaInfoCircle, FaUser, FaUserCheck } from "react-icons/fa";
-import { PaymentModalComponent } from "../../components/Modal/ModalComponent";
+// import { PaymentModalComponent } from "../../components/Modal/ModalComponent";
 import { UserContext } from "../../context/UserContext";
 import "./ProfilePage.scss";
 import { toast } from "react-toastify";
@@ -715,7 +715,7 @@ export function EditProfile({ userProfile, apiUrl, getUserProfile }) {
                     <label className="form-label">Phone Number</label>
                     <div className="d-flex">
                       <input
-                        className="form-control w-25"
+                        className="form-control w-25 ps-1 px-0"
                         type={"text"}
                         value="+234"
                         readOnly
