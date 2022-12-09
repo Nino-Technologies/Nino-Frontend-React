@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 import { FaExclamation, FaInfoCircle, FaRetweet } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 import { TermiiSMSContext } from "../../context/TermiiContext";
-import { ProfileSubscriptionAlertCard } from "../ProfilePage/ProfilePage";
+import {
+  ProfileCompletenessProgressBar,
+  ProfileCompletenessWhatLeftDropdown,
+  ProfileSubscriptionAlertCard,
+} from "../ProfilePage/ProfilePage";
 import { ProfileSVerificationAlertCard } from "./../ProfilePage/ProfilePage";
 
 function HomePage() {
-
   const {
     logOutFunction,
     userProfile,
@@ -21,7 +24,6 @@ function HomePage() {
     getUserProfile,
     profileCompletenessCheck,
     profileProgress,
-    nonCompleted,
   } = useContext(UserContext);
   const { getBalance, smsBalance } = useContext(TermiiSMSContext);
 
@@ -226,38 +228,9 @@ function HomePage() {
                 <p className="card-text">
                   Update Profile to get our top pro service providers
                 </p>
-                <div className="progress" style={{ height: "30px" }}>
-                  <div
-                    className="progress-bar progress-bar-striped bg-info "
-                    role="progressbar"
-                    style={{ width: `${profileProgress}%` }}
-                  >
-                    {profileProgress}%
-                  </div>
-                </div>
+                <ProfileCompletenessProgressBar />
                 <div className="d-flex flex-wrap">
-                  {profileProgress !== 100 ? (
-                    <div className="dropdown mt-2">
-                      <button
-                        className="btn btn-outline-primary px-3 w-100 dropdown-toggle"
-                        type="button"
-                        id="whatLeftDropdownId"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        What is left?
-                      </button>
-                      <ul
-                        className="dropdown-menu"
-                        aria-labelledby="whatLeftDropdownId"
-                        style={{ width: "200px" }}
-                      >
-                        {nonCompleted.map((item) => (
-                          <li className="ps-3">{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
+                  <ProfileCompletenessWhatLeftDropdown />
                   <Link
                     to="/dashboard/profile"
                     className="btn btn-primary mt-2 ms-auto"
