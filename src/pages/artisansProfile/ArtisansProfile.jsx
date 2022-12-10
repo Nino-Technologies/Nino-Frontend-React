@@ -339,7 +339,7 @@ function ArtisansProfile() {
                     <img
                       src={`${
                         artisan.avatar === ""
-                          ? "https://via.placeholder.com/100x100"
+                          ? "https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png"
                           : artisan.avatar
                       }`}
                       alt="Profile picture"
