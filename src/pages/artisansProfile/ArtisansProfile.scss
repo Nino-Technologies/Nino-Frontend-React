@@ -2,17 +2,6 @@
   margin-top: 100px;
   // padding-top: 50px;
   text-align: start;
-  div {
-    // border: solid 1px green;
-  }
-  // .container.profile{
-
-  //   .row{
-  //     height: 100vh;
-  //     border: solid;
-  //     overflow-y: scroll;
-  //   }
-  // }
   .containers {
     // border: red solid;
     width: 100%;
@@ -144,7 +133,6 @@
       ul {
         list-style: none;
         padding: 0;
-        width: 200px;
       }
     }
     .contact-div {
@@ -288,12 +276,6 @@
       }
       .introduction {
         padding: 5px;
-      }
-      .more-info {
-        ul {
-          width: 100%;
-        }
-        flex-direction: column;
       }
       .contact-div {
         .contact-button {
