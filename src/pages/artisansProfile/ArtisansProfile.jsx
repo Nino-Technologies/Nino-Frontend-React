@@ -347,12 +347,12 @@ function ArtisansProfile() {
                     />
                   </div>
                   <h5>{artisan.fullName}</h5>
-                  <p className="mb-0">
+                  <p className="mb-0 w-75 mx-auto">
                     {" "}
                     <b>Service</b> <br />
                     {artisan.service}
                   </p>
-                  <StarComponent rate={2} />
+                  <StarComponent rate={5} />
                   <div className="extra-button">
                     <ShareButton id={`${artisan._id}`} />
                     <SaveButton artisan={artisan} />
@@ -371,74 +371,73 @@ function ArtisansProfile() {
                     </p>
                     <hr />
                   </div>
-                  <div className="more-info d-flex px-3">
-                    <div>
-                      <h5>
-                        <b> Overview</b>
-                      </h5>
-                      <ul>
-                        <li>
+                  <div className="more-info  px-3 ">
+                    <h5>
+                      <b> Overview</b>
+                    </h5>
+                    <ul className=" w-100">
+                      {/* remove hire count */}
+                      {/* <li>
                           <span className="icon mx-2">
                             <FaTrophy />
                           </span>
                           Hired {artisan.hired} times
-                        </li>
+                        </li> */}
 
-                        <li className="d-flex">
+                      <li className="d-flex">
+                        <span className="icon mx-2">
+                          <FaMapMarked />
+                        </span>
+
+                        <span>
+                          <p className="mb-0">
+                            <b>State:</b> {artisan.locationState}
+                          </p>
+                          <p className="mb-0">
+                            <b>City:</b> {artisan.locationCity}
+                          </p>
+                        </span>
+                      </li>
+                      {artisan.backgroundChecked ? (
+                        <li>
                           <span className="icon mx-2">
-                            <FaMapMarked />
+                            <FaUserCheck />
                           </span>
-
-                          <span>
-                            <p className="mb-0">
-                              <b>State</b> {artisan.locationState}
-                            </p>
-                            <p className="mb-0">
-                              <b>City:</b> {artisan.locationCity}
-                            </p>
-                          </span>
+                          Background checked
                         </li>
-                        {artisan.backgroundChecked ? (
-                          <li>
-                            <span className="icon mx-2">
-                              <FaUserCheck />
-                            </span>
-                            Background checked
-                          </li>
-                        ) : null}
-                        {artisan.discountsAvailable ? (
-                          <li>
-                            <span className="icon mx-2">
-                              <FaTrophy />
-                            </span>
-                            Verified business
-                          </li>
-                        ) : null}
-                        {artisan.licensed ? (
-                          <li>
-                            <span className="icon mx-2">
-                              <FaShieldAlt />
-                            </span>
-                            License verified
-                          </li>
-                        ) : null}
-                        {artisan.YearsOfExperience ? (
-                          <li>
-                            <span className="icon mx-2">
-                              <FaShieldAlt />
-                            </span>
-                            {artisan.YearsOfExperience} Years
-                          </li>
-                        ) : null}
+                      ) : null}
+                      {artisan.discountsAvailable ? (
+                        <li>
+                          <span className="icon mx-2">
+                            <FaTrophy />
+                          </span>
+                          Verified business
+                        </li>
+                      ) : null}
+                      {artisan.licensed ? (
+                        <li>
+                          <span className="icon mx-2">
+                            <FaShieldAlt />
+                          </span>
+                          License verified
+                        </li>
+                      ) : null}
+                      {artisan.YearsOfExperience ? (
+                        <li>
+                          <span className="icon mx-2">
+                            <FaShieldAlt />
+                          </span>
+                          {artisan.YearsOfExperience} Years
+                        </li>
+                      ) : null}
 
-                        {/* <li>
+                      {/* <li>
                       <span className="icon mx-2">
                         <font-awesome-icon icon="fas fa-clock" />{" "}
                       </span>
                       31 years in business
                     </li> */}
-                      </ul>
-                    </div>
+                    </ul>
                   </div>
                   <div className="contact-div">
                     <ChatPopUp artisan={artisan} />
