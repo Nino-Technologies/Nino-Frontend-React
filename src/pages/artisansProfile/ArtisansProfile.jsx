@@ -321,190 +321,159 @@ function ArtisansProfile() {
   return (
     <>
       <Nav />
+
       {pageLoading ? (
         <>
           <PageLoading loadingStateError={false}>Loading..</PageLoading>
         </>
       ) : (
-        <div className="ArtisansProfile">
-          {/* button to open model */}
-          <button
-            type="button"
-            className="button"
-            id="request_artisan_number_button"
-            // hide button; it will be clicked with js
-            style={{ display: "none" }}
-            data-bs-toggle="modal"
-            data-bs-target="#request_artisan_number"
-          ></button>
-          {/* model component;  */}
-          <ModalComponent
-            modalTitle={"Important Notification"}
-            modalId={"request_artisan_number"}
-          >
-            {artisan.phoneNumber !== "" ? (
-              <>
-                This Service Provider will be notified that their number is been
-                request
-                <h5 className="border my-2 ps-3 py-2">
-                  +{artisan.phoneNumber}
-                </h5>{" "}
-                <div className="btn-group" role="group">
-                  <a href={`tel:+${artisan.phoneNumber}`}>
+        <div className="ArtisansProfile h-100">
+          <div className="containers profile">
+            <div className="row">
+              <div className="col-md-4 p-0">
+                <div className="side-section">
+                  <div className="header">
+                    <BackButton />
+                  </div>
+                  <div className="profile-image-container">
+                    <img
+                      src={`${
+                        artisan.avatar === ""
+                          ? "https://via.placeholder.com/100x100"
+                          : artisan.avatar
+                      }`}
+                      alt="Profile picture"
+                      className="profile-image"
+                    />
+                  </div>
+                  <h5>{artisan.fullName}</h5>
+                  <p className="mb-0">
                     {" "}
-                    <button type="button" className="btn btn-primary">
-                      Call
-                    </button>
-                  </a>
-                  {/* <!-- Use %20 instead of spaces, + for country code --> */}
-                  <a
-                    href={`sms:+${artisan.phoneNumber}?body=Question%20from%20me`}
-                  >
-                    <button type="button" className="btn btn-primary">
-                      SMS
-                    </button>
-                  </a>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() => copyLinkFunction(`+${artisan.phoneNumber}`)}
-                  >
-                    Copy
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>to become a verified Service Provider</>
-            )}
-            <br />{" "}
-          </ModalComponent>
-          <div className="containers h-100">
-            <div className="main-area">
-              <BackButton />
-              <div className="top-section">
-                {/* <!--  --> */}
-                <div className="image-div">
-                  <img
-                    src={`${
-                      artisan.avatar === ""
-                        ? "https://via.placeholder.com/100x100"
-                        : artisan.avatar
-                    }`}
-                    alt="Profile picture"
-                  />
-                </div>
-                <div className="name-div">
-                  <h1 className="m-0">{artisan.fullName}</h1>
-                  <p className="m-0 nav flex-row">
-                    {/* <!-- Exceptional 5.0 --> */}
-
-                    <StarComponent rate="5" />
-                    {/* <!-- (22) --> */}
+                    <b>Service</b> <br />
+                    {artisan.service}
                   </p>
-                  <b>Service</b> <br />
-                  {artisan.service}
+                  <StarComponent rate={2} />
                   <div className="extra-button">
                     <ShareButton id={`${artisan._id}`} />
                     <SaveButton artisan={artisan} />
                   </div>
                 </div>
               </div>
-              <hr />
-              <div className="introduction">
-                <p>
-                  <b>Introduction</b>: {artisan.introduction}
-                </p>
-                <hr />
-              </div>
-              <div className="more-info d-flex px-3">
-                <div>
-                  <b> Overview</b>
-                  <ul>
-                    <li>
-                      <span className="icon mx-2">
-                        <FaTrophy />
-                      </span>
-                      Hired {artisan.hired} times
-                    </li>
 
-                    <li>
-                      <span className="icon mx-2">
-                        <FaMapMarked />
-                      </span>
-                      {artisan.locationCity},{artisan.locationState}
-                    </li>
-                    {artisan.backgroundChecked ? (
-                      <li>
-                        <span className="icon mx-2">
-                          <FaUserCheck />
-                        </span>
-                        Background checked
-                      </li>
-                    ) : null}
-                    {artisan.discountsAvailable ? (
-                      <li>
-                        <span className="icon mx-2">
-                          <FaTrophy />
-                        </span>
-                        Verified business
-                      </li>
-                    ) : null}
-                    {artisan.licensed ? (
-                      <li>
-                        <span className="icon mx-2">
-                          <FaShieldAlt />
-                        </span>
-                        License verified
-                      </li>
-                    ) : null}
-                    {artisan.YearsOfExperience ? (
-                      <li>
-                        <span className="icon mx-2">
-                          <FaShieldAlt />
-                        </span>
-                        {artisan.YearsOfExperience} Years
-                      </li>
-                    ) : null}
+              <div className="col-md-8">
+                <div className="main-area">
+                  <div className="introduction">
+                    <p>
+                      <h5>
+                        <b>Introduction</b>
+                      </h5>
+                      {artisan.introduction}
+                    </p>
+                    <hr />
+                  </div>
+                  <div className="more-info d-flex px-3">
+                    <div>
+                      <h5>
+                        <b> Overview</b>
+                      </h5>
+                      <ul>
+                        <li>
+                          <span className="icon mx-2">
+                            <FaTrophy />
+                          </span>
+                          Hired {artisan.hired} times
+                        </li>
 
-                    {/* <li>
+                        <li className="d-flex">
+                          <span className="icon mx-2">
+                            <FaMapMarked />
+                          </span>
+
+                          <span>
+                            <p className="mb-0">
+                              <b>State</b> {artisan.locationState}
+                            </p>
+                            <p className="mb-0">
+                              <b>City:</b> {artisan.locationCity}
+                            </p>
+                          </span>
+                        </li>
+                        {artisan.backgroundChecked ? (
+                          <li>
+                            <span className="icon mx-2">
+                              <FaUserCheck />
+                            </span>
+                            Background checked
+                          </li>
+                        ) : null}
+                        {artisan.discountsAvailable ? (
+                          <li>
+                            <span className="icon mx-2">
+                              <FaTrophy />
+                            </span>
+                            Verified business
+                          </li>
+                        ) : null}
+                        {artisan.licensed ? (
+                          <li>
+                            <span className="icon mx-2">
+                              <FaShieldAlt />
+                            </span>
+                            License verified
+                          </li>
+                        ) : null}
+                        {artisan.YearsOfExperience ? (
+                          <li>
+                            <span className="icon mx-2">
+                              <FaShieldAlt />
+                            </span>
+                            {artisan.YearsOfExperience} Years
+                          </li>
+                        ) : null}
+
+                        {/* <li>
                       <span className="icon mx-2">
                         <font-awesome-icon icon="fas fa-clock" />{" "}
                       </span>
                       31 years in business
                     </li> */}
-                  </ul>
-                </div>
-              </div>
-              <div className="contact-div">
-                <ChatPopUp artisan={artisan} />
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="contact-div">
+                    <ChatPopUp artisan={artisan} />
 
-                <button
-                  className="contact-button"
-                  onClick={() => {
-                    // handelHire();
-                    handelSendMessage({
-                      to: `${artisan.phoneNumber}`,
-                      message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
-                    });
-                  }}
-                >
-                  <FaRegHandshake className="mx-1" />
-                  Hire
-                </button>
-              </div>
-              <hr />
-              {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
-              <div className="featured-projects">
-                <h4>Featured Projects</h4>
-                {artisan.workImage.length} photos
-                <div className="image-flex">
-                  {artisan.workImage.map((work, i) => {
-                    const { image, about } = work;
-                    return <ModalImage imgUrl={image} about={about} key={i} />;
-                  })}
-                </div>
-              </div>
-              {/* <hr />
+                    <button
+                      className="contact-button"
+                      onClick={() => {
+                        // handelHire();
+                        handelSendMessage({
+                          to: `${artisan.phoneNumber}`,
+                          message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
+                        });
+                      }}
+                    >
+                      <FaRegHandshake className="mx-1" />
+                      Hire
+                    </button>
+                  </div>
+                  <hr />
+                  {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
+                  <div className="featured-projects">
+                    <h5>
+                      <b>Featured Projects</b>
+                    </h5>
+                    {artisan.workImage.length} photos
+                    <div className="image-flex">
+                      {artisan.workImage.map((work, i) => {
+                        const { image, about } = work;
+                        return (
+                          <ModalImage imgUrl={image} about={about} key={i} />
+                        );
+                      })}
+                    </div>
+                  </div>
+                  {/* <hr />
               <div className="reviews">
                 <h3>Reviews</h3>
                 Customers rated this pro highly for professionalism, work
@@ -517,109 +486,74 @@ function ArtisansProfile() {
                 Your trust means everything to us. Learn about our review
                 guidelines.
               </div> */}
-              <hr />
-              <div className="reviews-div">
-                <div className="reviews">
-                  {artisan.reviews.length === 0 ? (
-                    <h5 className="text-muted text-center">No Review</h5>
-                  ) : (
-                    <>
-                      {" "}
-                      {artisan.reviews.map((review, i) => (
-                        <div className="review" key={`artisanReview${i}`}>
-                          <div className="d-flex">
-                            <img src={review.avatar} width="60" height={"60"} />
-                            <div className="name-pix d-flex flex-column-reverse  w-100 flex-md-row my-2">
-                              <div className=" ">
-                                <h4 className="m-0">{review.fullName}</h4>
-                                <div className="star-div">
-                                  <StarComponent rate={review.rate} />
+                  <hr />
+                  <div className="reviews-div">
+                    <div className="reviews">
+                      {artisan.reviews.length === 0 ? (
+                        <h5 className="text-muted text-center">No Review</h5>
+                      ) : (
+                        <>
+                          {" "}
+                          {artisan.reviews.map((review, i) => (
+                            <div className="review" key={`artisanReview${i}`}>
+                              <div className="d-flex">
+                                <img
+                                  src={review.avatar}
+                                  width="60"
+                                  height={"60"}
+                                />
+                                <div className="name-pix d-flex flex-column-reverse  w-100 flex-md-row my-2">
+                                  <div className=" ">
+                                    <h4 className="m-0">{review.fullName}</h4>
+                                    <div className="star-div">
+                                      <StarComponent rate={review.rate} />
+                                    </div>
+                                  </div>
+                                  <sup className="ms-md-auto ms-0 me-md-0 me-auto">
+                                    {decodeDate(review.date)[0]}
+                                  </sup>
                                 </div>
                               </div>
-                              <sup className="ms-md-auto ms-0 me-md-0 me-auto">
-                                {decodeDate(review.date)[0]}
-                              </sup>
+                              <div className="distribution">
+                                {review.review}
+                              </div>
                             </div>
-                          </div>
-                          <div className="distribution">{review.review}</div>
-                        </div>
-                      ))}
-                    </>
-                  )}
-                </div>
-                <div className="form-div">
-                  {/* <hr /> */}
-                  <div className="d-flex flex-column flex-md-row">
-                    <textarea
-                      className="form-control"
-                      placeholder="Write a review on this artisan"
-                      cols="5"
-                      rows="3"
-                      value={artisanReviewInput}
-                      onChange={(e) => {
-                        setArtisanReviewInput(e.target.value);
-                      }}
-                    ></textarea>
+                          ))}
+                        </>
+                      )}
+                    </div>
+                    <div className="form-div">
+                      {/* <hr /> */}
+                      <div className="d-flex flex-column flex-md-row">
+                        <textarea
+                          className="form-control"
+                          placeholder="Write a review on this artisan"
+                          cols="5"
+                          rows="3"
+                          value={artisanReviewInput}
+                          onChange={(e) => {
+                            setArtisanReviewInput(e.target.value);
+                          }}
+                        ></textarea>
 
-                    <button
-                      className="btn-primary btn h-25 mx-1 mt-auto"
-                      onClick={() => {
-                        giveArtisanReview();
-                      }}
-                    >
-                      Review
-                    </button>
+                        <button
+                          className="btn-primary btn h-25 mx-1 mt-auto"
+                          onClick={() => {
+                            giveArtisanReview();
+                          }}
+                        >
+                          Review
+                        </button>
+                      </div>
+                      <ReviewStarComponent
+                        rate={artisanRateInput}
+                        setRate={setArtisanRateInput}
+                      />
+                    </div>
                   </div>
-                  <ReviewStarComponent
-                    rate={artisanRateInput}
-                    setRate={setArtisanRateInput}
-                  />
                 </div>
               </div>
-              {/*  <hr />
-               <div className="specialties">
-                <h4>Specialties</h4>
-                <b>Fixture type</b> <br />
-                <ul className="nav my-auto">
-                  <font-awesome-icon icon="fas fa-check" className="my-auto" />
-                </ul>
-              </div> */}
-              <hr />
             </div>
-            {/* main area */}
-
-            {/* <div className="card-area">
-              <div className="form-card">
-                <form action="">
-                  <font-awesome-icon icon="fas fa-comment" /> contact for price
-                  <hr />
-                  <label className="w-100 text-start">
-                    <b> Zip-Code</b>
-                    <input type="text" className="form-control" />
-                  </label>
-                  <label className="w-100 text-start">
-                    <b> Areas needing help</b>
-                    <select type="text" className="form-select">
-                      <option value="">select an answer</option>
-                    </select>
-                  </label>
-                  <label className="w-100 text-start">
-                    <b> Property type</b>
-                    <select type="text" className="form-select">
-                      <option value="">select an answer</option>
-                    </select>
-                  </label>
-                  <button className="btn btn-primary w-100 mt-4">
-                    Request a Quote
-                  </button>
-                  <p className="mt-3">
-                    <font-awesome-icon icon="fas fa-comments" />
-                    Responds within
-                    <span className="bold">a day</span>
-                  </p>
-                </form>
-              </div>
-            </div> */}
           </div>
           <Footer />
         </div>
