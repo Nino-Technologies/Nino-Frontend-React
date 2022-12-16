@@ -1,136 +1,164 @@
 .ArtisansProfile {
-  margin-top: 70px;
+  margin-top: 100px;
+  // padding-top: 50px;
   text-align: start;
   .containers {
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: space-between;
-    .main-area {
-      width: 100%;
-
-      .profile-nav {
-        list-style: none;
-        display: flex;
-        border-bottom: solid 1px #ddd;
-        li {
-          padding: 10px 5px;
-          cursor: pointer;
-        }
-        :hover {
-          border-bottom: solid 2px #333;
-        }
+    // border: red solid;
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    .row{
+      --bs-gutter-x: 0;
+      .col-md-8{
+        padding: 0;
       }
-      .top-section {
-        display: flex;
-        .image-div {
-          width: 200px;
-          padding: 0;
-          margin-left: 25px;
-          overflow: hidden;
-          height: 300px;
-            img{
-      width: 100%;
-      height: 250px;
+    }
+  }
+  .side-section {
+    position: sticky;
+    top: 80px;
+    border: solid #ccc 1px;
+    width: 100%;
+    border-width: 1px;
+    border-radius: 10px;
+    text-align: center;
+    padding-bottom: 25px;
+    max-width: 350px;
+    margin: 0 auto;
+    .header {
+      border-radius: 10px 10px 0 0;
+      // border: solid #ccc  1px ;
+      border-bottom: none;
+      background-color: var(--color-primary);
+      height: 120px;
+    }
+    .BackButton {
+      button {
+        color: #fff;
+      }
+      margin-right: auto;
+      // border: solid 1px #fff;
+      width: 100px;
+    }
+    .profile-image-container {
+      // border: solid;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      margin-top: -70px;
+      overflow: hidden;
+      img {
+        width: 200px;
+        // height: 100%;
+          height: 200px;
       object-fit: cover;
       object-position: center;
+      }
     }
-        }
-        .name-div {
-          padding: 10px;
+    .extra-button {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+  .main-area {
+    width: 100%;
+    padding:0 10px;
+    margin-bottom: 20px;
+    max-width: none;
+    overflow-x: hidden;
+
+    .profile-nav {
+      list-style: none;
+      display: flex;
+      border-bottom: solid 1px #ddd;
+      li {
+        padding: 10px 5px;
+        cursor: pointer;
+      }
+      :hover {
+        border-bottom: solid 2px #333;
+      }
+    }
+    .top-section {
+      display: flex;
+      .image-div {
+        width: 200px;
+        padding: 0;
+        margin-left: 25px;
+        overflow: hidden;
+        height: 300px;
+        img {
           width: 100%;
-          max-width: 400px;
-        }
-        h1 {
-          font-size: 30px;
-        }
-        span {
-          border: solid 1px;
-          margin: 0 10px;
-          padding: 0;
-          border-radius: 30px;
-          display: inline-flex;
-          justify-content: center;
-          align-items: center;
-          height: 20px;
-          font-size: 12px;
-          // width: 140px;
-        }
-
-        position: relative;
-        .extra-button {
-          display: flex;
-          position: absolute;
-          top: 0;
-          right: 0px;
+          height: 250px;
+          object-fit: cover;
+          object-position: center;
         }
       }
-      padding: 30px;
-      .introduction {
-        text-align: start;
-        line-height: 30px;
-        padding: 25px;
+      .name-div {
+        padding: 10px;
+        width: 100%;
+        max-width: 400px;
+      }
+      h1 {
+        font-size: 30px;
+      }
+      span {
+        border: solid 1px;
+        margin: 0 10px;
+        padding: 0;
+        border-radius: 30px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        font-size: 12px;
+        // width: 140px;
       }
 
-      .more-info {
-        ul {
-          list-style: none;
-          padding: 0;
-          width: 200px;
-        }
-      }
-      .contact-div {
+      position: relative;
+      .extra-button {
         display: flex;
-        justify-content: space-evenly;
-        .contact-button {
-          border: solid 1px var(--color-primary);
-          width: 300px;
-          background-color: transparent;
-          height: 40px;
-        }
-        .ChatPopUpButton {
-          width: 300px;
-          background-color: var(--color-primary);
-          min-width: 100%;
-        }
-      }
-      .featured-projects {
-        overflow-x: hidden;
-        .image-flex {
-          display: flex;
-          overflow-x: scroll;
-          img {
-            max-width: 700px;
-            // margin: 5px;
-          }
-        }
+        position: absolute;
+        top: 0;
+        right: 0px;
       }
     }
+    padding: 0;
+    .introduction {
+      text-align: start;
+      line-height: 30px;
+      padding: 25px;
+    }
 
-    .card-area {
-      width: 30%;
-      position: relative;
-      .form-card {
-        position: sticky;
-        top: 95px;
-        border: solid 1px #ddd;
-        border-radius: 10px;
-        padding: 20px;
-        width: 100%;
-        max-width: 300px;
-        margin: auto;
-        box-shadow: 1px 1px 4px #00000036;
-        input:focus,
-        select:focus {
-          box-shadow: none;
-        }
-        form {
-          label {
-            b {
-              padding: 5px 0;
-              font-weight: 500;
-            }
-            margin: 5px 0;
-          }
+    .more-info {
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+    }
+    .contact-div {
+      display: flex;
+      justify-content: space-evenly;
+      .contact-button {
+        border: solid 1px var(--color-primary);
+        width: 300px;
+        background-color: transparent;
+        height: 40px;
+      }
+      .ChatPopUpButton {
+        width: 300px;
+        background-color: var(--color-primary);
+        min-width: 100%;
+      }
+    }
+    .featured-projects {
+      overflow-x: hidden;
+      .image-flex {
+        display: flex;
+        overflow-x: scroll;
+        img {
+          max-width: 700px;
+          // margin: 5px;
         }
       }
     }
@@ -163,10 +191,10 @@
       position: absolute;
       top: 0;
       left: 0;
-      transform: translateY(-10px) translateX(-5px);
+      transform: translateY(2px) translateX(0px);
       z-index: -9;
-      font: 3em Arial, Helvetica, sans-serif;
-      color: #ebebeb8e;
+      font: 25px Arial, Helvetica, sans-serif;
+      color: #000c138e;
       pointer-events: none;
     }
 
@@ -195,83 +223,77 @@
 
   @media only screen and (max-width: 768px) {
     overflow: hidden;
-    .containers {
-      .main-area {
-        width: 100%;
-        .introduction {
-          padding: 18px;
-        }
+    .side-section {
+      // border: solid green;
+      width: 100%;
+      max-width: none;
+    }
+    .main-area {
+      // ....
+      // width: 100%;
+      .introduction {
+        padding: 18px;
       }
-      .card-area {
-        display: none;
-      }
+    }
+    .card-area {
+      display: none;
     }
   }
   @media only screen and (max-width: 425px) {
     overflow: hidden;
-    .containers {
-      .main-area {
-        padding: 10px;
-        .profile-nav {
-          padding: 0;
-          li {
-            padding: 0 2px;
-          }
-        }
-        .top-section {
-          flex-direction: column;
-          text-align: center;
-          .name-div {
-            .service-ul {
-              justify-content: center;
-            }
-          }
-          .image-div {
-            width: 100%;
-            max-width: 300px;
-            // remove this height
-            height: unset;
-            margin: auto;
-            img {
-              width: 100%;
-            }
-          }
-          button {
-            margin: 10px auto;
-          }
-          .extra-button {
-            position: static;
-            justify-content: space-evenly;
-          }
-        }
-        .introduction {
-          padding: 5px;
-        }
-        .more-info {
-          ul {
-            width: 100%;
-          }
-          flex-direction: column;
-        }
-        .contact-div {
-          .contact-button {
-            width: 200px;
-          }
+    .main-area {
+      padding: 10px;
+      .profile-nav {
+        padding: 0;
+        li {
+          padding: 0 2px;
         }
       }
-      .card-area {
-        display: none;
+      .top-section {
+        flex-direction: column;
+        text-align: center;
+        .name-div {
+          .service-ul {
+            justify-content: center;
+          }
+        }
+        .image-div {
+          width: 100%;
+          // max-width: 300px;
+          // remove this height
+          height: unset;
+          margin: auto;
+          img {
+            width: 100%;
+          }
+        }
+        button {
+          margin: 10px auto;
+        }
+        .extra-button {
+          position: static;
+          justify-content: space-evenly;
+        }
       }
+      .introduction {
+        padding: 5px;
+      }
+      .contact-div {
+        .contact-button {
+          width: 200px;
+        }
+      }
+    }
+    .card-area {
+      display: none;
     }
   }
   @media only screen and (max-width: 320px) {
     overflow: hidden;
-    .containers {
-      .main-area {
-        .contact-div {
-          .contact-button {
-            width: 150px;
-          }
+    .main-area {
+      .contact-div {
+        .contact-button {
+          width: 150px;
         }
       }
     }

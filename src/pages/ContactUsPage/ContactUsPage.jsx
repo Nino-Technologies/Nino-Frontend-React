@@ -14,29 +14,6 @@ import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
 
 function ContactUsPage() {
-  const form = useRef();
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs
-      .sendForm(
-        "service_4xoj8n8", // "YOUR_SERVICE_ID",
-        "template_do8d6pa", // "YOUR_TEMPLATE_ID",
-        form.current,
-        "HWU7Rd-qnGwJVtzBN" // "YOUR_PUBLIC_KEY"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          toast.success("mail sent !!!");
-        },
-        (error) => {
-          toast.error("error sending message");
-          console.log(error.text);
-        }
-      );
-  };
   return (
     <div className="contact">
       <Nav />
@@ -50,62 +27,7 @@ function ContactUsPage() {
           <div className="contact-box shadow-lg">
             <div className="row">
               <div className="col-lg-7 px-5 py-5 bg-light">
-                <form className="form-layout" ref={form} onSubmit={sendEmail}>
-                  <h3 className="login-name">Send us a Message</h3>
-                  <div className="row mb-3">
-                    <div className="col-md-6 mb-3">
-                      <label htmlFor="name" className="form-label">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="name"
-                        name="sender_name"
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="email" className="form-label">
-                        Email address
-                      </label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        aria-describedby="emailHelp"
-                        name="sender_email"
-                      />
-                    </div>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="number" className="form-label">
-                      Number
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="number"
-                      placeholder="Optional"
-                      name="sender_number"
-                    />
-                  </div>
-
-                  <div className="mb-3">
-                    <label htmlFor="message" className="form-label">
-                      Leave a Message
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id="message"
-                      rows="3"
-                      name="sender_message"
-                    ></textarea>
-                  </div>
-
-                  <button type="submit" className="btn btn-primary mt-3">
-                    Submit
-                  </button>
-                </form>
+                <ContactUsForm />
               </div>
 
               <div
@@ -172,3 +94,88 @@ function ContactUsPage() {
 }
 
 export default ContactUsPage;
+
+export function ContactUsForm() {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_4xoj8n8", // "YOUR_SERVICE_ID",
+        "template_do8d6pa", // "YOUR_TEMPLATE_ID",
+        form.current,
+        "HWU7Rd-qnGwJVtzBN" // "YOUR_PUBLIC_KEY"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          toast.success("mail sent !!!");
+        },
+        (error) => {
+          toast.error("error sending message");
+          console.log(error.text);
+        }
+      );
+  };
+  return (
+    <form className="form-layout" ref={form} onSubmit={sendEmail}>
+      <h5 className="login-name">Send us a Message</h5>
+      <div className="line"></div>
+      <div className="row mb-3">
+        <div className="col-md-6 mb-3">
+          <label htmlFor="name" className="form-label">
+            Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            name="sender_name"
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="email" className="form-label">
+            Email address
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            aria-describedby="emailHelp"
+            name="sender_email"
+          />
+        </div>
+      </div>
+      <div className="mb-3">
+        <label htmlFor="number" className="form-label">
+          Number
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="number"
+          placeholder="Optional"
+          name="sender_number"
+        />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="message" className="form-label">
+          Leave a Message
+        </label>
+        <textarea
+          className="form-control"
+          id="message"
+          rows="3"
+          name="sender_message"
+        ></textarea>
+      </div>
+
+      <button type="submit" className="btn btn-primary mt-3">
+        Submit
+      </button>
+    </form>
+  );
+}

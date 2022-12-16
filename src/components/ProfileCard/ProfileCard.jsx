@@ -12,13 +12,14 @@ function ProfileCard({ artisan }) {
     fullName,
     introduction,
     service,
-    hired,
+    // hired,
     locationCity,
     locationState,
     _id,
     avatar,
-    gender,
+    // gender,
     backgroundChecked,
+    YearsOfExperience,
   } = artisan;
   // console.log(artisan);
   return (
@@ -54,7 +55,7 @@ function ProfileCard({ artisan }) {
                 <span className="icon mx-2">
                   <FaTrophy />
                 </span>
-                Hired {hired} times
+                Has {YearsOfExperience} years of experience
               </li>
 
               <li>
