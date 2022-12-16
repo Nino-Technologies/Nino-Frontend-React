@@ -376,13 +376,12 @@ function ArtisansProfile() {
                       <b> Overview</b>
                     </h5>
                     <ul className=" w-100">
-                      {/* remove hire count */}
-                      {/* <li>
-                          <span className="icon mx-2">
-                            <FaTrophy />
-                          </span>
-                          Hired {artisan.hired} times
-                        </li> */}
+                      <li>
+                        <span className="icon mx-2">
+                          <FaTrophy />
+                        </span>
+                        Hired {artisan.hired} times
+                      </li>
 
                       <li className="d-flex">
                         <span className="icon mx-2">
