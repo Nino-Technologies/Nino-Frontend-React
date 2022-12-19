@@ -1,163 +1,55 @@
-nav {
-  position: fixed !important  ;
-  top: 0;
-  z-index: 20;
-  width: 100%;
+.Nav {
   // border: solid;
-
-  .logo-image {
-    width: 150px;
-  }
-
-  nav,
-  .nav-item,
-  .icon,
-  .navbar-brand {
-    /* color: #003049; */
-    color: var(--color-primary) !important;
-  }
-  /* nav {
-  color: #003049;
-} */
-  .navbar-brand {
-    font-size: 1.9em;
-    /* color: #003049; */
-  }
-  button.navbar-toggler:focus {
-    box-shadow: none;
-  }
-
-  .nav-link {
-    font-size: 1.0em;
-  }
-
-  .nav-item {
-    color: #003049;
-    cursor: pointer;
-    font-size: 1.3em;
-    position: relative;
-    font-weight: 500;
-  }
-
-  .icon {
-    font-size: 18px;
-    cursor: pointer;
-    /* color: #003049; */
-  }
-
-  .effect::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background-color: var(--color-secondary);
-    bottom: 0;
-    left: 0;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .effect:hover::before {
-    transform-origin: left;
-    transform: scaleX(1);
-  }
-  .btn-outline-success {
-    border: none;
-    outline: none;
-    color: var(--color-secondary);
-    border: 1px solid var(--color-secondary);
-  }
-  .btn-outline-success:hover {
-    border: none;
-    color: #ffffff;
-    background-color: var(--color-secondary);
-  }
-  .btn-outline-success:focus {
-    outline: none;
-    box-shadow: none;
-  }
-  .signin {
-    color: #ffffff;
-    background-color: var(--color-secondary);
-  }
-  .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active,
-  .btn:focus-visible {
-       color: #ffffff;
-    background-color: var(--color-secondary);
-    border-color:var(--color-secondary);
-    // outline: 0;
-    // box-shadow: var(--bs-btn-focus-box-shadow);
-}
-}
-
-/* ###### NavMenuComponent ###### */
-.NavMenuComponent {
-  position: relative;
+  height: 70px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  position: fixed;
+  background-color: #fff;
+  top: 0;
   width: 100%;
-  max-width: 200px;
+  z-index: 5;
+  .logo {
+    // height: 70px;
+    width: 150px;
+    // margin-left: 20px;
+  }
+  .link-container {
+    align-items: center;
+    gap: 15px;
+    // border: solid;
+    height: 100%;
+    a {
+      // border: solid;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      text-decoration: none !important;
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -1px;
+      white-space: nowrap;
+      padding: 0 5px;
+      color: var(--color-primary);
+    }
+    a.active {
+      font-weight: 500;
+      color: var(--color-secondary);
+      border-bottom: 5px solid var(--color-secondary);
+    }
+    a:hover {
+      border-bottom: 5px solid var(--color-primary);
+    }
 
-  .dropdown-menu-ul {
-    top: 60px;
-    position: absolute;
-    right: 0;
-    left: 0;
-    z-index: 1000;
-    display: none;
-    min-width: 10rem;
-    padding: 5px 10px;
-    margin: 0;
-    font-size: 1rem;
-    color: #212529;
-    list-style: none;
-    background-color: rgb(255, 255, 255);
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0 0 0 5px;
   }
-  .dropdown-menu-ul a {
-    text-decoration: none;
-    font-weight: 500;
-    color: var(--color-primary);
-  }
-  .logout {
-    cursor: pointer;
-  }
+  .MuiPaper-root{
+    .MuiList-root{
 
-  @media screen and (max-width: 324px) {
-    .button {
-      font-size: 0.8rem;
+      a{
+        border: solid !important;
+      }
     }
   }
-  @media screen and (max-width: 991px) {
-    max-width: none;
-    .dropdown-menu-ul {
-      left: 0px;
-      background-color: rgb(255, 255, 255);
-      top: 50px;
-    }
-  }
-}
-
-/* ###### NavProfilePicture ###### */
-
-.NavProfilePicture,
-.ProfilePicture {
-  border: solid 2px;
-  display: inline-flex;
-  padding: 0px;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-  color: #ddd;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  margin: auto 3px;
-  margin-left: auto;
-}
-.ProfilePicture {
-  width: 40px;
-  height: 40px;
 }
