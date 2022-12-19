@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
-import heroImage from "../../assets/images/undraw_coffee_break_h3uu.svg";
-import smallHeroImage from "../../assets/images/hero-section-image-design-small.png";
+// import heroImage from "../../assets/images/undraw_coffee_break_h3uu.svg";
+// import smallHeroImage from "../../assets/images/hero-section-image-design-small.png";
 import "./LandingPage.scss";
 import Search from "../../components/Search/Search";
 import Nav from "../../components/Nav/Nav";
@@ -18,7 +18,7 @@ function LandingPage() {
   return (
     <>
       <Nav />
-      <div className="container">
+      <div className="con tainer">
         <div className="hero-section">
           <div className="text-div">
             <div className="mobile-background"></div>
@@ -31,13 +31,17 @@ function LandingPage() {
                 Become a service provider
               </Link>
             )}
-            <img src={smallHeroImage} alt="" className="smallHeroImage" />
+            {/* <img src={smallHeroImage} alt="" className="smallHeroImage" /> */}
           </div>
           <div className="image-div">
             <div className="image-container">
-              <img src={heroImage} alt="working-man" className="working-man" />
+              {/* <img src={heroImage} alt="working-man" className="working-man" /> */}
             </div>
           </div>
+        </div>
+
+        <div className="h-100 w-100" style={{ minHeight: "1000px" }}>
+          hi
         </div>
       </div>
     </>

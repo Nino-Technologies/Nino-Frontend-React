@@ -1,15 +1,19 @@
 .hero-section {
   height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   width: 100%;
   // min-height: 700px;
   // max-height: 560px;
   overflow: hidden;
-  .image-div,
+  background-image: url('../../assets/gif/hero-animation.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  // .image-div,
   .text-div {
-    width: 50%;
+    width: 70%;
+    max-width: 500px;
     height: 100%;
   }
   .row {
@@ -29,7 +33,9 @@
     .hero-name,
     .sub {
       text-align: left;
-      color: var(--color-primary);
+      // color: var(--color-primary);
+      // color:var(--color-secondary)
+      color:#fff
     }
     .hero-name {
       font-size: 2em;
@@ -70,6 +76,11 @@
 
   .search-form {
     padding: 0;
+    // border: solid;
+    button{
+      background-color: var(--color-secondary);
+      text-align: center;
+    }
   }
 
   @media (max-width: 1440px) {
@@ -99,7 +110,7 @@
       .hero-name {
         font-size: 1.5em;
         text-align: left;
-        color: #003049;
+        // color: #003049;
         padding-top: 90px;
         font-weight: 700;
       }
@@ -128,23 +139,26 @@
       }
       width: 100%;
       position: relative;
-      .mobile-background {
-        transform: rotate(180deg);
-        top: -10px;
-        right: 0;
-        width: 175px;
-        height: 183px;
-        background-size: 100%;
-        position: absolute;
-        background-repeat: no-repeat;
-        background-image: url("../../assets/images/hero-section-image-design-small.png");
-      }
-      .smallHeroImage {
-        display: block;
-      }
+      // .mobile-background {
+      //   transform: rotate(180deg);
+      //   top: -10px;
+      //   right: 0;
+      //   width: 175px;
+      //   height: 183px;
+      //   background-size: 100%;
+      //   position: absolute;
+      //   background-repeat: no-repeat;
+      //   background-image: url("../../assets/images/hero-section-image-design-small.png");
+      // }
+      // .smallHeroImage {
+      //   display: block;
+      // }
     }
   }
   @media (max-width: 425px) {
+      background-image: url('../../assets/images/13127-removebg-preview.png');
+      background-color: var(--color-primary);
+      background-repeat: no-repeat;
     .text-div {
       padding: 20px;
       .hero-name {
@@ -166,3 +180,15 @@
   @media (max-width: 320px) {
   }
 }
+
+// .hero-section::after {
+//   content: "";
+//   background: url("../../assets/images/13127-removebg-preview.png");
+//   opacity: 0.5;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   right: 0;
+//   position: absolute;
+//   z-index: 10;   
+// }
