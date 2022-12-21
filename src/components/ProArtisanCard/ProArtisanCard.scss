@@ -6,9 +6,9 @@
 // :root {
   /*========== Colors ==========*/
   /*Color mode HSL(hue, saturation, lightness)*/
-  --first-color: hsl(29, 80%, 58%);
+  // --color-secondary: hsl(29, 80%, 58%);
   --first-color-light: hsl(29, 80%, 70%);
-  --black-color: hsl(29, 16%, 10%);
+  // --color-primary: hsl(29, 16%, 10%);
   --text-color: hsl(29, 8%, 65%);
   --body-color: hsl(29, 100%, 99%);
 
@@ -27,8 +27,8 @@
 }
 
 // body {
-  font-family: var(--body-font);
-  background-color: var(--text-color);
+  // font-family: var(--body-font);
+  // background-color: var(--text-color);
 // }
 
 a {
@@ -45,17 +45,17 @@ img {
 }
 
 /*=============== CARD ===============*/
-.container {
-  height: 100vh;
-  margin-inline: 1.5rem;
-  display: grid;
-  place-items: center;
-}
+// .container {
+//   height: 100vh;
+//   margin-inline: 1.5rem;
+//   // display: grid;
+//   // place-items: center;
+// }
 
 .card {
   position: relative;
   width: 256px;
-  background-color: var(--black-color);
+  background-color: var(--color-primary);
   padding: 1.25rem 2rem 3rem;
   border-radius: 1.5rem;
   text-align: center;
@@ -64,13 +64,15 @@ img {
 
 .card__img {
   width: 96px;
+  height: 96px;
+  object-fit: cover;
   border-radius: 50%;
 }
 
 .card__border {
   width: 110px;
   height: 110px;
-  border: 2px solid var(--first-color);
+  border: 2px solid var(--color-secondary);
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -78,7 +80,7 @@ img {
 }
 
 .card__name {
-  color: var(--first-color);
+  color: var(--color-secondary);
   font-size: var(--h3-font-size);
   font-weight: 500;
 }
@@ -91,7 +93,7 @@ img {
 
 .card__social {
   width: 200px;
-  background-color: var(--first-color);
+  background-color: var(--color-secondary);
   padding: 0.75rem;
   border-radius: 3rem;
   text-align: initial;
@@ -114,8 +116,8 @@ img {
 
 .card__social-toggle {
   display: inline-flex;
-  background-color: var(--black-color);
-  color: var(--first-color);
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
   font-size: 1.25rem;
   padding: 0.5rem;
   border-radius: 50%;
@@ -126,7 +128,7 @@ img {
 
 .card__social-text {
   display: block;
-  color: var(--black-color);
+  color: var(--color-primary);
   font-size: var(--smaller-font-size);
   font-weight: 500;
 }
@@ -140,8 +142,8 @@ img {
 
 .card__social-link {
   display: inline-flex;
-  background-color: var(--first-color-light);
-  color: var(--black-color);
+  background-color: var(--color-secondary-light);
+  color: var(--color-primary);
   font-size: 1.25rem;
   padding: 6px;
   border-radius: 50%;

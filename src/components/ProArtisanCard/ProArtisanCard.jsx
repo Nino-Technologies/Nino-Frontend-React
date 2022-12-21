@@ -6,7 +6,7 @@ import { Facebook } from "@material-ui/icons";
 import { BsPlus } from "react-icons/bs";
 import { useState } from "react";
 
-function ProArtisanCard() {
+function ProArtisanCard({ profile }) {
   // /*=============== SHOW SOCIAL NETWORKS ===============*/
   // const showSocial = () => {
   //   const toggle = document.getElementById("card-toggle"),
@@ -34,7 +34,9 @@ function ProArtisanCard() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setAnimate(false);
+      if (animate) {
+        setAnimate(false);
+      }
     }, 2000);
 
     return () => {
@@ -48,15 +50,11 @@ function ProArtisanCard() {
       <div className="container">
         <div className="card">
           <div className="card__border">
-            <img
-              src="https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt="card image"
-              className="card__img"
-            />
+            <img src={profile.avatar} alt="card image" className="card__img" />
           </div>
 
-          <h3 className="card__name">Mia Miranda</h3>
-          <span className="card__profession">Interpreter</span>
+          <h3 className="card__name">{profile.fullName}</h3>
+          <span className="card__profession">{profile.service}</span>
 
           <div
             // className="card__social"
