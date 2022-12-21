@@ -10,6 +10,7 @@ import ProArtisanCard from "../../components/ProArtisanCard/ProArtisanCard";
 import CardCarousel from "../../components/CardCarousel/CardCarousel";
 import { SearchContext } from "./../../context/SearchContext";
 import { QuickRequestComponent } from "./../../components/Search/Search";
+import Footer from "../../components/Footer/Footer";
 
 function LandingPage() {
   const { loggedIn } = useContext(UserContext);
@@ -256,6 +257,8 @@ function LandingPage() {
             </div>
           </div>
         </div>
+
+        <Footer />
       </div>
     </>
   );
