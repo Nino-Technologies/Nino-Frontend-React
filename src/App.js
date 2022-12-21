@@ -23,7 +23,6 @@ import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
-import ReactGa from "react-ga";
 import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./context/UserContext";
@@ -34,17 +33,15 @@ import { TestProvider } from "./context/ContextTest";
 import { SaveArtisanProvider } from "./context/saveUserContext";
 import { TermiiSMSProvider } from "./context/TermiiContext";
 
-const TRACKING_ID = "G-C3G25DKRJC";
-ReactGa.initialize(TRACKING_ID);
 
 function App() {
   const { getUserProfile, loggedIn } = useContext(UserContext);
 
-  useEffect(() => {
-    if (loggedIn) {
-      getUserProfile();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     getUserProfile();
+  //   }
+  // }, []);
   // check network
   // const [networkConnected, setNetworkConnected] = useState(true);
 
@@ -80,10 +77,10 @@ function App() {
         <PaymentModalComponent />
       </TermiiSMSProvider>
       <Routes>
-        <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/about-us" element={<AboutUsPage />} />
+        <Route exact path="/home" element={<LandingPage />} />
+        <Route path="/about-us" element={<AboutUsPage />} />
         <Route
-          exact
+
           path="/artisans"
           element={
             <SaveArtisanProvider>
@@ -92,7 +89,7 @@ function App() {
           }
         />
         <Route
-          exact
+
           path="/artisans-profile/:id"
           element={
             <SaveArtisanProvider>
@@ -102,9 +99,9 @@ function App() {
             </SaveArtisanProvider>
           }
         />
-        <Route exact path="/contact-us" element={<ContactUsPage />} />
-        <Route exact path="/login" element={<LoginPage />} />
-        <Route exact path="/register" element={<RegisterPage />} />
+        <Route path="/contact-us" element={<ContactUsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/password-reset" element={<PasswordResetPage />} />
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/image-cropper" element={<ImageCropperWithStyle />} />
@@ -135,6 +132,12 @@ function App() {
           <Route path="create-admin" element={<CreateAdminPage />} />
           <Route path="payments" element={<PaymentPage />} />
         </Route>
+
+        <Route
+          exact
+          path="/"
+          element={<Navigate to="/home" replace />} //this is a way to redirect
+        />
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
