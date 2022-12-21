@@ -468,3 +468,100 @@ export function StateSearchInput({
     </div>
   );
 }
+
+export function QuickRequestComponent() {
+  return (
+    <div className="search-form">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          // filterDataFunction({
+          //   service: formService,
+          //   city: formLocationCity,
+          //   state: formLocationState,
+          // });
+        }}
+      >
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Service"
+          // value={`${formLocationState}`}
+          // onFocus={() => onFocus()}
+          // onBlur={() => onBlur()}
+          // onChange={(e) => {
+          //   if (formService === "") {
+          //     return toast.info("fill service first");
+          //   }
+          //   setFormLocationState(e.target.value);
+          //   // filterDataFunction(e.target.value);
+          // }}
+        />
+        <label>
+          <b>
+            Location <br />{" "}
+          </b>
+          <div className="d-flex w-100">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="State"
+              // value={`${formLocationState}`}
+              // // onFocus={() => onFocus()}
+              // // onBlur={() => onBlur()}
+              // onChange={(e) => {
+              //   if (formService === "") {
+              //     return toast.info("fill service first");
+              //   }
+              //   setFormLocationState(e.target.value);
+              //   // filterDataFunction(e.target.value);
+              // }}
+            />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="City"
+              // value={`${formLocationState}`}
+              // // onFocus={() => onFocus()}
+              // // onBlur={() => onBlur()}
+              // onChange={(e) => {
+              //   if (formService === "") {
+              //     return toast.info("fill service first");
+              //   }
+              //   setFormLocationState(e.target.value);
+              //   // filterDataFunction(e.target.value);
+              // }}
+            />
+          </div>
+        </label>
+        <div className="d-flex">
+          <button className="d-flex" type="submit">
+            {/* {!pageLoading ? ( */}
+            <div className="my-auto">
+              <FaSearch className="me-1" />
+              search
+            </div>
+            {/* ) : (
+              <div className="my-auto">
+                <FaHistory className="me-1" />
+                Loading ...
+              </div>
+            )} */}
+          </button>
+          {/* {formService !== "" ||
+          formLocationState !== "" ||
+          formLocationCity !== "" ? ( */}
+          {/* <button
+            type="button"
+            className="d-inline-flex "
+            // onClick={() => clearSearch()}
+          >
+            <FaRegWindowClose className="m-auto fs-4" />
+            <div className="d-none d-md-inline m-auto">Clear</div>
+          </button> */}
+          {/* ) : null} */}
+        </div>
+      </form>
+    </div>
+  );
+}
