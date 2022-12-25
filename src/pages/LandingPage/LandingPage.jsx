@@ -11,6 +11,12 @@ import CardCarousel from "../../components/CardCarousel/CardCarousel";
 import { SearchContext } from "./../../context/SearchContext";
 import { QuickRequestComponent } from "./../../components/Search/Search";
 import Footer from "../../components/Footer/Footer";
+import img1 from "../../assets/images/woolly-computer-with-the-checkmark-confirming-the-user-is-logged-into-account.png";
+import img2 from "../../assets/images/clip-car-service-support.png";
+import img3 from "../../assets/images/quirky-twenty-four-hours-service-1.png";
+import img4 from "../../assets/images/bonbon-five-stars-quality-rating.png";
+import img5 from "../../assets/images/pocus-service.png";
+import img6 from "../../assets/images/juicy-woman-connects-a-laptop-to-the-server.png";
 
 function LandingPage() {
   const { loggedIn } = useContext(UserContext);
@@ -64,15 +70,15 @@ function LandingPage() {
             <div className="row">
               <div className="col-md-6 d-flex">
                 <div className="my-auto">
-                  <h3>Quick Request</h3>
+                  <h3>Send A Quick Request</h3>
                   <strong>
                     {" "}
-                    Are you looking for a service provider and you are yet to
-                    find one?
+                    Do you need something done and you can’t find someone by
+                    service?
                   </strong>{" "}
                   <br />
-                  Lets assist in getting a trusted service provider in less than
-                  30 minutes
+                  Tell us what you are trying to get done and get a
+                  professional within 30min
                 </div>
               </div>
               <div className="col-md-6">
@@ -81,6 +87,11 @@ function LandingPage() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="pro-artisan-section my-4 container py-4">
+          <h1 className="text-center">Pro Artisans</h1>
+
+          <CardCarousel items={proArtisanList} />
         </div>
         <div className="feature-section">
           <header>
@@ -99,59 +110,56 @@ function LandingPage() {
           <main>
             <ul className="cards-container">
               <li className="cyan-feature-card">
-                <h2>Supervisor</h2>
-                <p>Monitors activity to identify project roadblocks</p>
-                <img
-                  src="https://alfonsosuarezg.github.io/four-card-feature-section/images/icon-supervisor.svg"
-                  alt="supervisor feature icon"
-                />
+                <h2>Skilled artisans</h2>
+                <p>
+                  Grinders houses various highly skilled Service Provider across
+                  the country
+                </p>
+                <div className="image-container">
+                  <img src={img1} alt="supervisor feature icon" />
+                </div>
               </li>
 
               <li className="red-feature-card">
-                <h2>Team Builder</h2>
+                <h2>Accountability </h2>
                 <p>
-                  Scans our talent network to create the optimal team for your
-                  project
+                  Grinders creates accountability between artisans and clients
+                  by properly scrutinizing artisans and creating a reward and
+                  report system to put them in check.
                 </p>
-                <img
-                  src="https://alfonsosuarezg.github.io/four-card-feature-section/images/icon-team-builder.svg"
-                  alt="team builder feature icon"
-                />
+                <div className="image-container">
+                  <img src={img2} alt="team builder feature icon" />
+                </div>
               </li>
 
               <li className="orange-feature-card">
-                <h2>Karma</h2>
-                <p>Regularly evaluates our talent to ensure quality</p>
-                <img
-                  src="https://alfonsosuarezg.github.io/four-card-feature-section/images/icon-karma.svg"
-                  alt="karma feature icon"
-                />
+                <h2>On demand service</h2>
+                <p>Grinders get you the help you need as soon as you want it</p>
+                <div className="image-container">
+                  <img src={img3} alt="karma feature icon" />
+                </div>
               </li>
 
               <li className="blue-feature-card">
-                <h2>Calculator</h2>
+                <h2>Quality service</h2>
                 <p>
-                  Uses data from past projects to provide better delivery
-                  estimates
+                  Grinders with the team of customers services ensure you have
+                  the best in quality, making sure you satisfied by the service
+                  rendered
                 </p>
-                <img
-                  src="https://alfonsosuarezg.github.io/four-card-feature-section/images/icon-calculator.svg"
-                  alt="calculator feature icon"
-                />
+                <div className="image-container">
+                  <img src={img4} alt="calculator feature icon" />
+                </div>
               </li>
             </ul>
           </main>
         </div>
-        <div className="pro-artisan-section my-4 container py-4">
-          <h1 className="text-center">Pro Artisans</h1>
 
-          <CardCarousel items={proArtisanList} />
-        </div>
         <div className="why-Choose-Us-section">
           <section className="chooseus-section d-flex align-items-center">
             <div className="container">
               <div className="sec-title text-center style-two">
-                <p>Lorem Ipsum</p>
+                {/* <p>Lorem Ipsum</p> */}
                 <h2>Why Choose Us</h2>
               </div>
               <div className="row clearfix">
@@ -160,34 +168,38 @@ function LandingPage() {
                     <div className="content-box">
                       <div className="single-item">
                         <div className="icon-box">
-                          <div className="bg-layer"></div>
-                          <i className="fas fa-users"></i>
+                          {/* <div className="bg-layer"></div>
+                          <i className="fas fa-users"></i> */}
+                          <img src={img5} alt="." />
                         </div>
                         <div className="box">
-                          <h4>Lorem Ipsum</h4>
+                          <h4>Quality services</h4>
                           <p>
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry.
+                            Grinders ensures service providers are giving out
+                            quality services to their clients, repairing the
+                            wounded relationship between artisans and clients
                           </p>
-                          <a href="#">
+                          {/* <a href="#">
                             <i className="fas fa-arrow-right"></i>More Details
-                          </a>
+                          </a> */}
                         </div>
                       </div>
                       <div className="single-item text-right">
                         <div className="icon-box">
-                          <div className="bg-layer"></div>
-                          <i className="fas fa-box"></i>
+                          {/* <div className="bg-layer"></div>
+                          <i className="fas fa-box"></i> */}
+                          <img src={img6} alt="." />
                         </div>
                         <div className="box">
-                          <h4>Lorem Ipsum 2</h4>
+                          <h4>Direct Connection</h4>
                           <p>
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry.
+                            Grinders creates a connection between the clients
+                            and service providers, no additional cost is
+                            incurred.
                           </p>
-                          <a href="#">
+                          {/* <a href="#">
                             More Details<i className="fas fa-arrow-left"></i>
-                          </a>
+                          </a> */}
                         </div>
                       </div>
                     </div>
