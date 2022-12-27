@@ -485,7 +485,7 @@ export function QuickRequestComponent() {
         <input
           type="text"
           className="form-control"
-          placeholder="Service"
+          placeholder="What do you want to do?"
           // value={`${formLocationState}`}
           // onFocus={() => onFocus()}
           // onBlur={() => onBlur()}
@@ -537,10 +537,7 @@ export function QuickRequestComponent() {
         <div className="d-flex">
           <button className="d-flex" type="submit">
             {/* {!pageLoading ? ( */}
-            <div className="my-auto">
-              <FaSearch className="me-1" />
-              search
-            </div>
+            <div className="my-auto text-center ">Request</div>
             {/* ) : (
               <div className="my-auto">
                 <FaHistory className="me-1" />
