@@ -45,8 +45,8 @@ function LandingPage() {
       <Nav />
       <div className="con tainer">
         <div className="hero-section">
+          <div className="mobile-background"></div>
           <div className="text-div">
-            <div className="mobile-background"></div>
             <h1 className="hero-name">Hire service providers With Grinders</h1>
             <p className="sub">Connecting people to trusted local services.</p>
             <Search />
@@ -65,10 +65,10 @@ function LandingPage() {
           </div>
         </div>
 
-        <div className="artisan-request-section py-3 secondary-color">
+        <div className="artisan-request-section py-5 px-2 secondary-color">
           <div className="artesian-request-container container">
             <div className="row">
-              <div className="col-md-6 d-flex">
+              <div className="col-md-6 d-flex text-center text-md-start">
                 <div className="my-auto">
                   <h3>Send A Quick Request</h3>
                   <strong>
@@ -81,7 +81,7 @@ function LandingPage() {
                   professional within 30min
                 </div>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-6 mt-3 mt-md-0">
                 {/* Form */}
                 <QuickRequestComponent />
               </div>
@@ -166,7 +166,7 @@ function LandingPage() {
                 <div className="col-lg-6 col-md-12 col-sm-12 content-column">
                   <div id="content_block_04">
                     <div className="content-box">
-                      <div className="single-item">
+                      <div className="single-item  flex-wrap flex-sm-nowrap">
                         <div className="icon-box">
                           {/* <div className="bg-layer"></div>
                           <i className="fas fa-users"></i> */}
@@ -184,7 +184,7 @@ function LandingPage() {
                           </a> */}
                         </div>
                       </div>
-                      <div className="single-item text-right">
+                      <div className="single-item text-right flex-wrap flex-sm-nowrap">
                         <div className="icon-box">
                           {/* <div className="bg-layer"></div>
                           <i className="fas fa-box"></i> */}
