@@ -50,10 +50,18 @@ function Nav() {
   const { loggedIn } = useContext(UserContext);
   return (
     <div className="Nav">
+      {" "}
+      <input
+        type="checkbox"
+        name=""
+        id="menu-toggle"
+        style={{ display: "none" }}
+      />
       <div className="logo">
         <Link to="/">
           <img src={navImage} alt="working-man" className="logo" />
         </Link>
+        <label htmlFor="menu-toggle" className="menu-button"></label>
       </div>
       <div className="link-container d-flex">
         {navLinks.map((link, index) => {
