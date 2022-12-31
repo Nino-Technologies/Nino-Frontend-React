@@ -32,12 +32,12 @@ function LandingPage() {
         // (artisan.subscriptionExpired === false)
       ) {
         proArtisan.push(artisan);
-        console.log(artisan);
+        // console.log(artisan);
       }
     });
 
     setProArtisanList(proArtisan);
-    console.log(proArtisan);
+    // console.log(proArtisan);
   }, [artisans]);
 
   return (
@@ -68,7 +68,7 @@ function LandingPage() {
         <div className="artisan-request-section py-5 px-2 secondary-color">
           <div className="artesian-request-container container">
             <div className="row">
-              <div className="col-md-6 d-flex text-center text-md-start">
+              <div className="col-md-6 d-flex text-start">
                 <div className="my-auto">
                   <h3>Send A Quick Request</h3>
                   <strong>
@@ -123,9 +123,8 @@ function LandingPage() {
               <li className="red-feature-card">
                 <h2>Accountability </h2>
                 <p>
-                  Grinders creates accountability between artisans and clients
-                  by properly scrutinizing artisans and creating a reward and
-                  report system to put them in check.
+                  Grinders holds artisans accountable to clients through
+                  evaluation, rewards, and reports.
                 </p>
                 <div className="image-container">
                   <img src={img2} alt="team builder feature icon" />
@@ -205,7 +204,7 @@ function LandingPage() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-12 col-sm-12 video-column">
+                <div className="col-lg-6 col-md-12 col-sm-12 d-none d-md-block video-column">
                   <div id="video_block_01">
                     <div
                       className="video-inner wow slideInRight"

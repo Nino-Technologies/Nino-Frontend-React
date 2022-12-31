@@ -52,6 +52,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 0 30px;
+    text-shadow: -2px 1px 1px rgb(0, 0, 0);
     .smallHeroImage {
       display: none;
     }
@@ -79,7 +80,8 @@
       left: 0;
     }
     a {
-      color: var(--color-secondary);
+      // color: var(--color-secondary);
+      color: #fff;
       font-weight: 600;
     }
 
@@ -106,6 +108,7 @@
   .search-form {
     padding: 0;
     // border: solid;
+    color: #fff;
     button {
       background-color: var(--color-secondary);
       text-align: center;
