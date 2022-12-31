@@ -5,6 +5,7 @@ import { FaInstagram } from "react-icons/fa";
 import { Facebook } from "@material-ui/icons";
 import { BsPlus } from "react-icons/bs";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function ProArtisanCard({ profile }) {
   // /*=============== SHOW SOCIAL NETWORKS ===============*/
@@ -77,7 +78,11 @@ function ProArtisanCard({ profile }) {
                 <BsPlus />
               </div>
 
-              <span className="card__social-text">My social networks</span>
+              <span className="card__social-text">
+                <Link to={"/artisans-profile/" + profile._id}>
+                  View profile
+                </Link>
+              </span>
 
               {/* <!-- Card Social --> */}
               <ul className="card__social-list">

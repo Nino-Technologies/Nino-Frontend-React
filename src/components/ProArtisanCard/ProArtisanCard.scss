@@ -159,7 +159,19 @@ img {
 }
 
 .card__social-text {
-  top: 0.5rem;
+  top: 0;
+  padding-left: 0rem;
+a{
+  font-weight: 600;
+  text-shadow: 1px 1px 1px  rgba(0, 0, 0, 0.453);
+  display: block;
+  width: 100%;
+  margin-right: 10px;
+  // border: solid 1px;
+  padding: 8px 0;
+  text-align: center;
+  color: #fff;
+}
 }
 
 /* Rotate social */
