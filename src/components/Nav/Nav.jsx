@@ -283,9 +283,15 @@ const StyledMenu = styled((props) => (
 
 export function CustomizedMenus() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorLink, setAnchorLink] = React.useState("");
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
+    // console.log(event);
     setAnchorEl(event.currentTarget);
+    if (event.currentTarget.id === "login-button") {
+      return setAnchorLink("login");
+    }
+    setAnchorLink("register");
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -306,6 +312,7 @@ export function CustomizedMenus() {
       >
         Login
       </Button>
+
       <Button
         id="sign-in-button"
         aria-controls={open ? "sign-in-menu" : undefined}
@@ -317,7 +324,7 @@ export function CustomizedMenus() {
         endIcon={<KeyboardArrowDownOutlined />}
         className="mx-1 secondary-color"
       >
-        Sign in
+        Sign Up
       </Button>
       <StyledMenu
         id="sign-in-menu"
@@ -328,20 +335,20 @@ export function CustomizedMenus() {
         open={open}
         onClose={handleClose}
       >
-        <Link className="drop-down-link" to="/register?as=user">
+        <Link className="drop-down-link" to={`/${anchorLink}?as=user`}>
           <MenuItem onClick={handleClose} disableRipple>
             {/* <EditIcon /> */}
             Users
           </MenuItem>
         </Link>
-        <Link className="drop-down-link" to="/register?as=artisan">
+        <Link className="drop-down-link" to={`/${anchorLink}?as=artisan`}>
           <MenuItem onClick={handleClose} disableRipple>
             {/* <EditIcon /> */}
             Service Provider
           </MenuItem>
         </Link>
       </StyledMenu>
-      <StyledMenu
+      {/* <StyledMenu
         id="login-menu"
         MenuListProps={{
           "aria-labelledby": "login-button",
@@ -352,17 +359,15 @@ export function CustomizedMenus() {
       >
         <Link to="/login?as=user">
           <MenuItem onClick={handleClose} disableRipple>
-            {/* <EditIcon /> */}
             Users
           </MenuItem>
         </Link>
         <Link to="/login?as=artisan">
           <MenuItem onClick={handleClose} disableRipple>
-            {/* <EditIcon /> */}
             Service Provider
           </MenuItem>
         </Link>
-      </StyledMenu>
+      </StyledMenu> */}
     </div>
   );
 }
