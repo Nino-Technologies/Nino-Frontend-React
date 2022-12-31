@@ -1,5 +1,6 @@
 import {
   FaCamera,
+  FaHandsHelping,
   FaMoneyCheck,
   FaUser,
   FaUserCheck,
@@ -60,6 +61,12 @@ export const userNavLinkObject = [
     name: "Payments",
     icon: <FaMoneyCheck />,
     path: "/dashboard/payments",
+    userPrivilege: 3,
+  },
+  {
+    name: "Requests",
+    icon: <FaHandsHelping />,
+    path: "/dashboard/requests",
     userPrivilege: 3,
   },
 ];
