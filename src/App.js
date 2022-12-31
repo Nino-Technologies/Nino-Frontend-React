@@ -32,6 +32,7 @@ import SendMessagePage from "./components/SendMessages/SendMessagePage";
 import { TestProvider } from "./context/ContextTest";
 import { SaveArtisanProvider } from "./context/saveUserContext";
 import { TermiiSMSProvider } from "./context/TermiiContext";
+import QuickRequestPage from "./pages/QuickRequestPage/QuickRequestPage";
 
 
 function App() {
@@ -131,6 +132,7 @@ function App() {
           />
           <Route path="create-admin" element={<CreateAdminPage />} />
           <Route path="payments" element={<PaymentPage />} />
+          <Route path="requests" element={<QuickRequestPage />} />
         </Route>
 
         <Route
