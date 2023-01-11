@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./../../context/UserContext";
 import axios from "axios";
+import { useCookies } from "react-cookie";
+import { TermiiSMSContext } from "../../context/TermiiContext";
 
 function Search() {
   const {
@@ -133,17 +135,21 @@ function Search() {
           </div>
         </label>
         <div className="d-flex">
-          <button className="d-flex" type="submit" disabled={pageLoading}>
-            {!pageLoading ? (
-              <div className="my-auto">
-                <FaSearch className="me-1" />
-                search
-              </div>
-            ) : (
-              <div className="my-auto">
+          <button
+            className="d-flex justify-content-center align-items-center"
+            type="submit"
+            disabled={pageLoading}
+          >
+            {pageLoading ? (
+              <>
                 <FaHistory className="me-1" />
                 Loading ...
-              </div>
+              </>
+            ) : (
+              <>
+                <FaSearch className="me-1" />
+                Search
+              </>
             )}
           </button>
           {formService !== "" ||
@@ -473,6 +479,8 @@ export function StateSearchInput({
 
 export function QuickRequestComponent() {
   const { loggedIn, userProfile, apiUrl } = useContext(UserContext);
+  const { sendMessageFunction } = useContext(TermiiSMSContext);
+  const [cookies] = useCookies();
   const [quickRequests, setQuickRequests] = useState({
     locationCity: "",
     locationState: "",
@@ -506,16 +514,35 @@ export function QuickRequestComponent() {
 
     // return console.log();
     try {
-      const resp = await axios.post(`${apiUrl}/request`, {
-        sender: userProfile.fullName,
-        number: userProfile.phoneNumber,
-        ...quickRequests,
-      });
-      setSendingRequest(false);
-
-      toast.success(
-        "Request sent successfully, we will attend to you in a short time"
+      const resp = await axios.post(
+        `${apiUrl}/request`,
+        {
+          sender: userProfile.fullName,
+          number: userProfile.phoneNumber,
+          ...quickRequests,
+        },
+        {
+          headers: {
+            authorization: cookies.grinderUser.token,
+          },
+        }
       );
+      setSendingRequest(false);
+      sendMessageFunction({
+        to: `2347067727487`,
+        message: `Attention Grinders,
+"${userProfile.fullName}" has submitted a request for the service "${quickRequests.service}". Prompt response is required. 
+Thank you.
+      `,
+      });
+      setQuickRequests({
+        locationCity: "",
+        locationState: "",
+        service: "",
+      });
+      // toast.success(
+      //   "Request sent successfully, we will attend to you in a short time"
+      // );
     } catch (err) {
       toast.error("Request was not successfully, try again");
       setSendingRequest(false);
@@ -570,10 +597,11 @@ export function QuickRequestComponent() {
           </div>
         </label>
         <div className="d-flex">
-          <button className="d-flex" type="submit">
-            <div className="my-auto text-center ">
-              {sendingRequest ? "Sending request..." : "Request"}
-            </div>
+          <button
+            className="d-flex justify-content-center align-items-center"
+            type="submit"
+          >
+            {sendingRequest ? "Sending request..." : "Request"}
           </button>
         </div>
       </form>
