@@ -1,6 +1,6 @@
 .hero-section {
   height: 100vh;
-  max-height: 600px;
+  // max-height: 600px;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -178,7 +178,8 @@
     }
   }
   @media (max-width: 425px) {
-    // background-image: url("../../assets/images/13127-removebg-preview.png");
+    background-image: url("../../assets/images/mobile-hero.png");
+    max-height: 700px;
     background-color: var(--color-primary);
     background-repeat: no-repeat;
     .text-div {
