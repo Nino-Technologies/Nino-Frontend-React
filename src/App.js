@@ -34,7 +34,6 @@ import { SaveArtisanProvider } from "./context/saveUserContext";
 import { TermiiSMSProvider } from "./context/TermiiContext";
 import QuickRequestPage from "./pages/QuickRequestPage/QuickRequestPage";
 
-
 function App() {
   const { getUserProfile, loggedIn } = useContext(UserContext);
 
@@ -78,10 +77,17 @@ function App() {
         <PaymentModalComponent />
       </TermiiSMSProvider>
       <Routes>
-        <Route exact path="/home" element={<LandingPage />} />
+        <Route
+          exact
+          path="/home"
+          element={
+            <TermiiSMSProvider>
+              <LandingPage />
+            </TermiiSMSProvider>
+          }
+        />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route
-
           path="/artisans"
           element={
             <SaveArtisanProvider>
@@ -90,7 +96,6 @@ function App() {
           }
         />
         <Route
-
           path="/artisans-profile/:id"
           element={
             <SaveArtisanProvider>
