@@ -91,7 +91,7 @@ function QuickRequestPage() {
                       <tr key={_id}>
                         <th scope="row">{i + 1}</th>
                         <td>{sender}</td>
-                        <td>{number}</td>
+                        <td>0{number}</td>
                         <td>{service}</td>
                         <td>{locationState}</td>
                         <td>{locationCity}</td>
