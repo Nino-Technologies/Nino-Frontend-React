@@ -49,7 +49,7 @@ function ContactUsPage() {
                       <li className="list-group-item py-3">
                         <FaEnvelope className="contact-icon" />
                         <span className="px-4 text-white">
-                          support@grinders.ng
+                          micheal@grinders.ng
                         </span>
                       </li>
                     </ul>
