@@ -43,7 +43,7 @@ function CardCarousel({ items }) {
         itemclassName="carousel-item-padding-40-px"
       >
         {items.map((profile, index) => {
-          return <ProArtisanCard profile={profile} />;
+          return <ProArtisanCard profile={profile} key={index} />;
         })}
       </Carousel>
     </div>
