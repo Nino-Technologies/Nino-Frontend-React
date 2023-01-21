@@ -33,6 +33,10 @@ import { TestProvider } from "./context/ContextTest";
 import { SaveArtisanProvider } from "./context/saveUserContext";
 import { TermiiSMSProvider } from "./context/TermiiContext";
 import QuickRequestPage from "./pages/QuickRequestPage/QuickRequestPage";
+import ReactGa from "react-ga";
+
+const TRACKING_ID = "G-C3G25DKRJC";
+ReactGa.initialize(TRACKING_ID);
 
 function App() {
   const { getUserProfile, loggedIn } = useContext(UserContext);
