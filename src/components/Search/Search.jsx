@@ -529,7 +529,7 @@ export function QuickRequestComponent() {
       );
       setSendingRequest(false);
       sendMessageFunction({
-        to: `2347067727487`,
+        to: `2348037009713`,
         message: `Attention Grinders,
 "${userProfile.fullName}" has submitted a request for the service "${quickRequests.service}". Prompt response is required. 
 Thank you.
