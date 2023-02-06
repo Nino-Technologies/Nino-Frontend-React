@@ -17,6 +17,7 @@ import img3 from "../../assets/images/quirky-twenty-four-hours-service-1.png";
 import img4 from "../../assets/images/bonbon-five-stars-quality-rating.png";
 import img5 from "../../assets/images/pocus-service.png";
 import img6 from "../../assets/images/juicy-woman-connects-a-laptop-to-the-server.png";
+import img7 from "../../assets/images/painter1.png";
 
 function LandingPage() {
   const { loggedIn } = useContext(UserContext);
@@ -85,6 +86,36 @@ function LandingPage() {
                 {/* Form */}
                 <QuickRequestComponent />
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="about-us-section my-4 container py-4">
+          <h1 className="text-center">About us</h1>
+
+          <div className="row">
+            <div className="col-md-4">
+              <img src={img7} alt="" className="" />
+            </div>
+            <div className="col-md-8">
+              <p className="">
+                Welcome to Grinders Technologies, a leading platform for skilled
+                workers to connect with clients in need of their services. Our
+                goal is to empower artisans and professionals to showcase their
+                expertise and offer clients access to top-quality work. At
+                Grinders Technologies, we make it easy for skilled workers to
+                find meaningful and rewarding work through our user-friendly
+                platform. Our wide range of services and easy-to-use interface
+                allows clients to find the right professional for their specific
+                needs. You can <Link to="/artisans">learn more</Link> about our
+                artisans on our website, We understand the importance of
+                security and strive to create a safe environment for both
+                clients and skilled workers. Our team works hard to maintain the
+                platform and implement strict measures to protect sensitive
+                information. Join the Grinders Technologies community and
+                experience the power of technology in connecting people.
+                <Link to="/about-us"> Learn more </Link>about us and how we are
+                helping to build a better future.
+              </p>
             </div>
           </div>
         </div>
