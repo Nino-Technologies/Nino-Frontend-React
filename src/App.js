@@ -34,6 +34,7 @@ import { SaveArtisanProvider } from "./context/saveUserContext";
 import { TermiiSMSProvider } from "./context/TermiiContext";
 import QuickRequestPage from "./pages/QuickRequestPage/QuickRequestPage";
 import ReactGa from "react-ga";
+import BlogPage from "./pages/BlogPage/BlogPage";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -91,6 +92,7 @@ function App() {
           }
         />
         <Route path="/about-us" element={<AboutUsPage />} />
+        <Route path="/blog" element={<BlogPage />} />
         <Route
           path="/artisans"
           element={
