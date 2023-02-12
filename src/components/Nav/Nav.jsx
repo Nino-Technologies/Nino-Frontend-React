@@ -41,6 +41,10 @@ const navLinks = [
     link: "/about-us",
   },
   {
+    name: "Blog",
+    link: "/blog",
+  },
+  {
     name: "Contact Us",
     link: "/contact-us",
   },
