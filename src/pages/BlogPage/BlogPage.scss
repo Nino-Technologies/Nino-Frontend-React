@@ -1,10 +1,15 @@
 .BlogPage {
   // border: solid;
-  .nav-section{
-    margin:0;
-    padding:0;
-    margin-bottom:70px;
+  b.header{
+    font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 24px;
 
+color: var(
+  --color-primary
+);
+margin: 10px 20px;
   }
   .featured_post-section{
     display:flex;
@@ -105,7 +110,24 @@
     }
   }
 }
+.blog_ban-section{
+  
+// width: 1440px;
+margin-top: 70px;
+height: 150px;
+display:flex;
+align-items: center;
+justify-content: center;
+background: #003049;
+// text
+font-style: normal;
+font-weight: 700;
+font-size: 40px;
+line-height: 48px;
 
+color: #FFFFFF;
+
+}
 .FeaturedBlogCardPost{
   width: 480px;
 height: 250px;

@@ -11,14 +11,18 @@ function BlogPage() {
         <Nav />
       </div>
 
+      <div className="blog_ban-section">Welcome To Grinders Blog</div>
+
       <div className="container">
+        <b className="header">Featured Post </b>
         <div className="featured_post-section">
           <FeaturedBlogCardPost />
           <FeaturedBlogCardPost />
         </div>
       </div>
       <div className="container-xl">
-        <div className="row border">
+        <b className="header">Blog Post </b>
+        <div className="row">
           <div className="col-md-9 col-12 post_cards-container">
             <BlogCardPost />
             <BlogCardPost />
@@ -110,7 +114,7 @@ function SideCol() {
         <button>Search</button>
       </div>
 
-      <div className="filter-container mx-5">
+      <div className="filter-container my-5 mt-2">
         <b>Filter</b>
       </div>
       <div className="read_more-container">
