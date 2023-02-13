@@ -35,6 +35,8 @@ import { TermiiSMSProvider } from "./context/TermiiContext";
 import QuickRequestPage from "./pages/QuickRequestPage/QuickRequestPage";
 import ReactGa from "react-ga";
 import BlogPage from "./pages/BlogPage/BlogPage";
+import BlogEditor from "./pages/BlogPage/BlogEditor";
+import BlogPost from "./pages/BlogPage/BlogPost";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -93,6 +95,8 @@ function App() {
         />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/editor" element={<BlogEditor />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
         <Route
           path="/artisans"
           element={
