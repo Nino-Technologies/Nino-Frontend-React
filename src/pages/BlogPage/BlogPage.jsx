@@ -29,14 +29,13 @@ function BlogPage() {
 
       <div className="blog_ban-section">Welcome To Grinders Blog</div>
 
-      <div className="container">
+      {/* <div className="container">
         <b className="header">Featured Post </b>
         <div className="featured_post-section">
           <FeaturedPostComponent />
-          {/* {console.log()} */}
         </div>
-      </div>
-      <div className="container-xl">
+      </div> */}
+      <div className="container-xl mt-5">
         <b className="header">Blog Post </b>
         <div className="row">
           <div className="col-md-9 col-12">
@@ -88,7 +87,7 @@ export function BlogCardPost({ post }) {
         <div className="post_text_sub mt-2">
           <ReactMarkdown
             skipHtml={true}
-            children={description.slice(0, 300)}
+            children={description.slice(0, 250)}
             rehypePlugins={[rehypeRaw, rehypeKatex]}
             remarkPlugins={[remarkGfm, remarkMath]}
           />
@@ -123,7 +122,7 @@ export function FeaturedBlogCardPost({ post }) {
         <div className="post_text_sub mt-2">
           <ReactMarkdown
             skipHtml={true}
-            children={post?.description?.slice(0, 120) + "..."}
+            children={post?.description?.slice(0, 100) + "..."}
             rehypePlugins={[rehypeRaw, rehypeKatex]}
             remarkPlugins={[remarkGfm, remarkMath]}
           />

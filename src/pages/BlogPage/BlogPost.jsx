@@ -168,12 +168,12 @@ function AfterPostContent() {
         </form>
       </div>
 
-      <div className="more-articles">
+      {/* <div className="more-articles">
         <h1>MORE ARTICLES</h1>
         <div className="featured_post-section flex-wrap">
           <FeaturedPostComponent />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
