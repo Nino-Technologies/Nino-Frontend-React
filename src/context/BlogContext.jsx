@@ -6,10 +6,84 @@ import { UserContext } from "./UserContext";
 export const BlogContext = createContext();
 
 export function BlogProvider({ children }) {
+  let postReset = [];
+  const [blogPostsSearch, SetBlogPostsSearch] = useState([]);
   const [blogPosts, SetBlogPosts] = useState({
     loading: true,
     blogs: [
-      {
+    ],
+  });
+  const [cookies] = useCookies();
+
+  const { apiUrl } = React.useContext(UserContext);
+  async function getBlogPost() {
+    try {
+      const resp = await axios.get(`${apiUrl}/blog`, {
+        headers: {
+          // authorization: cookies.grinderUser.token,
+        },
+      });
+      // setPageLoading(false);
+      // console.log(resp.data.blog);
+      // console.log(postReset);
+      postReset = [];
+      postReset = resp.data.blog.reverse();
+      // postReset.push(resp.data.blog.reverse());
+      SetBlogPosts({ loading: false, blogs: resp.data.blog.reverse() });
+      // SetBlogPostsSearch({ loading: false, blogs: resp.data.blog.reverse() });
+      console.log(postReset);
+      // SetBlogPostsSearch(resp.data.blog.reverse());
+      // console.log("blogPostsSearch", blogPostsSearch);
+      // setNotification(resp.data.data.reverse());
+    } catch (err) {
+      // Handle Error Here
+      console.error(err);
+    }
+  }
+
+  function searchBlogPost(word) {
+    let postResult = [];
+    blogPosts.blogs.map((post) => {
+      if (
+        post.title.toLowerCase().trim().indexOf(word.toLowerCase().trim()) !==
+          -1 ||
+        post.body.toLowerCase().trim().indexOf(word.toLowerCase().trim()) !==
+          -1 ||
+        post.description
+          .toLowerCase()
+          .trim()
+          .indexOf(word.toLowerCase().trim()) !== -1
+      ) {
+        postResult.push(post);
+      } else {
+        // console.log(post.title, word);
+      }
+    });
+    SetBlogPostsSearch((prevState) => postResult);
+    // console.log(postResult, word);
+    // console.log("blogPostsSearch", blogPostsSearch);
+  }
+
+  React.useEffect(() => {
+    getBlogPost();
+  }, []);
+
+  return (
+    <BlogContext.Provider
+      value={{
+        blogPosts,
+        SetBlogPosts,
+        getBlogPost,
+        searchBlogPost,
+        blogPostsSearch,
+      }}
+    >
+      {children}
+    </BlogContext.Provider>
+  );
+}
+
+/*    {
         _id: "112233445566",
         image_url:
           "https://cdn.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png",
@@ -100,42 +174,4 @@ A table:
 
   If you enjoyed and learned something new from this article, follow me for More web simplified topics, and do well to give me feedback by using the reaction emojis. Let me know how you feel about the explanation in the comment section. Give feedback, corrections, and recommendations. Much 🥰
       `,
-      },
-    ],
-  });
-  const [cookies] = useCookies();
-
-  const { apiUrl } = React.useContext(UserContext);
-  async function getBlogPost() {
-    try {
-      const resp = await axios.get(`${apiUrl}/blog`, {
-        headers: {
-          // authorization: cookies.grinderUser.token,
-        },
-      });
-      // setPageLoading(false);
-      // console.log(resp.data.blog);
-      SetBlogPosts({ loading: false, blogs: resp.data.blog.reverse() });
-      // setNotification(resp.data.data.reverse());
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
-    }
-  }
-
-  React.useEffect(() => {
-    getBlogPost();
-  }, []);
-
-  return (
-    <BlogContext.Provider
-      value={{
-        blogPosts,
-        SetBlogPosts,
-        getBlogPost,
-      }}
-    >
-      {children}
-    </BlogContext.Provider>
-  );
-}
+      }, */
