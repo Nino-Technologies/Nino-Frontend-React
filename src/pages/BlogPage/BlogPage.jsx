@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./BlogPage.scss";
 import Nav from "./../../components/Nav/Nav";
 import { TextField } from "@mui/material";
 import adsImage from "../../assets/images/Grinders_Ads.svg";
+import { BlogContext } from "./../../context/BlogContext";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { PaginatedBlog } from "../../components/Pagination/Pagination";
 
 function BlogPage() {
+  const { blogPosts, getBlogPost } = useContext(BlogContext);
+
+  useEffect(() => {
+    getBlogPost();
+  }, []);
+  // console.log(blogPost);
   return (
     <div className="BlogPage">
       <div className="nav-section">
@@ -16,22 +32,24 @@ function BlogPage() {
       <div className="container">
         <b className="header">Featured Post </b>
         <div className="featured_post-section">
-          <FeaturedBlogCardPost />
-          <FeaturedBlogCardPost />
+          <FeaturedPostComponent />
+          {/* {console.log()} */}
         </div>
       </div>
       <div className="container-xl">
         <b className="header">Blog Post </b>
         <div className="row">
-          <div className="col-md-9 col-12 post_cards-container">
-            <BlogCardPost />
-            <BlogCardPost />
-            <BlogCardPost />
-            <BlogCardPost />
-            <BlogCardPost />
+          <div className="col-md-9 col-12">
+            <div className="post_cards-container">
+              {/* <PaginatedItems /> */}
+              <PaginatedBlog itemsPerPage={6} items={blogPosts.blogs} />
+              {/* {blogPosts?.blogs?.map((post) => {
+                return <BlogCardPost post={post} key={post?._id} />;
+              })} */}
+            </div>
           </div>
           <div className="col-md-3 d-none d-md-flex">
-            <SideCol />
+            <SideCol search={true} />
           </div>
         </div>
       </div>
@@ -41,90 +59,107 @@ function BlogPage() {
 
 export default BlogPage;
 
-function BlogCardPost() {
+export function BlogCardPost({ post }) {
+  const { image_url, title, description, createdAt, author, seo_url } = post;
+  // console.log(body.slice(0, 300));
   return (
     <div className="BlogCardPost">
       <div className="image-container">
-        <img
-          src="https://cdn.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png"
-          alt="test"
-        />
+        <img src={image_url} alt="" />
       </div>
-      <div className="text-container">
-        <h2>Header Test</h2>
+      <div className="text-container mt-3">
+        <h2>{title}</h2>
         <span>
           <span>
-            <b>Author:</b> Victor Josiah
+            <b>Author:</b>
+            {author?.name}
           </span>{" "}
           <span>
-            <b>Date:</b> 12/feb/2020
+            <b>Date:</b> {createdAt?.split("T")[0]}
           </span>
         </span>
-        <p className="post_text_sub">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis
-          nobis sapiente consectetur. Ullam accusamus optio iste doloremque,
-          quae eos accusantium veritatis est, debitis numquam soluta voluptate
-          dolorum iusto sequi molestias. Lorem ipsum dolor, sit amet consectetur
-        </p>
-        <button>Read more</button>
+        <div className="post_text_sub mt-2">
+          <ReactMarkdown
+            skipHtml={true}
+            children={description.slice(0, 300)}
+            rehypePlugins={[rehypeRaw, rehypeKatex]}
+            remarkPlugins={[remarkGfm, remarkMath]}
+          />
+        </div>
+        <Link to={`/blog/${seo_url}`} className="mt-auto mb-3">
+          Read more
+        </Link>
       </div>
     </div>
   );
 }
-function FeaturedBlogCardPost() {
+export function FeaturedBlogCardPost({ post }) {
+  const { image_url, title, description, createdAt, author, seo_url } = post;
+
+  // console.log(post);
   return (
     <div className="BlogCardPost FeaturedBlogCardPost">
       <div className="image-container">
-        <img
-          src="https://cdn.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png"
-          alt="test"
-        />
+        <img src={image_url} alt="" />
       </div>
       <div className="text-container">
-        <h2>Header Test</h2>
-        <span>
+        <h2>{title}</h2>
+        <span className="d-flex flex-wrap">
           <span>
-            <b>Author:</b> Victor Josiah
+            <b>Author:</b>
+            {author?.name}
           </span>{" "}
           <span>
-            <b>Date:</b> 12/feb/2020
+            <b>Date: </b> {createdAt?.split("T")[0]}
           </span>
         </span>
-        <p className="post_text_sub">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis
-          nobis sapiente consectetur. Ullam accusamus optio iste doloremque,
-          quae eos accusantium veritatis.
-        </p>
-        <button>Read more</button>
+        <div className="post_text_sub mt-2">
+          <ReactMarkdown
+            skipHtml={true}
+            children={description?.slice(0, 120) + "..."}
+            rehypePlugins={[rehypeRaw, rehypeKatex]}
+            remarkPlugins={[remarkGfm, remarkMath]}
+          />
+        </div>
+        <Link to={`/blog/${seo_url}`}>Read more</Link>
       </div>
     </div>
   );
 }
 
-function SideCol() {
+export function SideCol({ search }) {
+  const { blogPosts } = useContext(BlogContext);
   return (
     <div className="SideCol">
-      <div className="search-container">
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Search Post"
-          variant="outlined"
-        />
-        <button>Search</button>
-      </div>
-
-      <div className="filter-container my-5 mt-2">
-        <b>Filter</b>
-      </div>
+      {search ? (
+        <>
+          {" "}
+          <div className="search-container">
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="Search Post"
+              variant="outlined"
+            />
+            <button>Search</button>
+          </div>
+          <div className="filter-container my-5 mt-2">
+            <b>Filter</b>
+          </div>
+        </>
+      ) : null}
       <div className="read_more-container">
-        <div className="header">READ MORE</div>
+        <div className="header ps-2">READ MORE</div>
 
         <ul>
-          <li>Read more Blog Post</li>
-          <li>Read more Blog Post</li>
-          <li>Read more Blog Post</li>
-          <li>Read more Blog Post</li>
+          {blogPosts?.blogs?.map(function (blogPost, i) {
+            if (i >= 4) return null;
+            return (
+              <li key={i}>
+                <Link to={`/blog/${blogPost?.seo_url}`}>{blogPost?.title}</Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
 
@@ -132,5 +167,20 @@ function SideCol() {
         <img src={adsImage} alt="" />
       </div>
     </div>
+  );
+}
+
+export function FeaturedPostComponent() {
+  const { blogPosts } = useContext(BlogContext);
+
+  return (
+    <>
+      <FeaturedBlogCardPost
+        post={blogPosts?.blogs[blogPosts?.blogs?.length - 1]}
+      />
+      <FeaturedBlogCardPost
+        post={blogPosts?.blogs[blogPosts?.blogs?.length - 2]}
+      />
+    </>
   );
 }
