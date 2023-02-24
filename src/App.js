@@ -1,5 +1,5 @@
 import "./App.css";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import ArtisansPage from "./pages/ArtisansPage/ArtisansPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
@@ -37,12 +37,23 @@ import ReactGa from "react-ga";
 import BlogPage from "./pages/BlogPage/BlogPage";
 import BlogEditor from "./pages/BlogPage/BlogEditor";
 import BlogPost from "./pages/BlogPage/BlogPost";
+import { BlogProvider } from "./context/BlogContext";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
 
 function App() {
   const { getUserProfile, loggedIn } = useContext(UserContext);
+
+  function ScrollToTop() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+  }
 
   // useEffect(() => {
   //   if (loggedIn) {
@@ -94,9 +105,30 @@ function App() {
           }
         />
         <Route path="/about-us" element={<AboutUsPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/editor" element={<BlogEditor />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
+        <Route
+          path="/blog"
+          element={
+            <BlogProvider>
+              <BlogPage />
+            </BlogProvider>
+          }
+        />
+        <Route
+          path="/blog/editor"
+          element={
+            <BlogProvider>
+              <BlogEditor />
+            </BlogProvider>
+          }
+        />
+        <Route
+          path="/blog/:id"
+          element={
+            <BlogProvider>
+              <BlogPost />
+            </BlogProvider>
+          }
+        />
         <Route
           path="/artisans"
           element={
@@ -158,6 +190,7 @@ function App() {
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
+      <ScrollToTop />
     </div>
   );
 }
