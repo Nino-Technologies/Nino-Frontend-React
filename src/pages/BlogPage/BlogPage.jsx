@@ -40,6 +40,9 @@ function BlogPage() {
         <b className="header">Blog Post </b>
         <div className="row">
           <div className="col-md-9 col-12">
+            <div className="mobile-search d-block d-md-none">
+              <SearchInputComponent />
+            </div>
             <div className="post_cards-container">
               {!blogPostsSearch || blogPostsSearch.length ? (
                 <PaginatedBlog itemsPerPage={6} items={blogPostsSearch} />
@@ -132,32 +135,13 @@ export function FeaturedBlogCardPost({ post }) {
 }
 
 export function SideCol({ search }) {
-  const { blogPosts, searchBlogPost, blogPostsSearch } =
-    useContext(BlogContext);
-  const [searchText, setSearchText] = React.useState("");
+  const { blogPosts } = useContext(BlogContext);
   return (
     <div className="SideCol">
       {search ? (
         <>
           {" "}
-          {(!blogPostsSearch || blogPostsSearch.length === 0) &&
-          searchText !== ""
-            ? ` No Blog Found With "${searchText}" Keyword`
-            : null}
-          <div className="search-container">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="Search Post"
-              variant="outlined"
-              value={searchText}
-              onChange={(e) => {
-                setSearchText(e.target.value);
-                searchBlogPost(e.target.value);
-              }}
-            />
-            {/* <button>Search</button> */}
-          </div>
+          <SearchInputComponent />
           <div className="filter-container my-5 mt-2">
             <b>Filter</b>
           </div>
@@ -181,6 +165,31 @@ export function SideCol({ search }) {
       <div className="ads_image-container mt-5">
         <img src={adsImage} alt="" />
       </div>
+    </div>
+  );
+}
+
+export function SearchInputComponent() {
+  const { searchBlogPost, blogPostsSearch } = useContext(BlogContext);
+  const [searchText, setSearchText] = React.useState("");
+  return (
+    <div className="search-container">
+      {(!blogPostsSearch || blogPostsSearch.length === 0) && searchText !== ""
+        ? ` No Blog Found With "${searchText}" Keyword`
+        : null}
+      <TextField
+        fullWidth
+        id="outlined-basic"
+        label="Search Post"
+        className="mt-2"
+        variant="outlined"
+        value={searchText}
+        onChange={(e) => {
+          setSearchText(e.target.value);
+          searchBlogPost(e.target.value);
+        }}
+      />
+      {/* <button>Search</button> */}
     </div>
   );
 }
