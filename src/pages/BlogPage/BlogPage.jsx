@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import { PaginatedBlog } from "../../components/Pagination/Pagination";
 
 function BlogPage() {
-  const { blogPosts, getBlogPost } = useContext(BlogContext);
+  const { blogPosts, getBlogPost, blogPostsSearch } = useContext(BlogContext);
 
   useEffect(() => {
     getBlogPost();
@@ -41,8 +41,12 @@ function BlogPage() {
         <div className="row">
           <div className="col-md-9 col-12">
             <div className="post_cards-container">
+              {!blogPostsSearch || blogPostsSearch.length ? (
+                <PaginatedBlog itemsPerPage={6} items={blogPostsSearch} />
+              ) : (
+                <PaginatedBlog itemsPerPage={6} items={blogPosts.blogs} />
+              )}
               {/* <PaginatedItems /> */}
-              <PaginatedBlog itemsPerPage={6} items={blogPosts.blogs} />
               {/* {blogPosts?.blogs?.map((post) => {
                 return <BlogCardPost post={post} key={post?._id} />;
               })} */}
@@ -65,11 +69,11 @@ export function BlogCardPost({ post }) {
   return (
     <div className="BlogCardPost">
       <div className="image-container">
-        <img src={image_url} alt="" />
+        <img src={image_url ? image_url : ""} alt="" />
       </div>
       <div className="text-container mt-3">
         <h2>{title}</h2>
-        <span>
+        <span className="d-flex flex-wrap">
           <span>
             <b>Author:</b>
             {author?.name}
@@ -94,54 +98,65 @@ export function BlogCardPost({ post }) {
   );
 }
 export function FeaturedBlogCardPost({ post }) {
-  const { image_url, title, description, createdAt, author, seo_url } = post;
+  // const { image_url, title, description, createdAt, author, seo_url } = post;
 
   // console.log(post);
   return (
     <div className="BlogCardPost FeaturedBlogCardPost">
       <div className="image-container">
-        <img src={image_url} alt="" />
+        <img src={post?.image_url} alt="" />
       </div>
       <div className="text-container">
-        <h2>{title}</h2>
+        <h2>{post?.title}</h2>
         <span className="d-flex flex-wrap">
           <span>
             <b>Author:</b>
-            {author?.name}
+            {post?.author?.name}
           </span>{" "}
           <span>
-            <b>Date: </b> {createdAt?.split("T")[0]}
+            <b>Date: </b> {post?.createdAt?.split("T")[0]}
           </span>
         </span>
         <div className="post_text_sub mt-2">
           <ReactMarkdown
             skipHtml={true}
-            children={description?.slice(0, 120) + "..."}
+            children={post?.description?.slice(0, 120) + "..."}
             rehypePlugins={[rehypeRaw, rehypeKatex]}
             remarkPlugins={[remarkGfm, remarkMath]}
           />
         </div>
-        <Link to={`/blog/${seo_url}`}>Read more</Link>
+        <Link to={`/blog/${post?.seo_url}`}>Read more</Link>
       </div>
     </div>
   );
 }
 
 export function SideCol({ search }) {
-  const { blogPosts } = useContext(BlogContext);
+  const { blogPosts, searchBlogPost, blogPostsSearch } =
+    useContext(BlogContext);
+  const [searchText, setSearchText] = React.useState("");
   return (
     <div className="SideCol">
       {search ? (
         <>
           {" "}
+          {(!blogPostsSearch || blogPostsSearch.length === 0) &&
+          searchText !== ""
+            ? ` No Blog Found With "${searchText}" Keyword`
+            : null}
           <div className="search-container">
             <TextField
               fullWidth
               id="outlined-basic"
               label="Search Post"
               variant="outlined"
+              value={searchText}
+              onChange={(e) => {
+                setSearchText(e.target.value);
+                searchBlogPost(e.target.value);
+              }}
             />
-            <button>Search</button>
+            {/* <button>Search</button> */}
           </div>
           <div className="filter-container my-5 mt-2">
             <b>Filter</b>
