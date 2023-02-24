@@ -1,5 +1,5 @@
 import { Divider } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "../../components/Nav/Nav";
 import adsImage from "../../assets/images/Grinders_Ads.svg";
 import "./BlogPost.scss";
@@ -11,61 +11,106 @@ import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 
 import { TextField } from "@mui/material";
-import { FeaturedBlogCardPost } from "./BlogPage";
+import {
+  FeaturedBlogCardPost,
+  FeaturedPostComponent,
+  SideCol,
+} from "./BlogPage";
 import Footer from "../../components/Footer/Footer";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { BlogContext } from "./../../context/BlogContext";
+import { useContext } from "react";
+import { toast } from "react-toastify";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 function BlogPost() {
-  const postContent = `
-  
-  **Good day pals, if you are looking for a very easy way to integrate a serverless
-from on your frontend website, you are at the right article.**
+  const { id } = useParams();
+  const [pageLoading, setPageLoading] = useState(true);
+  const [readingTime, setReadingTime] = useState(true);
+  const [blogPost, setBlogPost] = useState({});
+  // const [postContent, setPostContent] = useState("");
+  const { blogPosts } = useContext(BlogContext);
+  const navigate = useNavigate();
 
-A functional website must have form submission and integration. A functioning Form can be found on almost all hosted websites, including portfolios, landing pages for businesses, e-commerce sites, etc. It is impossible to deny the value of forms on a website. For a front-end developer who has little to no experience with the backend, it is challenging to construct a functional form on either our unpaid or paid projects.
+  async function getBlogPost(seo_url) {
+    if (seo_url === "" || seo_url === undefined) {
+      alert("this page requires an artisan ID ");
+      return navigate("/blog");
+    }
 
-# Get started with FabForm
+    if (blogPosts?.blogs?.length !== 0) {
+      var post = blogPosts?.blogs?.find((post) => post?.seo_url === seo_url);
 
-To make use of the service FabForm is providing you have to have an account with them.
-This is has simple as anything, it will take less than 2 minutes to set up an account.
+      // print
+      if (!post) {
+        // toast.info("Artesian post not found");
+        toast.info(" blog with the ID provided is a not found");
+        navigate("/blog");
+      } else {
+        setBlogPost(post);
+        // setPostContent(post.body);
+        // postContent = post.body;
+        setPageLoading(false);
+      }
+      return;
+    } else {
+      // if blog post array is empty then get a single blog post object from the database
+      // let response = await fetch(`${apiUrl}/search/${blogPostId}`);
+      // if (response.ok) {
+      //   let json = await response.json();
+      //   //  setArtisan(json[0]);
+      //   setPageLoading(false);
+      // } else {
+      //   console.log("error");
+      //   alert(" Post with the ID provided is a not found");
+      //   navigate("/blog");
+      //   return;
+      // }
+    }
+  }
+  useEffect(() => {
+    getBlogPost(id);
+  }, [id]);
 
-- Visit Fabform
-- Click on the Get started button
-- fill the registration form all you need is a working email and a password.
-- verify your email by clicking on the link sent to your email address.
+  const { image_url, title, sub_title, createdAt, author, tags, body } =
+    blogPost;
 
-At this point you have successfully created a working account with febform.
-
-<img src="https://cdn.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png"  width="100%" height="300px">
-
-## Submit form
-FabForm gives you totally control of the structure and style of your form, it doesn't give you custom attribute or a set of rules while creating your form, they make use of the already existing and we'll know attributes of the form element which are action and name attributes
-
-<img src="https://cdn.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png"  width="100%" height="300px">
-
-# Give feedback
-
-If you enjoyed and learned something new from this article, follow me for More web simplified topics, and do well to give me feedback by using the reaction emojis. Let me know how you feel about the explanation in the comment section. Give feedback, corrections, and recommendations. Much 🥰
-
-  `;
+  // body.
+  useEffect(() => {
+    let words = body?.split(" ").length;
+    let readingTime = Math.ceil(words / 250);
+    setReadingTime(readingTime);
+  }, [blogPost]);
   return (
     <div className="BlogPost">
       <Nav />
       <div className="image-container top-image">
-        <img
-          src="https://cdn.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png"
-          alt="test"
-        />
+        <Link to="/blog" className="back_button">
+          <FaArrowAltCircleLeft />
+        </Link>
+        <img src={image_url} alt="test" />
       </div>
       <div className="container-xl">
         <div className="header">
-          <h1>Header Post</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae quia
-            quisquam libero nobis veritatis.
-          </p>
-          <div className="sub">
-            <sub>Author Name</sub>
-            <sub>12, February 2023</sub>
-            <sub>3 minutes read</sub>
+          <h1>{title}</h1>
+          <p>{sub_title}</p>
+          <div className="sub flex-wrap">
+            <sub>
+              <b>Author: </b> {author?.name}
+            </sub>
+            <sub>
+              <b>Date: </b>
+              {createdAt?.split("T")[0]}
+            </sub>
+            <sub>{readingTime} minutes read</sub>
+          </div>
+          <div className="tags-container">
+            <b>Tags:</b>{" "}
+            {tags?.map((tag, i) => (
+              <div className="tag" key={i}>
+                {tag}
+              </div>
+            ))}
           </div>
           {/* <Divider /> */}
         </div>
@@ -75,14 +120,18 @@ If you enjoyed and learned something new from this article, follow me for More w
       <div className="container-xl blog-grade-section">
         <div className="row">
           <div className="col-md-9 col-12 ">
-            <div className="post_content-container">
-              <ReactMarkdown
-                skipHtml={true}
-                children={postContent}
-                rehypePlugins={[rehypeRaw, rehypeKatex]}
-                remarkPlugins={[remarkGfm, remarkMath]}
-              />
-            </div>
+            {pageLoading ? (
+              <>Loading ....</>
+            ) : (
+              <div className="post_content-container">
+                <ReactMarkdown
+                  skipHtml={true}
+                  children={body}
+                  rehypePlugins={[rehypeRaw, rehypeKatex]}
+                  remarkPlugins={[remarkGfm, remarkMath]}
+                />
+              </div>
+            )}
           </div>
           <div className="col-md-3 d-none d-md-flex">
             <SideCol />
@@ -98,27 +147,6 @@ If you enjoyed and learned something new from this article, follow me for More w
 }
 
 export default BlogPost;
-
-function SideCol() {
-  return (
-    <div className="SideCol">
-      <div className="read_more-container">
-        <div className="header">READ MORE</div>
-
-        <ul>
-          <li>Read more Blog Post</li>
-          <li>Read more Blog Post</li>
-          <li>Read more Blog Post</li>
-          <li>Read more Blog Post</li>
-        </ul>
-      </div>
-
-      <div className="ads_image-container mt-5">
-        <img src={adsImage} alt="" />
-      </div>
-    </div>
-  );
-}
 
 function AfterPostContent() {
   return (
@@ -142,9 +170,8 @@ function AfterPostContent() {
 
       <div className="more-articles">
         <h1>MORE ARTICLES</h1>
-        <div className="featured_post-section">
-          <FeaturedBlogCardPost />
-          <FeaturedBlogCardPost />
+        <div className="featured_post-section flex-wrap">
+          <FeaturedPostComponent />
         </div>
       </div>
     </div>
