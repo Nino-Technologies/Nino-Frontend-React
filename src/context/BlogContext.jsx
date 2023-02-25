@@ -31,7 +31,7 @@ export function BlogProvider({ children }) {
       // postReset.push(resp.data.blog.reverse());
       SetBlogPosts({ loading: false, blogs: resp.data.blog.reverse() });
       // SetBlogPostsSearch({ loading: false, blogs: resp.data.blog.reverse() });
-      console.log(postReset);
+      // console.log(postReset);
       // SetBlogPostsSearch(resp.data.blog.reverse());
       // console.log("blogPostsSearch", blogPostsSearch);
       // setNotification(resp.data.data.reverse());
