@@ -20,12 +20,12 @@ function BlogEditor() {
     title: "",
     seo_url: "",
     sub_title: "",
-    author: "63f793fcf1c9e97ee08e9d8f",
+    author: "63f9656bd2eed5c742d2b726",
     tags: [],
     description: "",
     body: "",
   });
-const { apiUrl } = React.useContext(UserContext);
+  const { apiUrl } = React.useContext(UserContext);
   React.useEffect(() => {
     setPost((prev) => {
       return {
@@ -38,7 +38,7 @@ const { apiUrl } = React.useContext(UserContext);
   const [imageFile, setImageFile] = React.useState(null);
   const [imagePrev, setImagePrev] = React.useState(null);
   function handleChange(e) {
-    console.log(e.target.files);
+    // console.log(e.target.files);
     setImageFile(e.target.files[0]);
     setImagePrev(URL.createObjectURL(e.target.files[0]));
   }
@@ -51,7 +51,15 @@ const { apiUrl } = React.useContext(UserContext);
     });
   };
   function uploadImageToCloudinary() {
-    if (imageFile === "") return toast.info("No image selected");
+    if (imageFile === null) return toast.info("No image selected");
+    if (post.title === "") return toast.info("Post Title is required");
+    if (post.seo_url === "") return toast.info("Post seo_url is required");
+    if (post.sub_title === "") return toast.info("Post sub_title is required");
+    if (post.description === "")
+      return toast.info("Post description is required");
+    if (post.body === "") return toast.info("Post body is required");
+    if (post.author === "") return toast.info("Post author is required");
+    if (post.tags.length === 0) return toast.info("Post tags is required");
 
     const imageData = new FormData();
     imageData.append("file", imageFile);
@@ -64,7 +72,7 @@ const { apiUrl } = React.useContext(UserContext);
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         // after the image is uploaded, publish blog post
         postBlogPost(data.url);
       })
@@ -87,13 +95,12 @@ const { apiUrl } = React.useContext(UserContext);
     axios
       .post(`${apiUrl}/blog`, postObject)
       .then(function (response) {
-        toast.success("blog post successfully")
-        console.log(response);
+        toast.success("blog post successfully");
+        // console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
-    
   }
   return (
     <div className="BlogEditor">
