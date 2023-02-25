@@ -22,6 +22,7 @@ import { BlogContext } from "./../../context/BlogContext";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { UserContext } from "./../../context/UserContext";
 
 function BlogPost() {
   const { id } = useParams();
@@ -30,6 +31,7 @@ function BlogPost() {
   const [blogPost, setBlogPost] = useState({});
   // const [postContent, setPostContent] = useState("");
   const { blogPosts } = useContext(BlogContext);
+  const { apiUrl } = useContext(UserContext);
   const navigate = useNavigate();
 
   async function getBlogPost(seo_url) {
@@ -48,24 +50,23 @@ function BlogPost() {
         navigate("/blog");
       } else {
         setBlogPost(post);
-        // setPostContent(post.body);
-        // postContent = post.body;
         setPageLoading(false);
       }
       return;
     } else {
       // if blog post array is empty then get a single blog post object from the database
-      // let response = await fetch(`${apiUrl}/search/${blogPostId}`);
-      // if (response.ok) {
-      //   let json = await response.json();
-      //   //  setArtisan(json[0]);
-      //   setPageLoading(false);
-      // } else {
-      //   console.log("error");
-      //   alert(" Post with the ID provided is a not found");
-      //   navigate("/blog");
-      //   return;
-      // }
+      let response = await fetch(`${apiUrl}/blog?seo_url=${id}`);
+      if (response.ok) {
+        let json = await response.json();
+        // console.log(json);
+        setPageLoading(false);
+        setBlogPost(json.post);
+      } else {
+        console.log("error");
+        alert(" Post with the ID provided is a not found");
+        navigate("/blog");
+        return;
+      }
     }
   }
   useEffect(() => {
