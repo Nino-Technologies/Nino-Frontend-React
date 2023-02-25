@@ -12,15 +12,35 @@ import { BsX } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 function BlogEditor() {
+  const [cookies, setCookie] = useCookies();
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (cookies.grinderAuthorId) return;
+    if (
+      window.prompt("Enter your valid Email Address") !== "misaacrock@gmail.com"
+    ) {
+      alert("Invalid access");
+      navigate("/blog");
+    } else {
+      let expiresDate = "86400000"; // A day after
+      let newCookies = "63f9656bd2eed5c742d2b726";
+      setCookie("grinderAuthorId", newCookies, {
+        path: "/",
+        maxAge: expiresDate,
+      });
+    }
+  }, []);
   const [postContentPreview, setPostContentPreview] = React.useState(false);
   const [post, setPost] = React.useState({
     image_url: "",
     title: "",
     seo_url: "",
     sub_title: "",
-    author: "63f9656bd2eed5c742d2b726",
+    author: cookies.grinderAuthorId,
     tags: [],
     description: "",
     body: "",
