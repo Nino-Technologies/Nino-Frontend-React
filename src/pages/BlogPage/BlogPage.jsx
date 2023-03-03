@@ -43,10 +43,16 @@ function BlogPage() {
               <SearchInputComponent />
             </div>
             <div className="post_cards-container">
-              {!blogPostsSearch || blogPostsSearch.length ? (
-                <PaginatedBlog itemsPerPage={6} items={blogPostsSearch} />
+              {blogPosts.loading ? (
+                <>Loading...</>
               ) : (
-                <PaginatedBlog itemsPerPage={6} items={blogPosts.blogs} />
+                <>
+                  {!blogPostsSearch || blogPostsSearch.length ? (
+                    <PaginatedBlog itemsPerPage={6} items={blogPostsSearch} />
+                  ) : (
+                    <PaginatedBlog itemsPerPage={6} items={blogPosts.blogs} />
+                  )}
+                </>
               )}
               {/* <PaginatedItems /> */}
               {/* {blogPosts?.blogs?.map((post) => {
