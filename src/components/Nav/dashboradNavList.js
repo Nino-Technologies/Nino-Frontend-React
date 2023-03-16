@@ -6,9 +6,27 @@ import {
   FaUserCheck,
   FaUserPlus,
 } from "react-icons/fa";
-import { BsBellFill, BsHouseFill, BsPerson } from "react-icons/bs";
+import { BsBellFill, BsHouseFill, BsPen, BsPerson } from "react-icons/bs";
 
 export const userNavLinkObject = [
+  {
+    name: "Blogs",
+    icon: <BsHouseFill />,
+    path: "/dashboard/author",
+    userPrivilege: -1,
+  },
+  {
+    name: "Write",
+    icon: <BsPen />,
+    path: "/dashboard/editor",
+    userPrivilege: -1,
+  },
+  {
+    name: "Profile",
+    icon: <BsPerson />,
+    path: "/dashboard/profile",
+    userPrivilege: -1,
+  },
   {
     name: "Home",
     icon: <BsHouseFill />,
