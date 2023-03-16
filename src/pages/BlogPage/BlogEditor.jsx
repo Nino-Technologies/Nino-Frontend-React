@@ -1,6 +1,6 @@
 import React from "react";
 import "./BlogEditor.scss";
-import Nav from "./../../components/Nav/Nav";
+// import Nav from "./../../components/Nav/Nav";
 import { TextField } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -17,35 +17,116 @@ import { useNavigate } from "react-router-dom";
 
 function BlogEditor() {
   const [cookies, setCookie] = useCookies();
+  const { setLoggedIn, userProfile } = React.useContext(UserContext);
   const navigate = useNavigate();
+
+  // React.useEffect(() => {
+  //   if (cookies.grinderAuthorId) return;
+  //   if (
+  //     window.prompt("Enter your valid Email Address") !== "misaacrock@gmail.com"
+  //   ) {
+  //     alert("Invalid access");
+  //     navigate("/blog");
+  //   } else {
+  //     let expiresDate = "86400000"; // A day after
+  //     let newCookies = "63f9656bd2eed5c742d2b726";
+  //     setCookie("grinderAuthorId", newCookies, {
+  //       path: "/",
+  //       maxAge: expiresDate,
+  //     });
+  //   }
+  // }, []);
   React.useEffect(() => {
-    if (cookies.grinderAuthorId) return;
-    if (
-      window.prompt("Enter your valid Email Address") !== "misaacrock@gmail.com"
-    ) {
-      alert("Invalid access");
-      navigate("/blog");
-    } else {
-      let expiresDate = "86400000"; // A day after
-      let newCookies = "63f9656bd2eed5c742d2b726";
-      setCookie("grinderAuthorId", newCookies, {
-        path: "/",
-        maxAge: expiresDate,
-      });
+    if (cookies.grinderUser === undefined) {
+      setLoggedIn(false);
+      navigate("/login?as=author");
+      return;
     }
   }, []);
+  React.useEffect(() => {
+    if (userProfile === null) {
+      setLoggedIn(false);
+      navigate("/login?as=author");
+      return;
+    }
+  }, [userProfile]);
   const [postContentPreview, setPostContentPreview] = React.useState(false);
   const [post, setPost] = React.useState({
     image_url: "",
     title: "",
     seo_url: "",
     sub_title: "",
-    author: cookies.grinderAuthorId,
+    author: userProfile?._id,
     tags: [],
     description: "",
     body: "",
+    author_name: "",
   });
   const { apiUrl } = React.useContext(UserContext);
+  const [updateKey, setUpdateKey] = React.useState(null);
+
+  async function getBlogPost(id) {
+    try {
+      const resp = await axios.get(`${apiUrl}/blog?seo_url=${id}`, {
+        headers: {
+          // authorization: cookies.grinderUser.token,
+        },
+      });
+
+      setPost(resp.data.post);
+      // console.log(resp.data.post);
+      setImagePrev(resp.data.post.image_url);
+
+      // SetBlogPosts({ loading: false, blogs: resp.data.blog.reverse() });
+    } catch (err) {
+      // Handle Error Here
+      console.error(err);
+    }
+  }
+
+  React.useEffect(() => {
+    // if (userProfile && userProfile.rol === -1) {
+    var Your_Current_URL = window.location.href;
+    let path = Your_Current_URL.split("/");
+    let last = Your_Current_URL.split("/").length - 1;
+    var query = path[last].split("?");
+
+    if (query.length === 1) {
+      setPost({
+        image_url: "",
+        title: "",
+        seo_url: "",
+        sub_title: "",
+        author: userProfile?._id,
+        tags: [],
+        description: "",
+        body: "",
+        author_name: "",
+      });
+      setImagePrev(null);
+      return;
+    }
+    // console.log(Your_Current_URL, path, last, query);
+    let key = query[1].split("=")[1];
+
+    setUpdateKey(key);
+    // }
+  }, [window.location.href]);
+
+  React.useEffect(() => {
+    getBlogPost(updateKey);
+  }, [updateKey]);
+
+  React.useEffect(() => {
+    setPost((prev) => {
+      return {
+        ...prev,
+        author: userProfile?._id,
+        author_name: userProfile?.fullName,
+      };
+    });
+  }, [userProfile]);
+
   React.useEffect(() => {
     setPost((prev) => {
       return {
@@ -57,7 +138,7 @@ function BlogEditor() {
 
   const [imageFile, setImageFile] = React.useState(null);
   const [imagePrev, setImagePrev] = React.useState(null);
-  function handleChange(e) {
+  function handleImageChange(e) {
     // console.log(e.target.files);
     setImageFile(e.target.files[0]);
     setImagePrev(URL.createObjectURL(e.target.files[0]));
@@ -71,6 +152,10 @@ function BlogEditor() {
     });
   };
   function uploadImageToCloudinary() {
+    if (updateKey && imageFile === null) {
+      // return postBlogPost(imagePrev);
+      return updateBlogPost(imagePrev);
+    }
     if (imageFile === null) return toast.info("No image selected");
     if (post.title === "") return toast.info("Post Title is required");
     if (post.seo_url === "") return toast.info("Post seo_url is required");
@@ -116,16 +201,44 @@ function BlogEditor() {
       .post(`${apiUrl}/blog`, postObject)
       .then(function (response) {
         toast.success("blog post successfully");
+        navigate("/dashboard/author");
         // console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
+  function updateBlogPost(img_url) {
+    const { title, seo_url, sub_title, author, tags, description, body } = post;
+    let postObject = {
+      image_url: img_url,
+      title,
+      seo_url,
+      sub_title,
+      author,
+      tags,
+      description,
+      body,
+    };
+    if (!updateKey || updateKey === "") {
+      return toast.error("Blog Post Can Not Be Updated!!!");
+    }
+    // console.log(postObject);
+    axios
+      .put(`${apiUrl}/blog?post_id=${updateKey}`, { blogUpdate: postObject })
+      .then(function (response) {
+        toast.success("blog Updated successfully");
+        navigate("/dashboard/author");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   return (
     <div className="BlogEditor">
       {/* <div className="nav-section"> */}
-      <Nav />
+      {/* <Nav /> */}
       {/* </div> */}
       <div className="blog_ban-section">Welcome To Grinders Blog Editor</div>
       <div className="top-editor-container container">
@@ -137,7 +250,7 @@ function BlogEditor() {
                 type="file"
                 id="image_upload"
                 className="d-none"
-                onChange={handleChange}
+                onChange={handleImageChange}
                 accept="image/*"
               />
               <label className="upload mx-auto" htmlFor="image_upload">
@@ -188,7 +301,7 @@ function BlogEditor() {
               label="Blog Author Name"
               variant="outlined"
               name="author"
-              value={"Akpata Isaac Adeiza"}
+              value={post?.author?.name}
               disabled={true}
               // onChange={(e) => {
               //   handelChanges(e);
@@ -202,7 +315,7 @@ function BlogEditor() {
               label="Blog Tag"
               variant="outlined"
               name="tags"
-              // value={post.sub_title}
+              value={post.tags.join(",")}
               onChange={(e) => {
                 setPost((prev) => {
                   return {
@@ -266,10 +379,16 @@ function BlogEditor() {
           ></textarea>
         )}
         <div className="d-flex ms-auto mb-5 gap-3 mt-2">
-          <button>Save Drift</button>
-          <button onClick={() => uploadImageToCloudinary()}>
-            Publish Post
-          </button>
+          {/* <button>Save Drift</button> */}
+          {updateKey ? (
+            <button onClick={() => uploadImageToCloudinary()}>
+              Update Post
+            </button>
+          ) : (
+            <button onClick={() => uploadImageToCloudinary()}>
+              Publish Post
+            </button>
+          )}
         </div>
       </div>
     </div>
