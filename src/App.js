@@ -38,6 +38,7 @@ import BlogPage from "./pages/BlogPage/BlogPage";
 import BlogEditor from "./pages/BlogPage/BlogEditor";
 import BlogPost from "./pages/BlogPage/BlogPost";
 import { BlogProvider } from "./context/BlogContext";
+import AuthorPage from "./pages/AuthorPage/AuthorPage";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -114,14 +115,6 @@ function App() {
           }
         />
         <Route
-          path="/blog/editor"
-          element={
-            <BlogProvider>
-              <BlogEditor />
-            </BlogProvider>
-          }
-        />
-        <Route
           path="/blog/:id"
           element={
             <BlogProvider>
@@ -180,6 +173,22 @@ function App() {
           <Route path="create-admin" element={<CreateAdminPage />} />
           <Route path="payments" element={<PaymentPage />} />
           <Route path="requests" element={<QuickRequestPage />} />
+          <Route
+            path="author"
+            element={
+              <BlogProvider>
+                <AuthorPage />
+              </BlogProvider>
+            }
+          />
+          <Route
+            path="editor"
+            element={
+              <BlogProvider>
+                <BlogEditor />
+              </BlogProvider>
+            }
+          />
         </Route>
 
         <Route
