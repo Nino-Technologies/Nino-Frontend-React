@@ -26,6 +26,7 @@ import {
 } from "@mui/material";
 import { Settings, KeyboardArrowDownOutlined } from "@material-ui/icons";
 import { styled, alpha } from "@mui/material/styles";
+import { useCookies } from "react-cookie";
 
 const navLinks = [
   {
@@ -152,10 +153,14 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
 };
 
 export function AccountMenu() {
-  const { logOutFunction, getUserProfile, userProfile } =
+  const { loggedIn, logOutFunction, getUserProfile, userProfile } =
     useContext(UserContext);
+  const [cookies] = useCookies();
   useEffect(() => {
-    getUserProfile();
+    if (loggedIn && cookies.grinderUser) {
+      return getUserProfile();
+    }
+    // getUserProfile();
   }, []);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -179,7 +184,7 @@ export function AccountMenu() {
           >
             <Avatar
               sx={{ width: 50, height: 50 }}
-              alt={userProfile.fullName}
+              alt={userProfile?.fullName}
               src={userProfile.avatar}
             />
             <KeyboardArrowDownOutlined />
