@@ -13,6 +13,8 @@ import "katex/dist/katex.min.css";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { PaginatedBlog } from "../../components/Pagination/Pagination";
+import { UserContext } from "./../../context/UserContext";
+import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 
 function BlogPage() {
   const { blogPosts, getBlogPost, blogPostsSearch } = useContext(BlogContext);
@@ -72,8 +74,10 @@ function BlogPage() {
 export default BlogPage;
 
 export function BlogCardPost({ post }) {
+  const { userProfile } = useContext(UserContext);
+  const { deleteBlogPost } = useContext(BlogContext);
   const { image_url, title, description, createdAt, author, seo_url } = post;
-  // console.log(body.slice(0, 300));
+  // console.log("userProfile", userProfile);
   return (
     <div className="BlogCardPost">
       <div className="image-container">
@@ -98,9 +102,34 @@ export function BlogCardPost({ post }) {
             remarkPlugins={[remarkGfm, remarkMath]}
           />
         </div>
-        <Link to={`/blog/${seo_url}`} className="mt-auto mb-3">
-          Read more
-        </Link>
+        {userProfile && userProfile.role === -1 ? (
+          <div className="d-flex gap-2 flex-wrap   ">
+            <Link
+              to={`/blog/${seo_url}`}
+              className="btn btn-secondary d-flex align-items-center gap-1 "
+            >
+              <FaEye /> Read
+            </Link>
+            <Link
+              to={`/dashboard/editor?id=${seo_url}`}
+              className="btn btn-secondary d-flex align-items-center gap-1 "
+            >
+              <FaEdit /> Edit
+            </Link>
+            <button
+              onClick={() => {
+                deleteBlogPost(post._id);
+              }}
+              className="btn btn-danger   d-flex align-items-center gap-1"
+            >
+              <FaTrash /> Delete
+            </button>
+          </div>
+        ) : (
+          <Link to={`/blog/${seo_url}`} className="mt-auto mb-3">
+            Read More
+          </Link>
+        )}
       </div>
     </div>
   );
