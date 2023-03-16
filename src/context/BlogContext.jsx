@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
 import { UserContext } from "./UserContext";
 
 export const BlogContext = createContext();
@@ -10,8 +11,7 @@ export function BlogProvider({ children }) {
   const [blogPostsSearch, SetBlogPostsSearch] = useState([]);
   const [blogPosts, SetBlogPosts] = useState({
     loading: true,
-    blogs: [
-    ],
+    blogs: [],
   });
   const [cookies] = useCookies();
 
@@ -63,7 +63,27 @@ export function BlogProvider({ children }) {
     // console.log(postResult, word);
     // console.log("blogPostsSearch", blogPostsSearch);
   }
-
+  function deleteBlogPost(id) {
+    if (!id || id === "") {
+      return toast.error("Error getting post id");
+    }
+    if (window.confirm("This Blog Post Will be Deleted")) {
+      // console.log(postObject);
+      axios
+        .delete(`${apiUrl}/blog?post_id=${id}`)
+        .then(function (response) {
+          toast.success("blog Deleted successfully");
+          SetBlogPosts({
+            loading: false,
+            blogs: response.data.blog,
+          });
+          // navigate("/dashboard/author");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }
   React.useEffect(() => {
     getBlogPost();
   }, []);
@@ -76,6 +96,7 @@ export function BlogProvider({ children }) {
         getBlogPost,
         searchBlogPost,
         blogPostsSearch,
+        deleteBlogPost,
       }}
     >
       {children}
