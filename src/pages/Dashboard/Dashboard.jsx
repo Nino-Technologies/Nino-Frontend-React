@@ -4,17 +4,20 @@ import "./Dashboard.css";
 import Nav, { DashboardSideNav } from "../../components/Nav/Nav";
 import { UserContext } from "../../context/UserContext";
 import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 function Dashboard() {
   const { loggedIn, getUserProfile } = useContext(UserContext);
   const [sideNavOpen, setSideNavOpen] = useState(false);
   const navigate = useNavigate();
-
+  const [cookies] = useCookies();
   if (loggedIn === false) {
-    navigate("/404");
+    navigate("/");
   }
   useEffect(() => {
-    getUserProfile();
+    if (loggedIn) {
+      getUserProfile();
+    }
   }, []);
   return (
     <div className="Dashboard">

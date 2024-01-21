@@ -1,15 +1,47 @@
 .hero-section {
   height: 100vh;
+  // max-height: 600px;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   width: 100%;
   // min-height: 700px;
   // max-height: 560px;
   overflow: hidden;
-  .image-div,
+  background-image: url("../../assets/gif/hero-animation.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  // .image-div,
+        @media (max-width: 600px) {
+  background-position: -500px 0;
+    .mobile-background {
+        // transform: rotate(180deg);
+        // top: -10px;
+        // right: 0;
+        // width: 175px;
+        // height: 183px;
+        // background-size: 100%;
+        // position: absolute;
+        // background-repeat: no-repeat;
+        // background-image: url("../../assets/images/hero-section-image-design-small.png");
+        background-color: rgba(0, 0, 0, 0.3);
+        height: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 1;
+      }
+      .text-div{
+        z-index: 3;
+        color: #fff;
+      }
+  }
   .text-div {
-    width: 50%;
+    width: 70%;
+    max-width: 500px;
     height: 100%;
   }
   .row {
@@ -20,6 +52,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 0 30px;
+    text-shadow: -2px 1px 1px rgb(0, 0, 0);
     .smallHeroImage {
       display: none;
     }
@@ -29,7 +62,9 @@
     .hero-name,
     .sub {
       text-align: left;
-      color: var(--color-primary);
+      // color: var(--color-primary);
+      // color:var(--color-secondary)
+      color: #fff;
     }
     .hero-name {
       font-size: 2em;
@@ -45,9 +80,11 @@
       left: 0;
     }
     a {
-      color: var(--color-secondary);
-    font-weight: 600;
+      // color: var(--color-secondary);
+      color: #fff;
+      font-weight: 600;
     }
+
   }
   .image-div {
     position: relative;
@@ -70,6 +107,12 @@
 
   .search-form {
     padding: 0;
+    // border: solid;
+    color: #fff;
+    button {
+      background-color: var(--color-secondary);
+      text-align: center;
+    }
   }
 
   @media (max-width: 1440px) {
@@ -99,7 +142,7 @@
       .hero-name {
         font-size: 1.5em;
         text-align: left;
-        color: #003049;
+        // color: #003049;
         padding-top: 90px;
         font-weight: 700;
       }
@@ -128,23 +171,17 @@
       }
       width: 100%;
       position: relative;
-      .mobile-background {
-        transform: rotate(180deg);
-        top: -10px;
-        right: 0;
-        width: 175px;
-        height: 183px;
-        background-size: 100%;
-        position: absolute;
-        background-repeat: no-repeat;
-        background-image: url("../../assets/images/hero-section-image-design-small.png");
-      }
-      .smallHeroImage {
-        display: block;
-      }
+    
+      // .smallHeroImage {
+      //   display: block;
+      // }
     }
   }
   @media (max-width: 425px) {
+    background-image: url("../../assets/images/mobile-hero.png");
+    max-height: 700px;
+    background-color: var(--color-primary);
+    background-repeat: no-repeat;
     .text-div {
       padding: 20px;
       .hero-name {
@@ -166,3 +203,661 @@
   @media (max-width: 320px) {
   }
 }
+.about-us-section{
+  // border:solid;
+  img{
+    // border:solid;
+    width:100%
+  }
+  // font-size: 20px;
+}
+.feature-section {
+  // border: solid red;
+
+  /******************************************************************\
+* READ FIRST:
+*
+* The target for this solution is keep compatibility with old
+* browsers by using only the float property.
+*
+* Four Card Section Challenge | Main Stylesheet.
+*
+* Challenge by Frontend Mentor. Coded by Alfonso Suarez.
+* 
+******************************************************************/
+
+  /*
+* # Common Styles Rules 
+*/
+
+  /*
+* ## Global
+*/
+
+  /* 
+* I would prefer to declare variables, but due the bad compatibility
+* between IE browsers and CSS variables, I omitted their use.
+*
+:root {
+--color-prim-cyan:   hsl(180, 62%, 55%);
+--color-prim-red:    hsl(0, 78%, 62%);
+--color-prim-orange: hsl(34, 97%, 64%);
+--color-prim-blue:   hsl(212, 86%, 64%);
+--color-neut-vdblue: hsl(234, 12%, 34%);
+--color-neut-grblue: hsl(229, 6%, 66%);  
+}
+*
+*/
+
+  /*
+* ## Document Body
+*/
+
+  // body {
+  /* Clean content offset */
+  margin: 0;
+  padding: 0;
+
+  /* Set common font styles */
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  // }
+
+  /*
+* ## Elements Styles
+*/
+
+  h1,
+  h2 {
+    font-weight: 600;
+    color: hsl(234, 12%, 34%);
+  }
+
+  p {
+    color: hsl(229, 6%, 66%);
+  }
+
+  /* - - - */
+
+  /*
+* # Specific Styles Rules
+*/
+
+  /*
+* ## Main Header Element
+*/
+
+  header {
+    margin: 80px 30px 75px;
+    text-align: center;
+  }
+
+  header > h1 {
+    margin: 20px 0;
+    font-weight: 200;
+  }
+
+  header > h1 strong {
+    font-weight: 600;
+  }
+
+  header > p {
+    max-width: 520px;
+    margin: auto;
+  }
+
+  @media (max-width: 443px) {
+    header > h1 {
+      font-size: 1.6em;
+    }
+  }
+
+  /*
+* ## Cards Container Class
+*/
+
+  .cards-container {
+    /* List Styling Clean-Up */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    /* Alignment */
+    margin: auto;
+  }
+
+  /*
+* ### Responsive Layout Rules
+*/
+
+  /* When viewport width is equal or greater than 788 pixels,
+* the cards container will fix its width and will append the
+* clear fix pseudo-class to avoid float property issues.
+*
+* The width will depend from the current viewport width.
+* If is greater than 1166 pixels, will be 1106 pixels.
+* Else, then will be 728 pixels.
+*/
+
+  @media (min-width: 788px) {
+    .cards-container {
+      width: 728px;
+    }
+    /* Clear Fix */
+    .cards-container::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+  }
+
+  @media (min-width: 1166px) {
+    .cards-container {
+      width: 1106px;
+    }
+  }
+
+  /*
+* ## Feature Card Class
+*/
+
+  [class$="feature-card"] {
+    /* Positioning and Sizing */
+    position: relative;
+    box-sizing: border-box;
+    width: 350px;
+    min-height: 250px;
+
+    /* Alignment */
+    margin: 0;
+    padding: 30px 32px 0px 32px ;
+
+    /* Box Details */
+    border-radius: 10px;
+    border-top: solid 5px black;
+    box-shadow: 2px 5px 20px rgb(0, 0, 0, 0.1);
+  }
+
+  /*
+* ### Inner Elements
+*/
+
+  [class$="feature-card"] h2,
+  [class$="feature-card"] p {
+    margin: 0;
+  }
+
+  .cards-container {
+    // border: solid;
+    .image-container {
+      margin-left: auto;
+      margin-bottom: 10px;
+      position: absolute;
+      bottom: 0;
+      right: 10px;
+      max-height: 100px;
+      width: 100px;
+      // overflow: hidden;
+      object-fit: cover;
+      img {
+        position: static !important;
+        // border: solid;
+        width: 100px;
+        object-fit: cover;
+      }
+    }
+  }
+
+  /*
+* ### Top Border Colors Rules
+*/
+
+  [class$="feature-card"][class*="cyan"] {
+    border-color: hsl(180, 62%, 55%);
+  }
+
+  [class$="feature-card"][class*="red"] {
+    border-color: hsl(0, 78%, 62%);
+  }
+
+  [class$="feature-card"][class*="orange"] {
+    border-color: hsl(34, 97%, 64%);
+  }
+
+  [class$="feature-card"][class*="blue"] {
+    border-color: hsl(212, 86%, 64%);
+  }
+
+  /*
+* ### Responsive Layout Rules
+*/
+
+  /* When the viewport width is less than 788 pixels, the container
+* will not be fixed and every card will arrange normally one over
+* other. This layout is comfortable for mobile devices.
+*
+* But if is equal or greather, every card will set the float
+* property to the left.
+*
+* They will sort smartly on a grid of two columns and two rows if
+* the current viewport width is less than 1166 pixels, that is,
+* for notebooks and tablets screens.
+*
+* Else, then they will sort like the final challenge for desktop
+* larger screens (with a viewport width greather than 1166 pixels.)
+*
+* I had to hard coded every effect because I only use float
+* properties. And I didn't went to use auxiliar HTML elements,
+* trying to keep separation of concerns.
+*/
+
+  @media (min-width: 788px) {
+    [class$="feature-card"] {
+      float: left;
+    }
+
+    @media (min-width: 1166px) {
+      [class$="feature-card"]:first-child {
+        margin: 140px 0;
+      }
+
+      [class$="feature-card"]:nth-child(2),
+      [class$="feature-card"]:nth-child(3) {
+        margin: 0 22px;
+      }
+
+      [class$="feature-card"]:last-child {
+        margin-top: -110px;
+      }
+
+      [class$="feature-card"]:nth-child(3) {
+        margin-top: 30px;
+      }
+    }
+
+    @media (max-width: 1165px) {
+      [class$="feature-card"]:nth-child(3),
+      [class$="feature-card"]:nth-child(4) {
+        margin-top: 30px;
+      }
+
+      [class$="feature-card"]:nth-child(2),
+      [class$="feature-card"]:nth-child(4) {
+        margin-left: 28px;
+      }
+    }
+  }
+
+  @media (max-width: 787px) {
+    [class$="feature-card"] {
+      width: 300px;
+      height: 220px;
+      margin: auto;
+    }
+
+    [class$="feature-card"]:not(:first-child) {
+      margin-top: 22px;
+    }
+  }
+}
+
+.why-Choose-Us-section {
+  //   h1,
+  // h2,
+  // h3,
+  // h4,
+  // h5,
+  // h6 {}
+  a,
+  a:hover,
+  a:focus,
+  a:active {
+    text-decoration: none;
+    outline: none;
+  }
+  a {
+    font-style: normal;
+    text-decoration: none;
+    transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -webkit-transition: all 500ms ease;
+    -ms-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+  }
+  a,
+  a:active,
+  a:focus {
+    color: #333;
+    text-decoration: none;
+    transition-timing-function: ease-in-out;
+    -ms-transition-timing-function: ease-in-out;
+    -moz-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    -o-transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
+    -ms-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+    -o-transition-duration: 0.2s;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .chooseus-section {
+    position: relative;
+    background: #fff;
+    padding: 50px 0px;
+    min-height: 100vh;
+  }
+
+  .chooseus-section .sec-title {
+    margin-bottom: 60px;
+  }
+
+  #video_block_01 .video-inner {
+    position: relative;
+    width: 100%;
+    padding: 175px 0px 130px 0px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  #video_block_01 .video-inner .pattern-layer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+  }
+
+  #video_block_01 .video-inner .video-btn {
+    position: relative;
+    display: inline-block;
+    width: 116px;
+    height: 115px;
+    line-height: 115px;
+    text-align: center;
+    margin-left: 40px;
+    border-radius: 50%;
+  }
+
+  #video_block_01 .video-inner .video-btn .btn-bg {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 116px;
+    height: 115px;
+    background-repeat: no-repeat;
+  }
+
+  #video_block_01 .video-inner .video-btn a {
+    position: relative;
+    display: inline-block;
+    width: 116px;
+    height: 115px;
+    border-radius: 50%;
+    font-size: 24px;
+    z-index: 1;
+  }
+  // #video_block_01 .video-inner .video-btn a i {
+  //   background: -webkit-linear-gradient(-45deg, #00bb6e, #0156d5 100%);
+  // }
+  // #video_block_01 .video-inner .video-btn a i {
+  //   position: relative;
+  //   color: transparent;
+  //   -webkit-background-clip: text;
+  //   -webkit-text-fill-color: transparent;
+  // }
+
+  #content_block_04 .content-box .single-item {
+    position: relative;
+    // border: solid;
+    display: flex;
+    gap: 10px;
+    // flex-wrap: wrap;
+    // flex-direction: column;
+  }
+
+  // #content_block_04 .content-box .single-item:first-child {
+  //   padding-left: 190px;
+  //   margin-bottom: 67px;
+  // }
+
+  // #content_block_04 .content-box .single-item:last-child {
+  //   padding-right: 190px;
+  // }
+
+  #content_block_04 .content-box .single-item .icon-box {
+    // position: absolute;
+    // margin-left: 10px;
+    
+    // top: 14px;
+    width: 300px;
+    // height: 300px;
+    // line-height: 158px;
+    
+    text-align: center;
+    // font-size: 70px;
+    // border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-left: auto;
+    img{
+      width: 100%;
+      object-fit: cover;
+      // border: 1px solid #e5e5e5;
+      margin-top: 0;
+    }
+  }
+  @media screen and  (max-width:575px){
+      #content_block_04 .content-box .single-item .icon-box {
+        border: solid var(--color-secondary) 2px;
+        box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.5) ;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        margin: auto;
+        margin-bottom: 20px;
+      }
+  }
+
+  // #content_block_04 .content-box .single-item .icon-box:before {
+  //   position: absolute;
+  //   content: "";
+  //   // background: #fbfbfb;
+  //   width: 138px;
+  //   height: 100%;
+  //   left: 10px;
+  //   border-radius: 10px;
+  // }
+
+  // #content_block_04 .content-box .single-item:first-child .icon-box:before {
+  //   top: 10px;
+  // }
+
+  // #content_block_04 .content-box .single-item:last-child .icon-box:before {
+  //   top: -10px;
+  // }
+
+  // #content_block_04 .content-box .single-item .icon-box i {
+  //   background: -webkit-linear-gradient(-45deg, #e273ff, #504bff 100%);
+  //   position: relative;
+  //   color: transparent;
+  //   -webkit-background-clip: text;
+  //   -webkit-text-fill-color: transparent;
+  // }
+
+  // #content_block_04 .content-box .single-item .icon-box .bg-layer {
+  //   position: absolute;
+  //   left: 0px;
+  //   top: 0px;
+  //   width: 158px;
+  //   height: 158px;
+  //   background-repeat: no-repeat;
+  // }
+
+  // #content_block_04 .content-box .single-item:first-child .icon-box {
+  //   left: 0px;
+  // }
+
+  // #content_block_04 .content-box .single-item:last-child .icon-box {
+  //   right: 0px;
+  // }
+
+  #content_block_04 .content-box .single-item .box h4 {
+    position: relative;
+    padding-bottom: 12px;
+    margin-bottom: 27px;
+  }
+
+  #content_block_04 .content-box .single-item .box h4:before {
+    position: absolute;
+    content: "";
+    width: 55px;
+    height: 2px;
+    bottom: 0px;
+  }
+
+  #content_block_04 .content-box .single-item:first-child .box h4:before {
+    left: 0px;
+  }
+
+  #content_block_04 .content-box .single-item:last-child .box h4:before {
+    right: 0px;
+  }
+
+  #content_block_04 .content-box .single-item .box p {
+    margin-bottom: 20px;
+    line-height: 28px;
+  }
+
+  #content_block_04 .content-box .single-item .box a {
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 26px;
+    font-family: "Josefin Sans", Sans-serif;
+    font-weight: 600;
+    color: #040535;
+  }
+
+  #content_block_04 .content-box .single-item .box a:hover {
+    color: #5167f9;
+  }
+
+  #content_block_04 .content-box .single-item:first-child .box a i {
+    margin-right: 10px;
+  }
+
+  #content_block_04 .content-box .single-item:last-child .box a i {
+    margin-left: 10px;
+  }
+  .rotate-me {
+    animation-name: rotateme;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-name: rotateme;
+    -webkit-animation-duration: 30s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: rotateme;
+    -moz-animation-duration: 30s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: rotateme;
+    -ms-animation-duration: 30s;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+    -o-animation-name: rotateme;
+    -o-animation-duration: 30s;
+    -o-animation-iteration-count: infinite;
+    -o-animation-timing-function: linear;
+  }
+
+  @keyframes rotateme {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  @-webkit-keyframes rotateme {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(-360deg);
+    }
+  }
+  @-moz-keyframes rotateme {
+    from {
+      -moz-transform: rotate(0deg);
+    }
+    to {
+      -moz-transform: rotate(-360deg);
+    }
+  }
+  @-o-keyframes rotateme {
+    from {
+      -o-transform: rotate(0deg);
+    }
+    to {
+      -o-transform: rotate(-360deg);
+    }
+  }
+  .modal-body {
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+    padding-top: 0;
+    overflow: hidden;
+  }
+
+  .modal-body iframe,
+  .modal-body object,
+  .modal-body embed,
+  .modal-body video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  button.close {
+    position: absolute;
+    right: -20px;
+    top: -30px;
+    border-radius: 50px;
+    background: white;
+    line-height: 1 !important;
+    padding: 0px 6px 5px !important;
+    opacity: 1;
+  }
+}
+// .hero-section::after {
+//   content: "";
+//   background: url("../../assets/images/13127-removebg-preview.png");
+//   opacity: 0.5;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   right: 0;
+//   position: absolute;
+//   z-index: 10;
+// }

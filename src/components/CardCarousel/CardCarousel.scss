@@ -1,0 +1,21 @@
+.CardCarousel{
+  display: flex;
+  .react-multi-carousel-list{
+// border: solid;
+height: 300px;
+.react-multi-carousel-track{
+  height: 350px;
+  // align-items: center;
+  .react-multi-carousel-item{
+    // border: solid red;
+    justify-content: center;
+    display: inline-flex;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+  }
+
+    }
+}
+
+}

@@ -7,6 +7,7 @@ import UserLoginForm from "../../components/LoginForm/UserLoginForm";
 import ArtisanLoginForm from "../../components/LoginForm/ArtisanLoginForm";
 import { FaArrowLeft } from "react-icons/fa";
 import AdminLoginForm from "../../components/LoginForm/AdminLoginForm";
+import AuthorLoginForm from "../../components/LoginForm/AuthorLoginForm";
 
 function LoginPage() {
   const [displayForm, setDisplayForm] = useState(-1);
@@ -21,6 +22,9 @@ function LoginPage() {
     }
     if (searchParams.get("as") === "admin") {
       return setDisplayForm(3);
+    }
+    if (searchParams.get("as") === "author") {
+      return setDisplayForm(4);
     }
     console.log("Invalid login request");
   }, [searchParams]);
@@ -43,7 +47,13 @@ function LoginPage() {
                     {displayForm === 3 ? (
                       <AdminLoginForm />
                     ) : (
-                      <>Invalid Login Request</>
+                      <>
+                        {displayForm === 4 ? (
+                          <AuthorLoginForm />
+                        ) : (
+                          <>Invalid Login Request</>
+                        )}
+                      </>
                     )}
                   </>
                 )}

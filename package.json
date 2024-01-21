@@ -1,13 +1,15 @@
 {
-  "name": "Grinders.ng",
+  "name": "grinders",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@cloudinary/react": "^1.5.0",
     "@cloudinary/url-gen": "^1.8.6",
     "@emailjs/browser": "^3.7.0",
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.5",
+    "@mui/material": "^5.15.5",
     "@popperjs/core": "^2.11.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -24,19 +26,25 @@
     "react-easy-crop": "^4.6.1",
     "react-ga": "^3.3.1",
     "react-icons": "^4.4.0",
+    "react-markdown": "^8.0.5",
+    "react-multi-carousel": "^2.8.2",
     "react-paginate": "^8.1.4",
     "react-paystack": "^4.0.1",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "5.0.1",
     "react-toastify": "^9.0.8",
+    "rehype-katex": "^6.0.2",
+    "rehype-raw": "^6.1.1",
+    "remark-gfm": "^3.0.1",
+    "remark-math": "^5.1.1",
     "sass": "^1.54.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -55,8 +63,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "react-app-rewired": "^2.2.1"
   }
 }

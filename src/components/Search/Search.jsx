@@ -4,6 +4,10 @@ import "./Search.scss";
 import { SearchContext } from "../../context/SearchContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "./../../context/UserContext";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import { TermiiSMSContext } from "../../context/TermiiContext";
 
 function Search() {
   const {
@@ -131,17 +135,21 @@ function Search() {
           </div>
         </label>
         <div className="d-flex">
-          <button className="d-flex" type="submit" disabled={pageLoading}>
-            {!pageLoading ? (
-              <div className="my-auto">
-                <FaSearch className="me-1" />
-                search
-              </div>
-            ) : (
-              <div className="my-auto">
+          <button
+            className="d-flex justify-content-center align-items-center"
+            type="submit"
+            disabled={pageLoading}
+          >
+            {pageLoading ? (
+              <>
                 <FaHistory className="me-1" />
                 Loading ...
-              </div>
+              </>
+            ) : (
+              <>
+                <FaSearch className="me-1" />
+                Search
+              </>
             )}
           </button>
           {formService !== "" ||
@@ -465,6 +473,138 @@ export function StateSearchInput({
           </ul>
         </div>
       ) : null} */}
+    </div>
+  );
+}
+
+export function QuickRequestComponent() {
+  const { loggedIn, userProfile, apiUrl } = useContext(UserContext);
+  const { sendMessageFunction } = useContext(TermiiSMSContext);
+  const [cookies] = useCookies();
+  const [quickRequests, setQuickRequests] = useState({
+    locationCity: "",
+    locationState: "",
+    service: "",
+  });
+  const [sendingRequest, setSendingRequest] = useState(false);
+
+  const handelChanges = (e) => {
+    setQuickRequests((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+  async function sendQuickRequests() {
+    if (!loggedIn) {
+      return toast.info("Login to send Quick Requests");
+    }
+    if (
+      quickRequests.locationCity === "" ||
+      quickRequests.locationState === "" ||
+      quickRequests.service === ""
+    ) {
+      return toast.info("Fill form to send Quick Requests");
+    }
+    if (userProfile.role === 3) {
+      return toast.info("Admins cant send Quick Requests");
+    }
+    setSendingRequest(true);
+
+    // return console.log();
+    try {
+      const resp = await axios.post(
+        `${apiUrl}/request`,
+        {
+          sender: userProfile.fullName,
+          number: userProfile.phoneNumber,
+          ...quickRequests,
+        },
+        {
+          headers: {
+            authorization: cookies.grinderUser.token,
+          },
+        }
+      );
+      setSendingRequest(false);
+      sendMessageFunction({
+        to: `2348037009713`,
+        message: `Attention Grinders,
+"${userProfile.fullName}" has submitted a request for the service "${quickRequests.service}". Prompt response is required. 
+Thank you.
+      `,
+      });
+      setQuickRequests({
+        locationCity: "",
+        locationState: "",
+        service: "",
+      });
+      // toast.success(
+      //   "Request sent successfully, we will attend to you in a short time"
+      // );
+    } catch (err) {
+      toast.error("Request was not successfully, try again");
+      setSendingRequest(false);
+      // Handle Error Here
+      console.error(err);
+    }
+  }
+
+  return (
+    <div className="search-form">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          sendQuickRequests();
+        }}
+      >
+        <input
+          type="text"
+          className="form-control"
+          placeholder="What do you want to do?"
+          name="service"
+          value={quickRequests.service}
+          onChange={(e) => {
+            handelChanges(e);
+          }}
+        />
+        <label>
+          <b>
+            Location <br />{" "}
+          </b>
+          <div className="d-flex w-100">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="State"
+              name="locationState"
+              value={quickRequests.locationState}
+              onChange={(e) => {
+                handelChanges(e);
+              }}
+            />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="City"
+              name="locationCity"
+              value={quickRequests.locationCity}
+              onChange={(e) => {
+                handelChanges(e);
+              }}
+            />
+          </div>
+        </label>
+        <div className="d-flex">
+          <button
+            className="d-flex justify-content-center align-items-center"
+            type="submit"
+          >
+            {sendingRequest ? "Sending request..." : "Request"}
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

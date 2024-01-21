@@ -1,0 +1,434 @@
+import React from "react";
+import "./BlogEditor.scss";
+// import Nav from "./../../components/Nav/Nav";
+import { TextField } from "@mui/material";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
+import { BsX } from "react-icons/bs";
+import { toast } from "react-toastify";
+import { UserContext } from "../../context/UserContext";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+
+function BlogEditor() {
+  const [cookies, setCookie] = useCookies();
+  const { setLoggedIn, userProfile } = React.useContext(UserContext);
+  const navigate = useNavigate();
+
+  // React.useEffect(() => {
+  //   if (cookies.grinderAuthorId) return;
+  //   if (
+  //     window.prompt("Enter your valid Email Address") !== "misaacrock@gmail.com"
+  //   ) {
+  //     alert("Invalid access");
+  //     navigate("/blog");
+  //   } else {
+  //     let expiresDate = "86400000"; // A day after
+  //     let newCookies = "63f9656bd2eed5c742d2b726";
+  //     setCookie("grinderAuthorId", newCookies, {
+  //       path: "/",
+  //       maxAge: expiresDate,
+  //     });
+  //   }
+  // }, []);
+  React.useEffect(() => {
+    if (cookies.grinderUser === undefined) {
+      setLoggedIn(false);
+      navigate("/login?as=author");
+      return;
+    }
+  }, []);
+  React.useEffect(() => {
+    if (userProfile === null) {
+      setLoggedIn(false);
+      navigate("/login?as=author");
+      return;
+    }
+  }, [userProfile]);
+  const [postContentPreview, setPostContentPreview] = React.useState(false);
+  const [post, setPost] = React.useState({
+    image_url: "",
+    title: "",
+    seo_url: "",
+    sub_title: "",
+    author: userProfile?._id,
+    tags: [],
+    description: "",
+    body: "",
+    author_name: "",
+  });
+  const { apiUrl } = React.useContext(UserContext);
+  const [updateKey, setUpdateKey] = React.useState(null);
+
+  async function getBlogPost(id) {
+    try {
+      const resp = await axios.get(`${apiUrl}/blog?seo_url=${id}`, {
+        headers: {
+          // authorization: cookies.grinderUser.token,
+        },
+      });
+
+      setPost(resp.data.post);
+      // console.log(resp.data.post);
+      setImagePrev(resp.data.post.image_url);
+
+      // SetBlogPosts({ loading: false, blogs: resp.data.blog.reverse() });
+    } catch (err) {
+      // Handle Error Here
+      console.error(err);
+    }
+  }
+
+  React.useEffect(() => {
+    // if (userProfile && userProfile.rol === -1) {
+    var Your_Current_URL = window.location.href;
+    let path = Your_Current_URL.split("/");
+    let last = Your_Current_URL.split("/").length - 1;
+    var query = path[last].split("?");
+
+    if (query.length === 1) {
+      setPost({
+        image_url: "",
+        title: "",
+        seo_url: "",
+        sub_title: "",
+        author: userProfile?._id,
+        tags: [],
+        description: "",
+        body: "",
+        author_name: "",
+      });
+      setImagePrev(null);
+      return;
+    }
+    // console.log(Your_Current_URL, path, last, query);
+    let key = query[1].split("=")[1];
+
+    setUpdateKey(key);
+    // }
+  }, [window.location.href]);
+
+  React.useEffect(() => {
+    getBlogPost(updateKey);
+  }, [updateKey]);
+
+  React.useEffect(() => {
+    setPost((prev) => {
+      return {
+        ...prev,
+        author: userProfile?._id,
+        author_name: userProfile?.fullName,
+      };
+    });
+  }, [userProfile]);
+
+  React.useEffect(() => {
+    setPost((prev) => {
+      return {
+        ...prev,
+        ["seo_url"]: post.title.replace(/ /g, "-"),
+      };
+    });
+  }, [post.title]);
+
+  const [imageFile, setImageFile] = React.useState(null);
+  const [imagePrev, setImagePrev] = React.useState(null);
+  function handleImageChange(e) {
+    // console.log(e.target.files);
+    setImageFile(e.target.files[0]);
+    setImagePrev(URL.createObjectURL(e.target.files[0]));
+  }
+  const handelChanges = (e) => {
+    setPost((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+  function uploadImageToCloudinary() {
+    if (updateKey && imageFile === null) {
+      // return postBlogPost(imagePrev);
+      return updateBlogPost(imagePrev);
+    }
+    if (imageFile === null) return toast.info("No image selected");
+    if (post.title === "") return toast.info("Post Title is required");
+    if (post.seo_url === "") return toast.info("Post seo_url is required");
+    if (post.sub_title === "") return toast.info("Post sub_title is required");
+    if (post.description === "")
+      return toast.info("Post description is required");
+    if (post.body === "") return toast.info("Post body is required");
+    if (post.author === "") return toast.info("Post author is required");
+    if (post.tags.length === 0) return toast.info("Post tags is required");
+
+    const imageData = new FormData();
+    imageData.append("file", imageFile);
+    imageData.append("upload_preset", "upload-blog-header-image");
+    imageData.append("cloud_name", "dhvacnvek");
+
+    fetch("https://api.cloudinary.com/v1_1/dhvacnvek/image/upload", {
+      method: "post",
+      body: imageData,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        // console.log(data);
+        // after the image is uploaded, publish blog post
+        postBlogPost(data.url);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function postBlogPost(img_url) {
+    const { title, seo_url, sub_title, author, tags, description, body } = post;
+    let postObject = {
+      image_url: img_url,
+      title,
+      seo_url,
+      sub_title,
+      author,
+      tags,
+      description,
+      body,
+    };
+    // console.log(postObject);
+    axios
+      .post(`${apiUrl}/blog`, postObject)
+      .then(function (response) {
+        toast.success("blog post successfully");
+        navigate("/dashboard/author");
+        // console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  function updateBlogPost(img_url) {
+    const { title, seo_url, sub_title, author, tags, description, body } = post;
+    let postObject = {
+      image_url: img_url,
+      title,
+      seo_url,
+      sub_title,
+      author,
+      tags,
+      description,
+      body,
+    };
+    if (!updateKey || updateKey === "") {
+      return toast.error("Blog Post Can Not Be Updated!!!");
+    }
+    // console.log(postObject);
+    axios
+      .put(`${apiUrl}/blog?post_id=${updateKey}`, { blogUpdate: postObject })
+      .then(function (response) {
+        toast.success("blog Updated successfully");
+        navigate("/dashboard/author");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  return (
+    <div className="BlogEditor">
+      {/* <div className="nav-section"> */}
+      {/* <Nav /> */}
+      {/* </div> */}
+      <div className="blog_ban-section">Welcome To Grinders Blog Editor</div>
+      <div className="top-editor-container container">
+        <div className="image-container">
+          {!imagePrev ? (
+            <div>
+              <p>Upload Header Image</p>
+              <input
+                type="file"
+                id="image_upload"
+                className="d-none"
+                onChange={handleImageChange}
+                accept="image/*"
+              />
+              <label className="upload mx-auto" htmlFor="image_upload">
+                Upload
+              </label>
+            </div>
+          ) : (
+            <>
+              <div className="close_button" onClick={() => setImagePrev(null)}>
+                <BsX />
+              </div>
+              <img src={imagePrev} />
+            </>
+          )}
+        </div>
+
+        <div className="row">
+          <div className="col-md-6 mt-4">
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="Blog Title"
+              variant="outlined"
+              name="title"
+              value={post.title}
+              onChange={(e) => {
+                handelChanges(e);
+              }}
+            />
+          </div>
+          <div className="col-md-6 mt-4">
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="Blog Subtitle"
+              variant="outlined"
+              name="sub_title"
+              value={post.sub_title}
+              onChange={(e) => {
+                handelChanges(e);
+              }}
+            />
+          </div>
+          <div className="col-md-6 mt-4">
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="Blog Author Name"
+              variant="outlined"
+              name="author"
+              value={post?.author?.name}
+              disabled={true}
+              // onChange={(e) => {
+              //   handelChanges(e);
+              // }}
+            />
+          </div>
+          <div className="col-md-6 mt-4">
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="Blog Tag"
+              variant="outlined"
+              name="tags"
+              value={post.tags.join(",")}
+              onChange={(e) => {
+                setPost((prev) => {
+                  return {
+                    ...prev,
+                    [e.target.name]: e.target.value.split(","),
+                  };
+                });
+              }}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="container mt-3">
+        <label htmlFor="description">Description</label>
+        <textarea
+          className="form-control"
+          name="description"
+          id="description"
+          value={post.description}
+          onChange={(e) => {
+            handelChanges(e);
+          }}
+        ></textarea>
+      </div>
+      <div className="body-editor-container container">
+        <div className="top my-5">
+          <span>
+            <b> Post Content </b>
+            <button
+              className="ms-3"
+              onClick={() => setPostContentPreview(!postContentPreview)}
+            >
+              {postContentPreview ? "Edit Content" : "Preview Content"}
+            </button>
+          </span>
+
+          <span>
+            <b>Word Count: </b>
+            {post.body.split(" ").length} Words,
+            {post.body.length} latter's,
+          </span>
+        </div>
+        {postContentPreview ? (
+          <div className="edit_content-preview">
+            <ReactMarkdown
+              skipHtml={true}
+              children={post.body}
+              rehypePlugins={[rehypeRaw, rehypeKatex]}
+              remarkPlugins={[remarkGfm, remarkMath]}
+            />
+          </div>
+        ) : (
+          <textarea
+            // value={postContent}
+            // onChange={(e) => setPostContent(e.target.value)}
+            name="body"
+            value={post.body}
+            onChange={(e) => {
+              handelChanges(e);
+            }}
+          ></textarea>
+        )}
+        <div className="d-flex ms-auto mb-5 gap-3 mt-2">
+          {/* <button>Save Drift</button> */}
+          {updateKey ? (
+            <button onClick={() => uploadImageToCloudinary()}>
+              Update Post
+            </button>
+          ) : (
+            <button onClick={() => uploadImageToCloudinary()}>
+              Publish Post
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default BlogEditor;
+
+/*
+# i am a body from my mother home
+
+<h1> hi header 1</h1>
+<h2> this is header two </h2>
+
+Here is some JavaScript code:
+
+~~~js
+console.log('It works!')
+~~~
+
+![test](https://cdn.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png)
+
+<img src="https://mma.prnewswire.com/media/1513369/Educative_Logo.jpg"  width="60%" height="30%">
+
+  This ~is not~ strikethrough, but ~~this is~~!
+
+The lift coefficient ($C_L$) is a dimensionless coefficient.
+
+A paragraph with *emphasis* and **strong importance**.
+import { UserContext } from './../../context/UserContext';
+
+> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
+
+* Lists
+* [ ] todo
+* [x] done
+
+A table:
+
+| a | b |
+| - | - |
+
+*/
