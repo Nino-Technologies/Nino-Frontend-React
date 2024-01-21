@@ -24,7 +24,7 @@ import {
   Tooltip,
   // Typography,
 } from "@mui/material";
-import { Settings, KeyboardArrowDownOutlined } from "@material-ui/icons";
+import { Settings, KeyboardArrowDownOutlined } from "@mui/icons-material";
 import { styled, alpha } from "@mui/material/styles";
 import { useCookies } from "react-cookie";
 

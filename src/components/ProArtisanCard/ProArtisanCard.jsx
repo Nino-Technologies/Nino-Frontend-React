@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./ProArtisanCard.scss";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
-import { Facebook } from "@material-ui/icons";
+import { Facebook } from "@mui/icons-material";
 import { BsPlus } from "react-icons/bs";
 import { useState } from "react";
 import { Link } from "react-router-dom";
