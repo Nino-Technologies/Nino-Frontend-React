@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Cropper from "react-easy-crop";
-import Slider from "@material-ui/core/Slider";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
+// import Slider from "@mui/material/Slider";
+import Slider from "@mui/material/Slider";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { withStyles } from "@mui/styles";
 import { getOrientation } from "get-orientation/browser";
 import ImgDialog from "./imgDialog";
 import { createImage, getCroppedImg, getRotatedImage } from "./canvasUtils";

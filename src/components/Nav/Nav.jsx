@@ -12,6 +12,44 @@ import {
   // BsHouse,
 } from "react-icons/bs";
 import { userNavLinkObject } from "./dashboradNavList";
+// import {
+//   Avatar,
+//   Box,
+//   Button,
+//   Divider,
+//   IconButton,
+//   ListItemIcon,
+//   Menu,
+//   MenuItem,
+//   Tooltip,
+//   // Typography,
+// } from "@mui/material";
+// import { Settings, KeyboardArrowDownOutlined } from "@mui/icons-material";
+// import { styled, alpha } from "@mui/styles";
+// import { useCookies } from "react-cookie";
+
+const navLinks = [
+  {
+    name: "Home",
+    link: "/home",
+  },
+  {
+    name: "Service Providers",
+    link: "/artisans",
+  },
+  {
+    name: "About Us",
+    link: "/about-us",
+  },
+  {
+    name: "Blog",
+    link: "/blog",
+  },
+  {
+    name: "Contact Us",
+    link: "/contact-us",
+  },
+];
 
 function Nav() {
   const { loggedIn } = useContext(UserContext);
