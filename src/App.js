@@ -1,5 +1,5 @@
 import "./App.css";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import ArtisansPage from "./pages/ArtisansPage/ArtisansPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
@@ -23,7 +23,6 @@ import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
 import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
-import ReactGa from "react-ga";
 import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./context/UserContext";
@@ -33,6 +32,13 @@ import SendMessagePage from "./components/SendMessages/SendMessagePage";
 import { TestProvider } from "./context/ContextTest";
 import { SaveArtisanProvider } from "./context/saveUserContext";
 import { TermiiSMSProvider } from "./context/TermiiContext";
+import QuickRequestPage from "./pages/QuickRequestPage/QuickRequestPage";
+import ReactGa from "react-ga";
+import BlogPage from "./pages/BlogPage/BlogPage";
+import BlogEditor from "./pages/BlogPage/BlogEditor";
+import BlogPost from "./pages/BlogPage/BlogPost";
+import { BlogProvider } from "./context/BlogContext";
+import AuthorPage from "./pages/AuthorPage/AuthorPage";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -40,11 +46,21 @@ ReactGa.initialize(TRACKING_ID);
 function App() {
   const { getUserProfile, loggedIn } = useContext(UserContext);
 
-  useEffect(() => {
-    if (loggedIn) {
-      getUserProfile();
-    }
-  }, []);
+  function ScrollToTop() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+  }
+
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     getUserProfile();
+  //   }
+  // }, []);
   // check network
   // const [networkConnected, setNetworkConnected] = useState(true);
 
@@ -80,10 +96,33 @@ function App() {
         <PaymentModalComponent />
       </TermiiSMSProvider>
       <Routes>
-        <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/about-us" element={<AboutUsPage />} />
         <Route
           exact
+          path="/home"
+          element={
+            <TermiiSMSProvider>
+              <LandingPage />
+            </TermiiSMSProvider>
+          }
+        />
+        <Route path="/about-us" element={<AboutUsPage />} />
+        <Route
+          path="/blog"
+          element={
+            <BlogProvider>
+              <BlogPage />
+            </BlogProvider>
+          }
+        />
+        <Route
+          path="/blog/:id"
+          element={
+            <BlogProvider>
+              <BlogPost />
+            </BlogProvider>
+          }
+        />
+        <Route
           path="/artisans"
           element={
             <SaveArtisanProvider>
@@ -92,7 +131,6 @@ function App() {
           }
         />
         <Route
-          exact
           path="/artisans-profile/:id"
           element={
             <SaveArtisanProvider>
@@ -102,9 +140,9 @@ function App() {
             </SaveArtisanProvider>
           }
         />
-        <Route exact path="/contact-us" element={<ContactUsPage />} />
-        <Route exact path="/login" element={<LoginPage />} />
-        <Route exact path="/register" element={<RegisterPage />} />
+        <Route path="/contact-us" element={<ContactUsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/password-reset" element={<PasswordResetPage />} />
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/image-cropper" element={<ImageCropperWithStyle />} />
@@ -134,10 +172,34 @@ function App() {
           />
           <Route path="create-admin" element={<CreateAdminPage />} />
           <Route path="payments" element={<PaymentPage />} />
+          <Route path="requests" element={<QuickRequestPage />} />
+          <Route
+            path="author"
+            element={
+              <BlogProvider>
+                <AuthorPage />
+              </BlogProvider>
+            }
+          />
+          <Route
+            path="editor"
+            element={
+              <BlogProvider>
+                <BlogEditor />
+              </BlogProvider>
+            }
+          />
         </Route>
+
+        <Route
+          exact
+          path="/"
+          element={<Navigate to="/home" replace />} //this is a way to redirect
+        />
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
+      <ScrollToTop />
     </div>
   );
 }

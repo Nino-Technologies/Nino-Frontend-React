@@ -34,9 +34,14 @@ export function UserProvider({ children }) {
       setLoggedIn(false);
       return;
     }
-  });
+  }, [userProfile]);
   function getUserProfile() {
     // axios GET request
+    if (!cookies.grinderUser) {
+      // toast.error("Login Profile");
+      return;
+      // navigate("/");
+    }
     const options = {
       // url: `http://localhost:5000/api/auth/user/login`,
       url: `${apiUrl}/users/profile/${cookies.grinderUser.profile._id}`,
@@ -52,15 +57,18 @@ export function UserProvider({ children }) {
       .then((response) => {
         const userProfile = response.data.data;
         setUserProfile(userProfile);
+        // console.log(userProfile);
       })
       .catch((error) => {
         console.log(error.message);
       });
   }
   useEffect(() => {
-    if (loggedIn) {
-      getUserProfile();
+    if (loggedIn && cookies.grinderUser) {
+      return getUserProfile();
     }
+    // toast.error("Login Profile");
+    // return navigate("/");
   }, []);
 
   function checkVerifiedFunction(verify) {
@@ -89,7 +97,7 @@ export function UserProvider({ children }) {
 
   function logOutFunction() {
     if (window.confirm("You will be logged out of your account !!!")) {
-      localStorage.removeItem("telecomMerchant");
+      // localStorage.removeItem("telecomMerchant");
 
       // setUserAccountInformation([]);
       setUserProfile([]);

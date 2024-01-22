@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./Nav.scss";
 import navImage from "../../assets/images/grinders.png";
 import { BsCaretDownFill, BsHeart, BsHouse } from "react-icons/bs";
@@ -54,208 +54,39 @@ const navLinks = [
 function Nav() {
   const { loggedIn } = useContext(UserContext);
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white">
-      <div className="container container-fluid px-4">
-        <Link className="navbar-brand" to={"/"}>
-          <img src={navImage} alt="working-man" className="logo-image" />
+    <div className="Nav">
+      {" "}
+      <input
+        type="checkbox"
+        name=""
+        id="menu-toggle"
+        style={{ display: "none" }}
+      />
+      <div className="logo">
+        <Link to="/">
+          <img src={navImage} alt="working-man" className="logo" />
         </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div
-          className="collapse navbar-collapse justify-content-center text-center"
-          id="navbarNav"
-        >
-          <ul className="navbar-nav">
-            <li className="nav-item effect px-3 ">
-              <Link to="/" className="nav-link active" aria-current="page">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item effect px-3 ">
-              <Link to="/artisans" className="nav-link">
-                Service Providers
-              </Link>
-            </li>
-            <li className="nav-item effect px-3 ">
-              <Link to="/about-us" className="nav-link">
-                About Us
-              </Link>
-            </li>
-            <li className="nav-item effect px-3 ">
-              <Link to="/contact-us" className="nav-link">
-                Contact Us
-              </Link>
-            </li>
-          </ul>
-          {loggedIn ? (
-            <NavMenuComponent />
-          ) : (
-            <ul className="navbar-nav">
-              <li className="nav-item m-2">
-                <div className="dropdown">
-                  <button
-                    className="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
-                    type="button"
-                    id="loginAccountButton"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Login Account
-                  </button>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="loginAccountButton"
-                  >
-                    <li>
-                      <Link to="/login?as=user" className="dropdown-item">
-                        Login as a User
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/login?as=artisan" className="dropdown-item">
-                        Login as a Service Provider
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li className="nav-item m-2 ">
-                <div className="dropdown">
-                  <button
-                    className="btn btn-outline-success signin px-3 w-100 dropdown-toggle"
-                    type="button"
-                    id="registerAccountButton"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Register new Account
-                  </button>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="registerAccountButton"
-                  >
-                    <li>
-                      <Link to="/register?as=user" className="dropdown-item">
-                        Register as a User
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/register?as=artisan" className="dropdown-item">
-                        Register as a Service Provider
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          )}
-        </div>
+        <label htmlFor="menu-toggle" className="menu-button"></label>
       </div>
-    </nav>
+      <div className="link-container d-flex">
+        {navLinks.map((link, index) => {
+          return (
+            <NavLink
+              to={link.link}
+              className={({ isActive }) => (isActive ? "active" : "")}
+              key={index}
+            >
+              {link.name}
+            </NavLink>
+          );
+        })}
+        {loggedIn ? <AccountMenu /> : <CustomizedMenus />}
+      </div>
+    </div>
   );
 }
 
 export default Nav;
-
-export const NavProfilePicture = () => {
-  const { userProfile } = useContext(UserContext);
-
-  return (
-    <div className="ms-au to my-auto">
-      {/* <b> {userInformation.userName}</b> */}
-      <img
-        // src="https://production-next-images-cdn.thumbtack.com/i/431288469664604162/width/120/aspect/1-1.webp"
-        src={userProfile.avatar}
-        className="NavProfilePicture ms-2"
-        alt="NavProfilePicture"
-      />
-    </div>
-  );
-};
-
-export const NavMenuComponent = ({ setLoggedIn }) => {
-  const [navMenuComponent, setNavMenuComponent] = useState(false);
-  const { logOutFunction, getUserProfile } = useContext(UserContext);
-
-  useEffect(() => {
-    getUserProfile();
-  }, []);
-  return (
-    <>
-      {/* <div className="dropdown">
-        <button
-          className="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Dropdown button
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li>
-            <a className="dropdown-item" href="#">
-              Action
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Another action
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Something else here
-            </a>
-          </li>
-        </ul>
-      </div>{" "} */}
-      <div
-        className="NavMenuComponent"
-        onClick={() => {
-          navMenuComponent
-            ? setNavMenuComponent(false)
-            : setNavMenuComponent(true);
-        }}
-      >
-        <NavProfilePicture
-          navMenuComponent={navMenuComponent}
-          setNavMenuComponent={setNavMenuComponent}
-        />{" "}
-        <BsCaretDownFill className="my-auto" />
-        <ul
-          className="dropdown-menu-ul"
-          style={
-            navMenuComponent ? { display: "inline-block" } : { display: "none" }
-          }
-        >
-          <li>
-            <Link to={"/dashboard/home"}>
-              <span className="me-2">
-                <BsHouse />
-              </span>
-              Dashboard
-            </Link>
-          </li>
-          <hr />
-          <li onClick={() => logOutFunction()} className="logout text-danger">
-            Logout
-          </li>
-        </ul>
-      </div>
-    </>
-  );
-};
 
 export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
   const { userProfile } = useContext(UserContext);
@@ -320,3 +151,232 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
     </>
   );
 };
+
+export function AccountMenu() {
+  const { loggedIn, logOutFunction, getUserProfile, userProfile } =
+    useContext(UserContext);
+  const [cookies] = useCookies();
+  useEffect(() => {
+    if (loggedIn && cookies.grinderUser) {
+      return getUserProfile();
+    }
+    // getUserProfile();
+  }, []);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  return (
+    <React.Fragment>
+      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+        <Tooltip title="Profile">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? "account-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+          >
+            <Avatar
+              sx={{ width: 50, height: 50 }}
+              alt={userProfile?.fullName}
+              src={userProfile.avatar}
+            />
+            <KeyboardArrowDownOutlined />
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mt: 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        {/* <Avatar /> Profile */}
+        <Link to={"/dashboard/home"}>
+          <MenuItem>
+            <ListItemIcon>
+              <BsHouse fontSize="small" />
+            </ListItemIcon>
+            Dashboard
+          </MenuItem>
+        </Link>
+        <Divider />
+        <MenuItem onClick={() => logOutFunction()}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
+  );
+}
+
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === "light"
+        ? "rgb(55, 65, 81)"
+        : theme.palette.grey[300],
+    boxShadow:
+      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "& .MuiMenu-list": {
+      padding: "4px 0",
+    },
+    "& .MuiMenuItem-root": {
+      "& .MuiSvgIcon-root": {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity
+        ),
+      },
+    },
+  },
+}));
+
+export function CustomizedMenus() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorLink, setAnchorLink] = React.useState("");
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    // console.log(event);
+    setAnchorEl(event.currentTarget);
+    if (event.currentTarget.id === "login-button") {
+      return setAnchorLink("login");
+    }
+    setAnchorLink("register");
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <Button
+        id="login-button"
+        aria-controls={open ? "login-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        variant="contained"
+        // disableElevation
+        onClick={handleClick}
+        endIcon={<KeyboardArrowDownOutlined />}
+        className="mx-1 secondary-color"
+      >
+        Login
+      </Button>
+
+      <Button
+        id="sign-in-button"
+        aria-controls={open ? "sign-in-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        variant="contained"
+        disableElevation
+        onClick={handleClick}
+        endIcon={<KeyboardArrowDownOutlined />}
+        className="mx-1 secondary-color"
+      >
+        Sign Up
+      </Button>
+      <StyledMenu
+        id="sign-in-menu"
+        MenuListProps={{
+          "aria-labelledby": "sign-in-button",
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        <Link className="drop-down-link" to={`/${anchorLink}?as=user`}>
+          <MenuItem onClick={handleClose} disableRipple>
+            {/* <EditIcon /> */}
+            Users
+          </MenuItem>
+        </Link>
+        <Link className="drop-down-link" to={`/${anchorLink}?as=artisan`}>
+          <MenuItem onClick={handleClose} disableRipple>
+            {/* <EditIcon /> */}
+            Service Provider
+          </MenuItem>
+        </Link>
+      </StyledMenu>
+      {/* <StyledMenu
+        id="login-menu"
+        MenuListProps={{
+          "aria-labelledby": "login-button",
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        <Link to="/login?as=user">
+          <MenuItem onClick={handleClose} disableRipple>
+            Users
+          </MenuItem>
+        </Link>
+        <Link to="/login?as=artisan">
+          <MenuItem onClick={handleClose} disableRipple>
+            Service Provider
+          </MenuItem>
+        </Link>
+      </StyledMenu> */}
+    </div>
+  );
+}

@@ -14,8 +14,8 @@ function Footer() {
               {" "}
               <h5>Navigation</h5>
               <div className="line"></div>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
+              <ul className="nav flex-column">
+                <li className="nav-item mb-2">
                   <Link
                     to="/"
                     className="nav-link text-muted active"
@@ -24,23 +24,23 @@ function Footer() {
                     Home
                   </Link>
                 </li>
-                <li class="nav-item mb-2">
+                <li className="nav-item mb-2">
                   <Link to="/artisans" className="nav-link text-muted">
                     Service Providers
                   </Link>
                 </li>
-                <li class="nav-item mb-2">
+                <li className="nav-item mb-2">
                   <Link to="/about-us" className="nav-link text-muted">
                     About Us
                   </Link>
                 </li>
-                <li class="nav-item mb-2">
+                <li className="nav-item mb-2">
                   <Link to="/contact-us" className="nav-link text-muted">
                     Contact Us
                   </Link>
                 </li>
-                {/* <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
+                {/* <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-muted">
                     About
                   </a>
                 </li> */}
@@ -50,13 +50,13 @@ function Footer() {
               {" "}
               <h5>Important Links</h5>
               <div className="line"></div>
-              <ul class="nav flex-column">
-                {/* <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
+              <ul className="nav flex-column">
+                {/* <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-muted">
                     Pricing
                   </a>
                 </li> */}
-                <li class="nav-item mb-2">
+                <li className="nav-item mb-2">
                   <Link
                     to="/register?as=artisan"
                     className="nav-link text-muted"
@@ -64,38 +64,38 @@ function Footer() {
                     Register as a service provider
                   </Link>
                 </li>
-                <li class="nav-item mb-2">
+                <li className="nav-item mb-2">
                   <Link to="/login?as=artisan" className="nav-link text-muted">
                     service provider login
                   </Link>
                 </li>
-                <li class="nav-item mb-2">
+                <li className="nav-item mb-2">
                   <Link to="/register?as=user" className="nav-link text-muted">
                     Register as a user
                   </Link>
                 </li>
-                <li class="nav-item mb-2">
+                <li className="nav-item mb-2">
                   <Link to="/login?as=user" className="nav-link text-muted">
                     user login
                   </Link>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted p-3">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-muted p-3">
                     Site map
                   </a>
                 </li>
-                {/* <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
+                {/* <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-muted">
                     Pricing
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-muted">
                     FAQs
                   </a>
                 </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0 text-muted">
                     About
                   </a>
                 </li>  */}

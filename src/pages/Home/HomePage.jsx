@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
 import { UserContext } from "../../context/UserContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaExclamation, FaInfoCircle, FaRetweet } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";
 import { TermiiSMSContext } from "../../context/TermiiContext";
@@ -11,6 +11,7 @@ import {
   ProfileSubscriptionAlertCard,
 } from "../ProfilePage/ProfilePage";
 import { ProfileSVerificationAlertCard } from "./../ProfilePage/ProfilePage";
+import { useCookies } from "react-cookie";
 
 function HomePage() {
   const {
@@ -24,6 +25,7 @@ function HomePage() {
     getUserProfile,
     profileCompletenessCheck,
     profileProgress,
+    loggedIn,
   } = useContext(UserContext);
   const { getBalance, smsBalance } = useContext(TermiiSMSContext);
 
@@ -71,11 +73,26 @@ function HomePage() {
   //   // Clean up the interval when the component unmounts
   //   return () => clearInterval(interval);
   // }, [count, distance]);
+  const [cookies] = useCookies();
+  const navigate = useNavigate();
+
+  function checkIfAuthor() {
+    if (cookies?.grinderUser?.profile?.role === -1) {
+      return navigate("/dashboard/author");
+    }
+  }
+  function checkLogin() {
+    if (loggedIn && cookies?.grinderUser) {
+      getNotification();
+      getUserProfile();
+    }
+  }
   useEffect(() => {
-    getUserProfile();
+    checkIfAuthor();
   }, []);
+
   useEffect(() => {
-    getNotification();
+    checkLogin();
   }, []);
   // useEffect(() => {
   //   if (!userProfile.email_verified) {

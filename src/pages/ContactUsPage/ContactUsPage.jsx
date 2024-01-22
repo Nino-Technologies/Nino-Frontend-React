@@ -49,7 +49,7 @@ function ContactUsPage() {
                       <li className="list-group-item py-3">
                         <FaEnvelope className="contact-icon" />
                         <span className="px-4 text-white">
-                          support@grinders.ng
+                          micheal@grinders.ng
                         </span>
                       </li>
                     </ul>
@@ -100,17 +100,18 @@ export function ContactUsForm() {
 
   const sendEmail = (e) => {
     e.preventDefault();
-
+    
     emailjs
       .sendForm(
-        "service_4xoj8n8", // "YOUR_SERVICE_ID",
-        "template_do8d6pa", // "YOUR_TEMPLATE_ID",
+        "service_lwi9tc4", // "YOUR_SERVICE_ID",
+        "template_q2yam8k", // "YOUR_TEMPLATE_ID",
         form.current,
-        "HWU7Rd-qnGwJVtzBN" // "YOUR_PUBLIC_KEY"
+        "lZ3AlEihULIGJlYbV" // "YOUR_PUBLIC_KEY"
       )
       .then(
         (result) => {
-          console.log(result.text);
+          console.log(result);
+          form.current.reset();
           toast.success("mail sent !!!");
         },
         (error) => {

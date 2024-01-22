@@ -1,0 +1,11 @@
+.AuthorPage{
+    /* border: solid red; */
+  color: var(--text-color-primary);
+  background-color: rgb(247 247 247);
+  margin-top: 20x;
+  padding-top: 20px;
+  .search-container{
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}

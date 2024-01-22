@@ -81,6 +81,9 @@ export function ProfileSubNav({ setCurrentTab }) {
 }
 export function ShowProfile({ userProfile, decodeDate }) {
   function getAccountType(role) {
+    if (role === -1) {
+      return "Author";
+    }
     if (role === 0) {
       return "User";
     }
