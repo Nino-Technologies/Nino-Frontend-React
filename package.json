@@ -8,8 +8,10 @@
     "@emailjs/browser": "^3.7.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.15.5",
     "@mui/material": "^5.15.5",
+    "@mui/styles": "^5.15.6",
     "@popperjs/core": "^2.11.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -65,6 +67,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^1.0.10"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
