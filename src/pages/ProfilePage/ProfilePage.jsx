@@ -988,8 +988,10 @@ export function ProfileCompletenessWhatLeftDropdown() {
             aria-labelledby="whatLeftDropdownId"
             style={{ width: "200px" }}
           >
-            {nonCompleted.map((item) => (
-              <li className="ps-3">{item}</li>
+            {nonCompleted.map((item, index) => (
+              <li className="ps-3" key={index}>
+                {item}
+              </li>
             ))}
           </ul>
         </div>
