@@ -1,44 +1,43 @@
 import "./App.css";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import LandingPage from "./pages/LandingPage/LandingPage";
-import ArtisansPage from "./pages/ArtisansPage/ArtisansPage";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
-import AboutUsPage from "./pages/AboutUsPage/AboutUsPage";
-import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
-import ArtisansProfile from "./pages/artisansProfile/ArtisansProfile";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import PasswordResetPage from "./pages/PasswordResetPage/PasswordResetPage";
 import { ToastContainer } from "react-toastify";
-// import { useEffect, useState } from "react";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import HomePage from "./pages/Home/HomePage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import NotificationPage from "./pages/Notification/NotificationPage";
-import VerifyUserPage from "./pages/VerifyUserPage/VerifyUserPage";
-import VerifyCodePage from "./pages/VerifyCodePage/VerifyCodePage";
-import UsersPage from "./pages/UserPage/UserPage";
-import CreateAdminPage from "./pages/CreateAdminPage/CreateAdminPage";
-import ArtisanUploadPhoto from "./pages/ArtisanUploadPhoto/ArtisanUploadPhoto";
-import SavedArtisanPage from "./pages/SavedArtisanPage/SavedArtisanPage";
-import { PaymentModalComponent } from "./components/Modal/ModalComponent";
-import PaymentPage from "./pages/PaymentPage/PaymentPage";
-import VerifyAdminsPage from "./pages/VerifyAdminsPage/VerifyAdminsPage";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./context/UserContext";
-import ImageCropper from "./pages/ImageCropper/ImageCropper";
-import ImageCropperWithStyle from "./pages/ImageCropper/ImageCropper";
-import SendMessagePage from "./components/SendMessages/SendMessagePage";
-import { TestProvider } from "./context/ContextTest";
 import { SaveArtisanProvider } from "./context/saveUserContext";
-import { TermiiSMSProvider } from "./context/TermiiContext";
-import QuickRequestPage from "./pages/QuickRequestPage/QuickRequestPage";
+import TermiiSMSProvider from "./context/TermiiContext";
 import ReactGa from "react-ga";
-import BlogPage from "./pages/BlogPage/BlogPage";
-import BlogEditor from "./pages/BlogPage/BlogEditor";
-import BlogPost from "./pages/BlogPage/BlogPost";
 import { BlogProvider } from "./context/BlogContext";
-import AuthorPage from "./pages/AuthorPage/AuthorPage";
+import {
+  LandingPage,
+  ArtisansPage,
+  ErrorPage,
+  AboutUsPage,
+  ContactUsPage,
+  ArtisansProfile,
+  LoginPage,
+  RegisterPage,
+  PasswordResetPage,
+  Dashboard,
+  HomePage,
+  ProfilePage,
+  NotificationPage,
+  VerifyUserPage,
+  VerifyCodePage,
+  UsersPage,
+  CreateAdminPage,
+  ArtisanUploadPhoto,
+  SavedArtisanPage,
+  PaymentPage,
+  VerifyAdminsPage,
+  BlogPage,
+  BlogEditor,
+  BlogPost,
+  AuthorPage,
+  ImageCropperWithStyle,
+  QuickRequestPage,
+  SendMessagePage,
+} from "./pages";
+import { PaymentModalComponent } from "./components/Modal/ModalComponent";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -56,29 +55,6 @@ function App() {
     return null;
   }
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     getUserProfile();
-  //   }
-  // }, []);
-  // check network
-  // const [networkConnected, setNetworkConnected] = useState(true);
-
-  // useEffect(() => {
-  //   if (navigator.onLine) {
-  //     setNetworkConnected(true);
-  //     return;
-  //   }
-  //   setNetworkConnected(false);
-  // });
-  // useEffect(() => {
-  //   if (networkConnected) {
-  //     toast.info("Welcome Back Connected");
-  //     return;
-  //   }
-  //   toast.info("you lost Connection ");
-  //   // console.log("  navigator.onLine");
-  // }, [networkConnected]);
   return (
     <div className="App">
       <ToastContainer
