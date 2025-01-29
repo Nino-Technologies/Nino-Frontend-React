@@ -17,13 +17,13 @@ import CloudinaryUploadProfileButton from "../../components/CloudnaryUploadButto
 // dhvacnvek
 
 function ProfilePage() {
-  const [editForm, setEditForm] = useState(false);
+  // const [editForm, setEditForm] = useState(false);
   const { userProfile, decodeDate, apiUrl, getUserProfile } =
     useContext(UserContext);
   const [currentTab, setCurrentTab] = useState(1);
   useEffect(() => {
     getUserProfile();
-  }, []);
+  }, [getUserProfile]);
   return (
     <div className="content-body">
       <div className="container">
@@ -111,7 +111,7 @@ export function ShowProfile({ userProfile, decodeDate }) {
         <div className="card-body">
           <div className="image-div d-flex">
             <img
-              src={userProfile.avatar}
+              src={userProfile.avatar || "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"}
               alt="profilePix"
               className="mx-auto"
             />

@@ -55,15 +55,7 @@ function UsersPage() {
         <table className="table">
           <thead className="thead-dark">
             <tr>
-              <th
-                scope="col"
-                style={{
-                  width: "50px",
-                  minWidth: "fit-content",
-                }}
-              >
-                #
-              </th>
+              <th scope="col" style={{ width: "50px", minWidth: "fit-content" }}>#</th>
               <th scope="col">Full name</th>
               <th scope="col">Email</th>
               <th scope="col">Phone number</th>
@@ -73,16 +65,18 @@ function UsersPage() {
               <th scope="col">Handle</th>
             </tr>
           </thead>
-          {pageLoading ? (
-            <div className="loading">Loading....</div>
-          ) : (
-            <>
-              {" "}
-              {users.length === 0 ? (
-                <div className="loading">No user record Found</div>
-              ) : (
-                <tbody>
-                  {users.map((user, i) => {
+
+          <tbody>
+            {pageLoading ? (
+              <tr>
+                <td colSpan="8" className="loading">Loading...</td>
+              </tr>
+            ) : users.length === 0 ? (
+              <tr>
+                <td colSpan="8" className="loading">No user record found</td>
+              </tr>
+            ) : (
+                  users.map((user, i) => {
                     const {
                       _id,
                       fullName,
@@ -94,51 +88,41 @@ function UsersPage() {
                       account_active,
                       role,
                     } = user;
+
                     return (
                       <tr key={_id}>
                         <th scope="row">{i + 1}</th>
-                        <td>{fullName ? fullName : "-"}</td>
-                        <td>
-                          <div className="check-verify-div">
-                            <div className="check-verify-icon">
-                              {checkVerifiedFunction(email_verified)}
-                            </div>
-                            {email}
-                          </div>
-                        </td>
-                        <td>{phoneNumber !== "" ? phoneNumber : "-"}</td>
-                        <td>
-                          {/* {account_verified
-                            ?  */}
-                          {checkVerifiedFunction(account_verified)}
-                          {/* : "-"} */}
-                        </td>
-                        <td>
-                          {/* {account_active
-                            ? */}
-                          {checkVerifiedFunction(account_active)}
-                          {/* : "-"} */}
-                        </td>
-                        <td>{decodeDate(joinDate)[0]}</td>
-                        <td>
-                          <AdminAction
-                            role={role}
-                            _id={_id}
-                            phoneNumber={phoneNumber}
-                            setProfileNumber={setProfileNumber}
-                            reLoadListFunction={getUsers}
-                            account_verified={account_verified}
-                            account_active={account_active}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              )}
-            </>
-          )}
+                    <td>{fullName || "-"}</td>
+                    <td>
+                      <div className="check-verify-div">
+                        <div className="check-verify-icon">
+                          {checkVerifiedFunction(email_verified)}
+                        </div>
+                        {email}
+                      </div>
+                    </td>
+                    <td>{phoneNumber || "-"}</td>
+                    <td>{checkVerifiedFunction(account_verified)}</td>
+                    <td>{checkVerifiedFunction(account_active)}</td>
+                    <td>{decodeDate(joinDate)[0]}</td>
+                    <td>
+                      <AdminAction
+                        role={role}
+                        _id={_id}
+                        phoneNumber={phoneNumber}
+                        setProfileNumber={setProfileNumber}
+                        reLoadListFunction={getUsers}
+                        account_verified={account_verified}
+                        account_active={account_active}
+                      />
+                    </td>
+                  </tr>
+                );
+                  })
+            )}
+          </tbody>
         </table>
+
       </div>
     </div>
   );
