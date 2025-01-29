@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 // import SocialLogin from "./SocialLogin";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import { useCookies } from "react-cookie";
 import { ForgotPasswordLink } from "./../BackButton/BackButton";
 

@@ -4,7 +4,7 @@ import "./Search.scss";
 import { SearchContext } from "../../context/SearchContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "./../../context/UserContext";
+import {UserContext} from "./../../context/UserContext";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { TermiiSMSContext } from "../../context/TermiiContext";
@@ -55,7 +55,7 @@ function Search() {
             .trim()
             .indexOf(state.toLowerCase().trim()) !== -1
         ) {
-          stateSearchResult.push(artisan);
+         return stateSearchResult.push(artisan);
         }
       });
       // console.log("State", stateSearchResult);
@@ -72,7 +72,7 @@ function Search() {
             .trim()
             .indexOf(city.toLowerCase().trim()) !== -1
         ) {
-          citySearchResult.push(artisan);
+        return  citySearchResult.push(artisan);
         }
       });
       // console.log("City", citySearchResult);
@@ -204,7 +204,7 @@ export function ServiceSearchInput({
           .indexOf(search.toLowerCase().trim()) !== -1
       ) {
         searchResult.push(artisan);
-        artisanServiceArrayVar.push(artisan.service.toLowerCase().trim());
+       return artisanServiceArrayVar.push(artisan.service.toLowerCase().trim());
       }
     });
 
@@ -222,7 +222,7 @@ export function ServiceSearchInput({
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
-
+console.log({focused})
   return (
     <label>
       <b>
@@ -528,18 +528,20 @@ export function QuickRequestComponent() {
         }
       );
       setSendingRequest(false);
-      sendMessageFunction({
-        to: `2348037009713`,
-        message: `Attention Grinders,
-"${userProfile.fullName}" has submitted a request for the service "${quickRequests.service}". Prompt response is required. 
-Thank you.
-      `,
-      });
+//       sendMessageFunction({
+//         to: `2348037009713`,
+//         message: `Attention Grinders,
+// "${userProfile.fullName}" has submitted a request for the service "${quickRequests.service}". Prompt response is required. 
+// Thank you.
+//       `,
+//       });
       setQuickRequests({
         locationCity: "",
         locationState: "",
         service: "",
       });
+
+      console.log(resp)
       // toast.success(
       //   "Request sent successfully, we will attend to you in a short time"
       // );

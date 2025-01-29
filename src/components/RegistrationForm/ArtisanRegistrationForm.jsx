@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./ArtisanRegistrationForm.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import axios from "axios";
 // import { ProfilePictureModalComponent } from "../Modal/ModalComponent";
 // import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper";

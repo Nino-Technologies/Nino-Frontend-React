@@ -3,7 +3,7 @@ import SocialLogin from "../LoginForm/SocialLogin";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 
 function UserRegistrationForm({ saveAccountType }) {
   const [loading, setLoading] = useState(false);

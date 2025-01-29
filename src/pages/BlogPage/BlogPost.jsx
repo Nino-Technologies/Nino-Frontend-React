@@ -22,7 +22,7 @@ import { BlogContext } from "./../../context/BlogContext";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { UserContext } from "./../../context/UserContext";
+import {UserContext} from "./../../context/UserContext";
 
 function BlogPost() {
   const { id } = useParams();

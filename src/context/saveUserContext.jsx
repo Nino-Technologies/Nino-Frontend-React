@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { UserContext } from "./UserContext";
+import {UserContext} from "./UserContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useCookies } from "react-cookie";

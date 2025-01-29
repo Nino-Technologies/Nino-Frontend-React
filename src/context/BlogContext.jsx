@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { UserContext } from "./UserContext";
+import {UserContext} from "./UserContext";
 
 export const BlogContext = createContext();
 
@@ -138,7 +138,7 @@ This ~is not~ strikethrough, but ~~this is~~!
 The lift coefficient ($C_L$) is a dimensionless coefficient.
 
 A paragraph with *emphasis* and **strong importance**.
-import { UserContext } from './UserContext';
+import {UserContext} from './UserContext';
 
 > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
 

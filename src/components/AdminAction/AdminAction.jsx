@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import { TermiiSMSContext } from "./../../context/TermiiContext";
 
 function AdminAction({

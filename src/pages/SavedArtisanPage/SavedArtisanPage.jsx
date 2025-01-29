@@ -47,7 +47,7 @@ function SavedArtisanPage() {
                           <img
                             src={`${
                               artisan.avatar === ""
-                                ? "https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png"
+                              ? "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"
                                 : artisan.avatar
                             }`}
                             alt="Profile picture"

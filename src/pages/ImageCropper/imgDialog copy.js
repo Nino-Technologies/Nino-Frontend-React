@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "@mui/system"; // Import styled
+import { withStyles } from "@mui/system";
 import Dialog from "@mui/material/Dialog";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,23 +10,26 @@ import Slide from "@mui/material/Slide";
 import Button from "@mui/material/Button";
 import BackButton from "./../../components/BackButton/BackButton";
 
-const AppBarStyled = styled(AppBar)({
-  position: "relative",
-});
-
-const ImgContainer = styled("div")({
-  position: "relative",
-  flex: 1,
-  padding: 16,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
-const ImgStyled = styled("img")({
-  maxWidth: "350px",
-  maxHeight: "100%",
-});
+const styles = {
+  appBar: {
+    position: "relative",
+  },
+  flex: {
+    flex: 1,
+  },
+  imgContainer: {
+    position: "relative",
+    flex: 1,
+    padding: 16,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  img: {
+    maxWidth: "350px",
+    maxHeight: "100%",
+  },
+};
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -46,42 +49,54 @@ class ImgDialog extends React.Component {
   };
 
   render() {
-    const { img, onClose } = this.props; // Destructure props for easier access
+    const { classes } = this.props;
     return (
       <Dialog
         fullScreen
-        open={!!img}
-        onClose={onClose}
+        open={!!this.props.img}
+        onClose={this.props.onClose}
         TransitionComponent={Transition}
       >
         <div>
-          <AppBarStyled>
+          <AppBar className={classes.appBar}>
             <Toolbar>
-              <IconButton color="inherit" onClick={onClose} aria-label="Close">
+              <IconButton
+                color="inherit"
+                onClick={this.props.onClose}
+                aria-label="Close"
+              >
                 <CloseIcon />
               </IconButton>
-              <Typography variant="h6" color="inherit" sx={{ flex: 1 }}>
+              <Typography
+                variant="title"
+                color="inherit"
+                className={classes.flex}
+              >
                 Cropped image
               </Typography>
             </Toolbar>
-          </AppBarStyled>
-          <ImgContainer>
-            <ImgStyled src={img} alt="Cropped" />
-          </ImgContainer>
+          </AppBar>
+          {/* <BackButton /> */}
+          <div className={classes.imgContainer}>
+            <img src={this.props.img} alt="Cropped" className={classes.img} />
+          </div>
 
           <div className="d-flex">
+            {" "}
             <Button
               variant="contained"
               color="primary"
               className="mx-auto"
-              onClick={() => { }}
+              onClick={() => {}}
+              // onClick={() => console.log(this.props)}
             >
               Update Profile
             </Button>
           </div>
           <div className="d-flex">
             <Button
-              onClick={onClose}
+              // color="inherit"
+              onClick={this.props.onClose}
               aria-label="Close"
               color="primary"
               variant="contained"
@@ -96,4 +111,4 @@ class ImgDialog extends React.Component {
   }
 }
 
-export default ImgDialog;
+export default withStyles(styles)(ImgDialog);

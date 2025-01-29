@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext } from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import "./SocialLogin.scss";
 
 function SocialLogin() {

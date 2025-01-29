@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import "./VerifyAdminsPage.scss";
 import axios from "axios";
 import { toast } from "react-toastify";

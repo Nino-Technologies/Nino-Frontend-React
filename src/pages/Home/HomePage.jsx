@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FaExclamation, FaInfoCircle, FaRetweet } from "react-icons/fa";
 import ModalComponent from "../../components/Modal/ModalComponent";

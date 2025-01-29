@@ -13,7 +13,7 @@ import "katex/dist/katex.min.css";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { PaginatedBlog } from "../../components/Pagination/Pagination";
-import { UserContext } from "./../../context/UserContext";
+import {UserContext} from "./../../context/UserContext";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 
 function BlogPage() {

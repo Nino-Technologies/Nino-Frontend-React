@@ -1,75 +1,83 @@
 // require("dotenv").config();
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import moment from "moment";
 import axios from "axios";
 import VerifiedBadge from "../components/verifiedBadge/verifiedBadge";
 import { FaExclamation } from "react-icons/fa";
-import { toast } from "react-toastify";
 
 export const UserContext = createContext();
 
-export function UserProvider({ children }) {
-  const [loggedIn, setLoggedIn] = useState(false);
+function UserProvider({ children }) {
+  // const [loggedIn, setLoggedIn] = useState(false);
+  // const [userProfile, setUserProfile] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies();
-  const [userProfile, setUserProfile] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(() => !!cookies.grinderUser);
+  const [userProfile, setUserProfile] = useState(cookies.grinderUser?.profile || null);
+
   const [notification, setNotification] = useState([]);
   const navigate = useNavigate();
   // const apiUrl = "https://nino-technologies.herokuapp.com/api";
-  // const apiUrl = "http://localhost:5000/api";
-  const apiUrl = "https://api.grinders.ng/api";
+  const apiUrl = "http://localhost:5000/api";
+  // const apiUrl = "https://api.grinders.ng/api";
   const [pageLoading, setPageLoading] = useState(true);
 
+  // useEffect(() => {
+  //   if (cookies.grinderUser === undefined) {
+  //     setLoggedIn(false);
+  //     return;
+  //   }
+  //   setLoggedIn(true);
+  //   // setUserProfile(cookies.grinderUser.profile || null);
+  // }, [cookies.grinderUser]);
+  // useEffect(() => {
+  //   if (userProfile === null) {
+  //     setLoggedIn(false);
+  //     return;
+  //   }
+  // }, [userProfile]);
   useEffect(() => {
-    if (cookies.grinderUser === undefined) {
-      setLoggedIn(false);
-      return;
-    }
-    setLoggedIn(true);
-    // setUserProfile(cookies.grinderUser.profile || null);
-  }, []);
-  useEffect(() => {
-    if (userProfile === null) {
-      setLoggedIn(false);
-      return;
-    }
-  }, [userProfile]);
-  function getUserProfile() {
-    // axios GET request
     if (!cookies.grinderUser) {
-      // toast.error("Login Profile");
-      return;
-      // navigate("/");
+      setLoggedIn(false);
+      setUserProfile(null);
+    } else {
+      setLoggedIn(true);
+      setUserProfile(cookies.grinderUser.profile || null);
     }
-    const options = {
-      // url: `http://localhost:5000/api/auth/user/login`,
-      url: `${apiUrl}/users/profile/${cookies.grinderUser.profile._id}`,
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-        authorization: cookies.grinderUser.token,
-      },
-    };
+  }, [cookies.grinderUser]);
 
-    axios(options)
-      .then((response) => {
-        const userProfile = response.data.data;
-        setUserProfile(userProfile);
-        // console.log(userProfile);
-      })
-      .catch((error) => {
-        console.log(error.message);
+  const getUserProfile = useCallback(async () => {
+    if (!cookies.grinderUser) return;
+
+    try {
+      const options = {
+        url: `${apiUrl}/users/profile/${cookies.grinderUser.profile._id}`,
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          authorization: cookies.grinderUser.token,
+        },
+      };
+
+      const response = await axios(options);
+      const profile = response.data.data;
+
+      setUserProfile((prev) => {
+        // Only update state if profile changes
+        return JSON.stringify(prev) !== JSON.stringify(profile) ? profile : prev;
       });
-  }
-  useEffect(() => {
-    if (loggedIn && cookies.grinderUser) {
-      return getUserProfile();
+    } catch (error) {
+      console.error(error.message);
     }
-    // toast.error("Login Profile");
-    // return navigate("/");
-  }, []);
+  }, [apiUrl, cookies.grinderUser]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      getUserProfile();
+    }
+  }, [loggedIn, getUserProfile]);
 
   function checkVerifiedFunction(verify) {
     if (verify) {
@@ -122,340 +130,71 @@ export function UserProvider({ children }) {
   const [profileProgress, setProfileProgress] = useState(0);
   const [nonCompleted, setNonCompleted] = useState([]);
 
-  function checkTextProperty(property) {
-    if (property && property.trim() !== "") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  function checkNumberProperty(property) {
-    if (Number(property) > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  function checkBooleanProperty(property) {
-    if (property) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
-  function profileCompletenessCheck() {
-    setProfileProgress(0);
+  // Profile Completeness Check
+  const profileCompletenessCheck = useCallback(() => {
+    if (!userProfile) return;
+
     let progressCount = 0;
-    let nonCompleted = [];
-    if (userProfile.role === 1) {
-      const {
-        avatar,
-        email,
-        fullName,
-        phoneNumber,
-        password,
-        officeLocation,
-        refereeNumber,
-        locationState,
-        locationCity,
-        service,
-        gender,
-        introduction,
-        Nin,
-        YearsOfExperience,
-        refereeName,
-        email_verified,
-        account_verified,
-        account_active,
-        freeAccount,
-        subscriptionExpired,
-      } = userProfile;
+    const incompleteFields = [];
 
-      if (!email && !password) return;
+    const checkTextProperty = (property) =>
+      property && property.trim() !== "" ? true : false;
+    const checkNumberProperty = (property) =>
+      Number(property) > 0 ? true : false;
+    const checkBooleanProperty = (property) => !!property;
 
-      // console.log(userProfile);
+    const fields = {
+      email: checkTextProperty(userProfile.email),
+      fullName: checkTextProperty(userProfile.fullName),
+      avatar: checkTextProperty(userProfile.avatar),
+      password: checkTextProperty(userProfile.password),
+      location: checkTextProperty(userProfile.locationCity),
+      phoneNumber: checkNumberProperty(userProfile.phoneNumber),
+      account_active: checkBooleanProperty(userProfile.account_active),
+      account_verified: checkBooleanProperty(userProfile.account_verified),
+      email_verified: checkBooleanProperty(userProfile.email_verified),
+    };
 
-      if (checkTextProperty(email)) {
-        progressCount += 5;
+    for (const [key, value] of Object.entries(fields)) {
+      if (value) {
+        progressCount += 10;
       } else {
-        nonCompleted.push("Email");
-      }
-
-      if (checkTextProperty(Nin)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Nin");
-      }
-
-      if (checkTextProperty(fullName)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Full name");
-      }
-
-      if (checkTextProperty(avatar)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Profile picture");
-      }
-
-      if (checkTextProperty(password)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Password");
-      }
-
-      if (checkTextProperty(service)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Service");
-      }
-
-      if (checkTextProperty(officeLocation)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Office location");
-      }
-
-      if (checkTextProperty(locationCity)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Location city");
-      }
-
-      if (checkTextProperty(locationState)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Location state");
-      }
-
-      if (checkTextProperty(gender)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Gender");
-      }
-
-      if (checkTextProperty(introduction)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Introduction");
-      }
-
-      if (checkTextProperty(refereeName)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Referee name");
-      }
-
-      if (checkNumberProperty(YearsOfExperience)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Years of experience");
-      }
-
-      if (checkNumberProperty(phoneNumber)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Phone number");
-      }
-
-      if (checkNumberProperty(refereeNumber)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Referee number");
-      }
-
-      if (checkBooleanProperty(subscriptionExpired)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Subscription expired");
-      }
-
-      if (checkBooleanProperty(freeAccount)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Account Subscription");
-      }
-
-      if (checkBooleanProperty(account_active)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Account inactive ");
-      }
-
-      if (checkBooleanProperty(account_verified)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Account verification");
-      }
-
-      if (checkBooleanProperty(email_verified)) {
-        progressCount += 5;
-      } else {
-        nonCompleted.push("Email verification");
+        incompleteFields.push(key);
       }
     }
 
-    if (userProfile.role === 3) {
-      const {
-        fullName,
-        avatar,
-        location,
-        email,
-        email_verified,
-        account_verified,
-        account_active,
-        password,
-        number,
-        role,
-      } = userProfile;
-
-      if (checkTextProperty(email)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Email");
-      }
-
-      if (checkTextProperty(fullName)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Full name");
-      }
-
-      if (checkTextProperty(avatar)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Profile picture");
-      }
-
-      if (checkTextProperty(password)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Password");
-      }
-
-      if (checkTextProperty(location)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Location");
-      }
-
-      if (checkNumberProperty(number)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Number");
-      }
-
-      if (checkNumberProperty(role)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Role");
-      }
-
-      if (checkBooleanProperty(account_active)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Account inactive");
-      }
-
-      if (checkBooleanProperty(account_verified)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Account verification");
-      }
-
-      if (checkBooleanProperty(email_verified)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Email verification");
-      }
-    }
-
-    if (userProfile.role === 0) {
-      const {
-        fullName,
-        avatar,
-        locationCity,
-        locationState,
-        email,
-        email_verified,
-        account_verified,
-        account_active,
-        password,
-        phoneNumber,
-      } = userProfile;
-
-      if (checkTextProperty(email)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Email");
-      }
-
-      if (checkTextProperty(fullName)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Full name");
-      }
-
-      if (checkTextProperty(avatar)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Profile picture");
-      }
-
-      if (checkTextProperty(password)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Password");
-      }
-
-      if (checkTextProperty(locationState)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Location state");
-      }
-
-      if (checkTextProperty(locationCity)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Location city");
-      }
-
-      if (checkNumberProperty(phoneNumber)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Phone number");
-      }
-
-      if (checkBooleanProperty(account_active)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("account_active");
-      }
-
-      if (checkBooleanProperty(account_verified)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Account verification");
-      }
-
-      if (checkBooleanProperty(email_verified)) {
-        progressCount += 10;
-      } else {
-        nonCompleted.push("Email verification");
-      }
-    }
-
-    setNonCompleted(nonCompleted);
     setProfileProgress(progressCount);
-  }
+    setNonCompleted(incompleteFields);
+  }, [userProfile]);
 
   useEffect(() => {
     profileCompletenessCheck();
-  }, [userProfile]);
+  }, [userProfile, profileCompletenessCheck]);
+
 
   return (
+    // <UserContext.Provider
+    //   value={{
+    //     loggedIn,
+    //     setLoggedIn,
+    //     userProfile,
+    //     setUserProfile,
+    //     logOutFunction,
+    //     apiUrl,
+    //     decodeDate,
+    //     getNotification,
+    //     notification,
+    //     checkVerifiedFunction,
+    //     pageLoading,
+    //     getUserProfile,
+    //     profileCompletenessCheck,
+    //     profileProgress,
+    //     nonCompleted,
+    //   }}
+    // >
+    //   {children}
+    // </UserContext.Provider>
     <UserContext.Provider
       value={{
         loggedIn,
@@ -464,13 +203,14 @@ export function UserProvider({ children }) {
         setUserProfile,
         logOutFunction,
         apiUrl,
-        decodeDate,
+        decodeDate: (date) =>
+          moment(date).format("ddd, MMM Do YYYY h:mm:ss a"),
         getNotification,
         notification,
-        checkVerifiedFunction,
+        checkVerifiedFunction: (verify) =>
+          verify ? <VerifiedBadge /> : <FaExclamation className="text-danger" />,
         pageLoading,
         getUserProfile,
-        profileCompletenessCheck,
         profileProgress,
         nonCompleted,
       }}
@@ -479,3 +219,5 @@ export function UserProvider({ children }) {
     </UserContext.Provider>
   );
 }
+
+export default UserProvider;

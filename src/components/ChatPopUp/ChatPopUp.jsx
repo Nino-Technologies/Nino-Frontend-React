@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { FaCommentDots } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./ChatPopUp.scss";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 

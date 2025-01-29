@@ -57,7 +57,7 @@ function ArtisansProfile() {
       if (!profile) {
         // toast.info("Artesian profile not found");
         toast.info(" artisan with the ID provided is a not found");
-        navigate("/artisans");
+        // navigate("/artisans");
       } else {
         setArtisan(profile);
         setPageLoading(false);
@@ -73,7 +73,7 @@ function ArtisansProfile() {
       } else {
         console.log("error");
         alert(" artisan with the ID provided is a not found");
-        navigate("/artisans");
+        // navigate("/artisans");
         return;
       }
     }
@@ -316,6 +316,7 @@ function ArtisansProfile() {
       });
   }
   useEffect(() => {
+    // console.log(id)
     getProfile(id);
   }, []);
   return (
@@ -339,7 +340,7 @@ function ArtisansProfile() {
                     <img
                       src={`${
                         artisan.avatar === ""
-                          ? "https://www.seekpng.com/png/detail/110-1100707_person-avatar-placeholder.png"
+                          ? "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"
                           : artisan.avatar
                       }`}
                       alt="Profile picture"
@@ -363,12 +364,12 @@ function ArtisansProfile() {
               <div className="col-md-8">
                 <div className="main-area">
                   <div className="introduction">
-                    <p>
+                      <div>
                       <h5>
                         <b>Introduction</b>
                       </h5>
                       {artisan.introduction}
-                    </p>
+                      </div>
                     <hr />
                   </div>
                   <div className="more-info  px-3 ">

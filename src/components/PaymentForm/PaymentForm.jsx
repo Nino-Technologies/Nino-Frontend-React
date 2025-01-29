@@ -11,7 +11,7 @@ import {
 import { usePaystackPayment } from "react-paystack";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import "./PaymentForm.scss";
 import { TermiiSMSContext } from "../../context/TermiiContext";
 

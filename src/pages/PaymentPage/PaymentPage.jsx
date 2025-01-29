@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import "./PaymentPage.scss";
 
 function PaymentPage() {

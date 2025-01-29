@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
+import artisanDB from"../json/artisans.json"
 
 export const SearchContext = createContext();
 
-export function SearchProvider({ children }) {
+function SearchProvider({ children }) {
   const { apiUrl } = useContext(UserContext);
   const [pageLoading, setPageLoading] = useState(true);
   // const [copyArtisans, setCopyArtisans] = useState([]);
-  const [artisans, setArtisans] = useState([]);
+  const [artisans, setArtisans] = useState([...artisanDB]);
   const [searchArtisans, setSearchArtisans] = useState([]);
 
   const [formService, setFormService] = useState("");
@@ -18,6 +19,7 @@ export function SearchProvider({ children }) {
 
   useEffect(() => {
     getArtisansFunction();
+    console.log({artisanDB})
   }, []);
 
   async function getArtisansFunction() {
@@ -28,8 +30,8 @@ export function SearchProvider({ children }) {
         return response.json();
       })
       .then(function (data) {
-        setArtisans(data);
-        setSearchArtisans(data);
+        setArtisans([...data]);
+        setSearchArtisans([...data,...artisanDB]);
         setPageLoading(false);
       })
       .catch(function (error) {
@@ -59,3 +61,5 @@ export function SearchProvider({ children }) {
     </SearchContext.Provider>
   );
 }
+
+export default SearchProvider;

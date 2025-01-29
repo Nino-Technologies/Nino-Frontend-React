@@ -11,9 +11,12 @@ function Dashboard() {
   const [sideNavOpen, setSideNavOpen] = useState(false);
   const navigate = useNavigate();
   const [cookies] = useCookies();
+
+  useEffect(() => {
   if (loggedIn === false) {
     navigate("/");
   }
+  }, [loggedIn]);
   useEffect(() => {
     if (loggedIn) {
       getUserProfile();

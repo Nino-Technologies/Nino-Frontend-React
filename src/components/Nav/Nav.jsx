@@ -1,8 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Nav.scss";
 import navImage from "../../assets/images/grinders.png";
-import { BsCaretDownFill, BsHeart, BsHouse } from "react-icons/bs";
+import { BsHouse } from "react-icons/bs";
 import { UserContext } from "../../context/UserContext";
 import {
   BsArrowLeftSquareFill,
@@ -25,9 +25,9 @@ import {
   // Typography,
 } from "@mui/material";
 import { Settings, KeyboardArrowDownOutlined } from "@mui/icons-material";
-// import { styled, alpha } from "@mui/styles";
-import { useTheme } from "@mui/material/styles";
-import { styled } from "@material-ui/styles";
+// import { styled } from "@material-ui/styles";
+import { styled } from '@mui/system'; // for MUI v5 and above
+
 // import { styled, alpha } from "@material-ui/styles";
 import { useCookies } from "react-cookie";
 
@@ -93,13 +93,13 @@ export default Nav;
 
 export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
   const { userProfile } = useContext(UserContext);
-  // const [sideNavOpen, setSideNavOpen] = useState(false);
   function navToggle() {
     setSideNavOpen(!sideNavOpen);
   }
-
   const { logOutFunction } = useContext(UserContext);
   const { role } = userProfile;
+
+  useEffect(() => { console.log({ role }) }, [role]);
   // console.log(userProfile);
   return (
     <>
@@ -114,31 +114,19 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
         {sideNavOpen ? <BsArrowLeftSquareFill /> : <BsArrowRightSquareFill />}
       </div>
       <ul>
-        {userNavLinkObject.map((link, i) => {
-          const { name, icon, path, userPrivilege } = link;
-          return (
-            <React.Fragment key={i}>
-              {role >= userPrivilege ? (
-                <li>
-                  <Link to={path}>
-                    <div className="side-nav-icon">{icon}</div>
-                    <span className="nav-link-name">{name}</span>
-                  </Link>
-                </li>
-              ) : null}
-            </React.Fragment>
-          );
-        })}
-        {role === 0 ? (
-          <li>
-            <Link to="saved-artisan">
-              <div className="side-nav-icon">
-                <BsHeart />
-              </div>
-              <span className="nav-link-name">Saved Service Provider</span>
-            </Link>
-          </li>
-        ) : null}
+        {userNavLinkObject
+          .filter(({ userPrivilege }) => role === 3 || userPrivilege.includes(role))
+          .map(({ name, icon, path }, i) => {
+            return (
+              <li key={i}>
+                <NavLink to={path} className={({ isActive }) => (isActive ? "active-nav-item" : "")}>
+                  <div className="side-nav-icon">{icon}</div>
+                  <span className="nav-link-name">{name}</span>
+                </NavLink>
+              </li>
+            );
+          })}
+
         <li
           onClick={() => {
             logOutFunction();
@@ -155,40 +143,40 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
   );
 };
 
+
 export function AccountMenu() {
-  const { loggedIn, logOutFunction, getUserProfile, userProfile } =
-    useContext(UserContext);
+  const { loggedIn, logOutFunction, getUserProfile, userProfile } = useContext(UserContext);
   const [cookies] = useCookies();
+  const [anchorEl, setAnchorEl] = useState(null);
+  // const isOpen = Boolean(anchorEl);
+
+  // Fetch user profile if logged in and cookie is present
   useEffect(() => {
     if (loggedIn && cookies.grinderUser) {
-      return getUserProfile();
+      getUserProfile();
     }
-    // getUserProfile();
-  }, []);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  }, [loggedIn, cookies.grinderUser, getUserProfile]);
+
+  // Handlers with useCallback for memoization
+  const handleClick = useCallback((event) => setAnchorEl(event.currentTarget), []);
+  const handleClose = useCallback(() => setAnchorEl(null), []);
+
   return (
-    <React.Fragment>
+    <>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Profile">
           <IconButton
             onClick={handleClick}
             size="small"
             sx={{ ml: 2 }}
-            aria-controls={open ? "account-menu" : undefined}
+            aria-controls={anchorEl ? "account-menu" : undefined}
             aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
+            aria-expanded={anchorEl ? "true" : undefined}
           >
             <Avatar
               sx={{ width: 50, height: 50 }}
-              alt={userProfile?.fullName}
-              src={userProfile.avatar}
+              alt={userProfile?.fullName || "User"}
+              src={userProfile?.avatar || null} // Fallback avatar
             />
             <KeyboardArrowDownOutlined />
           </IconButton>
@@ -197,9 +185,8 @@ export function AccountMenu() {
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
-        open={open}
+        open={anchorEl}
         onClose={handleClose}
-        onClick={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -229,8 +216,7 @@ export function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {/* <Avatar /> Profile */}
-        <Link to={"/dashboard/home"}>
+        <Link to="/dashboard/home" style={{ textDecoration: "none", color: "inherit" }}>
           <MenuItem>
             <ListItemIcon>
               <BsHouse fontSize="small" />
@@ -239,16 +225,17 @@ export function AccountMenu() {
           </MenuItem>
         </Link>
         <Divider />
-        <MenuItem onClick={() => logOutFunction()}>
+        <MenuItem onClick={logOutFunction}>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <  BsFillDoorOpenFill fontSize="small" />
           </ListItemIcon>
           Logout
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   );
 }
+
 
 const StyledMenu = styled((props) => (
   <Menu

@@ -10,7 +10,7 @@ import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import { BsX } from "react-icons/bs";
 import { toast } from "react-toastify";
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from "../../context/UserContext";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
@@ -418,7 +418,7 @@ console.log('It works!')
 The lift coefficient ($C_L$) is a dimensionless coefficient.
 
 A paragraph with *emphasis* and **strong importance**.
-import { UserContext } from './../../context/UserContext';
+import {UserContext} from './../../context/UserContext';
 
 > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
 
