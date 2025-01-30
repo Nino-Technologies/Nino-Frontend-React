@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./NotificationPage.css";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 function NotificationPage() {
   const { decodeDate, getNotification, notification, pageLoading } =
     useContext(UserContext);

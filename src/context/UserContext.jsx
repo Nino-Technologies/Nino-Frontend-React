@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import moment from "moment";
 import axios from "axios";
-import VerifiedBadge from "../components/verifiedBadge/verifiedBadge";
+import VerifiedBadge from "../components/verifiedBadge/verifiedBadge.jsx";
 import { FaExclamation } from "react-icons/fa";
 
 export const UserContext = createContext();

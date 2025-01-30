@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GiHeartPlus, GiHeartMinus } from "react-icons/gi";
 import { toast } from "react-toastify";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import "./SaveButton.scss";
-import { SaveArtisanContext } from "./../../context/saveUserContext";
+import { SaveArtisanContext } from "./../../context/saveUserContext.jsx";
 
 function SaveButton({ artisan }) {
   const { saveArtisan, removeArtisan, savedArtisanIds } =

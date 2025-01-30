@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import {UserContext} from "./UserContext";
+import { UserContext } from "./UserContext.jsx";
 
 export const BlogContext = createContext();
 

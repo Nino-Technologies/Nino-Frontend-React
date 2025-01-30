@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { useContext } from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   FaAt,
   FaDotCircle,
@@ -11,9 +10,9 @@ import {
 import { usePaystackPayment } from "react-paystack";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import "./PaymentForm.scss";
-import { TermiiSMSContext } from "../../context/TermiiContext";
+import { TermiiSMSContext } from "../../context/TermiiContext.jsx";
 
 function PaymentForm({ selectedPlane }) {
   const { sendMessageFunction } = useContext(TermiiSMSContext);

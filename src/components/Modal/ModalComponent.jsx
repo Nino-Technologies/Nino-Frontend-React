@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import PaymentForm from "../PaymentForm/PaymentForm";
+import PaymentForm from "../PaymentForm/PaymentForm.jsx";
 import "./ModalComponent.scss";
 import { FaCheckCircle } from "react-icons/fa";
-import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper";
+// import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper.jsx";
 
 function ModalComponent({ btnText, modalTitle, children, modalId }) {
   return (

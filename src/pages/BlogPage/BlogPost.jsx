@@ -1,6 +1,6 @@
 import { Divider } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import Nav from "../../components/Nav/Nav";
+import Nav from "../../components/Nav/Nav.jsx";
 import adsImage from "../../assets/images/Grinders_Ads.svg";
 import "./BlogPost.scss";
 import ReactMarkdown from "react-markdown";
@@ -15,14 +15,14 @@ import {
   FeaturedBlogCardPost,
   FeaturedPostComponent,
   SideCol,
-} from "./BlogPage";
-import Footer from "../../components/Footer/Footer";
+} from "./BlogPage.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { BlogContext } from "./../../context/BlogContext";
+import { BlogContext } from "./../../context/BlogContext.jsx";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import {UserContext} from "./../../context/UserContext";
+import { UserContext } from "./../../context/UserContext.jsx";
 
 function BlogPost() {
   const { id } = useParams();

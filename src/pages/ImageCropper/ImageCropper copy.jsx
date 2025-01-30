@@ -1,18 +1,18 @@
-import React, { useState, useCallback, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useCallback } from "react";
+// import ReactDOM from "react-dom";
 import Cropper from "react-easy-crop";
 // import Slider from "@mui/material/Slider";
 import Slider from "@mui/material/Slider";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import { withStyles } from "@mui/system";
 import { getOrientation } from "get-orientation/browser";
-import ImgDialog from "./imgDialog";
-import { createImage, getCroppedImg, getRotatedImage } from "./canvasUtils";
+// import ImgDialog from "./imgDialog.jsx";
+import { /*createImage,*/ getCroppedImg, getRotatedImage } from "./canvasUtils";
 import { styles } from "./styles";
 import "./imageCropper.scss";
-import BackButton from "../../components/BackButton/BackButton";
-import { FaFileImage, FaImage, FaUpload } from "react-icons/fa";
+// import BackButton from "../../components/BackButton/BackButton.jsx";
+import { FaUpload } from "react-icons/fa";
 
 const ORIENTATION_TO_ANGLE = {
   3: 180,

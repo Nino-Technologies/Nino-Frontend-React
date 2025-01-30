@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ArtisanRegistrationForm from "../../components/RegistrationForm/ArtisanRegistrationForm";
+import ArtisanRegistrationForm from "../../components/RegistrationForm/ArtisanRegistrationForm.jsx";
 import "./RegisterPage.scss";
-import UserRegistrationForm from "../../components/RegistrationForm/UserRegistrationForm";
+import UserRegistrationForm from "../../components/RegistrationForm/UserRegistrationForm.jsx";
 import { Link, useSearchParams } from "react-router-dom";
-import { BackComponent } from "../LoginPage/LoginPage";
+import { BackComponent } from "../LoginPage/LoginPage.jsx";
 import { toast } from "react-toastify";
 
 function RegisterPage() {

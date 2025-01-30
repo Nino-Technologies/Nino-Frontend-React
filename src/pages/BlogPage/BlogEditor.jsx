@@ -1,6 +1,6 @@
 import React from "react";
 import "./BlogEditor.scss";
-// import Nav from "./../../components/Nav/Nav";
+// import Nav from "./../../components/Nav/Nav.jsx";
 import { TextField } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -10,7 +10,7 @@ import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import { BsX } from "react-icons/bs";
 import { toast } from "react-toastify";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";

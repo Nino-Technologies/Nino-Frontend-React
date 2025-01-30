@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import SocialLogin from "./SocialLogin";
-import {UserContext} from "../../context/UserContext";
+// import SocialLogin from "./SocialLogin.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 import { useCookies } from "react-cookie";
-import { ForgotPasswordLink } from "./../BackButton/BackButton";
+import { ForgotPasswordLink } from "./../BackButton/BackButton.jsx";
 
 function UserLoginForm() {
   const [loading, setLoading] = useState(false);

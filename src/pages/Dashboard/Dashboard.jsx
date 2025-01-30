@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import Nav, { DashboardSideNav } from "../../components/Nav/Nav";
-import { UserContext } from "../../context/UserContext";
+import Nav, { DashboardSideNav } from "../../components/Nav/Nav.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 

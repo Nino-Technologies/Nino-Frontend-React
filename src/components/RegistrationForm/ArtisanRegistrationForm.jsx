@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import "./ArtisanRegistrationForm.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import axios from "axios";
-// import { ProfilePictureModalComponent } from "../Modal/ModalComponent";
-// import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper";
-import CloudinaryUploadProfileButton from "../CloudnaryUploadButton/CloudnaryUploadButton";
+// import { ProfilePictureModalComponent } from "../Modal/ModalComponent.jsx";
+// import ImageCropperWithStyle from "../../pages/ImageCropper/ImageCropper.jsx";
+import CloudinaryUploadProfileButton from "../CloudnaryUploadButton/CloudnaryUploadButton.jsx";
 
 function ArtisanRegistrationForm({ saveAccountType }) {
   const [currentTab, setCurrentTab] = useState(1);

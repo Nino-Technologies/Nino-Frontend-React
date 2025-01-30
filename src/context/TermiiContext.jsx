@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {UserContext} from "./UserContext";
+import { UserContext } from "./UserContext.jsx";
 import axios from "axios";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 export const TermiiSMSContext = createContext();
 

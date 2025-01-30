@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import "./Nav.scss";
 import navImage from "../../assets/images/grinders.png";
 import { BsHouse } from "react-icons/bs";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import {
   BsArrowLeftSquareFill,
   BsArrowRightSquareFill,
@@ -11,7 +11,7 @@ import {
   BsFillDoorOpenFill,
   // BsHouse,
 } from "react-icons/bs";
-import { userNavLinkObject } from "./dashboradNavList";
+import { userNavLinkObject } from "./dashboradNavList.js";
 import {
   Avatar,
   Box,

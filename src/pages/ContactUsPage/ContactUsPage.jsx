@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import Footer from "../../components/Footer/Footer";
+import Footer from "../../components/Footer/Footer.jsx";
 import "./ContactUsPage.scss";
-import Nav from "../../components/Nav/Nav";
+import Nav from "../../components/Nav/Nav.jsx";
 import {
   FaEnvelope,
   FaInstagram,

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import SocialLogin from "../LoginForm/SocialLogin";
+// import SocialLogin from "../LoginForm/SocialLogin.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 
 function UserRegistrationForm({ saveAccountType }) {
   const [loading, setLoading] = useState(false);

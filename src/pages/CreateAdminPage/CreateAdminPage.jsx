@@ -1,8 +1,8 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+// import axios from "axios";
+import React from "react";
 
 import "./CreateAdminPage.scss";
-import AdminRegistrationForm from "../../components/RegistrationForm/AdminRegistrationForm";
+import AdminRegistrationForm from "../../components/RegistrationForm/AdminRegistrationForm.jsx";
 
 function CreateAdminPage() {
   return (

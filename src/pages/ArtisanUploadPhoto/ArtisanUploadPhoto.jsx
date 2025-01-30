@@ -2,10 +2,10 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import "./ArtisanUploadPhoto.scss";
-import ModalImage from "../../components/ModalImage/ModalImage";
+import ModalImage from "../../components/ModalImage/ModalImage.jsx";
 import altImg from "../../assets/images/hero-design.png";
 import { toast } from "react-toastify";
-import {UserContext} from "./../../context/UserContext";
+import { UserContext } from "./../../context/UserContext.jsx";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 

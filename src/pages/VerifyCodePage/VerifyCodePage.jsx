@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import "./VerifyCodePage.scss";
-import Nav from "../../components/Nav/Nav";
-import VerifyCodeSearch from "../../components/VerifyCodeSearch/VerifyCodeSearch";
+import Nav from "../../components/Nav/Nav.jsx";
+import VerifyCodeSearch from "../../components/VerifyCodeSearch/VerifyCodeSearch.jsx";
 // import { Link } from "react-router-dom";
-import {UserContext} from "./../../context/UserContext";
+import { UserContext } from "./../../context/UserContext.jsx";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { SkipButton } from "../../components/BackButton/BackButton";
+import { SkipButton } from "../../components/BackButton/BackButton.jsx";
 
 function VerifyCodePage() {
   const { loggedIn, apiUrl } = useContext(UserContext);

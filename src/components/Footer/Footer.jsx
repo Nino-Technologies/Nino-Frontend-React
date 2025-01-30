@@ -1,7 +1,7 @@
 import React from "react";
 import { FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { ContactUsForm } from "../../pages/ContactUsPage/ContactUsPage";
+import { ContactUsForm } from "../../pages/ContactUsPage/ContactUsPage.jsx";
 import "./Footer.scss";
 
 function Footer() {

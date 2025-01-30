@@ -1,14 +1,14 @@
 import React from "react";
 import { withStyles } from "@mui/system";
-import Dialog from "@mui/material/Dialog";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
+import Dialog from "@mui/material/Dialog.jsx";
+import AppBar from "@mui/material/AppBar.jsx";
+import Toolbar from "@mui/material/Toolbar.jsx";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import Button from "@mui/material/Button";
-import BackButton from "./../../components/BackButton/BackButton";
+import BackButton from "./../../components/BackButton/BackButton.jsx";
 
 const styles = {
   appBar: {

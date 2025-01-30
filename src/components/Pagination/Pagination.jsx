@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 // import ReactDOM from "react-dom";
 import ReactPaginate from "react-paginate";
-import { BlogCardPost } from "../../pages/BlogPage/BlogPage";
-import ProfileCard from "../ProfileCard/ProfileCard";
+import { BlogCardPost } from "../../pages/BlogPage/BlogPage.jsx";
+import ProfileCard from "../ProfileCard/ProfileCard.jsx";
 import "./Pagination.scss";
 
 // Example items, to simulate fetching from another resources.

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import ArtisanRegistrationForm from "../../components/RegistrationForm/ArtisanRegistrationForm";
+// import ArtisanRegistrationForm from "../../components/RegistrationForm/ArtisanRegistrationForm.jsx";
 import "./LoginPage.scss";
-import UserRegistrationForm from "../../components/RegistrationForm/UserRegistrationForm";
+// import UserRegistrationForm from "../../components/RegistrationForm/UserRegistrationForm.jsx";
 import { Link, useSearchParams } from "react-router-dom";
-import UserLoginForm from "../../components/LoginForm/UserLoginForm";
-import ArtisanLoginForm from "../../components/LoginForm/ArtisanLoginForm";
+import UserLoginForm from "../../components/LoginForm/UserLoginForm.jsx";
+import ArtisanLoginForm from "../../components/LoginForm/ArtisanLoginForm.jsx";
 import { FaArrowLeft } from "react-icons/fa";
-import AdminLoginForm from "../../components/LoginForm/AdminLoginForm";
-import AuthorLoginForm from "../../components/LoginForm/AuthorLoginForm";
+import AdminLoginForm from "../../components/LoginForm/AdminLoginForm.jsx";
+import AuthorLoginForm from "../../components/LoginForm/AuthorLoginForm.jsx";
 
 function LoginPage() {
   const [displayForm, setDisplayForm] = useState(-1);

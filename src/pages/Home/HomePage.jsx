@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "./HomePage.css";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import { Link, useNavigate } from "react-router-dom";
-import { FaExclamation, FaInfoCircle, FaRetweet } from "react-icons/fa";
-import ModalComponent from "../../components/Modal/ModalComponent";
-import { TermiiSMSContext } from "../../context/TermiiContext";
+import { FaExclamation, FaRetweet } from "react-icons/fa";
+import ModalComponent from "../../components/Modal/ModalComponent.jsx";
+import { TermiiSMSContext } from "../../context/TermiiContext.jsx";
 import {
   ProfileCompletenessProgressBar,
   ProfileCompletenessWhatLeftDropdown,
-  ProfileSubscriptionAlertCard,
-} from "../ProfilePage/ProfilePage";
-import { ProfileSVerificationAlertCard } from "./../ProfilePage/ProfilePage";
+  ProfileSubscriptionAlertCard, ProfileSVerificationAlertCard
+} from "../ProfilePage/ProfilePage.jsx";
 import { useCookies } from "react-cookie";
 
 function HomePage() {

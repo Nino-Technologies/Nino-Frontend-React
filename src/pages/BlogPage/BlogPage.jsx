@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import "./BlogPage.scss";
-import Nav from "./../../components/Nav/Nav";
+import Nav from "./../../components/Nav/Nav.jsx";
 import { TextField } from "@mui/material";
 import adsImage from "../../assets/images/Grinders_Ads.svg";
-import { BlogContext } from "./../../context/BlogContext";
+import { BlogContext } from "./../../context/BlogContext.jsx";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -12,8 +12,8 @@ import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { PaginatedBlog } from "../../components/Pagination/Pagination";
-import {UserContext} from "./../../context/UserContext";
+import { PaginatedBlog } from "../../components/Pagination/Pagination.jsx";
+import { UserContext } from "./../../context/UserContext.jsx";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 
 function BlogPage() {

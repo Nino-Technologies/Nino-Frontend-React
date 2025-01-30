@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { FaCogs, FaInfoCircle, FaUser, FaUserCheck } from "react-icons/fa";
-// import { PaymentModalComponent } from "../../components/Modal/ModalComponent";
-import { UserContext } from "../../context/UserContext";
+// import { PaymentModalComponent } from "../../components/Modal/ModalComponent.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 import "./ProfilePage.scss";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
-import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
+import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge.jsx";
 import { Link } from "react-router-dom";
-import CloudinaryUploadProfileButton from "../../components/CloudnaryUploadButton/CloudnaryUploadButton";
+import CloudinaryUploadProfileButton from "../../components/CloudnaryUploadButton/CloudnaryUploadButton.jsx";
 {
   /*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove any commented code on this page !!!!!!!!!!!!!!!!!!!!! */
 }

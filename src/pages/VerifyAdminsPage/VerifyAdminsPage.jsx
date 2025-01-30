@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import "./VerifyAdminsPage.scss";
 import axios from "axios";
-import { toast } from "react-toastify";
-import AdminAction from "../../components/AdminAction/AdminAction";
-import { SendMessageModalForm } from "../VerifyUserPage/VerifyUserPage";
+// import { toast } from "react-toastify";
+import AdminAction from "../../components/AdminAction/AdminAction.jsx";
+import { SendMessageModalForm } from "../VerifyUserPage/VerifyUserPage.jsx";
 
 function VerifyAdminsPage() {
   const [pageLoading, setPageLoading] = useState(true);

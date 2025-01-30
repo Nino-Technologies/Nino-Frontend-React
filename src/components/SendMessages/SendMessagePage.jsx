@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext } from "react";
-import { TermiiSMSContext } from "../../context/TermiiContext";
+import { TermiiSMSContext } from "../../context/TermiiContext.jsx";
 
 export default function SendMessagePage() {
   const { sendMessageFunction } = useContext(TermiiSMSContext);

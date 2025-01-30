@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./UserContext.jsx";
 import artisanDB from"../json/artisans.json"
 
 export const SearchContext = createContext();

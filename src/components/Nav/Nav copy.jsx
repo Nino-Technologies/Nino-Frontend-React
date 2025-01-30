@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Nav.scss";
 import navImage from "../../assets/images/grinders.png";
 import { BsCaretDownFill, BsHeart, BsHouse } from "react-icons/bs";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import {
   BsArrowLeftSquareFill,
   BsArrowRightSquareFill,

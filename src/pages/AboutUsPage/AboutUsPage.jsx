@@ -1,7 +1,7 @@
 import React from "react";
 import "./AboutUsPage.scss";
-import Nav from "../../components/Nav/Nav";
-import Footer from "../../components/Footer/Footer";
+import Nav from "../../components/Nav/Nav.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
 
 function AboutUsPage() {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import "./PasswordResetPage.scss";
-import Nav from "../../components/Nav/Nav";
-import PasswordReset from "../../components/PasswordResetForm/PasswordResetForm";
+import Nav from "../../components/Nav/Nav.jsx";
+import PasswordReset from "../../components/PasswordResetForm/PasswordResetForm.jsx";
 
 function PasswordResetPage() {
   return (

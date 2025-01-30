@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
-import Nav from "../../components/Nav/Nav";
+import Footer from "../../components/Footer/Footer.jsx";
+import Nav from "../../components/Nav/Nav.jsx";
 import StarComponent, {
   ReviewStarComponent,
-} from "../../components/stars/Stars";
-import ChatPopUp from "../../components/ChatPopUp/ChatPopUp";
-import PageLoading from "../../components/PageLoading/PageLoading";
+} from "../../components/stars/Stars.jsx";
+import ChatPopUp from "../../components/ChatPopUp/ChatPopUp.jsx";
+import PageLoading from "../../components/PageLoading/PageLoading.jsx";
 import "./ArtisansProfile.scss";
-import ShareButton from "../../components/ShareButton/ShareButton";
-import SaveButton from "../../components/SaveButton/SaveButton";
-import { UserContext } from "../../context/UserContext";
+import ShareButton from "../../components/ShareButton/ShareButton.jsx";
+import SaveButton from "../../components/SaveButton/SaveButton.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 import { toast } from "react-toastify";
 import {
   FaMapMarked,
@@ -22,11 +22,11 @@ import {
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import moment from "moment";
-import ModalImage from "./../../components/ModalImage/ModalImage";
-import ModalComponent from "./../../components/Modal/ModalComponent";
-import BackButton from "../../components/BackButton/BackButton";
-import { SearchContext } from "./../../context/SearchContext";
-import { TermiiSMSContext } from "../../context/TermiiContext";
+import ModalImage from "./../../components/ModalImage/ModalImage.jsx";
+// import ModalComponent from "./../../components/Modal/ModalComponent.jsx";
+import BackButton from "../../components/BackButton/BackButton.jsx";
+import { SearchContext } from "./../../context/SearchContext.jsx";
+import { TermiiSMSContext } from "../../context/TermiiContext.jsx";
 
 function ArtisansProfile() {
   const { id } = useParams();

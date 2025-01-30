@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import HomePage from "../pages/Home/HomePage";
+import HomePage from "../pages/Home/HomePage.jsx";
 
 export const TestContext = createContext();
 

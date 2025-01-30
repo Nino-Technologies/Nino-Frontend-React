@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 
 import "./SavedArtisanPage.scss";
-import { SaveArtisanContext } from "../../context/saveUserContext";
+import { SaveArtisanContext } from "../../context/saveUserContext.jsx";
 import { GiHeartMinus } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 function SavedArtisanPage() {
   const { userProfile } = useContext(UserContext);

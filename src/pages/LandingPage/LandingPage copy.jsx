@@ -2,10 +2,10 @@ import React, { useEffect, useContext } from "react";
 import heroImage from "../../assets/images/undraw_coffee_break_h3uu.svg";
 import smallHeroImage from "../../assets/images/hero-section-image-design-small.png";
 import "./LandingPage.scss";
-import Search from "../../components/Search/Search";
-import Nav from "../../components/Nav/Nav";
+import Search from "../../components/Search/Search.jsx";
+import Nav from "../../components/Nav/Nav.jsx";
 import { Link } from "react-router-dom";
-import {UserContext} from "./../../context/UserContext";
+import { UserContext } from "./../../context/UserContext.jsx";
 
 function LandingPage() {
   const { loggedIn } = useContext(UserContext);

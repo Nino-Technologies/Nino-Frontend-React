@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SaveButton from "../SaveButton/SaveButton";
-import StarComponent from "../stars/Stars";
+import SaveButton from "../SaveButton/SaveButton.jsx";
+import StarComponent from "../stars/Stars.jsx";
 import "./ProfileCard.scss";
 import { FaTrophy, FaUser, FaUserCheck } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
-import ShareButton from "../ShareButton/ShareButton";
+import ShareButton from "../ShareButton/ShareButton.jsx";
 
 function ProfileCard({ artisan }) {
   const {

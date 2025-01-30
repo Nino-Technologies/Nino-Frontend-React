@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./AuthorPage.scss";
-import { TextField } from "@mui/material";
-import adsImage from "../../assets/images/Grinders_Ads.svg";
+// import { TextField } from "@mui/material";
+// import adsImage from "../../assets/images/Grinders_Ads.svg";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -10,9 +10,9 @@ import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { SearchInputComponent, SideCol } from "../BlogPage/BlogPage";
-import { BlogContext } from "../../context/BlogContext";
-import { PaginatedBlog } from "../../components/Pagination/Pagination";
+import { SearchInputComponent, SideCol } from "../BlogPage/BlogPage.jsx";
+import { BlogContext } from "../../context/BlogContext.jsx";
+import { PaginatedBlog } from "../../components/Pagination/Pagination.jsx";
 
 function AuthorPage() {
   const { blogPosts, getBlogPost, blogPostsSearch } = useContext(BlogContext);

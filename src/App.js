@@ -2,11 +2,11 @@ import "./App.css";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useContext, useEffect } from "react";
-import { UserContext } from "./context/UserContext";
-import { SaveArtisanProvider } from "./context/saveUserContext";
-import TermiiSMSProvider from "./context/TermiiContext";
+import { UserContext } from "./context/UserContext.jsx";
+import { SaveArtisanProvider } from "./context/saveUserContext.jsx";
+import TermiiSMSProvider from "./context/TermiiContext.jsx";
 import ReactGa from "react-ga";
-import { BlogProvider } from "./context/BlogContext";
+import { BlogProvider } from "./context/BlogContext.jsx";
 import {
   LandingPage,
   ArtisansPage,
@@ -36,13 +36,13 @@ import {
   ImageCropperWithStyle,
   QuickRequestPage,
   SendMessagePage,
-} from "./pages";
-import { PaymentModalComponent } from "./components/Modal/ModalComponent";
+} from "./pages/index.jsx";
+import { PaymentModalComponent } from "./components/Modal/ModalComponent.jsx";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
 
-function App() {
+export default function App() {
   const { getUserProfile, loggedIn } = useContext(UserContext);
 
   function ScrollToTop() {
@@ -123,7 +123,7 @@ function App() {
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/image-cropper" element={<ImageCropperWithStyle />} />
         <Route
-          path="/dashboard"
+          path="/Dashboard.jsx"
           element={
             <TermiiSMSProvider>
               <Dashboard />
@@ -179,5 +179,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

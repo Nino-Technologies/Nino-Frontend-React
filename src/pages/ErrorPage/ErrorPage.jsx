@@ -3,7 +3,7 @@ import "./error_page.style.css";
 import { Link } from "react-router-dom";
 import errorImage from "../../assets/images/page_not_found.svg";
 import { BsFillExclamationTriangleFill } from "react-icons/bs";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 
 const ErrorPage = () => {
   const { loggedIn } = useContext(UserContext);

@@ -3,9 +3,9 @@ import "./VerifyCodeSearch.scss";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {UserContext} from "../../context/UserContext";
-import VerifyCodeFail from "../../components/VerifyCodeFail/VerifyCodeFail";
-import VerifyCodeSuccess from "../../components/VerifyCodeSuccess/VerifyCodeSuccess";
+import { UserContext } from "../../context/UserContext.jsx";
+// import VerifyCodeFail from "../../components/VerifyCodeFail/VerifyCodeFail";
+// import VerifyCodeSuccess from "../../components/VerifyCodeSuccess/VerifyCodeSuccess";
 // import { toast } from "react-toastify";
 
 function VerifyCodeSearch({ email }) {

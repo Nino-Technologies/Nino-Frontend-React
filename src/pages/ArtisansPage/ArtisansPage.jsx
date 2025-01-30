@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import Footer from "../../components/Footer/Footer";
-import Nav from "../../components/Nav/Nav";
-import ProfileCard from "../../components/ProfileCard/ProfileCard";
-import Search from "../../components/Search/Search";
+import Footer from "../../components/Footer/Footer.jsx";
+import Nav from "../../components/Nav/Nav.jsx";
+// import ProfileCard from "../../components/ProfileCard/ProfileCard.jsx";
+import Search from "../../components/Search/Search.jsx";
 
 import "./ArtisansPage.scss";
-import { SearchContext } from "../../context/SearchContext";
-import PaginatedItems from "../../components/Pagination/Pagination";
+import { SearchContext } from "../../context/SearchContext.jsx";
+import PaginatedItems from "../../components/Pagination/Pagination.jsx";
 
 function ArtisansPage() {
   const { pageLoading, artisans, searchArtisans, formService } =

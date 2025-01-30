@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import "./VerifyUserPage.scss";
 import axios from "axios";
-import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge";
-import { FaArrowUp, FaExclamation } from "react-icons/fa";
+// import VerifiedBadge from "../../components/verifiedBadge/verifiedBadge.jsx";
+import { FaArrowUp } from "react-icons/fa";
 import { toast } from "react-toastify";
-import AdminAction from "../../components/AdminAction/AdminAction";
-import ModalComponent from "../../components/Modal/ModalComponent";
-import { TermiiSMSContext } from "../../context/TermiiContext";
+import AdminAction from "../../components/AdminAction/AdminAction.jsx";
+import ModalComponent from "../../components/Modal/ModalComponent.jsx";
+import { TermiiSMSContext } from "../../context/TermiiContext.jsx";
 
 function VerifyUserPage() {
   const [pageLoading, setPageLoading] = useState(true);

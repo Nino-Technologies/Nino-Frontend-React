@@ -4,9 +4,9 @@ import { FaArrowLeft } from "react-icons/fa";
 import "./PasswordResetForm.scss";
 import { toast } from "react-toastify";
 import axios from "axios";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
-import BackButton from "../BackButton/BackButton";
+import BackButton from "../BackButton/BackButton.jsx";
 
 export default function PasswordReset() {
   const [passwordTab, setPasswordTab] = useState(1);

@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaHistory, FaRegWindowClose, FaSearch } from "react-icons/fa";
 import "./Search.scss";
-import { SearchContext } from "../../context/SearchContext";
+import { SearchContext } from "../../context/SearchContext.jsx";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import {UserContext} from "./../../context/UserContext";
+import { UserContext } from "./../../context/UserContext.jsx";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import { TermiiSMSContext } from "../../context/TermiiContext";
+import { TermiiSMSContext } from "../../context/TermiiContext.jsx";
 
 function Search() {
   const {
