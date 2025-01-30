@@ -1,7 +1,7 @@
 {
   "name": "grinders",
   "version": "2.0.0",
-    "type": "module",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@cloudinary/react": "^1.13.1",
@@ -76,6 +76,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.26.7",
+    "@babel/preset-react": "^7.26.3"
   }
 }
