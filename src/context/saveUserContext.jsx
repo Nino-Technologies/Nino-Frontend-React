@@ -93,7 +93,7 @@ export function SaveArtisanProvider({ children }) {
       setSavedArtisanIds(savedArtisanIdArray);
     }
     useEffect(() => {
-      if (userProfile.saved_artisans) {
+      if (userProfile?.saved_artisans) {
         getSavedArtisanIds(userProfile.saved_artisans);
       }
     }, [userProfile]);
