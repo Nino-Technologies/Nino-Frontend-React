@@ -1,6 +1,7 @@
 {
   "name": "grinders",
   "version": "2.0.0",
+    "type": "module",
   "private": true,
   "dependencies": {
     "@cloudinary/react": "^1.13.1",
