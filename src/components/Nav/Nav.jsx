@@ -115,7 +115,7 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
       </div>
       <ul>
         {userNavLinkObject
-          .filter(({ userPrivilege }) => role === 3 || userPrivilege.includes(role))
+          .filter(({ userPrivilege }) => userPrivilege.includes(role))
           .map(({ name, icon, path }, i) => {
             return (
               <li key={i}>
