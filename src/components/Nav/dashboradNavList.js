@@ -26,7 +26,7 @@ export const userNavLinkObject = [
     name: "Home",
     icon: <BsHouseFill />,
     path: "/dashboard/home",
-    userPrivilege: [0, 1]
+    userPrivilege: [0, 1, 3]
   },
   {
     name: "profile",
