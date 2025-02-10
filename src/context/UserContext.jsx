@@ -118,14 +118,10 @@ function UserProvider({ children }) {
 
   // decodeDate();
   function decodeDate(date) {
-    // moment()
-    const dateArray = moment(date)
-      .format("ddd, MMM Do YYYY T h:mm:ss a")
-      .split("T");
-    // console.log(dateArray);
-    const timeOnly = dateArray[1].split("+");
-    // console.log(dateArray);
-    return [dateArray[0], timeOnly[0]];
+    const formattedDate = moment(date).format("MMM DD YYYY T h:mm:ss a");
+    // console.log(formattedDate)
+    const [datePart, timePart] = formattedDate.split(" T ");
+    return [datePart, timePart];
   }
 
   const [profileProgress, setProfileProgress] = useState(0);
@@ -204,8 +200,7 @@ function UserProvider({ children }) {
         setUserProfile,
         logOutFunction,
         apiUrl,
-        decodeDate: (date) =>
-          moment(date).format("ddd, MMM Do YYYY h:mm:ss a"),
+        decodeDate,
         getNotification,
         notification,
         checkVerifiedFunction: (verify) =>
