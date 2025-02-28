@@ -13,7 +13,9 @@ import SaveButton from "../../components/SaveButton/SaveButton.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { toast } from "react-toastify";
 import {
+  FaCopy,
   FaMapMarked,
+  FaPhone,
   FaRegHandshake,
   FaShieldAlt,
   FaTrophy,
@@ -32,6 +34,7 @@ function ArtisansProfile() {
   const { id } = useParams();
   const [artisan, setArtisan] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
+  const [showNumber, setShowNumber] = useState(false);
   // const [showArtisansNumber, setShowArtisansNumber] = useState(false);
   const [artisanReviewInput, setArtisanReviewInput] = useState("");
   const [artisanRateInput, setArtisanRateInput] = useState(1);
@@ -430,6 +433,24 @@ function ArtisansProfile() {
                           {artisan.YearsOfExperience} Years
                         </li>
                       ) : null}
+                        {showNumber ? (
+                          <li>
+                            <span className="icon mx-2">
+                              <FaPhone />
+                            </span>
+                            +{artisan.phoneNumber}
+
+                            <button
+                              className="btn btn-primary btn-sm ms-2"
+                              onClick={() => {
+                                copyLinkFunction("+" + artisan.phoneNumber);
+                                setShowNumber(false);
+                              }}
+                            >
+                              <FaCopy />  Copy
+                            </button>
+                          </li>
+                        ) : null}
 
                       {/* <li>
                       <span className="icon mx-2">
@@ -446,6 +467,7 @@ function ArtisansProfile() {
                       className="contact-button"
                       onClick={() => {
                         // handelHire();
+                        setShowNumber(true);
                         handelSendMessage({
                           to: `${artisan.phoneNumber}`,
                           message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
