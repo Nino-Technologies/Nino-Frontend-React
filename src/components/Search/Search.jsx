@@ -55,7 +55,7 @@ function Search() {
             .trim()
             .indexOf(state.toLowerCase().trim()) !== -1
         ) {
-         return stateSearchResult.push(artisan);
+          return stateSearchResult.push(artisan);
         }
       });
       // console.log("State", stateSearchResult);
@@ -72,7 +72,7 @@ function Search() {
             .trim()
             .indexOf(city.toLowerCase().trim()) !== -1
         ) {
-        return  citySearchResult.push(artisan);
+          return citySearchResult.push(artisan);
         }
       });
       // console.log("City", citySearchResult);
@@ -153,8 +153,8 @@ function Search() {
             )}
           </button>
           {formService !== "" ||
-          formLocationState !== "" ||
-          formLocationCity !== "" ? (
+            formLocationState !== "" ||
+            formLocationCity !== "" ? (
             <button
               type="button"
               className="d-inline-flex "
@@ -204,7 +204,7 @@ export function ServiceSearchInput({
           .indexOf(search.toLowerCase().trim()) !== -1
       ) {
         searchResult.push(artisan);
-       return artisanServiceArrayVar.push(artisan.service.toLowerCase().trim());
+        return artisanServiceArrayVar.push(artisan.service.toLowerCase().trim());
       }
     });
 
@@ -222,7 +222,7 @@ export function ServiceSearchInput({
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
-console.log({focused})
+  console.log({ focused })
   return (
     <label>
       <b>
@@ -528,13 +528,13 @@ export function QuickRequestComponent() {
         }
       );
       setSendingRequest(false);
-//       sendMessageFunction({
-//         to: `2348037009713`,
-//         message: `Attention Grinders,
-// "${userProfile.fullName}" has submitted a request for the service "${quickRequests.service}". Prompt response is required. 
-// Thank you.
-//       `,
-//       });
+      //       sendMessageFunction({
+      //         to: `2348037009713`,
+      //         message: `Attention Grinders,
+      // "${userProfile.fullName}" has submitted a request for the service "${quickRequests.service}". Prompt response is required. 
+      // Thank you.
+      //       `,
+      //       });
       setQuickRequests({
         locationCity: "",
         locationState: "",
@@ -563,7 +563,7 @@ export function QuickRequestComponent() {
       >
         <input
           type="text"
-          className="form-control"
+          className="form-control p-3 rounded"
           placeholder="What do you want to do?"
           name="service"
           value={quickRequests.service}
@@ -578,7 +578,7 @@ export function QuickRequestComponent() {
           <div className="d-flex w-100">
             <input
               type="text"
-              className="form-control"
+              className="form-control p-3 rounded-l"
               placeholder="State"
               name="locationState"
               value={quickRequests.locationState}
@@ -588,7 +588,7 @@ export function QuickRequestComponent() {
             />
             <input
               type="text"
-              className="form-control"
+              className="form-control p-3 rounded-r"
               placeholder="City"
               name="locationCity"
               value={quickRequests.locationCity}

@@ -130,18 +130,18 @@ function HomePage() {
           <>
             to become a verified service providers
             {userProfile.refereeNumber &&
-            userProfile.refereeNumber.trim() === "" ? (
+              userProfile.refereeNumber.trim() === "" ? (
               <>
                 <br /> <FaExclamation className="text-danger" /> Fill Referee
                 Number for Account verification
               </>
             ) : null}{" "}
             {userProfile.refereeName &&
-            userProfile.refereeName.trim() === "" ? (
+              userProfile.refereeName.trim() === "" ? (
               <>
                 {" "}
                 <br />
-                <FaExclamation className="text-danger" /> Fill Referee Name for
+                <FaExclamation className="text-danger" /> Fill Reference Name for
                 Account verification
               </>
             ) : null}
@@ -193,7 +193,7 @@ function HomePage() {
                 {" "}
                 <div
                   className="card text-dark mx-2 mt-2"
-                  // style={{ maxWidth: "18rem" }}
+                // style={{ maxWidth: "18rem" }}
                 >
                   <div className="card-header d-flex justify-content-between">
                     <span className="my-auto">SMS Wallet</span>
@@ -336,7 +336,7 @@ function HomePage() {
                     <>
                       <li className="achievements-div my-1 w-100">
                         {userProfile.freeAccount === false &&
-                        userProfile.subscriptionExpired === false
+                          userProfile.subscriptionExpired === false
                           ? checkVerifiedFunction(true)
                           : checkVerifiedFunction(false)}
                         {/* {checkVerifiedFunction(userProfile.freeAccount)} */}

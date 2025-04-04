@@ -36,7 +36,9 @@ import {
   ImageCropperWithStyle,
   QuickRequestPage,
   SendMessagePage,
+
 } from "./pages/index.jsx";
+import ProposedLandingPage from './pages/LandingPageV2/LandingPage.jsx'
 import { PaymentModalComponent } from "./components/Modal/ModalComponent.jsx";
 
 const TRACKING_ID = "G-C3G25DKRJC";
@@ -106,6 +108,7 @@ export default function App() {
             </SaveArtisanProvider>
           }
         />
+
         <Route
           path="/artisans-profile/:id"
           element={
@@ -172,6 +175,7 @@ export default function App() {
           path="/"
           element={<Navigate to="/home" replace />} //this is a way to redirect
         />
+        <Route path="/ProposedHP" element={<ProposedLandingPage />} />
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
