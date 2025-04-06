@@ -134,7 +134,7 @@ function Search() {
             />
           </div>
         </label>
-        <div className="d-flex">
+        <div className="d-flex flex-sm-column">
           <button
             className="d-flex justify-content-center align-items-center"
             type="submit"
@@ -152,6 +152,7 @@ function Search() {
               </>
             )}
           </button>
+
           {formService !== "" ||
             formLocationState !== "" ||
             formLocationCity !== "" ? (
@@ -164,6 +165,9 @@ function Search() {
               <div className="d-none d-md-inline m-auto">Clear</div>
             </button>
           ) : null}
+          <div>
+            <button>Register New Job</button>
+          </div>
         </div>
       </form>
     </div>

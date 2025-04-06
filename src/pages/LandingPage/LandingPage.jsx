@@ -122,15 +122,15 @@ function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="pro-artisan-section mb-4 container py-4 proArtisans">
-          <h1 className="text-center">Pro Artisans</h1>
+        <div className="pro-artisan-section mb-4 container py-4 proArtisans shadow">
+          <h1 className="text-center fw-bold text-primaryy">Pro Artisans</h1>
 
           <CardCarousel items={proArtisanList} />
         </div>
         <div className="feature-section">
           <header>
-            <h1>
-              <strong> Reliable, efficient Service providers</strong>
+            <h1 className="text-primaryy">
+              <strong className="text-primaryy"> Reliable, efficient Service providers</strong>
               {/* <br />
              Powered by Technology */}
             </h1>
@@ -193,7 +193,7 @@ function LandingPage() {
             <div className="container">
               <div className="sec-title text-center style-two">
                 {/* <p>Lorem Ipsum</p> */}
-                <h2>Why Choose Us</h2>
+                <h1 className="fw-bold text-primaryy">Why Choose Us</h1>
               </div>
               <div className="row clearfix">
                 <div className="col-lg-6 col-md-12 col-sm-12 content-column">
