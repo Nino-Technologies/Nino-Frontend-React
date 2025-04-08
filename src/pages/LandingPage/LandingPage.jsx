@@ -19,7 +19,9 @@ import img5 from "../../assets/images/pocus-service.png";
 import img6 from "../../assets/images/juicy-woman-connects-a-laptop-to-the-server.png";
 import womanArtisan from "../../assets/images/AboutUsLady1.png";
 import AboutUsArtisan from '../../assets/images/AboutUs_Artisan.webp'
-import { Button } from "@mui/material";
+import createJobIMG from '../../assets/images/internship-job-training-illustration.png'
+// import { Button } from "@mui/material";
+import { Container, Box, Typography, Button, Paper } from '@mui/material';
 function LandingPage() {
   const { loggedIn } = useContext(UserContext);
   const { artisans } = useContext(SearchContext);
@@ -93,6 +95,64 @@ function LandingPage() {
             </div>
           </div>
         </div>
+
+
+
+        <Box sx={{ py: 8, bgcolor: 'linear-gradient(to bottom, #f8f9fa, #ffffff)' }}>
+          <Container maxWidth="lg">
+            <Paper
+              elevation={6}
+              sx={{
+                borderRadius: 4,
+                px: { xs: 4, md: 6 },
+
+                backgroundColor: 'darkblue',
+              }}
+              className="d-flex justify-content-between align-items-center flex-column flex-md-row gap-4"
+            >
+              <div className="w-100 d-flex flex-column justify-content-center   py-4">
+                <Typography variant="h6" sx={{ fontWeight: 900 }} className="fw-bold text-white" gutterBottom>
+                  Create a Job Opening
+                </Typography>
+
+                <Typography variant="h2" color="text.secondary" sx={{ fontSize: '1.125rem', mb: 4 }} className="fw-bold max-w-[600px] mx-auto text-white">
+                  Our platform connects you with top-tier candidates quickly and efficiently. Post a job today
+                  and let us help you find the perfect talent to grow your team.
+                </Typography>
+
+                <div>
+                  <Button
+                    variant="contained"
+                    className="bg-primaryy"
+                    size="small"
+                    sx={{
+                      px: 4,
+                      py: 1.5,
+                      borderRadius: '10px',
+                      textTransform: 'none',
+                      fontWeight: 600,
+                      fontSize: '1rem',
+                      boxShadow: 3,
+                      backgroundColor: '#EF6E0B',
+                      color: 'white',
+                      '&:hover': {
+                        boxShadow: 6,
+                      },
+
+                    }}
+
+                  >
+                    <Link to="/create-offer" className="text-decoration-none text-white">Create Job Opening Now</Link>
+                  </Button>
+                </div>
+              </div>
+              <div className="d-none d-md-flex justify-content-center align-items-end">
+                <img src={createJobIMG} alt="" className="w-50" />
+              </div>
+            </Paper>
+          </Container>
+        </Box>
+
         <div className="about-us-section mt-4 container pt-4 border-1 border-black">
           <div>
             <h1 className="text-center  mb-5 font-weight-bold fs-1 fw-bold text-primaryy">About us</h1>
@@ -309,6 +369,11 @@ function LandingPage() {
             <div className="sec-title text-center style-two">
               {/* <p>Lorem Ipsum</p> */}
               <h1 className="fw-bold text-primaryy">How It Works </h1>
+            </div>
+            <div>
+              <div className="">
+
+              </div>
             </div>
           </div>
         </div>

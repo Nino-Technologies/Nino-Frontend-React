@@ -28,11 +28,10 @@ function ProfileCard({ artisan }) {
       <div className="ProfileCard">
         <div className="image-div">
           <img
-            src={`${
-              avatar === ""
-              ? "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"
+            src={`${avatar === ""
+                ? "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"
                 : avatar
-            }`}
+              }`}
             alt="Profile picture"
           />
         </div>

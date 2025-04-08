@@ -165,9 +165,7 @@ function Search() {
               <div className="d-none d-md-inline m-auto">Clear</div>
             </button>
           ) : null}
-          <div>
-            <button>Register New Job</button>
-          </div>
+
         </div>
       </form>
     </div>
