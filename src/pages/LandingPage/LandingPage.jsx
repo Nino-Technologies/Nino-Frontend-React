@@ -238,6 +238,8 @@ function LandingPage() {
                     </div>
                   </div>
                 </div>
+
+
                 <div className="col-lg-6 col-md-12 col-sm-12 d-none d-md-block video-column">
                   <div id="video_block_01">
                     <div
@@ -302,7 +304,14 @@ function LandingPage() {
             </div>
           </div>
         </div>
-
+        <div className="how-it-works-section">
+          <div className="container">
+            <div className="sec-title text-center style-two">
+              {/* <p>Lorem Ipsum</p> */}
+              <h1 className="fw-bold text-primaryy">How It Works </h1>
+            </div>
+          </div>
+        </div>
         <Footer />
       </div>
     </>
