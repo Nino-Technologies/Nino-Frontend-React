@@ -7,6 +7,7 @@ import {
   FaUserPlus,
 } from "react-icons/fa";
 import { BsBellFill, BsHeart, BsHouseFill, BsPen, BsPerson } from "react-icons/bs";
+import { Work } from "@mui/icons-material";
 
 export const userNavLinkObject = [
   {
@@ -49,6 +50,12 @@ export const userNavLinkObject = [
     name: " Saved Service Provider",
     icon: < BsHeart />,
     path: "/dashboard/saved-artisan",
+    userPrivilege: [0],
+  },
+  {
+    name: " Create New Job",
+    icon: < Work />,
+    path: "/dashboard/create-offer",
     userPrivilege: [0],
   },
   {

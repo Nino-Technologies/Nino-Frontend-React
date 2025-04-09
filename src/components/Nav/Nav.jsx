@@ -41,6 +41,10 @@ const navLinks = [
     link: "/artisans",
   },
   {
+    name: "Job Offers",
+    link: "/job-offer",
+  },
+  {
     name: "About Us",
     link: "/about-us",
   },

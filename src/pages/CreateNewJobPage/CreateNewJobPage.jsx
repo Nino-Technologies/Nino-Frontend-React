@@ -1,41 +1,45 @@
-import React from 'react';
-import { Box, TextField, Button, Typography, Grid, Paper, MenuItem } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, TextField, Button, Typography, Grid, Paper, MenuItem, Chip } from '@mui/material';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 
 const jobTypes = ['Full-Time', 'Part-Time', 'Contract', 'Freelance'];
 const categories = ['Web Development', 'Design', 'Marketing', 'Finance', 'Engineering'];
-const [tags, setTags] = useState([]);
-const [tagInput, setTagInput] = useState('');
 
-const handleAddTag = (e) => {
-    if (e.key === 'Enter' && tagInput.trim() !== '') {
-        e.preventDefault();
-        if (!tags.includes(tagInput.trim())) {
-            setTags([...tags, tagInput.trim()]);
-        }
-        setTagInput('');
-    }
-};
 
-const handleDeleteTag = (tagToDelete) => {
-    setTags(tags.filter((tag) => tag !== tagToDelete));
-};
+
 const CreateNewJobPage = () => {
+    const [tags, setTags] = useState([]);
+    const [tagInput, setTagInput] = useState('');
+
+    const handleAddTag = (e) => {
+        if (e.key === 'Enter' && tagInput.trim() !== '') {
+            e.preventDefault();
+            if (!tags.includes(tagInput.trim())) {
+                setTags([...tags, tagInput.trim()]);
+            }
+            setTagInput('');
+        }
+    };
+
+    const handleDeleteTag = (tagToDelete) => {
+        setTags(tags.filter((tag) => tag !== tagToDelete));
+    };
+
     return (
         <div>
-            <Nav />
+
             <Box
                 sx={{
                     backgroundColor: '#f8f9fa',
                     minHeight: '90vh',
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
-                    alignItems: 'stretch',
+                    alignItems: 'start',
                     justifyContent: 'space-evenly',
                     px: 2,
                     py: 4,
-                    mt: 10
+
                 }}
             >
                 {/* Left Section */}
@@ -52,7 +56,7 @@ const CreateNewJobPage = () => {
                         padding: 4,
                         position: 'sticky', // Makes the section sticky
                         top: 0, // Sticks to the top of the viewport
-                        height: '100vh', // Ensures it spans the full height of the viewport
+                        height: '600px', // Ensures it spans the full height of the viewport
                     }}
                 >
                     <Typography
@@ -77,13 +81,7 @@ const CreateNewJobPage = () => {
                 </Box>
 
                 {/* Vertical Line of Demarcation */}
-                <Box
-                    sx={{
-                        width: '2px',
-                        backgroundColor: '#EF6E0B',
-                        display: { xs: 'none', md: 'block' },
-                    }}
-                />
+
 
                 {/* Right Section (Form) */}
                 <Box
@@ -290,7 +288,52 @@ const CreateNewJobPage = () => {
                                         }}
                                     />
                                 </Grid>
-
+                                <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth
+                                        label="Add Tags (Press Enter to Add)"
+                                        variant="outlined"
+                                        value={tagInput}
+                                        onChange={(e) => setTagInput(e.target.value)}
+                                        onKeyDown={handleAddTag}
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                                '& fieldset': {
+                                                    borderColor: '#013049',
+                                                },
+                                                '&:hover fieldset': {
+                                                    borderColor: '#EF6E0B',
+                                                },
+                                                '&.Mui-focused fieldset': {
+                                                    borderColor: '#EF6E0B',
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            flexWrap: 'wrap',
+                                            gap: 1,
+                                            mt: 2,
+                                        }}
+                                    >
+                                        {tags.map((tag, index) => (
+                                            <Chip
+                                                key={index}
+                                                label={tag}
+                                                onDelete={() => handleDeleteTag(tag)}
+                                                sx={{
+                                                    backgroundColor: '#EF6E0B',
+                                                    color: 'white',
+                                                    '& .MuiChip-deleteIcon': {
+                                                        color: 'white',
+                                                    },
+                                                }}
+                                            />
+                                        ))}
+                                    </Box>
+                                </Grid>
                                 {/* Submit Button */}
                                 <Grid item xs={12}>
                                     <Button
@@ -315,7 +358,7 @@ const CreateNewJobPage = () => {
                     </Paper>
                 </Box>
             </Box>
-            <Footer />
+
         </div>
     );
 };

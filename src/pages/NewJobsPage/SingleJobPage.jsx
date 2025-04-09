@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Typography, Button, Grid, Paper, Chip } from '@mui/material';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkIcon from '@mui/icons-material/Work';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-
+import { UserContext } from '../../context/UserContext';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 const SingleJobPage = () => {
+  const { userProfile } = useContext(UserContext)
+  const [accept, setAccept] = useState(false);
+
+
+
+  console.log('this is user details from user Context', userProfile)
   return (
     <div>
       <Nav />
@@ -145,18 +153,19 @@ const SingleJobPage = () => {
                   <Chip label="JavaScript" sx={{ backgroundColor: '#EF6E0B', color: 'white' }} />
                   <Chip label="CSS" sx={{ backgroundColor: '#EF6E0B', color: 'white' }} />
                 </Box>
-                <div className='d-flex justify-content-between align-items-center bg-white px-2 py-1  mt-4 rounded-5'>
-                  <input type="number" placeholder='BID PRICE' className=' p-1 border-0 ' style={{
-                    outline: 'none',
-                    appearance: 'textfield', // Removes arrows in most browsers
-                    MozAppearance: 'textfield', // Removes arrows in Firefox
-                  }} />
-                  <Button variant='contained' className='rounded-end-5 rounded-0' sx={{ backgroundColor: '#EF6E0B', color: 'white', fontWeight: 'bold', fontSize: '10px', '&:hover': { backgroundColor: '#d65c0a', } }}>
-                    BID PRICE
-                  </Button>
-                </div>
+                {userProfile?.role === 1 ?
+                  <div className='d-flex justify-content-between align-items-center bg-white px-2 py-1  mt-4 rounded-5'>
+                    <input type="number" placeholder='BID PRICE' className=' p-1 border-0 w-75' style={{
+                      outline: 'none',
+                      appearance: 'textfield', // Removes arrows in most browsers
+                      MozAppearance: 'textfield', // Removes arrows in Firefox
+                    }} />
+                    <Button variant='contained' className='rounded-end-5 rounded-0' sx={{ backgroundColor: '#EF6E0B', color: 'white', fontWeight: 'bold', fontSize: '10px', '&:hover': { backgroundColor: '#d65c0a', } }}>
+                      BID PRICE
+                    </Button>
+                  </div> : ''}
               </Paper>
-              <Button
+              <Button onClick={''}
                 variant="contained"
                 sx={{
                   backgroundColor: '#EF6E0B',
@@ -176,18 +185,26 @@ const SingleJobPage = () => {
               >
                 Apply Now
               </Button>
+              <Box sx={{ mt: 2, textAlign: 'center' }}>
+                <div className=''>
+
+                </div>
+                <Typography variant="body2" sx={{ color: '#555' }}>
+                  By applying, you agree to our{' '}
+                  <Link href="#" style={{ color: '#EF6E0B', textDecoration: 'none' }}>
+                    Terms of Service
+                  </Link>{' '}
+                  and{' '}
+                  <Link href="#" style={{ color: '#EF6E0B', textDecoration: 'none' }}>
+                    Privacy Policy
+                  </Link>
+                </Typography>
+              </Box>
             </Grid>
           </Grid>
 
           {/* Call to Action */}
-          <Box
-            sx={{
-              textAlign: 'center',
-              mt: 6,
-            }}
-          >
 
-          </Box>
         </div>
       </Box>
       <Footer />

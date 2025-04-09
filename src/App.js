@@ -122,7 +122,7 @@ export default function App() {
           }
         />
         <Route path="/job-offer" element={<JobOfferPage />} />
-        <Route path="/create-offer" element={<CreateNewJobPage />} />
+
         <Route path="/single-job" element={<SingleJobPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -143,7 +143,7 @@ export default function App() {
           <Route path="notification" element={<NotificationPage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="verify-user" element={<VerifyUserPage />} />
-
+          <Route path="create-offer" element={<CreateNewJobPage />} />
           <Route path="verify-admins" element={<VerifyAdminsPage />} />
           <Route path="sendMessage" element={<SendMessagePage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />

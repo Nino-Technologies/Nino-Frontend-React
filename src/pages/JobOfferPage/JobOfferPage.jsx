@@ -71,11 +71,11 @@ const JobCard = ({ job }) => {
                     Web Development
                 </p>
             </div>
-            <button className="btn bg-primaryy text-white">
-                <Link to={'/single-job'} className="text-white text-decoration-none">
+            <Link to={'/single-job'} className="text-white text-decoration-none w-100">
+                <button className="btn bg-primaryy text-white w-100">
                     VIEW DETAIL
-                </Link>
-            </button>
+                </button>
+            </Link>
         </div>
     );
 };
