@@ -5,7 +5,22 @@ import Footer from '../../components/Footer/Footer';
 
 const jobTypes = ['Full-Time', 'Part-Time', 'Contract', 'Freelance'];
 const categories = ['Web Development', 'Design', 'Marketing', 'Finance', 'Engineering'];
+const [tags, setTags] = useState([]);
+const [tagInput, setTagInput] = useState('');
 
+const handleAddTag = (e) => {
+    if (e.key === 'Enter' && tagInput.trim() !== '') {
+        e.preventDefault();
+        if (!tags.includes(tagInput.trim())) {
+            setTags([...tags, tagInput.trim()]);
+        }
+        setTagInput('');
+    }
+};
+
+const handleDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
+};
 const CreateNewJobPage = () => {
     return (
         <div>
@@ -17,7 +32,7 @@ const CreateNewJobPage = () => {
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
                     alignItems: 'stretch',
-                    justifyContent: 'center',
+                    justifyContent: 'space-evenly',
                     px: 2,
                     py: 4,
                     mt: 10
@@ -87,13 +102,13 @@ const CreateNewJobPage = () => {
                         <Typography
                             variant="h4"
                             sx={{
-                                fontWeight: 'bold',
-                                color: '#013049',
+                                fontWeight: '900',
+                                color: '#EF6E0B',
                                 textAlign: 'center',
                                 mb: 3,
                             }}
                         >
-                            Create a New Job
+                            <span className='fw-bold'> Create a New Job</span>
                         </Typography>
                         <form>
                             <Grid container spacing={3}>
