@@ -13,9 +13,9 @@ function Dashboard() {
   const [cookies] = useCookies();
 
   useEffect(() => {
-  if (loggedIn === false) {
-    navigate("/");
-  }
+    if (loggedIn === false) {
+      navigate("/login?as=user");
+    }
   }, [loggedIn]);
   useEffect(() => {
     if (loggedIn) {

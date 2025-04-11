@@ -27,17 +27,19 @@ import "./Pagination.scss";
 
 function Items({ currentItems }) {
   return (
-    <>
-      {currentItems &&
-        currentItems.map((item) => (
-          <ProfileCard artisan={item} key={item._id} />
-          // <div>
-          //   <h3>Item #{item}</h3>
-          // </div>
-        ))}
-    </>
+    <div className="container mt-3">
+      <div className="row justify-content-center">
+        {currentItems &&
+          currentItems.map((item) => (
+            <div className="col-12 col-md-6 d-flex justify-content-center mb-4" key={item._id}>
+              <ProfileCard artisan={item} />
+            </div>
+          ))}
+      </div>
+    </div>
   );
 }
+
 function BlogCards({ currentItems }) {
   return (
     <div className="d-flex justify-content-evenly flex-wrap">

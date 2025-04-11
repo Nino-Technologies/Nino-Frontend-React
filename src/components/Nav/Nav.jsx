@@ -41,6 +41,10 @@ const navLinks = [
     link: "/artisans",
   },
   {
+    name: "Job Offers",
+    link: "/job-offer",
+  },
+  {
     name: "About Us",
     link: "/about-us",
   },
@@ -97,8 +101,8 @@ export const DashboardSideNav = ({ sideNavOpen, setSideNavOpen }) => {
     setSideNavOpen(!sideNavOpen);
   }
   const { logOutFunction } = useContext(UserContext);
-  const { role } = userProfile;
-
+  // const { role } = userProfile;
+  const { role } = userProfile || {};
   useEffect(() => { console.log({ role }) }, [role]);
   // console.log(userProfile);
   return (

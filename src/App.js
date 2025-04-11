@@ -36,8 +36,13 @@ import {
   ImageCropperWithStyle,
   QuickRequestPage,
   SendMessagePage,
+
 } from "./pages/index.jsx";
+import JobOfferPage from "./pages/JobOfferPage/JobOfferPage.jsx";
 import { PaymentModalComponent } from "./components/Modal/ModalComponent.jsx";
+import SingleJobPage from "./pages/NewJobsPage/SingleJobPage.jsx";
+import CreateNewJobPage from "./pages/CreateNewJobPage/CreateNewJobPage.jsx";
+import JobRecord from "./pages/JobRecord/JobRecord.jsx";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -106,6 +111,7 @@ export default function App() {
             </SaveArtisanProvider>
           }
         />
+
         <Route
           path="/artisans-profile/:id"
           element={
@@ -116,6 +122,9 @@ export default function App() {
             </SaveArtisanProvider>
           }
         />
+        <Route path="/job-offer" element={<JobOfferPage />} />
+
+        <Route path="/single-job" element={<SingleJobPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -135,6 +144,8 @@ export default function App() {
           <Route path="notification" element={<NotificationPage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="verify-user" element={<VerifyUserPage />} />
+          <Route path="create-offer" element={<CreateNewJobPage />} />
+          <Route path="job-record" element={<JobRecord />} />
           <Route path="verify-admins" element={<VerifyAdminsPage />} />
           <Route path="sendMessage" element={<SendMessagePage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />
@@ -172,6 +183,7 @@ export default function App() {
           path="/"
           element={<Navigate to="/home" replace />} //this is a way to redirect
         />
+
         <Route path="/404" element={<ErrorPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>

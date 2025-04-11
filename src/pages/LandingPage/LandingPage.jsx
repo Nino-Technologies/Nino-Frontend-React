@@ -17,13 +17,17 @@ import img3 from "../../assets/images/quirky-twenty-four-hours-service-1.png";
 import img4 from "../../assets/images/bonbon-five-stars-quality-rating.png";
 import img5 from "../../assets/images/pocus-service.png";
 import img6 from "../../assets/images/juicy-woman-connects-a-laptop-to-the-server.png";
-import img7 from "../../assets/images/painter1.png";
-
+import womanArtisan from "../../assets/images/AboutUsLady1.png";
+import AboutUsArtisan from '../../assets/images/AboutUs_Artisan.webp'
+import createJobIMG from '../../assets/images/internship-job-training-illustration.png'
+// import { Button } from "@mui/material";
+import { Container, Box, Typography, Button, Paper } from '@mui/material';
 function LandingPage() {
   const { loggedIn } = useContext(UserContext);
   const { artisans } = useContext(SearchContext);
   const [proArtisanList, setProArtisanList] = useState([]);
-
+  const [readMoreAboutUs, setReadMoreAboutUs] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   useEffect(() => {
     // console.log(artisans);
     const proArtisan = [];
@@ -48,7 +52,7 @@ function LandingPage() {
         <div className="hero-section">
           <div className="mobile-background"></div>
           <div className="text-div">
-            <h1 className="hero-name">Hire service providers With Grinders</h1>
+            <h1 className="hero-name">Hire service providers With <span className="text-primaryy">Grinders</span></h1>
             <p className="sub">Connecting people to trusted local services.</p>
             <Search />
             {loggedIn ? null : (
@@ -66,20 +70,22 @@ function LandingPage() {
           </div>
         </div>
 
-        <div className="artisan-request-section py-5 px-2 secondary-color">
+        <div className="artisan-request-section py-5 px-2 quick_hire_bg">
           <div className="artesian-request-container container">
             <div className="row">
               <div className="col-md-6 d-flex text-start">
                 <div className="my-auto">
-                  <h3>Send A Quick Request</h3>
-                  <strong>
-                    {" "}
-                    Do you need something done and you can’t find someone by
-                    service?
-                  </strong>{" "}
-                  <br />
-                  Tell us what you are trying to get done and get a
-                  professional within 30min
+                  <h2 className="font-bold fw-bold text-2xl text-white">Send A Quick Request</h2>
+                  <p className="light_grey">
+                    <strong>
+                      {" "}
+                      Do you need something done and you can’t find someone by
+                      service?
+                    </strong>{" "}
+                    <br />
+                    Tell us what you are trying to get done and get a
+                    professional within 30min
+                  </p>
                 </div>
               </div>
               <div className="col-md-6 mt-3 mt-md-0">
@@ -89,45 +95,102 @@ function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="about-us-section my-4 container py-4">
-          <h1 className="text-center">About us</h1>
 
-          <div className="row">
-            <div className="col-md-4">
-              <img src={img7} alt="" className="" />
+
+
+        <Box sx={{ py: 8, bgcolor: 'linear-gradient(to bottom, #f8f9fa, #ffffff)' }}>
+          <Container maxWidth="lg">
+            <Paper
+              elevation={6}
+              sx={{
+                borderRadius: 4,
+                px: { xs: 4, md: 6 },
+
+                backgroundColor: 'darkblue',
+              }}
+              className="d-flex justify-content-between align-items-center flex-column flex-md-row gap-4"
+            >
+              <div className="w-100 d-flex flex-column justify-content-center   py-4">
+                <Typography variant="h6" sx={{ fontWeight: 900 }} className="fw-bold fs-3 text-white" gutterBottom>
+                  <span className="fw-6">Create a Job Opening</span>
+                </Typography>
+
+                <Typography variant="h2" color="text.secondary" sx={{ fontSize: '1.125rem', mb: 4 }} className="fw-bold max-w-[800px] mx-auto text-white">
+                  Our platform connects you with top-tier candidates quickly and efficiently. Post a job today
+                  and let us help you find the perfect talent to grow your team.
+                </Typography>
+
+                <div>
+                  <Button
+                    variant="contained"
+                    className="bg-primaryy"
+                    size="small"
+                    sx={{
+                      px: 4,
+                      py: 1.5,
+                      borderRadius: '10px',
+                      textTransform: 'none',
+                      fontWeight: 600,
+                      fontSize: '1rem',
+                      boxShadow: 3,
+                      backgroundColor: '#EF6E0B',
+                      color: 'white',
+                      '&:hover': {
+                        boxShadow: 6,
+                      },
+
+                    }}
+
+                  >
+                    <Link to="/dashboard/create-offer" className="text-decoration-none text-white cursor-pointer" >Create Job Opening Now</Link>
+                  </Button>
+                </div>
+              </div>
+              <div className="d-none d-md-flex justify-content-end align-items-end">
+                <img src={createJobIMG} alt="" className="w-50" />
+              </div>
+            </Paper>
+          </Container>
+        </Box>
+
+        <div className="about-us-section mt-4 container pt-4 border-1 border-black">
+          <div>
+            <h1 className="text-center  mb-5 font-weight-bold fs-1 fw-bold text-primaryy">About us</h1>
+            <span></span>
+          </div>
+          <div className="row flex justify-content-center align-items-end">
+            <div className="col-md-3 ">
+              <img src={AboutUsArtisan} alt="" className="object-fit-contain" />
             </div>
-            <div className="col-md-8">
-              <p className="">
-                Welcome to Grinders Technologies, a leading platform for skilled
-                workers to connect with clients in need of their services. Our
-                goal is to empower artisans and professionals to showcase their
-                expertise and offer clients access to top-quality work. At
-                Grinders Technologies, we make it easy for skilled workers to
-                find meaningful and rewarding work through our user-friendly
-                platform. Our wide range of services and easy-to-use interface
-                allows clients to find the right professional for their specific
-                needs. You can <Link to="/artisans">learn more</Link> about our
-                artisans on our website, We understand the importance of
-                security and strive to create a safe environment for both
-                clients and skilled workers. Our team works hard to maintain the
-                platform and implement strict measures to protect sensitive
-                information. Join the Grinders Technologies community and
-                experience the power of technology in connecting people.
-                <Link to="/about-us"> Learn more </Link>about us and how we are
-                helping to build a better future.
+            <div className="col-md-6 my-5">
+              <h4 className="fw-bolder  text-center">
+                Welcome to Grinders Technologies!
+
+              </h4>
+              <p className="lead text-center">
+
+                We’re a dynamic platform connecting skilled workers with clients who need top-quality services. Our mission is to empower artisans and professionals by showcasing their expertise while making it easy for clients to find the right talent.
+                {/* {readMoreAboutUs && ' With a user-friendly interface and a wide range of services, we simplify the process of finding meaningful work and trusted professionals. Security is our priority—we ensure a safe environment for both clients and artisans with strict data protection measures.Join the Grinders Technologies community and experience the future of work! Learn more about our artisans or discover our mission.'} <br /> <span style={{ cursor: 'pointer' }} className="text-primaryy cursor-pointer" onClick={() => setReadMoreAboutUs(!readMoreAboutUs)}>{readMoreAboutUs ? 'Read Less' : 'Read More'}</span> */}
               </p>
+              <div className="text-center">
+
+                <button className=" primary-btn"><a href="/" className="text-decoration-none  text-white">Learn More</a></button>
+              </div>
+            </div>
+            <div className="col-md-3 d-none d-md-block">
+              <img src={womanArtisan} alt="" className="object-fit-contain w-75 " />
             </div>
           </div>
         </div>
-        <div className="pro-artisan-section my-4 container py-4">
-          <h1 className="text-center">Pro Artisans</h1>
+        <div className="pro-artisan-section mb-4 container py-4 proArtisans shadow">
+          <h1 className="text-center fw-bold text-primaryy">Pro Artisans</h1>
 
           <CardCarousel items={proArtisanList} />
         </div>
         <div className="feature-section">
           <header>
-            <h1>
-              <strong> Reliable, efficient Service providers</strong>
+            <h1 className="text-primaryy">
+              <strong className="text-primaryy"> Reliable, efficient Service providers</strong>
               {/* <br />
              Powered by Technology */}
             </h1>
@@ -190,7 +253,7 @@ function LandingPage() {
             <div className="container">
               <div className="sec-title text-center style-two">
                 {/* <p>Lorem Ipsum</p> */}
-                <h2>Why Choose Us</h2>
+                <h1 className="fw-bold text-primaryy">Why Choose Us</h1>
               </div>
               <div className="row clearfix">
                 <div className="col-lg-6 col-md-12 col-sm-12 content-column">
@@ -235,6 +298,8 @@ function LandingPage() {
                     </div>
                   </div>
                 </div>
+
+
                 <div className="col-lg-6 col-md-12 col-sm-12 d-none d-md-block video-column">
                   <div id="video_block_01">
                     <div
@@ -299,7 +364,19 @@ function LandingPage() {
             </div>
           </div>
         </div>
+        <div className="how-it-works-section">
+          <div className="container">
+            <div className="sec-title text-center style-two">
+              {/* <p>Lorem Ipsum</p> */}
+              <h1 className="fw-bold text-primaryy">How It Works </h1>
+            </div>
+            <div>
+              <div className="">
 
+              </div>
+            </div>
+          </div>
+        </div>
         <Footer />
       </div>
     </>

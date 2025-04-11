@@ -341,11 +341,10 @@ function ArtisansProfile() {
                   </div>
                   <div className="profile-image-container">
                     <img
-                      src={`${
-                        artisan.avatar === ""
-                          ? "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"
-                          : artisan.avatar
-                      }`}
+                      src={`${artisan.avatar === ""
+                        ? "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"
+                        : artisan.avatar
+                        }`}
                       alt="Profile picture"
                       className="profile-image"
                     />
@@ -367,12 +366,12 @@ function ArtisansProfile() {
               <div className="col-md-8">
                 <div className="main-area">
                   <div className="introduction">
-                      <div>
+                    <div>
                       <h5>
-                        <b>Introduction</b>
+                        <b className="text-color">Introduction</b>
                       </h5>
                       {artisan.introduction}
-                      </div>
+                    </div>
                     <hr />
                   </div>
                   <div className="more-info  px-3 ">
@@ -433,24 +432,24 @@ function ArtisansProfile() {
                           {artisan.YearsOfExperience} Years
                         </li>
                       ) : null}
-                        {showNumber ? (
-                          <li>
-                            <span className="icon mx-2">
-                              <FaPhone />
-                            </span>
-                            +{artisan.phoneNumber}
+                      {showNumber ? (
+                        <li>
+                          <span className="icon mx-2">
+                            <FaPhone />
+                          </span>
+                          +{artisan.phoneNumber}
 
-                            <button
-                              className="btn btn-primary btn-sm ms-2"
-                              onClick={() => {
-                                copyLinkFunction("+" + artisan.phoneNumber);
-                                setShowNumber(false);
-                              }}
-                            >
-                              <FaCopy />  Copy
-                            </button>
-                          </li>
-                        ) : null}
+                          <button
+                            className="btn btn-primary btn-sm ms-2"
+                            onClick={() => {
+                              copyLinkFunction("+" + artisan.phoneNumber);
+                              setShowNumber(false);
+                            }}
+                          >
+                            <FaCopy />  Copy
+                          </button>
+                        </li>
+                      ) : null}
 
                       {/* <li>
                       <span className="icon mx-2">
