@@ -27,7 +27,7 @@ import "./Pagination.scss";
 
 function Items({ currentItems }) {
   return (
-    <>
+    <div className="row">
       {currentItems &&
         currentItems.map((item) => (
           <ProfileCard artisan={item} key={item._id} />
@@ -35,7 +35,7 @@ function Items({ currentItems }) {
           //   <h3>Item #{item}</h3>
           // </div>
         ))}
-    </>
+    </div>
   );
 }
 function BlogCards({ currentItems }) {

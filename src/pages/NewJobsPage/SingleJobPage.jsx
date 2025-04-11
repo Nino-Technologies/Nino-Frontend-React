@@ -28,7 +28,7 @@ const SingleJobPage = () => {
 
         }}
       >
-        <div className='border-top-0 border-1 border-secondary-subtle container border-2'
+        <div className='border-top-0 border-1 border-secondary-subtle p-3 px-4 rounded bg-secondary-subtle container border-2'
         >
           {/* Job Title and Company */}
           <Box
@@ -45,7 +45,7 @@ const SingleJobPage = () => {
               variant="h4"
               sx={{ fontWeight: 'bold', color: '#013049', mb: 1 }}
             >
-              Frontend Developer
+              <span className="fw-6">  Frontend Developer</span>
             </Typography>
             <Typography
               variant="h6"
@@ -63,7 +63,7 @@ const SingleJobPage = () => {
                 variant="h5"
                 sx={{ fontWeight: '900', color: '#013049', mb: 2 }}
               >
-                Job Description
+                <span className='fw-2'>Job Description</span>
               </Typography>
               <Typography
                 variant="body2"
