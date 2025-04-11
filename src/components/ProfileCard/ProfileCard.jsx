@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 // import SaveButton from "../SaveButton/SaveButton.jsx"
 
-import { FaTrophy, FaUser, FaUserCheck } from "react-icons/fa"
+import { FaFacebook, FaRegClipboard, FaShareSquare, FaTrophy, FaTwitter, FaUser, FaUserCheck } from "react-icons/fa"
 import { GoLocation } from "react-icons/go"
 // import ShareButton from "../ShareButton/ShareButton.jsx"
 import { useState } from "react"
@@ -9,6 +9,7 @@ import { FaBookmark, FaRegBookmark } from "react-icons/fa"
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa"
 
 import { FaShare } from "react-icons/fa"
+import { toast } from "react-toastify"
 
 function ProfileCard({ artisan }) {
   const {
@@ -21,85 +22,104 @@ function ProfileCard({ artisan }) {
     avatar,
     backgroundChecked,
     YearsOfExperience,
-  } = artisan
+  } = artisan;
+
+  const [showFullService, setShowFullService] = useState(false);
+
+  const toggleService = () => setShowFullService(!showFullService);
+
+  const getServicePreview = (text, length = 20) =>
+    text.length > length ? text.slice(0, length) + "..." : text;
 
   return (
-    <div className=" card border-0 shadow-sm mb-4 overflow-hidden" style={{}}>
-      <div className="row g-0">
-        {/* Profile Image Column */}
+    <div
+      className="card shadow-sm border-0 rounded-4 overflow-hidden"
+      style={{ maxWidth: "100%", width: "500px", minHeight: "320px" }}
+    >
+      <div className="row g-0 h-100">
+        {/* Profile Image */}
         <div className="col-md-4 position-relative">
           <img
-            src={avatar === "" ? "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png" : avatar}
+            src={avatar || "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"}
             alt={`${fullName}'s profile`}
             className="img-fluid h-100 w-100 object-fit-cover"
-            style={{ minHeight: "250px" }}
+            style={{ objectFit: "cover" }}
           />
           {backgroundChecked && (
-            <div className="position-absolute top-0 end-0 m-2">
-              <span className="badge bg-success d-flex align-items-center p-2">
-                <FaUserCheck className="me-1" /> Verified
-              </span>
-            </div>
+            <span className="position-absolute top-0 end-0 m-2 badge bg-success d-flex align-items-center gap-1 px-2 py-1 rounded-pill">
+              <FaUserCheck /> Verified
+            </span>
           )}
         </div>
 
-        {/* Profile Info Column */}
+        {/* Content */}
         <div className="col-md-8">
           <div className="card-body d-flex flex-column h-100">
-            {/* Header with name and rating */}
-            <div className="d-flex justify-content-between align-items-start mb-3">
+            {/* Name, stars, actions */}
+            <div className="d-flex justify-content-between align-items-start">
               <div>
-                <h3 className="card-title fw-bold mb-1">{fullName}</h3>
-                <div className="mb-2">
-                  <StarComponent rate="5" />
-                </div>
+                <h5 className="fw-bold mb-1">{fullName}</h5>
+                <StarComponent rate="5" />
               </div>
               <div className="d-flex gap-2">
-                <ShareButton id={`${_id}`} />
+                <ShareButton id={_id} />
                 <SaveButton artisan={artisan} />
               </div>
             </div>
 
-            {/* Introduction */}
-            <div className="mb-3">
-              <h6 className="text-secondary mb-1">Introduction</h6>
-              <p className="card-text">{introduction}</p>
+            {/* Intro */}
+            <div className="mt-3">
+              <h6 className="text-muted mb-1 small">Introduction</h6>
+              <p className="mb-2 small">
+                {/* {introduction} */}
+                {showFullService ? introduction : getServicePreview(introduction)}
+                {introduction.length > 20 && (
+                  <span
+                    onClick={toggleService}
+                    className="text-primary ms-2"
+                    role="button"
+                    style={{ cursor: "pointer", fontWeight: "500" }}
+                  >
+                    {showFullService ? "Read Less" : "Read More"}
+                  </span>
+                )}
+              </p>
             </div>
 
             {/* Service */}
-            <div className="mb-3">
-              <h6 className="text-secondary mb-1">Service</h6>
-              <p className="card-text">{service}</p>
+            <div>
+              <h6 className="text-muted mb-1 small">Service</h6>
+              <p className="mb-2 small">
+                <span>
+                  {service}
+                </span>
+
+              </p>
             </div>
 
             {/* Overview */}
-            <div className="mb-3">
-              <h6 className="text-secondary mb-1">Overview</h6>
-              <ul className="list-group list-group-flush border-0">
-                <li className="list-group-item px-0 py-1 d-flex align-items-center border-0">
-                  <FaTrophy className="text-warning me-2" />
-                  <span>{YearsOfExperience} years of experience</span>
+            <ul className="list-unstyled mb-3">
+              <li className="d-flex align-items-center mb-1 small text-dark">
+                <FaTrophy className="me-2 text-warning" />
+                {YearsOfExperience} years of experience
+              </li>
+              <li className="d-flex align-items-center mb-1 small text-dark">
+                <GoLocation className="me-2 text-primary" />
+                {locationCity}, {locationState}
+              </li>
+              {backgroundChecked && (
+                <li className="d-flex align-items-center mb-1 small text-success">
+                  <FaUserCheck className="me-2" />
+                  Background checked
                 </li>
-                <li className="list-group-item px-0 py-1 d-flex align-items-center border-0">
-                  <GoLocation className="text-primary me-2" />
-                  <span>
-                    {locationCity}, {locationState}
-                  </span>
-                </li>
-                {backgroundChecked && (
-                  <li className="list-group-item px-0 py-1 d-flex align-items-center border-0">
-                    <FaUserCheck className="text-success me-2" />
-                    <span>Background checked</span>
-                  </li>
-                )}
-              </ul>
-            </div>
+              )}
+            </ul>
 
-            {/* View Profile Link */}
+            {/* View Profile Button */}
             <div className="mt-auto pt-2 border-top">
               <Link
                 to={`/artisans-profile/${_id}`}
-                className="btn btn-outline-primary d-flex align-items-center gap-2 w-100 justify-content-center"
+                className="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2"
               >
                 <FaUser /> View Complete Profile
               </Link>
@@ -107,8 +127,8 @@ function ProfileCard({ artisan }) {
           </div>
         </div>
       </div>
-    </div>
-  )
+    </div >
+  );
 }
 
 export default ProfileCard
@@ -138,15 +158,58 @@ function SaveButton({ artisan }) {
 
 
 function ShareButton({ id }) {
+  const [visibility, setVisibility] = useState(false);
+  function toggleVisibility() {
+    setVisibility(!visibility);
+  }
+  const profileUrl = "https://www.grinders.ng/artisans-profile/" + id;
+  async function copyURL(id) {
+    try {
+      await navigator.clipboard.writeText(profileUrl);
+      toast.info("Link Copied");
+    } catch {
+      toast.error("Error copying link");
+    }
+  }
   const handleShare = () => {
     // Share functionality
     console.log(`Sharing profile with ID: ${id}`)
   }
 
   return (
-    <button onClick={handleShare} className="btn btn-sm btn-outline-secondary" title="Share profile">
-      <FaShare className="me-1" /> Share
-    </button>
+    // <button onClick={handleShare} className="btn btn-sm btn-outline-secondary" title="Share profile">
+    //   <FaShare className="me-1" /> Share
+    // </button>
+    <div className="ShareButton ">
+      <div
+        className="Share-icons"
+        style={!visibility ? { display: "none" } : null}
+      >
+        <a
+          title="Share on facebook"
+          href={`https://www.facebook.com/sharer/sharer.php?u=${profileUrl}`}
+          target="_blank"
+          rel="noopener"
+        >
+          <FaFacebook />
+        </a>
+
+        <a
+          title="Share on facebook"
+          href={`
+https://twitter.com/intent/tweet?text=Service Provider%20profile ${profileUrl}&original_referer=${profileUrl}&related=clicktotweet
+`}
+          target="_blank"
+          rel="noopener"
+        >
+          <FaTwitter />
+        </a>
+        <FaRegClipboard onClick={() => copyURL(id)} className="my-auto" />
+      </div>
+      <button htmlFor="toggle-share" onClick={() => toggleVisibility()}>
+        <FaShareSquare /> Share
+      </button>
+    </div>
   )
 }
 
@@ -173,3 +236,51 @@ function StarComponent({ rate }) {
     </div>
   )
 }
+
+// function ShareButton({ id }) {
+//   const [visibility, setVisibility] = useState(false);
+//   function toggleVisibility() {
+//     setVisibility(!visibility);
+//   }
+//   const profileUrl = "https://www.grinders.ng/artisans-profile/" + id;
+//   async function copyURL(id) {
+//     try {
+//       await navigator.clipboard.writeText(profileUrl);
+//       toast.info("Link Copied");
+//     } catch {
+//       toast.error("Error copying link");
+//     }
+//   }
+//   return (
+//     <div className="ShareButton">
+//       <div
+//         className="Share-icons"
+//         style={!visibility ? { display: "none" } : null}
+//       >
+//         <a
+//           title="Share on facebook"
+//           href={`https://www.facebook.com/sharer/sharer.php?u=${profileUrl}`}
+//           target="_blank"
+//           rel="noopener"
+//         >
+//           <FaFacebook />
+//         </a>
+
+//         <a
+//           title="Share on facebook"
+//           href={`
+// https://twitter.com/intent/tweet?text=Service Provider%20profile ${profileUrl}&original_referer=${profileUrl}&related=clicktotweet
+// `}
+//           target="_blank"
+//           rel="noopener"
+//         >
+//           <FaTwitter />
+//         </a>
+//         <FaRegClipboard onClick={() => copyURL(id)} className="my-auto" />
+//       </div>
+//       <button htmlFor="toggle-share" onClick={() => toggleVisibility()}>
+//         <FaShareSquare /> Share
+//       </button>
+//     </div>
+//   );
+// }

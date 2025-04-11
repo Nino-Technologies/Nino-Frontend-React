@@ -63,7 +63,7 @@ function UserProvider({ children }) {
       };
 
       const response = await axios(options);
-      const profile = response.data.data;
+      const profile = response?.data?.data;
 
       setUserProfile((prev) => {
         // Only update state if profile changes
@@ -111,6 +111,7 @@ function UserProvider({ children }) {
       // setUserAccountInformation([]);
       setUserProfile([]);
       setLoggedIn(false);
+
       removeCookie("grinderUser", { path: "/" });
       navigate("./");
     }

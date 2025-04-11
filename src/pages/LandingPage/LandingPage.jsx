@@ -111,11 +111,11 @@ function LandingPage() {
               className="d-flex justify-content-between align-items-center flex-column flex-md-row gap-4"
             >
               <div className="w-100 d-flex flex-column justify-content-center   py-4">
-                <Typography variant="h6" sx={{ fontWeight: 900 }} className="fw-bold text-white" gutterBottom>
-                  Create a Job Opening
+                <Typography variant="h6" sx={{ fontWeight: 900 }} className="fw-bold fs-3 text-white" gutterBottom>
+                  <span className="fw-6">Create a Job Opening</span>
                 </Typography>
 
-                <Typography variant="h2" color="text.secondary" sx={{ fontSize: '1.125rem', mb: 4 }} className="fw-bold max-w-[600px] mx-auto text-white">
+                <Typography variant="h2" color="text.secondary" sx={{ fontSize: '1.125rem', mb: 4 }} className="fw-bold max-w-[800px] mx-auto text-white">
                   Our platform connects you with top-tier candidates quickly and efficiently. Post a job today
                   and let us help you find the perfect talent to grow your team.
                 </Typography>
@@ -142,11 +142,11 @@ function LandingPage() {
                     }}
 
                   >
-                    <Link to="/create-offer" className="text-decoration-none text-white">Create Job Opening Now</Link>
+                    <Link to="/dashboard/create-offer" className="text-decoration-none text-white cursor-pointer" >Create Job Opening Now</Link>
                   </Button>
                 </div>
               </div>
-              <div className="d-none d-md-flex justify-content-center align-items-end">
+              <div className="d-none d-md-flex justify-content-end align-items-end">
                 <img src={createJobIMG} alt="" className="w-50" />
               </div>
             </Paper>

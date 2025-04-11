@@ -59,7 +59,7 @@ export const userNavLinkObject = [
     userPrivilege: [0],
   },
   {
-    name: "Job Recods",
+    name: "Job Records",
     icon: < WorkHistory />,
     path: "/dashboard/job-record",
     userPrivilege: [0],

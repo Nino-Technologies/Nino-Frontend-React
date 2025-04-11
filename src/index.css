@@ -6,10 +6,15 @@
 }
 
 
-.primary-color{
+.primary-color {
   background-color: var(--color-primary) !important;
 }
-.secondary-color{
+
+.text-color {
+  color: var(--color-primary) !important;
+}
+
+.secondary-color {
   background-color: var(--color-secondary) !important;
   color: #fff !important;
 }
