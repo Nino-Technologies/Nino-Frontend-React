@@ -77,7 +77,7 @@ const JobCard = ({ job }) => {
                         VIEW DETAIL
                     </button>
                 </Link>
-                <div className="btn bg-primaryy text-white d-flex align-items-center gap-3"><Cancel /> <span>close Job</span></div>
+                <div className="btn bg-primaryy text-white d-flex align-items-center gap-3"><Cancel /> <span>close</span></div>
             </div>
         </div>
     );
