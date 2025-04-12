@@ -87,7 +87,7 @@ const CreateNewJobPage = () => {
                 <Box
                     sx={{
                         flex: 2,
-                        padding: 4,
+                        padding: { md: 4 },
                     }}
                 >
                     <Paper
@@ -103,7 +103,7 @@ const CreateNewJobPage = () => {
                                 fontWeight: '900',
                                 color: '#EF6E0B',
                                 textAlign: 'center',
-                                mb: 3,
+                                mb: { md: 3 },
                             }}
                         >
                             <span className='fw-bold'> Create a New Job</span>
