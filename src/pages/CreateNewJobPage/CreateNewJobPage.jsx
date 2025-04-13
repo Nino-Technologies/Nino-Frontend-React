@@ -4,13 +4,61 @@ import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 
 const jobTypes = ['Full-Time', 'Part-Time', 'Contract', 'Freelance'];
-const categories = ['Web Development', 'Design', 'Marketing', 'Finance', 'Engineering'];
+const categories = [
+    'Web Development',
+    'Design',
+    'Marketing',
+    'Finance',
+    'Engineering',
+    'Data Science',
+    'Content Writing',
+    'Mobile Development',
+    'Sales',
+    'Customer Support',
+    'Human Resources',
+    'Project Management',
+    'Legal',
+    'Healthcare',
+    'Education',
+    'IT Support',
+    'Construction',
+    'Real Estate',
+    'Photography',
+    'Video Editing',
+    'UI/UX Design',
+    'Accounting',
+    'Consulting',
+    'Event Planning',
+    'Social Media Management',
+    'Translation',
+    'Game Development',
+    'Cybersecurity',
+    'Machine Learning',
+    'Artificial Intelligence',
+    'Blockchain Development',
+    'Electrical Engineering',
+    'Mechanical Engineering',
+    'Architecture',
+    'Logistics',
+    'Supply Chain Management',
+    'E-commerce',
+    'SEO Optimization',
+    'Public Relations',
+    'Fitness Training',
+    'Food Services', 'Others'
+];
 
 
 
 const CreateNewJobPage = () => {
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState('');
+    const [files, setFiles] = useState([]);
+    const [requestInspection, setRequestInspection] = useState(false);
+    const handleFileUpload = (e) => {
+        const uploadedFiles = Array.from(e.target.files);
+        setFiles([...files, ...uploadedFiles]);
+    };
 
     const handleAddTag = (e) => {
         if (e.key === 'Enter' && tagInput.trim() !== '') {
@@ -36,7 +84,7 @@ const CreateNewJobPage = () => {
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
                     alignItems: 'start',
-                    justifyContent: 'space-evenly',
+                    // justifyContent: 'space-evenly',
                     px: 2,
                     py: 4,
 
@@ -56,7 +104,8 @@ const CreateNewJobPage = () => {
                         padding: 4,
                         position: 'sticky', // Makes the section sticky
                         top: 0, // Sticks to the top of the viewport
-                        height: '600px', // Ensures it spans the full height of the viewport
+                        height: '100vh', // Ensures it spans the full height of the viewport
+                        overflow: 'visible', // Ensure no overflow issues
                     }}
                 >
                     <Typography
@@ -93,7 +142,7 @@ const CreateNewJobPage = () => {
                     <Paper
                         elevation={3}
                         sx={{
-                            padding: 4,
+                            padding: { xs: 1, md: 4 },
                         }}
                     >
                         <Typography
@@ -199,7 +248,27 @@ const CreateNewJobPage = () => {
                                         }}
                                     />
                                 </Grid> */}
-
+                                <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth
+                                        label="Budget"
+                                        variant="outlined"
+                                        required
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                                '& fieldset': {
+                                                    borderColor: '#013049',
+                                                },
+                                                '&:hover fieldset': {
+                                                    borderColor: '#EF6E0B',
+                                                },
+                                                '&.Mui-focused fieldset': {
+                                                    borderColor: '#EF6E0B',
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </Grid>
                                 {/* Job Type */}
                                 <Grid item xs={12} sm={6}>
                                     <TextField
@@ -236,7 +305,7 @@ const CreateNewJobPage = () => {
                                     <TextField
                                         fullWidth
                                         select
-                                        label="Category"
+                                        label="Task Category"
                                         variant="outlined"
                                         required
                                         defaultValue=""
@@ -265,27 +334,7 @@ const CreateNewJobPage = () => {
                                 {/* Location */}
 
                                 {/* Salary */}
-                                <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        label="Salary Range (e.g., $50,000 - $70,000)"
-                                        variant="outlined"
-                                        required
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                '& fieldset': {
-                                                    borderColor: '#013049',
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </Grid>
+
 
                                 {/* Job Description */}
 
@@ -335,7 +384,90 @@ const CreateNewJobPage = () => {
                                         ))}
                                     </Box>
                                 </Grid>
+                                {/* Additional info */}
+                                <Grid item xs={12}>
+                                    <Typography variant='body1' sx={{ fontWeight: 'bold', mb: 1 }}>
+                                        Additional Information
+                                    </Typography>
+
+                                    {/* File Upload */}
+                                    <Box sx={{ mb: 3 }}>
+                                        <input
+                                            accept="image/*,video/*"
+                                            style={{ display: 'none' }}
+                                            id="file-upload"
+                                            multiple
+                                            type="file"
+                                            onChange={handleFileUpload}
+                                        />
+                                        <label htmlFor="file-upload">
+                                            <Button
+                                                variant="outlined"
+                                                component="span"
+                                                sx={{
+                                                    borderColor: '#013049',
+                                                    color: '#013049',
+                                                    '&:hover': {
+                                                        borderColor: '#EF6E0B',
+                                                    },
+                                                }}
+                                            >
+                                                Upload Photos/Videos
+                                            </Button>
+                                        </label>
+                                        {files.map((file, index) => (
+                                            <Chip
+                                                key={index}
+                                                label={file.name}
+                                                sx={{ ml: 1 }}
+                                                onDelete={() => setFiles(files.filter((_, i) => i !== index))}
+                                            />
+                                        ))}
+                                    </Box>
+
+                                    {/* Specific Skills */}
+                                    <TextField
+                                        fullWidth
+                                        label="Specific Skills Required"
+                                        variant="outlined"
+                                        multiline
+                                        rows={2}
+                                        sx={{ mb: 3 }}
+                                    />
+
+                                    {/* Materials/Tools */}
+                                    <TextField
+                                        fullWidth
+                                        label="Materials/Tools Information"
+                                        variant="outlined"
+                                        multiline
+                                        rows={2}
+                                        sx={{ mb: 3 }}
+                                    />
+
+                                    {/* Inspection Request */}
+                                    {/* <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                checked={requestInspection}
+                                                onChange={(e) => setRequestInspection(e.target.checked)}
+                                                sx={{
+                                                    color: '#EF6E0B',
+                                                    '&.Mui-checked': {
+                                                        color: '#EF6E0B',
+                                                    },
+                                                }}
+                                            />
+                                        }
+                                        label="Request On-Site Inspection"
+                                        sx={{ mb: 2 }}
+                                    ></FormControlLabel> */}
+
+                                </Grid>
+
+
                                 {/* Submit Button */}
+
                                 <Grid item xs={12}>
                                     <Button
                                         fullWidth
@@ -360,7 +492,7 @@ const CreateNewJobPage = () => {
                 </Box>
             </Box>
 
-        </div>
+        </div >
     );
 };
 
