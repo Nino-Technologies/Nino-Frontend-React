@@ -70,7 +70,7 @@ function LandingPage() {
           </div>
         </div>
 
-        <div className="artisan-request-section py-5 px-2 quick_hire_bg">
+        {/* <div className="artisan-request-section py-5 px-2 quick_hire_bg ">
           <div className="artesian-request-container container">
             <div className="row">
               <div className="col-md-6 d-flex text-start">
@@ -86,16 +86,106 @@ function LandingPage() {
                     Tell us what you are trying to get done and get a
                     professional within 30min
                   </p>
+
                 </div>
               </div>
               <div className="col-md-6 mt-3 mt-md-0">
-                {/* Form */}
+                Form
                 <QuickRequestComponent />
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <div className="  p-md-5">
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center   row ">
+            {/* Section for Hiring Artisans */}
+            <div className="hire-artisans-section text-center text-md-start col-md-6 p-5 bg-primaryy">
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 'bold',
+                  color: 'white',
+                  mb: 2,
+                }}
+              >
+                Hire Skilled Service Provider
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: 'white',
+                  mb: 3,
+                  lineHeight: 1.8,
+                }}
+              >
+                <span> Connect with trusted and skilled artisans for your projects. Browse through our list of verified service providers and find the perfect match for your needs.</span>
+              </Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: '#fff',
+                  color: '#EF6E0B',
+                  fontWeight: 'bold',
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: '8px',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#d65c0a',
+                    color: 'white',
+                  },
+                }}
+              >
+                <Link to="/artisans" className="text-decoration-none text-primaryy">
+                  Find Artisans
+                </Link>
+              </Button>
+            </div>
 
+            {/* Section for Posting New Jobs */}
+            <div className="post-jobs-section text-center text-md-start col-md-6 p-5 " style={{ backgroundColor: '#013049' }}>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 'bold',
+                  color: '#fff',
+                  mb: 2,
+                }}
+              >
+                Post a New Job
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#fff',
+                  mb: 3,
+                  lineHeight: 1.8,
+                }}
+              >
+                <span> Looking for top-tier candidates? Post a job opening and let us help you find the perfect talent to grow your team.</span>
+              </Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: '#EF6E0B',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: '8px',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#d65c0a',
+                  },
+                }}
+              >
+                <Link to="/dashboard/create-offer" className="text-decoration-none text-white">
+                  Post a Job
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
 
 
         <Box sx={{ py: 8, bgcolor: 'linear-gradient(to bottom, #f8f9fa, #ffffff)' }}>
@@ -106,7 +196,7 @@ function LandingPage() {
                 borderRadius: 4,
                 px: { xs: 4, md: 6 },
 
-                backgroundColor: 'darkblue',
+                backgroundColor: '#013049',
               }}
               className="d-flex justify-content-between align-items-center flex-column flex-md-row gap-4"
             >
@@ -155,7 +245,7 @@ function LandingPage() {
 
         <div className="about-us-section mt-4 container pt-4 border-1 border-black">
           <div>
-            <h1 className="text-center  mb-5 font-weight-bold fs-1 fw-bold text-primaryy">About us</h1>
+            <h1 className="text-center font-weight-bold fs-1 fw-bold text-primaryy">About us</h1>
             <span></span>
           </div>
           <div className="row flex justify-content-center align-items-end">
@@ -173,8 +263,7 @@ function LandingPage() {
                 {/* {readMoreAboutUs && ' With a user-friendly interface and a wide range of services, we simplify the process of finding meaningful work and trusted professionals. Security is our priority—we ensure a safe environment for both clients and artisans with strict data protection measures.Join the Grinders Technologies community and experience the future of work! Learn more about our artisans or discover our mission.'} <br /> <span style={{ cursor: 'pointer' }} className="text-primaryy cursor-pointer" onClick={() => setReadMoreAboutUs(!readMoreAboutUs)}>{readMoreAboutUs ? 'Read Less' : 'Read More'}</span> */}
               </p>
               <div className="text-center">
-
-                <button className=" primary-btn"><a href="/" className="text-decoration-none  text-white">Learn More</a></button>
+                <a href="/about-us" className=" primary-btn text-decoration-none  text-white p-3">Learn More</a>
               </div>
             </div>
             <div className="col-md-3 d-none d-md-block">

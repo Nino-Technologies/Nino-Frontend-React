@@ -94,7 +94,6 @@ const CreateNewJobPage = () => {
                         elevation={3}
                         sx={{
                             padding: 4,
-
                         }}
                     >
                         <Typography
@@ -132,9 +131,54 @@ const CreateNewJobPage = () => {
                                         }}
                                     />
                                 </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth
+                                        label="Job Description"
+                                        variant="outlined"
+                                        multiline
+                                        rows={4}
+                                        required
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                                '& fieldset': {
+                                                    borderColor: '#013049',
+                                                },
+                                                '&:hover fieldset': {
+                                                    borderColor: '#EF6E0B',
+                                                },
+                                                '&.Mui-focused fieldset': {
+                                                    borderColor: '#EF6E0B',
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth
+                                        label="Location"
+                                        variant="outlined"
+                                        required
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                                '& fieldset': {
+                                                    borderColor: '#013049',
+                                                },
+                                                '&:hover fieldset': {
+                                                    borderColor: '#EF6E0B',
+                                                },
+                                                '&.Mui-focused fieldset': {
+                                                    borderColor: '#EF6E0B',
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </Grid>
 
                                 {/* Company Name */}
-                                <Grid item xs={12}>
+                                {/* <Grid item xs={12}>
                                     <TextField
                                         fullWidth
                                         label="Company Name"
@@ -154,7 +198,7 @@ const CreateNewJobPage = () => {
                                             },
                                         }}
                                     />
-                                </Grid>
+                                </Grid> */}
 
                                 {/* Job Type */}
                                 <Grid item xs={12} sm={6}>
@@ -219,27 +263,6 @@ const CreateNewJobPage = () => {
                                 </Grid>
 
                                 {/* Location */}
-                                <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        label="Location"
-                                        variant="outlined"
-                                        required
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                '& fieldset': {
-                                                    borderColor: '#013049',
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </Grid>
 
                                 {/* Salary */}
                                 <Grid item xs={12}>
@@ -265,29 +288,7 @@ const CreateNewJobPage = () => {
                                 </Grid>
 
                                 {/* Job Description */}
-                                <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        label="Job Description"
-                                        variant="outlined"
-                                        multiline
-                                        rows={4}
-                                        required
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                '& fieldset': {
-                                                    borderColor: '#013049',
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </Grid>
+
                                 <Grid item xs={12}>
                                     <TextField
                                         fullWidth
