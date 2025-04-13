@@ -338,56 +338,10 @@ const CreateNewJobPage = () => {
 
                                 {/* Job Description */}
 
-                                <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        label="Add Tags (Press Enter to Add)"
-                                        variant="outlined"
-                                        value={tagInput}
-                                        onChange={(e) => setTagInput(e.target.value)}
-                                        onKeyDown={handleAddTag}
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                '& fieldset': {
-                                                    borderColor: '#013049',
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            flexWrap: 'wrap',
-                                            gap: 1,
-                                            mt: 2,
-                                        }}
-                                    >
-                                        {tags.map((tag, index) => (
-                                            <Chip
-                                                key={index}
-                                                label={tag}
-                                                onDelete={() => handleDeleteTag(tag)}
-                                                sx={{
-                                                    backgroundColor: '#EF6E0B',
-                                                    color: 'white',
-                                                    '& .MuiChip-deleteIcon': {
-                                                        color: 'white',
-                                                    },
-                                                }}
-                                            />
-                                        ))}
-                                    </Box>
-                                </Grid>
                                 {/* Additional info */}
                                 <Grid item xs={12}>
                                     <Typography variant='body1' sx={{ fontWeight: 'bold', mb: 1 }}>
-                                        Additional Information
+                                        Additional Information :
                                     </Typography>
 
                                     {/* File Upload */}
@@ -425,15 +379,61 @@ const CreateNewJobPage = () => {
                                         ))}
                                     </Box>
 
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            label="Add Specific skills (Press Enter to Add)"
+                                            variant="outlined"
+                                            value={tagInput}
+                                            onChange={(e) => setTagInput(e.target.value)}
+                                            onKeyDown={handleAddTag}
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    '& fieldset': {
+                                                        borderColor: '#013049',
+                                                    },
+                                                    '&:hover fieldset': {
+                                                        borderColor: '#EF6E0B',
+                                                    },
+                                                    '&.Mui-focused fieldset': {
+                                                        borderColor: '#EF6E0B',
+                                                    },
+                                                },
+                                            }}
+                                        />
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                flexWrap: 'wrap',
+                                                gap: 1,
+                                                mt: 2,
+                                            }}
+                                        >
+                                            {tags.map((tag, index) => (
+                                                <Chip
+                                                    key={index}
+                                                    label={tag}
+                                                    onDelete={() => handleDeleteTag(tag)}
+                                                    sx={{
+                                                        backgroundColor: '#EF6E0B',
+                                                        color: 'white',
+                                                        '& .MuiChip-deleteIcon': {
+                                                            color: 'white',
+                                                        },
+                                                    }}
+                                                />
+                                            ))}
+                                        </Box>
+                                    </Grid>
                                     {/* Specific Skills */}
-                                    <TextField
+                                    {/* <TextField
                                         fullWidth
                                         label="Specific Skills Required"
                                         variant="outlined"
                                         multiline
                                         rows={2}
                                         sx={{ mb: 3 }}
-                                    />
+                                    /> */}
 
                                     {/* Materials/Tools */}
                                     <TextField
@@ -444,7 +444,9 @@ const CreateNewJobPage = () => {
                                         rows={2}
                                         sx={{ mb: 3 }}
                                     />
-
+                                    <div>
+                                        <input type="checkbox" name="request-inspection" id="request-inspection" className='p-2' /> <label htmlFor="request-inspection">Request Inspection</label>
+                                    </div>
                                     {/* Inspection Request */}
                                     {/* <FormControlLabel
                                         control={

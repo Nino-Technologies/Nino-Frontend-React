@@ -53,6 +53,12 @@ export const userNavLinkObject = [
     userPrivilege: [0],
   },
   {
+    name: "Bids",
+    icon: < BsHeart />,
+    path: "/dashboard/bids",
+    userPrivilege: [1],
+  },
+  {
     name: " Create New Job",
     icon: < Work />,
     path: "/dashboard/create-offer",
