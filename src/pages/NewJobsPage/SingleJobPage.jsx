@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, Typography, Button, Grid, Paper, Chip, Avatar, Dialog, Input, TextField, DialogContent } from '@mui/material';
+import { Box, Typography, Button, Grid, Paper, Chip, Avatar, Dialog, Input, TextField, DialogContent, DialogTitle, DialogContentText, DialogActions } from '@mui/material';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -14,6 +14,7 @@ const SingleJobPage = () => {
   const [accept, setAccept] = useState(false);
   const [files, setFiles] = useState([]);
   const [requestInspection, setRequestInspection] = useState(false);
+
   const [open, setOpen] = useState(false);
   const handleFileUpload = (e) => {
     const uploadedFiles = Array.from(e.target.files);
@@ -473,79 +474,251 @@ const SingleJobPage = () => {
 };
 
 const ArtisanCard = () => {
-  return <Paper
-    elevation={1}
-    sx={{
-      p: 3,
-      borderRadius: 2,
-      border: '1px solid #e0e0e0',
-    }}
-    className='col-md-5'
-  >
-    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-      <Avatar
-        src="/path-to-artisan-image.jpg"
-        sx={{ width: 60, height: 60, mr: 2 }}
-      />
-      <Box>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#013049' }}>
-          Electrician
+  const [openArtisanDetails, setOpenArtisanDetails] = useState(false)
+  return <div className='col-md-5'>
+    <Paper
+      elevation={1}
+      sx={{
+        p: 3,
+        borderRadius: 2,
+        border: '1px solid #e0e0e0',
+      }}
+
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+        <Avatar
+          src="/path-to-artisan-image.jpg"
+          sx={{ width: 60, height: 60, mr: 2 }}
+        />
+        <Box>
+          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#013049' }}>
+            Electrician
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Frontend Developer
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+          Bid Amount:
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Frontend Developer
+        <Typography
+          variant="h6"
+          sx={{ color: '#EF6E0B', fontWeight: 'bold' }}
+        >
+          $500
         </Typography>
       </Box>
-    </Box>
 
-    <Box sx={{ mb: 2 }}>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-        Bid Amount:
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{ color: '#EF6E0B', fontWeight: 'bold' }}
-      >
-        $500
-      </Typography>
-    </Box>
-
-    <Box>
+      <Box>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <span className='fw-bold'>Estimated Timeline</span> 6 weeks
+        </Typography></Box>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        <span className='fw-bold'>Estimated Timeline</span> 6 weeks
-      </Typography></Box>
-    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-      <span className='fw-bold'>Description</span> "I have 5 years of experience in frontend development and would love to help with your project..."
-    </Typography>
-    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-      <span className='fw-bold'>Materials and Cost</span>: 2yards 2mm wire , Shock Absorber
-    </Typography>
+        <span className='fw-bold'>Description</span> "I have 5 years of experience in frontend development and would love to help with your project..."
+      </Typography>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+        <span className='fw-bold'>Materials and Cost</span>: 2yards 2mm wire , Shock Absorber
+      </Typography>
 
-    <Box sx={{ display: 'flex', gap: 2 }}>
-      <Button
-        variant="contained"
-        sx={{
-          flex: 1,
-          backgroundColor: '#EF6E0B',
-          '&:hover': { backgroundColor: '#d65c0a' },
-        }}
-      >
-        Accept Bid
-      </Button>
-      <Button
-        variant="outlined"
-        sx={{
-          flex: 1,
-          borderColor: '#013049',
-          color: '#013049',
-          '&:hover': {
-            borderColor: '#EF6E0B',
-            color: '#EF6E0B',
-          },
-        }}
-      >
-        View Profile
-      </Button>
-    </Box> </Paper>
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        <Button
+          variant="contained"
+          sx={{
+            flex: 1,
+            backgroundColor: '#EF6E0B',
+            '&:hover': { backgroundColor: '#d65c0a' },
+          }}
+          onClick={() => { setOpenArtisanDetails(true) }}
+        >
+          View Bid details
+        </Button>
+        <Button
+          variant="outlined"
+          sx={{
+            flex: 1,
+            borderColor: '#013049',
+            color: '#013049',
+            '&:hover': {
+              borderColor: '#EF6E0B',
+              color: '#EF6E0B',
+            },
+          }}
+        >
+          View Profile
+        </Button>
+      </Box> </Paper>
+    <Dialog
+      open={openArtisanDetails}
+      onClose={() => { setOpenArtisanDetails(false) }}
+      maxWidth="md"
+      sx={{
+        '& .MuiDialog-paper': {
+          borderRadius: 2,
+          p: 2,
+          minWidth: { xs: '90%', sm: '600px' }
+        }
+      }}
+    >
+      <DialogTitle sx={{ borderBottom: '2px solid #EF6E0B', pb: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Avatar
+            src="/path-to-artisan-image.jpg"
+            sx={{ width: 64, height: 64 }}
+          />
+          <Box>
+            <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#013049' }}>
+              John Doe's Bid Details
+            </Typography>
+            <Typography variant="subtitle1" sx={{ color: '#666' }}>
+              Electrician • 5 years experience
+            </Typography>
+          </Box>
+        </Box>
+      </DialogTitle>
+
+      <DialogContent sx={{ mt: 2 }}>
+        <Grid container spacing={3}>
+          {/* Bid Amount and Timeline */}
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={0} sx={{ p: 2, bgcolor: '#f5f5f5', borderRadius: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <AttachMoneyIcon sx={{ color: '#EF6E0B', mr: 1 }} />
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                  Bid Amount
+                </Typography>
+              </Box>
+              <Typography variant="h4" sx={{ color: '#EF6E0B', fontWeight: 'bold' }}>
+                ₦50,000
+              </Typography>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={0} sx={{ p: 2, bgcolor: '#f5f5f5', borderRadius: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <WorkIcon sx={{ color: '#EF6E0B', mr: 1 }} />
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                  Timeline
+                </Typography>
+              </Box>
+              <Typography variant="h4" sx={{ color: '#013049', fontWeight: 'bold' }}>
+                6 weeks
+              </Typography>
+            </Paper>
+          </Grid>
+
+          {/* Detailed Information */}
+          <Grid item xs={12}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#013049', mb: 2 }}>
+              Proposal Description
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
+              I have extensive experience in handling similar projects. My approach would include:
+              • Initial assessment and planning
+              • Quality material procurement
+              • Professional installation
+              • Testing and quality assurance
+            </Typography>
+          </Grid>
+
+          {/* Cost Breakdown */}
+          <Grid item xs={12}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#013049', mb: 2 }}>
+              Cost Breakdown
+            </Typography>
+            <Box sx={{ bgcolor: '#f5f5f5', p: 2, borderRadius: 2 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Typography variant="body1" sx={{ color: '#666' }}>
+                    Labor Cost:
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                    ₦20,000
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1" sx={{ color: '#666' }}>
+                    Materials Cost:
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                    ₦25,000
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1" sx={{ color: '#666' }}>
+                    Additional Expenses:
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                    ₦5,000
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+
+          {/* Materials List */}
+          <Grid item xs={12}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#013049', mb: 2 }}>
+              Required Materials
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {['2yards 2mm wire', 'Shock Absorber', 'Circuit Breaker', 'Cable Ties'].map((material) => (
+                <Chip
+                  key={material}
+                  label={material}
+                  sx={{
+                    bgcolor: '#013049',
+                    color: 'white',
+                    '& .MuiChip-label': { fontWeight: 'medium' }
+                  }}
+                />
+              ))}
+            </Box>
+          </Grid>
+        </Grid>
+      </DialogContent>
+
+      <DialogActions sx={{ p: 3, gap: 2 }}>
+        <Button
+          onClick={() => setOpenArtisanDetails(false)}
+          variant="outlined"
+          sx={{
+            borderColor: '#013049',
+            color: '#013049',
+            '&:hover': {
+              borderColor: '#EF6E0B',
+              color: '#EF6E0B',
+            }
+          }}
+        >
+          Close
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            bgcolor: '#EF6E0B',
+            color: 'white',
+            '&:hover': {
+              bgcolor: '#d65c0a',
+            }
+          }}
+        >
+          Accept Bid
+        </Button>
+      </DialogActions>
+    </Dialog>
+  </div>
+
+
 }
 
 export default SingleJobPage;
