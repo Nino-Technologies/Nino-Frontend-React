@@ -220,7 +220,7 @@ const BidCard = ({ bid, onUpdate }) => {
                 <Typography variant="h6" sx={{ color: '#013049', mb: 1, fontWeight: 'bold' }}>
                     {bid.jobTitle}
                 </Typography>
-                <Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', }}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Button
                             variant="outlined"
@@ -286,7 +286,7 @@ const BidCard = ({ bid, onUpdate }) => {
                         </Box>
                     </Box>
                 )}
-                <Box>
+                <Box className="" >
                     <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#ef6e0b', position: 'relative', button: 0 }}>View Job</button>
                 </Box>
             </Box>
