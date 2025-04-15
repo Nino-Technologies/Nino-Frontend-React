@@ -192,6 +192,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
+import { AccessTimeSharp, WalletRounded } from '@mui/icons-material';
 
 const BidCard = ({ bid, onUpdate }) => {
     const [openEdit, setOpenEdit] = useState(false);
@@ -285,7 +286,9 @@ const BidCard = ({ bid, onUpdate }) => {
                         </Box>
                     </Box>
                 )}
-                <button className='btn bg-primaryy w-100 sticky-bottom'>View Job</button>
+                <Box>
+                    <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#ef6e0b', position: 'relative', button: 0 }}>View Job</button>
+                </Box>
             </Box>
 
             {/* Edit Bid Dialog - Keep existing dialog code */}
@@ -365,6 +368,7 @@ const BidPage = () => {
             jobTitle: "Office Lighting Upgrade",
             amount: "85,000",
             timeline: "7",
+            inspection: 'pending Approval',
             description: "LED lighting upgrade for office space including dimmer switches"
         },
         // Add more sample bids as needed
@@ -382,15 +386,25 @@ const BidPage = () => {
                 mt: 8,
                 minHeight: 'calc(100vh - 128px)'
             }}>
-                <Typography variant="h4" sx={{
-                    color: '#013049',
-                    mb: 4,
-                    fontWeight: 'bold',
-                    textAlign: 'center'
-                }}>
-                    <span class='fw-6'>  My Bids</span>
-                </Typography>
+                <div className='d-flex justify-content-center align-items-center p-5 rounded-3 mb-4' style={{ backgroundColor: '#ef6e0b' }}>
+                    <Typography variant="h4" sx={{
+                        color: '#fff',
+                        mb: 4,
+                        fontWeight: 'bold',
+                        textAlign: 'center'
+                    }}>
+                        <span class='fw-6'>  My Bids</span>
+                    </Typography>
 
+                </div>
+                <div className='d-flex gap-2  mb-4'>
+                    <div className='p-2 rounded-1 bg-secondary-subtle my-2'>
+                        <span className='fw-5'> <WalletRounded style={{ color: '#ef6e0b' }} /> <span className='fw-bold'>Wallet</span> : 510,045</span>
+                    </div>
+                    <div className='p-2 rounded-1 bg-secondary-subtle my-2'>
+                        <span className='fw-5'> <AccessTimeSharp style={{ color: '#ef6e0b' }} /> <span className='fw-bold'>Pending</span>  : 510,045</span>
+                    </div>
+                </div>
                 <Grid container spacing={3}>
                     {bids.map(bid => (
                         <Grid item key={bid.id} xs={12} sm={6} md={4}>

@@ -14,7 +14,7 @@ const SingleJobPage = () => {
   const [accept, setAccept] = useState(false);
   const [files, setFiles] = useState([]);
   const [requestInspection, setRequestInspection] = useState(false);
-
+  const [paidInspection, setPaidInspection] = useState(false)
   const [open, setOpen] = useState(false);
   const handleFileUpload = (e) => {
     const uploadedFiles = Array.from(e.target.files);
@@ -40,9 +40,9 @@ const SingleJobPage = () => {
           <DialogContent className='p-2 ' sx={{ width: { sm: '100%', md: '700px', maxWidth: 600 }, backgroundColor: '#fff', borderRadius: '8px' }}>
             <div className='d-flex justify-content-between align-items-center p-4'>
               <h5 className='text- fw-bold text-primaryy'>Submit A Bid</h5>
-              <div className="p-2 border-1 border-primary text-black rounded-2 " style={{
+              <div className="p-2 border-1 border-primary text-black rounded-2 text-white" style={{
                 backgroundColor: '#EF6E0B'
-              }}><span className='fw-bold'>Wallet:</span>12</div>
+              }}><span className='fw-bold '>Connect:</span>12</div>
             </div>
             <div >
               {/* <Input type="number" placeholder='BID PRICE' className=' p-1 border-0 w-75' style={{
@@ -197,11 +197,32 @@ const SingleJobPage = () => {
               </div>
               <div className='d-flex gap-5 mt-3 py-3'>
                 <div className='d-flex align-items-center gap-2'>
-                  <input type="radio" name="inspection" id="" /> <label htmlFor="inspection">Free Inspection</label>
+                  <input type="radio" name="inspection" id="" checked={!paidInspection} onChange={() => { setPaidInspection(false) }} /> <label htmlFor="inspection">Free Inspection</label>
                 </div>
                 <div className='d-flex align-items-center gap-2' >
-                  <input type="radio" name="inspection" id="" /> <label htmlFor="inspection">Paid Inspection</label>
+                  <input type="radio" name="inspection" id="" checked={paidInspection} onChange={() => { setPaidInspection(true) }} /> <label htmlFor="inspection">Paid Inspection</label>
                 </div>
+                {paidInspection ? <div className='mt-3'>
+                  <TextField
+                    fullWidth
+                    label="Inspect Cost"
+                    variant="outlined"
+                    required
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: '#013049',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: '#EF6E0B',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#EF6E0B',
+                        },
+                      },
+                    }}
+                  />
+                </div> : ''}
               </div>
             </div>
 
@@ -263,8 +284,9 @@ const SingleJobPage = () => {
                 />
               </div>
             </Box>
-            <Button variant='contained' className='p-3' sx={{ width: "100%", backgroundColor: '#EF6E0B', color: 'white', fontWeight: 'bold', fontSize: '10px', '&:hover': { backgroundColor: '#d65c0a', } }} onClick={() => setOpen(false)}>
-              SUBMIT
+            <Button variant='contained' className='p-3' sx={{ width: "100%", backgroundColor: '#EF6E0B', color: 'white', fontWeight: 'bold', fontSize: '16px', '&:hover': { backgroundColor: '#d65c0a', } }} onClick={() => setOpen(false)}>
+              <span>
+                SUBMIT</span>
             </Button>
           </DialogContent>
         </Dialog>
@@ -428,12 +450,12 @@ const SingleJobPage = () => {
               >
                 Submit a bid
               </Button> : ""}
-              <Box sx={{ mt: 2, textAlign: 'center' }}>
-                <div className=''>
-
-                </div>
+              <Box sx={{ mt: 2, textAlign: 'center' }}>{userProfile?.role === 0 ? <div className='text-start rounded-1 bg-white p-2'>
+                <Typography variant="body1" color="initial"><span className='fw-bold'>Disclaimer:</span>       it's better to pay for the bid directly on grinders than outside the platform because once customer is not satisfied artisans would not be paid and client can ask for a refund</Typography>
+              </div> : ''}
                 <Typography variant="body2" sx={{ color: '#555' }}>
-                  By applying, you agree to our{' '}
+
+                  <br /> By applying, you agree to our{' '}
                   <Link href="#" style={{ color: '#EF6E0B', textDecoration: 'none' }}>
                     Terms of Service
                   </Link>{' '}
@@ -475,6 +497,7 @@ const SingleJobPage = () => {
 
 const ArtisanCard = () => {
   const [openArtisanDetails, setOpenArtisanDetails] = useState(false)
+  const [requestInspection, setRequestInspection] = useState(false)
   return <div className='col-md-5'>
     <Paper
       elevation={1}
@@ -686,21 +709,94 @@ const ArtisanCard = () => {
           </Grid>
         </Grid>
       </DialogContent>
+      {requestInspection ? <Box className='d-md-flex flex-sm-column flex-md-row gap-1'>
+        <div className='mt-3'>
+          <TextField
+            fullWidth
+            label="Address"
+            variant="outlined"
+            required
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: '#013049',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#EF6E0B',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#EF6E0B',
+                },
+              },
+            }}
+          />
+        </div>
+        <div className='mt-3'>
+          <TextField
+            fullWidth
+            label="Phone Number"
+            variant="outlined"
+            required
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: '#013049',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#EF6E0B',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#EF6E0B',
+                },
+              },
+            }}
+          />
+        </div>
+        <div className='mt-3'>
+          <input
+            fullWidth
+            label="Date"
+            variant="outlined"
+            type='datetime-local'
+            required
+            className='outline-none border-1 border-bg-secondary-subtle rounded w-100 p-2 py-3'
+          // sx={{
+          //   '& .MuiOutlinedInput-root': {
+          //     '& fieldset': {
+          //       borderColor: '#013049',
+          //     },
+          //     '&:hover fieldset': {
+          //       borderColor: '#EF6E0B',
+          //     },
+          //     '&.Mui-focused fieldset': {
+          //       borderColor: '#EF6E0B',
+          //     },
+          //   },
+          // }}
+          />
+        </div>
+        {/* <TODO>
+          Make the button conditionally show confirm inspection or paid inspection depending on the type of inpection
+        </TODO> */}
+        <button className='btn btn-success mt-3'>Pay For Inspection</button>
 
-      <DialogActions sx={{ p: 3, gap: 2 }}>
+
+      </Box> : ''}
+      {/* <DialogActions sx={{ p: 3, gap: 2 }}> */}
+      <div className='d-flex flex-column flex-md-row gap-2 mt-2'>
+
         <Button
-          onClick={() => setOpenArtisanDetails(false)}
-          variant="outlined"
+          variant="contained"
           sx={{
-            borderColor: '#013049',
-            color: '#013049',
+            bgcolor: '#013049',
+            color: 'white',
             '&:hover': {
-              borderColor: '#EF6E0B',
-              color: '#EF6E0B',
+              bgcolor: '#d65c0a',
             }
           }}
+          onClick={() => setRequestInspection(true)}
         >
-          Close
+          Approve Inspection (paid)
         </Button>
         <Button
           variant="contained"
@@ -714,7 +810,23 @@ const ArtisanCard = () => {
         >
           Accept Bid
         </Button>
-      </DialogActions>
+        <Button
+          onClick={() => setOpenArtisanDetails(false)}
+          variant="outlined"
+          sx={{
+            borderColor: '#013049',
+            color: '#013049',
+            '&:hover': {
+              borderColor: '#EF6E0B',
+              color: '#EF6E0B',
+            },
+            width: { sm: '100%', md: 'auto' }
+          }}
+        >
+          Close
+        </Button>
+      </div>
+      {/* </DialogActions> */}
     </Dialog>
   </div>
 
