@@ -43,6 +43,8 @@ import { PaymentModalComponent } from "./components/Modal/ModalComponent.jsx";
 import SingleJobPage from "./pages/NewJobsPage/SingleJobPage.jsx";
 import CreateNewJobPage from "./pages/CreateNewJobPage/CreateNewJobPage.jsx";
 import JobRecord from "./pages/JobRecord/JobRecord.jsx";
+import BidPage from "./pages/BidPage/BidPage.jsx";
+import OngoingJobs from "./pages/OngoingJobs/OngoingJobs.jsx";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -146,6 +148,8 @@ export default function App() {
           <Route path="verify-user" element={<VerifyUserPage />} />
           <Route path="create-offer" element={<CreateNewJobPage />} />
           <Route path="job-record" element={<JobRecord />} />
+          <Route path="ongoing-jobs" element={<OngoingJobs />} />
+          <Route path="bids" element={<BidPage />} />
           <Route path="verify-admins" element={<VerifyAdminsPage />} />
           <Route path="sendMessage" element={<SendMessagePage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />
