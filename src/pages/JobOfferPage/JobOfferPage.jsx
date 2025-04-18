@@ -7,7 +7,7 @@ import { LocationOn, WorkRounded } from '@mui/icons-material';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-
+import { CircularProgress } from '@mui/material';
 const JobOfferPage = () => {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -42,8 +42,14 @@ const JobOfferPage = () => {
         fetchJobs();
     }, []);
 
-    if (loading) return <div className="text-center p-4">Loading jobs...</div>;
-    if (error) return <div className="text-center p-4 text-danger">Error: {error}</div>;
+    if (loading) return <div className="text-center p-4 d-flex justify-content-center align-items-center " style={{ width: '100%', height: '100vh' }}>
+        <CircularProgress style={{ color: '#EF6E0B' }} size={48} thickness={5} />
+        <span className="ms-3 fs-5">Loading jobs...</span>
+    </div>
+    if (error) return <div>
+        <Nav />
+        <div className="text-center p-4 text-danger">Error: {error}</div>;
+    </div>
 
     return (
         <div id="job-offer-page">
