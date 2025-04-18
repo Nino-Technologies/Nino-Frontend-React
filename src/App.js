@@ -126,7 +126,7 @@ export default function App() {
         />
         <Route path="/job-offer" element={<JobOfferPage />} />
 
-        <Route path="/single-job" element={<SingleJobPage />} />
+        <Route path="/single-job/:id" element={<SingleJobPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

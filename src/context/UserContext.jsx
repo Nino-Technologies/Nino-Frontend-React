@@ -6,7 +6,7 @@ import moment from "moment";
 import axios from "axios";
 import VerifiedBadge from "../components/verifiedBadge/verifiedBadge.jsx";
 import { FaExclamation } from "react-icons/fa";
-
+import { useContext } from "react";
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
@@ -170,6 +170,34 @@ function UserProvider({ children }) {
     profileCompletenessCheck();
   }, [userProfile, profileCompletenessCheck]);
 
+  // 
+  async function CreateJob(jobData) {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", cookies.grinderUser.token); // Replace with actual token logic
+      myHeaders.append("Content-Type", "application/json");
+      console.log('this is the token', cookies.grinderUser.token)
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(jobData),
+        redirect: "follow",
+      };
+
+      const response = await fetch(`${apiUrl}/job`, requestOptions);
+
+      if (!response.ok) {
+        throw new Error(`Failed to submit job: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log("Job submitted successfully:", result);
+      return result;
+    } catch (error) {
+      console.error("Error submitting job:", error);
+      throw error; // Rethrow the error for further handling if needed
+    }
+  }
 
   return (
     // <UserContext.Provider
@@ -210,6 +238,7 @@ function UserProvider({ children }) {
         getUserProfile,
         profileProgress,
         nonCompleted,
+        CreateJob,
       }}
     >
       {children}

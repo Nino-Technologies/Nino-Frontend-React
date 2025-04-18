@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, Grid, Paper, MenuItem, Chip } from '@mui/material';
+import React, { useContext, useState } from 'react';
+import { Box, TextField, Button, Typography, Grid, Paper, MenuItem, Chip, Checkbox, FormControlLabel } from '@mui/material';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
+import { UserContext } from '../../context/UserContext';
+import { Cloudinary } from '@cloudinary/url-gen';
+import { auto } from '@cloudinary/url-gen/actions/resize';
+import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
+import { AdvancedImage } from '@cloudinary/react';
+import { toast } from 'react-toastify';
+
+
 
 const jobTypes = ['Full-Time', 'Part-Time', 'Contract', 'Freelance'];
 const categories = [
@@ -51,13 +59,36 @@ const categories = [
 
 
 const CreateNewJobPage = () => {
+    const { CreateJob } = useContext(UserContext)
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState('');
     const [files, setFiles] = useState([]);
+    const [media, setMedia] = useState([]);
     const [requestInspection, setRequestInspection] = useState(false);
-    const handleFileUpload = (e) => {
-        const uploadedFiles = Array.from(e.target.files);
-        setFiles([...files, ...uploadedFiles]);
+
+    const uploadToCloudinary = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'grinders');
+
+        try {
+            const response = await fetch(
+                `https://api.cloudinary.com/v1_1/dvprllhcj/upload`,
+                { method: 'POST', body: formData }
+            );
+            const data = await response.json();
+            return { url: data.secure_url, name: file.name };
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            return null;
+        }
+    };
+
+    const handleFileUpload = async (e) => {
+        const files = Array.from(e.target.files);
+        const uploadPromises = files.map(file => uploadToCloudinary(file));
+        const uploadedMedia = await Promise.all(uploadPromises);
+        setMedia(prev => [...prev, ...uploadedMedia.filter(item => item !== null)]);
     };
 
     const handleAddTag = (e) => {
@@ -74,6 +105,38 @@ const CreateNewJobPage = () => {
         setTags(tags.filter((tag) => tag !== tagToDelete));
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+
+        const jobData = {
+            title: formData.get('jobTitle'),
+            description: formData.get('jobDescription'),
+            materialInformation: formData.get('materials'),
+            skills: tags,
+            media: media.map(item => item.url),
+            budget: Number(formData.get('budget')),
+            location: formData.get('location'),
+            category: formData.get('category'),
+            requestInspection: requestInspection,
+        };
+
+        try {
+            CreateJob(jobData)
+            // Replace with actual submitJob function
+            console.log('Submitting job:', jobData);
+            // await submitJob(jobData);
+            // alert('Job posted successfully!');
+            // Reset form
+            setTags([]);
+            setMedia([]);
+            setRequestInspection(false);
+            e.target.reset();
+            toast.success('Job posted successfully!');
+        } catch (error) {
+            alert('Error posting job: ' + error.message);
+        }
+    };
     return (
 
 
@@ -135,195 +198,66 @@ const CreateNewJobPage = () => {
 
 
             {/* Right Section (Form) */}
-            <Box
-                sx={{
-                    flex: 2,
-                    padding: { md: 4 },
-                }}
-            >
-                <Paper
-                    elevation={3}
-                    sx={{
-                        padding: { xs: 1, md: 4 },
-                    }}
-                >
-                    <Typography
-                        variant="h4"
-                        sx={{
-                            fontWeight: '900',
-                            color: '#EF6E0B',
-                            textAlign: 'center',
-                            mb: { md: 3 },
-                        }}
-                    >
-                        <span className='fw-bold'> Create a New Job</span>
+
+            <Box sx={{ flex: 2, padding: { md: 4 } }}>
+                <Paper elevation={3} sx={{ padding: { xs: 1, md: 4 } }}>
+                    <Typography variant="h4" sx={{ color: '#EF6E0B', textAlign: 'center', mb: 3 }}>
+                        Create a New Job
                     </Typography>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <Grid container spacing={3}>
-                            {/* Job Title */}
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
+                                    name="jobTitle"
                                     label="Job Title"
                                     variant="outlined"
                                     required
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            '& fieldset': {
-                                                borderColor: '#013049',
-                                            },
-                                            '&:hover fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                            '&.Mui-focused fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                        },
-                                    }}
                                 />
                             </Grid>
+
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
+                                    name="jobDescription"
                                     label="Job Description"
                                     variant="outlined"
                                     multiline
                                     rows={4}
                                     required
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            '& fieldset': {
-                                                borderColor: '#013049',
-                                            },
-                                            '&:hover fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                            '&.Mui-focused fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                        },
-                                    }}
                                 />
                             </Grid>
 
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
+                                    name="location"
                                     label="Location"
                                     variant="outlined"
                                     required
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            '& fieldset': {
-                                                borderColor: '#013049',
-                                            },
-                                            '&:hover fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                            '&.Mui-focused fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                        },
-                                    }}
                                 />
                             </Grid>
 
-                            {/* Company Name */}
-                            {/* <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        label="Company Name"
-                                        variant="outlined"
-                                        required
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                '& fieldset': {
-                                                    borderColor: '#013049',
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </Grid> */}
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
+                                    name="budget"
                                     label="Budget"
                                     variant="outlined"
+                                    type="number"
                                     required
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            '& fieldset': {
-                                                borderColor: '#013049',
-                                            },
-                                            '&:hover fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                            '&.Mui-focused fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                        },
-                                    }}
                                 />
                             </Grid>
-                            {/* Job Type */}
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    select
-                                    label="Job Type"
-                                    variant="outlined"
-                                    required
-                                    defaultValue=""
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            '& fieldset': {
-                                                borderColor: '#013049',
-                                            },
-                                            '&:hover fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                            '&.Mui-focused fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                        },
-                                    }}
-                                >
-                                    {jobTypes.map((type) => (
-                                        <MenuItem key={type} value={type}>
-                                            {type}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </Grid>
 
-                            {/* Category */}
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextField
                                     fullWidth
                                     select
+                                    name="category"
                                     label="Task Category"
                                     variant="outlined"
                                     required
                                     defaultValue=""
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            '& fieldset': {
-                                                borderColor: '#013049',
-                                            },
-                                            '&:hover fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                            '&.Mui-focused fieldset': {
-                                                borderColor: '#EF6E0B',
-                                            },
-                                        },
-                                    }}
                                 >
                                     {categories.map((category) => (
                                         <MenuItem key={category} value={category}>
@@ -333,20 +267,7 @@ const CreateNewJobPage = () => {
                                 </TextField>
                             </Grid>
 
-                            {/* Location */}
-
-                            {/* Salary */}
-
-
-                            {/* Job Description */}
-
-                            {/* Additional info */}
                             <Grid item xs={12}>
-                                <Typography variant='body1' sx={{ fontWeight: 'bold', mb: 1 }}>
-                                    Additional Information :
-                                </Typography>
-
-                                {/* File Upload */}
                                 <Box sx={{ mb: 3 }}>
                                     <input
                                         accept="image/*,video/*"
@@ -356,136 +277,82 @@ const CreateNewJobPage = () => {
                                         type="file"
                                         onChange={handleFileUpload}
                                     />
-                                    <label htmlFor="file-upload">
-                                        <Button
-                                            variant="outlined"
-                                            component="span"
-                                            sx={{
-                                                borderColor: '#013049',
-                                                color: '#013049',
-                                                '&:hover': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                            }}
-                                        >
-                                            Upload Photos/Videos
-                                        </Button>
-                                    </label>
-                                    {files.map((file, index) => (
-                                        <Chip
-                                            key={index}
-                                            label={file.name}
-                                            sx={{ ml: 1 }}
-                                            onDelete={() => setFiles(files.filter((_, i) => i !== index))}
-                                        />
-                                    ))}
-                                </Box>
-
-                                <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        label="Add Specific skills (Press Enter to Add)"
-                                        variant="outlined"
-                                        value={tagInput}
-                                        onChange={(e) => setTagInput(e.target.value)}
-                                        onKeyDown={handleAddTag}
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                '& fieldset': {
-                                                    borderColor: '#013049',
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: '#EF6E0B',
-                                                },
-                                            },
-                                        }}
-                                    />
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            flexWrap: 'wrap',
-                                            gap: 1,
-                                            mt: 2,
-                                        }}
-                                    >
-                                        {tags.map((tag, index) => (
+                                    <Box className='flex justify-between  items-center my-2'>
+                                        {/* <FileUploaderRegular
+                                            sourceList="local, camera, gdrive"
+                                            cameraModes="photo, video"
+                                            classNameUploader="uc-light"
+                                            pubkey="de06d3627e924744c45e"
+                                            onChange={handleFileUpload}
+                                        /> */}
+                                        {/* <CloudinaryInput /> */}
+                                        <label htmlFor="file-upload">
+                                            <Button variant="outlined" component="span">
+                                                Upload Photos/Videos
+                                            </Button>
+                                        </label>
+                                        {media.map((item, index) => (
                                             <Chip
                                                 key={index}
-                                                label={tag}
-                                                onDelete={() => handleDeleteTag(tag)}
-                                                sx={{
-                                                    backgroundColor: '#EF6E0B',
-                                                    color: 'white',
-                                                    '& .MuiChip-deleteIcon': {
-                                                        color: 'white',
-                                                    },
-                                                }}
+                                                label={item.name}
+                                                sx={{ ml: 1 }}
+                                                onDelete={() => setMedia(media.filter((_, i) => i !== index))}
                                             />
                                         ))}
                                     </Box>
-                                </Grid>
-                                {/* Specific Skills */}
-                                {/* <TextField
-                                        fullWidth
-                                        label="Specific Skills Required"
-                                        variant="outlined"
-                                        multiline
-                                        rows={2}
-                                        sx={{ mb: 3 }}
-                                    /> */}
+                                </Box>
+                            </Grid>
 
-                                {/* Materials/Tools */}
+                            <Grid item xs={12}>
                                 <TextField
                                     fullWidth
+                                    label="Add Specific skills (Press Enter to Add)"
+                                    value={tagInput}
+                                    onChange={(e) => setTagInput(e.target.value)}
+                                    onKeyDown={handleAddTag}
+                                />
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
+                                    {tags.map((tag, index) => (
+                                        <Chip
+                                            key={index}
+                                            label={tag}
+                                            onDelete={() => handleDeleteTag(tag)}
+                                            sx={{ backgroundColor: '#EF6E0B', color: 'white' }}
+                                        />
+                                    ))}
+                                </Box>
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="materials"
                                     label="Materials/Tools Information"
                                     variant="outlined"
                                     multiline
                                     rows={2}
-                                    sx={{ mb: 3 }}
                                 />
-                                <div>
-                                    <input type="checkbox" name="request-inspection" id="request-inspection" className='p-2' /> <label htmlFor="request-inspection">Request Inspection</label>
-                                </div>
-                                {/* Inspection Request */}
-                                {/* <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={requestInspection}
-                                                onChange={(e) => setRequestInspection(e.target.checked)}
-                                                sx={{
-                                                    color: '#EF6E0B',
-                                                    '&.Mui-checked': {
-                                                        color: '#EF6E0B',
-                                                    },
-                                                }}
-                                            />
-                                        }
-                                        label="Request On-Site Inspection"
-                                        sx={{ mb: 2 }}
-                                    ></FormControlLabel> */}
-
                             </Grid>
 
-
-                            {/* Submit Button */}
+                            <Grid item xs={12}>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={requestInspection}
+                                            onChange={(e) => setRequestInspection(e.target.checked)}
+                                            color="primary"
+                                        />
+                                    }
+                                    label="Request Inspection"
+                                />
+                            </Grid>
 
                             <Grid item xs={12}>
                                 <Button
+                                    type="submit"
                                     fullWidth
                                     variant="contained"
-                                    sx={{
-                                        backgroundColor: '#EF6E0B',
-                                        color: 'white',
-                                        fontWeight: 'bold',
-                                        fontSize: '1rem',
-                                        py: 1.5,
-                                        '&:hover': {
-                                            backgroundColor: '#d65c0a',
-                                        },
-                                    }}
+                                    sx={{ backgroundColor: '#EF6E0B', '&:hover': { backgroundColor: '#d65c0a' } }}
                                 >
                                     Post Job
                                 </Button>
@@ -500,3 +367,16 @@ const CreateNewJobPage = () => {
 };
 
 export default CreateNewJobPage;
+
+// const CloudinaryInput = () => {
+//     const cld = new Cloudinary({ cloud: { cloudName: 'dvprllhcj' } });
+
+//     // Use this sample image or upload your own via the Media Explorer
+//     const img = cld
+//         .image('cld-sample-5')
+//         .format('auto') // Optimize delivery by resizing and applying auto-format and auto-quality
+//         .quality('auto')
+//         .resize(auto().gravity(autoGravity()).width(500).height(500)); // Transform the image: auto-crop to square aspect_ratio
+
+//     return (<AdvancedImage cldImg={img} />);
+// };
