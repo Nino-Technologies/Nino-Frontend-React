@@ -956,7 +956,31 @@
   border-radius: 20px;
 }
 
+//  about section styling
+.divider {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #2b6cb0 0%, #4299e1 100%);
+}
 
+.icon-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(90deg, #2b6cb0 0%, #4299e1 100%);
+}
+
+.shadow-lg {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+// how it works section
 .how-it-works-container {
   padding: 4rem 1rem;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);

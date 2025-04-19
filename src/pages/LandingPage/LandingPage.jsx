@@ -23,6 +23,8 @@ import createJobIMG from '../../assets/images/internship-job-training-illustrati
 import AboutImg from '../../assets/images/fpkdl.com_750_people-standing-against-clear-sky_1048944-2881346.jpg'
 // import { Button } from "@mui/material";
 import { Container, Box, Typography, Button, Paper } from '@mui/material';
+import { GiHelmet, GiMiningHelmet } from "react-icons/gi";
+import { FaClock } from "react-icons/fa";
 function LandingPage() {
   const { loggedIn } = useContext(UserContext);
   const { artisans } = useContext(SearchContext);
@@ -278,7 +280,7 @@ function LandingPage() {
                   <div className="d-grid gap-4">
                     <div className="d-flex align-items-center">
                       <div className="icon-box bg-primary text-white me-4">
-                        <i className="fas fa-shield-alt fa-2x"></i>
+                        <i className="fas fa-shield-alt fa-2x"> <GiMiningHelmet className='fs-2' /></i>
                       </div>
                       <div>
                         <h5 className="fw-semibold mb-1">Verified Professionals</h5>
@@ -288,7 +290,7 @@ function LandingPage() {
 
                     <div className="d-flex align-items-center">
                       <div className="icon-box bg-success text-white me-4">
-                        <i className="fas fa-clock fa-2x"></i>
+                        <i className="fas fa-clock fa-2x"><FaClock className='fs-2' /></i>
                       </div>
                       <div>
                         <h5 className="fw-semibold mb-1">24/7 Support</h5>
