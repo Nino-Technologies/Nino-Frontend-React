@@ -49,7 +49,7 @@ const JobRecord = () => {
 
             <div className="row mt-5">
                 {loading ? (
-                    <div className="text-center p-4 d-flex justify-content-center align-items-center " style={{ width: '100%', height: '100vh' }}>
+                    <div className="text-center p-4 d-flex justify-content-center align-items-center " style={{ width: '100%', }}>
                         <CircularProgress style={{ color: '#EF6E0B' }} size={48} thickness={5} />
                         <span className="ms-3 fs-5">Loading jobs...</span>
                     </div>
