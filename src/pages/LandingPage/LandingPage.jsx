@@ -20,6 +20,7 @@ import img6 from "../../assets/images/juicy-woman-connects-a-laptop-to-the-serve
 import womanArtisan from "../../assets/images/AboutUsLady1.png";
 import AboutUsArtisan from '../../assets/images/AboutUs_Artisan.webp'
 import createJobIMG from '../../assets/images/internship-job-training-illustration.png'
+import AboutImg from '../../assets/images/fpkdl.com_750_people-standing-against-clear-sky_1048944-2881346.jpg'
 // import { Button } from "@mui/material";
 import { Container, Box, Typography, Button, Paper } from '@mui/material';
 function LandingPage() {
@@ -28,6 +29,8 @@ function LandingPage() {
   const [proArtisanList, setProArtisanList] = useState([]);
   const [readMoreAboutUs, setReadMoreAboutUs] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
   useEffect(() => {
     // console.log(artisans);
     const proArtisan = [];
@@ -44,7 +47,27 @@ function LandingPage() {
     setProArtisanList(proArtisan);
     // console.log(proArtisan);
   }, [artisans]);
-
+  const steps = [
+    {
+      number: 1,
+      title: "Discover",
+      content: "Explore our wide range of innovative solutions tailored to your needs."
+    },
+    {
+      number: 2,
+      title: "Select",
+      content: "Choose the perfect package that matches your requirements."
+    },
+    {
+      number: 3,
+      title: "Customize",
+      content: "Personalize your selection with our easy-to-use tools."
+    },
+    {
+      number: 4,
+      title: "Enjoy",
+      content: "Experience seamless integration and outstanding performance."
+    }]
   return (
     <>
       <Nav />
@@ -188,6 +211,109 @@ function LandingPage() {
         </div>
 
 
+        {/* 
+        <div className="about-us-section mt-4 container pt-4 border-1 border-black">
+          <div>
+            <h1 className="text-center font-weight-bold fs-1 fw-bold text-primaryy">About us</h1>
+            <span></span>
+          </div>
+          <div className="row flex justify-content-center align-items-end">
+            <div className="col-md-3 ">
+              <img src={AboutUsArtisan} alt="" className="object-fit-contain" />
+            </div>
+            <div className="col-md-6 my-5">
+              <h4 className="fw-bolder  text-center">
+                Welcome to Grinders Technologies!
+
+              </h4>
+              <p className="lead text-center">
+
+                We’re a dynamic platform connecting skilled workers with clients who need top-quality services. Our mission is to empower artisans and professionals by showcasing their expertise while making it easy for clients to find the right talent.
+    
+              </p>
+              <div className="text-center">
+                <a href="/about-us" className=" primary-btn text-decoration-none  text-white p-3">Learn More</a>
+              </div>
+            </div>
+            <div className="col-md-3 d-none d-md-block">
+              <img src={womanArtisan} alt="" className="object-fit-contain w-75 " />
+            </div>
+          </div>
+        </div> */}
+        <div className="about-us-section py-5 bg-light">
+          <div className="container">
+            <div className="row justify-content-center mb-5">
+              <div className="col-lg-8 text-center">
+                <h6 className="text-uppercase  mb-3">Who We Are</h6>
+                <h2 className="display-4 fw-bold mb-4 text-primaryy">Connecting Talent with Opportunity</h2>
+                <div className="divider mx-auto bg-gradient-primary" />
+              </div>
+            </div>
+
+            <div className="row align-items-center g-5">
+              <div className="col-lg-6">
+                <div className="position-relative">
+                  <img
+                    src={AboutImg}
+                    alt="Team collaboration"
+                    className="img-fluid rounded-3 shadow-lg"
+                  />
+                  <div className="position-absolute bottom-0 start-0 bg-white p-4 m-3 rounded shadow-sm">
+                    <h3 className="text-primary mb-0">15K+</h3>
+                    <p className="text-muted mb-0">Professionals Registered</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div className="ps-lg-5">
+                  <h3 className="fw-semibold mb-4">
+                    Empowering Skilled Professionals Since 2018
+                  </h3>
+                  <p className="lead text-muted mb-4">
+                    At Grinders Technologies, we've built a trusted ecosystem where expertise meets demand.
+                    Our platform revolutionizes how businesses connect with top-tier professionals across various industries.
+                  </p>
+
+                  <div className="d-grid gap-4">
+                    <div className="d-flex align-items-center">
+                      <div className="icon-box bg-primary text-white me-4">
+                        <i className="fas fa-shield-alt fa-2x"></i>
+                      </div>
+                      <div>
+                        <h5 className="fw-semibold mb-1">Verified Professionals</h5>
+                        <p className="text-muted mb-0">Rigorous vetting process ensures quality</p>
+                      </div>
+                    </div>
+
+                    <div className="d-flex align-items-center">
+                      <div className="icon-box bg-success text-white me-4">
+                        <i className="fas fa-clock fa-2x"></i>
+                      </div>
+                      <div>
+                        <h5 className="fw-semibold mb-1">24/7 Support</h5>
+                        <p className="text-muted mb-0">Round-the-clock customer service</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-5">
+                    <a href="/about-us" className=" px-5 py-3 primary-btn">
+                      Explore Our Story <i className="fas fa-arrow-right ms-2"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="pro-artisan-section mb-4 container py-4  shadow">
+          <h1 className="text-center fw-bold text-primaryy">Pro Artisans</h1>
+
+          <CardCarousel items={proArtisanList} />
+        </div>
+
+
         <Box sx={{ py: 8, bgcolor: 'linear-gradient(to bottom, #f8f9fa, #ffffff)' }}>
           <Container maxWidth="lg">
             <Paper
@@ -243,39 +369,6 @@ function LandingPage() {
           </Container>
         </Box>
 
-        <div className="about-us-section mt-4 container pt-4 border-1 border-black">
-          <div>
-            <h1 className="text-center font-weight-bold fs-1 fw-bold text-primaryy">About us</h1>
-            <span></span>
-          </div>
-          <div className="row flex justify-content-center align-items-end">
-            <div className="col-md-3 ">
-              <img src={AboutUsArtisan} alt="" className="object-fit-contain" />
-            </div>
-            <div className="col-md-6 my-5">
-              <h4 className="fw-bolder  text-center">
-                Welcome to Grinders Technologies!
-
-              </h4>
-              <p className="lead text-center">
-
-                We’re a dynamic platform connecting skilled workers with clients who need top-quality services. Our mission is to empower artisans and professionals by showcasing their expertise while making it easy for clients to find the right talent.
-                {/* {readMoreAboutUs && ' With a user-friendly interface and a wide range of services, we simplify the process of finding meaningful work and trusted professionals. Security is our priority—we ensure a safe environment for both clients and artisans with strict data protection measures.Join the Grinders Technologies community and experience the future of work! Learn more about our artisans or discover our mission.'} <br /> <span style={{ cursor: 'pointer' }} className="text-primaryy cursor-pointer" onClick={() => setReadMoreAboutUs(!readMoreAboutUs)}>{readMoreAboutUs ? 'Read Less' : 'Read More'}</span> */}
-              </p>
-              <div className="text-center">
-                <a href="/about-us" className=" primary-btn text-decoration-none  text-white p-3">Learn More</a>
-              </div>
-            </div>
-            <div className="col-md-3 d-none d-md-block">
-              <img src={womanArtisan} alt="" className="object-fit-contain w-75 " />
-            </div>
-          </div>
-        </div>
-        <div className="pro-artisan-section mb-4 container py-4 proArtisans shadow">
-          <h1 className="text-center fw-bold text-primaryy">Pro Artisans</h1>
-
-          <CardCarousel items={proArtisanList} />
-        </div>
         <div className="feature-section">
           <header>
             <h1 className="text-primaryy">
@@ -458,6 +551,25 @@ function LandingPage() {
             <div className="sec-title text-center style-two">
               {/* <p>Lorem Ipsum</p> */}
               <h1 className="fw-bold text-primaryy">How It Works </h1>
+            </div>
+            <div className="how-it-works-container">
+              <div className="steps-wrapper">
+                {steps.map((step, index) => (
+                  <div
+                    key={step.number}
+                    className={`step-pill ${index === activeIndex ? 'active' : ''}`}
+                    onClick={() => setActiveIndex(index)}
+                  >
+                    <div className="step-number-container">
+                      <span className="step-number">{step.number}</span>
+                    </div>
+                    <div className="step-content">
+                      <h3>{step.title}</h3>
+                      <p>{step.content}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
             <div>
               <div className="">

@@ -8,8 +8,10 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { UserContext } from '../../context/UserContext';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 const SingleJobPage = () => {
+
+  const { id } = useParams()
   const { userProfile } = useContext(UserContext)
   const [accept, setAccept] = useState(false);
   const [files, setFiles] = useState([]);
@@ -21,7 +23,7 @@ const SingleJobPage = () => {
     setFiles([...files, ...uploadedFiles]);
   };
 
-  console.log('this is user details from user Context', userProfile)
+  console.log('this is user details from user Context', userProfile, 'this is the single job id', id)
   return (
     <div>
       <Nav />
