@@ -17,12 +17,12 @@ const JobOfferPage = () => {
 
         const fetchJobs = async () => {
             try {
-                const myHeaders = new Headers();
-                myHeaders.append("Authorization", cookies.grinderUser.token);
+                // const myHeaders = new Headers();
+                // myHeaders.append("Authorization", cookies.grinderUser.token);
 
                 const response = await fetch("https://nino-backend.vercel.app/api/job", {
                     method: "GET",
-                    headers: myHeaders,
+                    // headers: myHeaders,
                     redirect: "follow"
                 });
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Box, Typography, Button, Grid, Paper, Chip, Avatar, Dialog, Input, TextField, DialogContent, DialogTitle, DialogContentText, DialogActions } from '@mui/material';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
@@ -18,12 +18,66 @@ const SingleJobPage = () => {
   const [requestInspection, setRequestInspection] = useState(false);
   const [paidInspection, setPaidInspection] = useState(false)
   const [open, setOpen] = useState(false);
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
   const handleFileUpload = (e) => {
     const uploadedFiles = Array.from(e.target.files);
     setFiles([...files, ...uploadedFiles]);
   };
+  // useEffect(() => {
 
-  console.log('this is user details from user Context', userProfile, 'this is the single job id', id)
+  //       const fetchJobs = async () => {
+  //           try {
+  //               // const myHeaders = new Headers();
+  //               // myHeaders.append("Authorization", cookies.grinderUser.token);
+
+  //               const response = await fetch(`https://nino-backend.vercel.app/api/job?id=${id}`, {
+  //                   method: "GET",
+  //                   // headers: myHeaders,
+  //                   redirect: "follow"
+  //               });
+
+  //               if (!response.ok) {
+  //                   throw new Error(`HTTP error! status: ${response.status}`);
+  //               }
+
+  //               const data = await response.json();
+  //               console.log('data from single data',data)
+
+  //           } catch (err) {
+
+  //           } finally {
+
+  //           }
+  //       };
+
+  //       fetchJobs();
+  //   }, []);
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const response = await fetch(`https://nino-backend.vercel.app/api/job?id=${id}`);
+        if (!response.ok) throw new Error('Failed to fetch job');
+
+        const data = await response.json();
+        if (data.ok && data.jobs.length > 0) {
+          setJob(data.jobs[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching job:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJob();
+  }, [id]);
+
+
+
+  if (loading) return <div>Loading...</div>;
+  if (!job) return <div>Job not found</div>;
+
   return (
     <div>
       <Nav />
@@ -197,14 +251,16 @@ const SingleJobPage = () => {
                   }}
                 />
               </div>
-              <div className='d-flex gap-5 mt-3 py-3'>
-                <div className='d-flex align-items-center gap-2'>
-                  <input type="radio" name="inspection" id="" checked={!paidInspection} onChange={() => { setPaidInspection(false) }} /> <label htmlFor="inspection">Free Inspection</label>
-                </div>
-                <div className='d-flex align-items-center gap-2' >
-                  <input type="radio" name="inspection" id="" checked={paidInspection} onChange={() => { setPaidInspection(true) }} /> <label htmlFor="inspection">Paid Inspection</label>
-                </div>
-                {paidInspection ? <div className='mt-3'>
+              <div className='d-flex gap-5 mt-3 py-3 align-items-center'>
+                {job.requestInspection ?
+                  <div className='d-flex gap-5'>
+                    <div className='d-flex align-items-center gap-2'>
+                      <input type="radio" name="inspection" id="" checked={!paidInspection} onChange={() => { setPaidInspection(false) }} /> <label htmlFor="inspection">Free Inspection</label>
+                    </div>
+                    <div className='d-flex align-items-center gap-2' >
+                      <input type="radio" name="inspection" id="" checked={paidInspection} onChange={() => { setPaidInspection(true) }} /> <label htmlFor="inspection">Paid Inspection</label>
+                    </div> </div> : <p className='text-secondary-subtle'>Inspection Unavailable</p>}
+                {job.requestInspection ? <div className='mt-3'>
                   <TextField
                     fullWidth
                     label="Inspect Cost"
@@ -309,7 +365,7 @@ const SingleJobPage = () => {
               variant="h4"
               sx={{ fontWeight: 'bold', color: '#013049', mb: 1 }}
             >
-              <span className="fw-6"> Job Title</span>
+              <span className="fw-6">   {job.title}</span>
             </Typography>
             {/* <Typography
               variant="h6"
@@ -333,26 +389,44 @@ const SingleJobPage = () => {
                 variant="body2"
                 sx={{ color: '#000', lineHeight: 1.8, mb: 4, fontWeight: 'bold' }}
               >
-                We are looking for a skilled Frontend Developer to join our
-                dynamic team. You will be responsible for implementing
-                user-friendly interfaces and ensuring seamless user experiences.
-                Your role will involve working closely with designers and
-                backend developers to bring our projects to life.
+                {job.description}
               </Typography>
+              {job.materialInformation && (
+                <>
+                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#013049', mb: 2 }}>
+                    Material Information
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: '#555', lineHeight: 1.8 }}>
+                    {job.materialInformation}
+                  </Typography>
+                </>
+              )}
 
-              <Typography
-                variant="h5"
-                sx={{ fontWeight: 'bold', color: '#013049', mb: 2 }}
-              >
-                Responsibilities
-              </Typography>
-              <ul style={{ color: '#555', lineHeight: 1.8 }}>
-                <li>Develop and maintain responsive web applications.</li>
-                <li>Collaborate with designers to implement UI/UX designs.</li>
-                <li>Optimize applications for maximum speed and scalability.</li>
-                <li>Write clean, maintainable, and efficient code.</li>
-                <li>Debug and troubleshoot issues across browsers and devices.</li>
-              </ul>
+              {job.media.length > 0 && (
+                <Box sx={{ mt: 4 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
+                    Attached Media
+                  </Typography>
+                  <Grid container spacing={2}>
+                    {job.media.map((mediaUrl, index) => (
+                      <Grid item xs={6} md={4} key={index}>
+                        <img
+                          src={mediaUrl}
+                          alt={`Media ${index + 1}`}
+                          style={{
+                            width: '100%',
+                            height: 200,
+                            objectFit: 'cover',
+                            borderRadius: '8px'
+                          }}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              )}
+
+
             </Grid>
 
             {/* Right Section */}
@@ -372,51 +446,33 @@ const SingleJobPage = () => {
                 >
                   Job Details
                 </Typography>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    mb: 2,
-                  }}
-                >
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <LocationOnIcon sx={{ color: '#EF6E0B', mr: 1 }} />
-                  <Typography variant="body1">Abuja, Nigeria</Typography>
+                  <Typography variant="body1">{job.location}</Typography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    mb: 2,
-                  }}
-                >
-                  <WorkIcon sx={{ color: '#EF6E0B', mr: 1 }} />
-                  <Typography variant="body1">Full-Time</Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    mb: 2,
-                  }}
-                >
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <AttachMoneyIcon sx={{ color: '#EF6E0B', mr: 1 }} />
-                  <Typography variant="body1">₦302,323</Typography>
+                  <Typography variant="body1">
+                    ₦{job.budget?.toLocaleString()}
+                  </Typography>
                 </Box>
-                <h4 className='fs-6'>
-                  Specific Skills
-                </h4>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: 1,
-                    mt: 2,
-                  }}
-                >
-                  <Chip label="React" sx={{ backgroundColor: '#EF6E0B', color: 'white' }} />
-                  <Chip label="JavaScript" sx={{ backgroundColor: '#EF6E0B', color: 'white' }} />
-                  <Chip label="CSS" sx={{ backgroundColor: '#EF6E0B', color: 'white' }} />
-                </Box>
+
+                {job.skills?.length > 0 && (
+                  <>
+                    <Typography variant="body1" sx={{ mt: 2, mb: 1 }}>
+                      Required Skills:
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                      {job.skills.map((skill, index) => (
+                        <Chip
+                          key={index}
+                          label={skill}
+                          sx={{ backgroundColor: '#EF6E0B', color: 'white' }}
+                        />
+                      ))}
+                    </Box>
+                  </>
+                )}
                 {/* {userProfile?.role === 1 ?
                   <div className='d-flex justify-content-between align-items-center bg-white px-2 py-1  mt-4 rounded-5'>
                     <input type="number" placeholder='BID PRICE' className=' p-1 border-0 w-75' style={{

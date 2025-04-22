@@ -308,6 +308,7 @@ const CreateNewJobPage = () => {
                                     fullWidth
                                     label="Add Specific skills (Press Enter to Add)"
                                     value={tagInput}
+
                                     onChange={(e) => setTagInput(e.target.value)}
                                     onKeyDown={handleAddTag}
                                 />
