@@ -43,7 +43,7 @@ function ProfileCard({ artisan }) {
             src={avatar || "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"}
             alt={`${fullName}'s profile`}
             className="img-fluid h-100 w-100 object-fit-cover"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", maxHeight: '400px' }}
           />
           {backgroundChecked && (
             <span className="position-absolute top-0 end-0 m-2 badge bg-success d-flex align-items-center gap-1 px-2 py-1 rounded-pill">

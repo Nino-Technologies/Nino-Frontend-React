@@ -8,8 +8,10 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { UserContext } from '../../context/UserContext';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 const SingleJobPage = () => {
+
+  const { id } = useParams()
   const { userProfile } = useContext(UserContext)
   const [accept, setAccept] = useState(false);
   const [files, setFiles] = useState([]);
@@ -21,7 +23,7 @@ const SingleJobPage = () => {
     setFiles([...files, ...uploadedFiles]);
   };
 
-  console.log('this is user details from user Context', userProfile)
+  console.log('this is user details from user Context', userProfile, 'this is the single job id', id)
   return (
     <div>
       <Nav />
@@ -534,7 +536,7 @@ const ArtisanCard = () => {
           $500
         </Typography>
       </Box>
-
+      {/* 
       <Box>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
           <span className='fw-bold'>Estimated Timeline</span> 6 weeks
@@ -544,7 +546,7 @@ const ArtisanCard = () => {
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         <span className='fw-bold'>Materials and Cost</span>: 2yards 2mm wire , Shock Absorber
-      </Typography>
+      </Typography> */}
 
       <Box sx={{ display: 'flex', gap: 2 }}>
         <Button
@@ -834,3 +836,537 @@ const ArtisanCard = () => {
 }
 
 export default SingleJobPage;
+
+// import React, { useContext, useState } from 'react';
+// import {
+//   Box,
+//   Typography,
+//   Button,
+//   Grid,
+//   Paper,
+//   Chip,
+//   Avatar,
+//   Dialog,
+//   TextField,
+//   DialogContent,
+//   DialogTitle,
+//   DialogActions,
+//   useMediaQuery,
+//   useTheme
+// } from '@mui/material';
+// import { Link } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
+// import LocationOnIcon from '@mui/icons-material/LocationOn';
+// import WorkIcon from '@mui/icons-material/Work';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+// import Nav from '../../components/Nav/Nav';
+// import Footer from '../../components/Footer/Footer';
+// import { UserContext } from '../../context/UserContext';
+
+// const SingleJobPage = () => {
+//   const theme = useTheme();
+//   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+//   const { id } = useParams();
+//   const { userProfile } = useContext(UserContext);
+//   const [open, setOpen] = useState(false);
+//   const [files, setFiles] = useState([]);
+//   const [paidInspection, setPaidInspection] = useState(false);
+//   const [openArtisanDetails, setOpenArtisanDetails] = useState(false);
+//   const [requestInspection, setRequestInspection] = useState(false);
+
+//   // Style constants
+//   const primaryColor = '#013049';
+//   const accentColor = '#EF6E0B';
+//   const textSecondary = '#6c757d';
+
+//   const handleFileUpload = (e) => {
+//     const uploadedFiles = Array.from(e.target.files);
+//     setFiles([...files, ...uploadedFiles]);
+//   };
+
+//   const StyledTextField = (props) => (
+//     <TextField
+//       fullWidth
+//       variant="outlined"
+//       sx={{
+//         '& .MuiOutlinedInput-root': {
+//           '& fieldset': { borderColor: primaryColor },
+//           '&:hover fieldset': { borderColor: accentColor },
+//           '&.Mui-focused fieldset': { borderColor: accentColor },
+//         },
+//         '& .MuiInputLabel-root.Mui-focused': { color: accentColor },
+//         mb: 2
+//       }}
+//       {...props}
+//     />
+//   );
+
+//   return (
+//     <div>
+//       <Nav />
+//       <Box sx={{
+//         backgroundColor: '#f8f9fa',
+//         minHeight: '100vh',
+//         py: 2,
+//         mt: 8,
+//         width: '100%',
+//         maxWidth: '100vw',
+//         overflowX: 'hidden'
+//       }}>
+//         {/* Bid Dialog */}
+//         <Dialog
+//           open={open}
+//           onClose={() => setOpen(false)}
+//           fullScreen={isMobile}
+//           sx={{
+//             '& .MuiDialog-paper': {
+//               width: '100%',
+//               maxWidth: '800px',
+//               borderRadius: 4
+//             }
+//           }}
+//         >
+//           <DialogContent sx={{ p: 3 }}>
+//             <Box sx={{
+//               display: 'flex',
+//               justifyContent: 'space-between',
+//               alignItems: 'center',
+//               mb: 3,
+//               borderBottom: `2px solid ${primaryColor}`,
+//               pb: 2
+//             }}>
+//               <Typography variant="h5" sx={{ fontWeight: 700, color: primaryColor }}>
+//                 Submit A Bid
+//               </Typography>
+//               <Chip
+//                 label="Connect: 12"
+//                 sx={{
+//                   bgcolor: accentColor,
+//                   color: 'white',
+//                   fontWeight: 'bold',
+//                   fontSize: '0.875rem'
+//                 }}
+//               />
+//             </Box>
+
+//             <Grid container spacing={3}>
+//               <Grid item xs={12} md={6}>
+//                 <StyledTextField label="Description" required />
+//                 <StyledTextField label="Timeline" required />
+//                 <StyledTextField label="Labour and Other Expenses" required />
+//               </Grid>
+//               <Grid item xs={12} md={6}>
+//                 <StyledTextField label="Budget" required />
+//                 <StyledTextField label="Additional Expenses" required />
+//                 <StyledTextField label="Bid Amount" required />
+//               </Grid>
+//             </Grid>
+
+//             <Box sx={{
+//               display: 'flex',
+//               gap: 3,
+//               alignItems: 'center',
+//               my: 3,
+//               flexDirection: isMobile ? 'column' : 'row'
+//             }}>
+//               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+//                 <input
+//                   type="radio"
+//                   checked={!paidInspection}
+//                   onChange={() => setPaidInspection(false)}
+//                 />
+//                 <Typography>Free Inspection</Typography>
+//               </Box>
+//               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+//                 <input
+//                   type="radio"
+//                   checked={paidInspection}
+//                   onChange={() => setPaidInspection(true)}
+//                 />
+//                 <Typography>Paid Inspection</Typography>
+//               </Box>
+//             </Box>
+
+//             {paidInspection && <StyledTextField label="Inspection Cost" required />}
+
+//             <Box sx={{ mb: 3 }}>
+//               <input
+//                 accept="image/*,video/*"
+//                 hidden
+//                 id="file-upload"
+//                 multiple
+//                 type="file"
+//                 onChange={handleFileUpload}
+//               />
+//               <label htmlFor="file-upload">
+//                 <Button
+//                   variant="outlined"
+//                   component="span"
+//                   sx={{
+//                     borderColor: primaryColor,
+//                     color: primaryColor,
+//                     '&:hover': { borderColor: accentColor }
+//                   }}
+//                 >
+//                   Upload Photos/Videos
+//                 </Button>
+//               </label>
+//               <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+//                 {files.map((file, index) => (
+//                   <Chip
+//                     key={index}
+//                     label={file.name}
+//                     onDelete={() => setFiles(files.filter((_, i) => i !== index))}
+//                     sx={{
+//                       bgcolor: '#e9ecef',
+//                       '& .MuiChip-deleteIcon': { color: textSecondary }
+//                     }}
+//                   />
+//                 ))}
+//               </Box>
+//             </Box>
+
+//             <Button
+//               fullWidth
+//               variant="contained"
+//               sx={{
+//                 bgcolor: accentColor,
+//                 py: 1.5,
+//                 fontSize: '1rem',
+//                 fontWeight: 700,
+//                 '&:hover': { bgcolor: '#d65c0a' }
+//               }}
+//               onClick={() => setOpen(false)}
+//             >
+//               SUBMIT BID
+//             </Button>
+//           </DialogContent>
+//         </Dialog>
+
+//         {/* Main Content */}
+//         <Box sx={{
+//           width: '100%',
+//           maxWidth: 1400,
+//           mx: 'auto',
+//           px: isMobile ? 2 : 4
+//         }}>
+//           {/* Job Header */}
+//           <Box sx={{
+//             bgcolor: 'white',
+//             borderRadius: 4,
+//             p: 4,
+//             boxShadow: 3,
+//             mb: 4
+//           }}>
+//             <Typography variant="h3" sx={{
+//               fontWeight: 800,
+//               color: primaryColor,
+//               mb: 2,
+//               fontSize: isMobile ? '2rem' : '2.5rem'
+//             }}>
+//               Senior Frontend Developer
+//             </Typography>
+
+//             <Box sx={{
+//               display: 'flex',
+//               gap: 3,
+//               alignItems: 'center',
+//               flexWrap: 'wrap'
+//             }}>
+//               <Box sx={{ display: 'flex', alignItems: 'center' }}>
+//                 <LocationOnIcon sx={{ color: accentColor, mr: 1 }} />
+//                 <Typography variant="h6">Abuja, Nigeria</Typography>
+//               </Box>
+//               <Box sx={{ display: 'flex', alignItems: 'center' }}>
+//                 <WorkIcon sx={{ color: accentColor, mr: 1 }} />
+//                 <Typography variant="h6">Full-Time</Typography>
+//               </Box>
+//               <Box sx={{ display: 'flex', alignItems: 'center' }}>
+//                 <AttachMoneyIcon sx={{ color: accentColor, mr: 1 }} />
+//                 <Typography variant="h6">₦302,323</Typography>
+//               </Box>
+//             </Box>
+//           </Box>
+
+//           {/* Job Details Grid */}
+//           <Grid container spacing={4}>
+//             <Grid item xs={12} md={8}>
+//               <Box sx={{
+//                 bgcolor: 'white',
+//                 borderRadius: 4,
+//                 p: 4,
+//                 boxShadow: 3
+//               }}>
+//                 <Typography variant="h5" sx={{
+//                   fontWeight: 700,
+//                   color: primaryColor,
+//                   mb: 3
+//                 }}>
+//                   Job Description
+//                 </Typography>
+//                 <Typography sx={{ mb: 4, lineHeight: 1.8 }}>
+//                   We're seeking a skilled Frontend Developer to create responsive web applications
+//                   and collaborate with our design team. You'll work with modern technologies including
+//                   React, TypeScript, and Material-UI.
+//                 </Typography>
+
+//                 <Typography variant="h5" sx={{
+//                   fontWeight: 700,
+//                   color: primaryColor,
+//                   mb: 3
+//                 }}>
+//                   Responsibilities
+//                 </Typography>
+//                 <Box component="ul" sx={{
+//                   pl: 3,
+//                   mb: 4,
+//                   '& li': { mb: 1.5 }
+//                 }}>
+//                   <li>Develop and maintain responsive web applications</li>
+//                   <li>Implement UI/UX designs with precision</li>
+//                   <li>Optimize applications for performance</li>
+//                   <li>Write clean, maintainable code</li>
+//                 </Box>
+//               </Box>
+//             </Grid>
+
+//             <Grid item xs={12} md={4}>
+//               <Box sx={{
+//                 bgcolor: primaryColor,
+//                 borderRadius: 4,
+//                 p: 4,
+//                 boxShadow: 3,
+//                 color: 'white'
+//               }}>
+//                 <Typography variant="h6" sx={{
+//                   fontWeight: 700,
+//                   mb: 3,
+//                   textAlign: 'center'
+//                 }}>
+//                   Job Details
+//                 </Typography>
+
+//                 <Box sx={{ mb: 3 }}>
+//                   <Chip
+//                     label="React"
+//                     sx={{
+//                       bgcolor: accentColor,
+//                       color: 'white',
+//                       mr: 1,
+//                       mb: 1
+//                     }}
+//                   />
+//                   <Chip
+//                     label="JavaScript"
+//                     sx={{
+//                       bgcolor: accentColor,
+//                       color: 'white',
+//                       mr: 1,
+//                       mb: 1
+//                     }}
+//                   />
+//                   <Chip
+//                     label="Material-UI"
+//                     sx={{
+//                       bgcolor: accentColor,
+//                       color: 'white',
+//                       mb: 1
+//                     }}
+//                   />
+//                 </Box>
+
+//                 {userProfile?.role === 1 && (
+//                   <Button
+//                     fullWidth
+//                     variant="contained"
+//                     sx={{
+//                       bgcolor: accentColor,
+//                       py: 1.5,
+//                       fontWeight: 700,
+//                       '&:hover': { bgcolor: '#d65c0a' }
+//                     }}
+//                     onClick={() => setOpen(true)}
+//                   >
+//                     Submit Bid
+//                   </Button>
+//                 )}
+
+//                 <Box sx={{ mt: 3, textAlign: 'center' }}>
+//                   <Typography variant="body2">
+//                     By applying, you agree to our{' '}
+//                     <Link to="#" style={{ color: accentColor }}>
+//                       Terms
+//                     </Link>{' '}
+//                     and{' '}
+//                     <Link to="#" style={{ color: accentColor }}>
+//                       Privacy Policy
+//                     </Link>
+//                   </Typography>
+//                 </Box>
+//               </Box>
+//             </Grid>
+//           </Grid>
+
+//           {/* Artisan Bids Section */}
+//           {userProfile?.role === 0 && (
+//             <Box sx={{ mt: 5 }}>
+//               <Typography variant="h4" sx={{
+//                 fontWeight: 700,
+//                 color: primaryColor,
+//                 mb: 4
+//               }}>
+//                 Artisan Bids
+//               </Typography>
+
+//               <Grid container spacing={3}>
+//                 {[1, 2, 3, 4].map((item) => (
+//                   <Grid item xs={12} key={item}>
+//                     <ArtisanCard
+//                       onViewDetails={() => setOpenArtisanDetails(true)}
+//                     />
+//                   </Grid>
+//                 ))}
+//               </Grid>
+//             </Box>
+//           )}
+//         </Box>
+
+//         {/* Artisan Details Dialog */}
+//         <Dialog
+//           open={openArtisanDetails}
+//           onClose={() => setOpenArtisanDetails(false)}
+//           maxWidth="md"
+//           fullWidth
+//         >
+//           <DialogTitle sx={{
+//             bgcolor: primaryColor,
+//             color: 'white',
+//             borderBottom: `3px solid ${accentColor}`
+//           }}>
+//             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+//               <Avatar sx={{ width: 56, height: 56 }} />
+//               <Box>
+//                 <Typography variant="h5">John Doe</Typography>
+//                 <Typography>Electrician • 5 years experience</Typography>
+//               </Box>
+//             </Box>
+//           </DialogTitle>
+
+//           <DialogContent sx={{ pt: 4 }}>
+//             <Grid container spacing={3}>
+//               <Grid item xs={12} md={6}>
+//                 <Paper sx={{ p: 2, bgcolor: '#f5f5f5', borderRadius: 2 }}>
+//                   <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+//                     Bid Details
+//                   </Typography>
+//                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+//                     <Typography>Bid Amount:</Typography>
+//                     <Typography sx={{ fontWeight: 700, color: accentColor }}>
+//                       ₦50,000
+//                     </Typography>
+//                   </Box>
+//                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+//                     <Typography>Timeline:</Typography>
+//                     <Typography sx={{ fontWeight: 700 }}>6 weeks</Typography>
+//                   </Box>
+//                 </Paper>
+//               </Grid>
+
+//               <Grid item xs={12} md={6}>
+//                 <Paper sx={{ p: 2, bgcolor: '#f5f5f5', borderRadius: 2 }}>
+//                   <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+//                     Contact Information
+//                   </Typography>
+//                   <Typography>📞 +234 812 345 6789</Typography>
+//                   <Typography>📧 john.doe@example.com</Typography>
+//                 </Paper>
+//               </Grid>
+
+//               <Grid item xs={12}>
+//                 <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+//                   Materials List
+//                 </Typography>
+//                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+//                   {['2mm Wire', 'Circuit Breaker', 'Cable Ties'].map((item) => (
+//                     <Chip
+//                       key={item}
+//                       label={item}
+//                       sx={{ bgcolor: primaryColor, color: 'white' }}
+//                     />
+//                   ))}
+//                 </Box>
+//               </Grid>
+//             </Grid>
+//           </DialogContent>
+
+//           <DialogActions sx={{ p: 3, gap: 2 }}>
+//             <Button
+//               variant="contained"
+//               sx={{ bgcolor: accentColor, '&:hover': { bgcolor: '#d65c0a' } }}
+//             >
+//               Accept Bid
+//             </Button>
+//             <Button
+//               variant="outlined"
+//               onClick={() => setOpenArtisanDetails(false)}
+//               sx={{ borderColor: primaryColor, color: primaryColor }}
+//             >
+//               Close
+//             </Button>
+//           </DialogActions>
+//         </Dialog>
+//       </Box>
+//       <Footer />
+//     </div>
+//   );
+// };
+
+// const ArtisanCard = ({ onViewDetails }) => {
+//   return (
+//     <Paper sx={{
+//       p: 3,
+//       borderRadius: 4,
+//       bgcolor: 'white',
+//       boxShadow: 3,
+//       transition: 'transform 0.2s',
+//       '&:hover': { transform: 'translateY(-5px)' }
+//     }}>
+//       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+//         <Avatar sx={{ width: 56, height: 56, mr: 2 }} />
+//         <Box>
+//           <Typography variant="h6" sx={{ fontWeight: 700 }}>
+//             Electrician Specialist
+//           </Typography>
+//           <Typography variant="body2">5 years experience</Typography>
+//         </Box>
+//       </Box>
+
+//       <Box sx={{
+//         display: 'flex',
+//         justifyContent: 'space-between',
+//         alignItems: 'center',
+//         mb: 2
+//       }}>
+//         <Typography variant="body2">Bid Amount:</Typography>
+//         <Typography variant="h6" sx={{ color: '#EF6E0B', fontWeight: 700 }}>
+//           ₦50,000
+//         </Typography>
+//       </Box>
+
+//       <Button
+//         fullWidth
+//         variant="contained"
+//         sx={{
+//           bgcolor: '#013049',
+//           '&:hover': { bgcolor: '#00111c' },
+//           mt: 2
+//         }}
+//         onClick={onViewDetails}
+//       >
+//         View Bid Details
+//       </Button>
+//     </Paper>
+//   );
+// };
+
+// export default SingleJobPage;
