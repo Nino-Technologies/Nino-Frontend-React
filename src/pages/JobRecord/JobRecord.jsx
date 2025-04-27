@@ -17,7 +17,7 @@ const JobRecord = () => {
                 const myHeaders = new Headers();
                 myHeaders.append("Authorization", cookies.grinderUser.token);
 
-                const response = await fetch("https://nino-backend.vercel.app/api/job", {
+                const response = await fetch("https://nino-backend.vercel.app/api/job/mine", {
                     method: "GET",
                     headers: myHeaders,
                     redirect: "follow"
