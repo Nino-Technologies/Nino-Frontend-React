@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Nav from '../../components/Nav/Nav'
-import { Box, Chip, Grid, Paper, Typography } from '@mui/material'
+import { Box, Chip, CircularProgress, Grid, Paper, Typography } from '@mui/material'
 import { Category, GpsFixedSharp, LocationCity, LocationOn, MoneyRounded } from '@mui/icons-material'
 import { TbGps } from 'react-icons/tb'
 import { BsTools } from 'react-icons/bs'
@@ -10,13 +10,18 @@ import { GoClock } from 'react-icons/go'
 import BidDialogBox from './components/BidDialogBox'
 import { grey } from '@mui/material/colors'
 import { Avatar, Button, } from '@mui/material';
-
+import { useCookies } from 'react-cookie'
+import { Link } from 'react-router-dom'
 const SingleJobPage = () => {
   const { id } = useParams()
+  const [cookies, setCookie, removeCookie] = useCookies();
   const { userProfile } = useContext(UserContext)
   const [open, setOpen] = useState(false);
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  useEffect(() => {
+
+  })
   useEffect(() => {
     const fetchJob = async () => {
       try {
@@ -38,9 +43,13 @@ const SingleJobPage = () => {
     };
 
     fetchJob();
+    console.log('this is the user profile', userProfile)
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="text-center p-4 d-flex justify-content-center align-items-center " style={{ width: '100%', height: '100vh' }}>
+    <CircularProgress style={{ color: '#EF6E0B' }} size={48} thickness={5} />
+    <span className="ms-3 fs-5">Loading job Details...</span>
+  </div>;
   if (!job) return <div>Job not found</div>;
 
   return (
@@ -76,7 +85,7 @@ const SingleJobPage = () => {
                 </p>
               </div>
               <div>
-                <div>
+                {<div>
                   {job.media.length > 0 && (
                     <Box sx={{ mt: 4 }}>
                       <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
@@ -116,7 +125,7 @@ const SingleJobPage = () => {
                     </Box>
                   )}
 
-                </div>
+                </div>}
               </div>
             </Paper>
           </Grid>
@@ -151,7 +160,7 @@ const SingleJobPage = () => {
               <div className='d-flex flex-wap justify-content-between align-items-center mb-3'>
 
                 <Typography variant="body1" color="#EF6E0B"> <BsTools style={{ color: '#EF6E0B' }} /> Skills:</Typography>
-                <Typography variant="body2" className='fw-6 text-wrap' color="#000"><Chip label='coding' className='' style={{ background: '#EF6E0B', color: '#fff' }} /> </Typography>
+                <Typography variant="body2" className='fw-6 text-wrap' color="#000">{job?.skills.map((skill, index) => <Chip label={skill} key={index} className=' mx-1' style={{ background: '#EF6E0B', color: '#fff' }} />)} </Typography>
 
               </div>
               <div>
@@ -165,15 +174,23 @@ const SingleJobPage = () => {
               </div>
               {job ? <BidDialogBox open={open} id={id} setOpen={setOpen} job={job || {}} /> : ''}
             </Paper>
-            <Paper sx={{ marginTop: 2, padding: 1, background: '#EF6E0B' }}>
-              <div className="hello" style={{ fontWeight: 700 }}><Typography className='fw-bold text-white'>Artisans bids</Typography></div>
-              <hr />
-              <div className='p-2 rounded bg-white'>
-                <div>
-                  <ArtisanCards />
+            {userProfile?._id === job.user ?
+              <Paper sx={{ marginTop: 2, padding: 1, background: '#EF6E0B' }}>
+                <div className="hello" style={{ fontWeight: 700 }}><Typography className='fw-bold text-white'>Artisans bids</Typography></div>
+                <hr />
+                <div className='p-2 rounded bg-white'>
+                  <div>
+
+                    {Array.isArray(job.applied) && job.applied.length < 1 ? (
+                      <div>No Bids Yet</div>
+                    ) : (
+                      job.applied.map((applied, index) => (
+                        <ArtisanCards key={applied._id || index} applied={applied} />
+                      ))
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Paper>
+              </Paper> : ''}
           </Grid>
         </Grid>
       </div>
@@ -186,7 +203,7 @@ export default SingleJobPage
 
 
 
-const ArtisanCards = () => {
+const ArtisanCards = ({ applied }) => {
   // Example artisan data (replace with real data as needed)
   const artisan = {
     name: "John Doe",
@@ -228,7 +245,7 @@ const ArtisanCards = () => {
               {artisan.profession}
             </Typography>
             <Typography variant="body2" sx={{ color: '#EF6E0B', fontWeight: 600 }}>
-              Bid: {artisan.bidAmount}
+              Bid: {applied.amount}
             </Typography>
           </Box>
 
@@ -238,7 +255,7 @@ const ArtisanCards = () => {
       </Box>
       {/* Action Buttons */}
       <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, width: '100%' }}>
-        <Button
+        <Link to={`/artisans-profile/` + applied.artisan}> <Button
           variant="outlined"
           sx={{
             flex: 1,
@@ -250,7 +267,7 @@ const ArtisanCards = () => {
           }}
         >
           View Profile
-        </Button>
+        </Button></Link>
         <Button
           variant="contained"
           sx={{
