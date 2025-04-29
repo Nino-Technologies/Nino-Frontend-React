@@ -6,9 +6,8 @@ import { toast } from 'react-toastify';
 
 
 const BidDialogBox = ({ open, setOpen, id, job }) => {
-    const [cookies, setCookie, removeCookie] = useCookies();
+    const [cookies] = useCookies();
     const [paidInspection, setPaidInspection] = useState(false)
-    const [files, setFiles] = useState([]);
 
     const [state, setState] = useState({
         loading: true,
@@ -26,16 +25,54 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
             media: []
         },
         submittingBid: false,
-        bidError: null
+        bidError: null,
+        uploadingMedia: false
     });
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
+        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     };
 
+    const handleFileUpload = async (e) => {
+        const files = Array.from(e.target.files);
+        if (!files.length) return;
+
+        setState(prev => ({ ...prev, uploadingMedia: true }));
+
+        try {
+            const uploadPromises = files.map(async (file) => {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', 'grinders'); // Replace with your Cloudinary preset
+
+                const response = await fetch(
+                    'https://api.cloudinary.com/v1_1/dvprllhcj/upload',
+                    { method: 'POST', body: formData }
+                );
+                const data = await response.json();
+                return { url: data.secure_url, name: file.name };
+            });
+
+            const uploadedMedia = await Promise.all(uploadPromises);
+
+            setState(prev => ({
+                ...prev,
+                bidSubmission: {
+                    ...prev.bidSubmission,
+                    media: [...prev.bidSubmission.media, ...uploadedMedia]
+                },
+                uploadingMedia: false
+            }));
+        } catch (error) {
+            console.error('Upload error:', error);
+            setState(prev => ({
+                ...prev,
+                bidError: 'Failed to upload some files',
+                uploadingMedia: false
+            }));
+        }
+    };
 
     const submitBid = async () => {
         if (!cookies?.grinderUser?.token) {
@@ -43,20 +80,9 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
             return;
         }
 
-        if (!state.bidSubmission.startDate || !state.bidSubmission.endDate) {
-            setState(prev => ({ ...prev, bidError: 'Both dates are required' }));
-            return;
-        }
-
         const timelineString = `${formatDate(state.bidSubmission.startDate)}-${formatDate(state.bidSubmission.endDate)}`;
-        setState(prev => ({ ...prev, submittingBid: true, bidError: null }));
 
         try {
-            const headers = new Headers({
-                'Authorization': cookies.grinderUser.token,
-                'Content-Type': 'application/json'
-            });
-
             const body = JSON.stringify({
                 description: state.bidSubmission.description,
                 timeLine: timelineString,
@@ -64,38 +90,34 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                 amount: Number(state.bidSubmission.amount),
                 inspectionFee: Number(state.bidSubmission.inspectionFee),
                 laborCost: Number(state.bidSubmission.laborCost),
-                expensis: Number(state.bidSubmission.expensis)
+                expensis: Number(state.bidSubmission.expensis),
+                media: state.bidSubmission.media.map(m => m.url)
             });
-            console.log('this is the body!', body)
+
             const response = await fetch(
                 `https://nino-backend.vercel.app/api/job/apply/${id}`,
                 {
                     method: 'POST',
-                    headers,
-                    body,
-                    redirect: 'follow'
+                    headers: {
+                        'Authorization': cookies.grinderUser.token,
+                        'Content-Type': 'application/json'
+                    },
+                    body
                 }
             );
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Bid submission failed');
-            }
+            if (!response.ok) throw new Error('Bid submission failed');
 
-            const result = await response.json();
-            toast.success('bid submited successfully')
+            toast.success('Bid submitted successfully');
             setOpen(false);
-            // Handle successful submission (maybe show toast or update UI)
         } catch (error) {
             setState(prev => ({
                 ...prev,
-                bidError: error.message || 'Failed to submit bid',
-                submittingBid: false
+                bidError: error.message || 'Failed to submit bid'
             }));
-        } finally {
-            setState(prev => ({ ...prev, submittingBid: false }));
         }
     };
+
 
     const handleInputChange = (field, value) => {
         setState(prev => ({
@@ -104,13 +126,13 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
         }));
     };
 
-    const handleFileUpload = (e) => {
-        const uploadedFiles = Array.from(e.target.files);
-        setState(prev => ({
-            ...prev,
-            bidSubmission: { ...prev.bidSubmission, files: [...prev.bidSubmission.files, ...uploadedFiles] }
-        }));
-    };
+    // const handleFileUpload = (e) => {
+    //     const uploadedFiles = Array.from(e.target.files);
+    //     setState(prev => ({
+    //         ...prev,
+    //         bidSubmission: { ...prev.bidSubmission, files: [...prev.bidSubmission.files, ...uploadedFiles] }
+    //     }));
+    // };
 
     return (
         <div>
@@ -334,52 +356,34 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                             multiple
                             type="file"
                             onChange={handleFileUpload}
+                            disabled={state.uploadingMedia}
                         />
                         <label htmlFor="file-upload">
                             <Button
                                 variant="outlined"
                                 component="span"
-                                sx={{
-                                    borderColor: '#013049',
-                                    color: '#013049',
-                                    '&:hover': {
-                                        borderColor: '#EF6E0B',
-                                    },
-                                }}
+                                disabled={state.uploadingMedia}
                             >
-                                Upload Photos/Videos
+                                {state.uploadingMedia ? 'Uploading...' : 'Upload Photos/Videos'}
                             </Button>
                         </label>
-                        {files.map((file, index) => (
-                            <Chip
-                                key={index}
-                                label={file.name}
-                                sx={{ ml: 1 }}
-                                onDelete={() => setFiles(files.filter((_, i) => i !== index))}
-                            />
-                        ))}
 
-                        <div className='mt-3'>
-                            <TextField
-                                fullWidth
-                                label="Terms and Conditions"
-                                variant="outlined"
-                                required
-                                sx={{
-                                    '& .MuiOutlinedInput-root': {
-                                        '& fieldset': {
-                                            borderColor: '#013049',
-                                        },
-                                        '&:hover fieldset': {
-                                            borderColor: '#EF6E0B',
-                                        },
-                                        '&.Mui-focused fieldset': {
-                                            borderColor: '#EF6E0B',
-                                        },
-                                    },
-                                }}
-                            />
-                        </div>
+                        <Box sx={{ mt: 2 }}>
+                            {state.bidSubmission.media.map((media, index) => (
+                                <Chip
+                                    key={index}
+                                    label={media.name}
+                                    onDelete={() => setState(prev => ({
+                                        ...prev,
+                                        bidSubmission: {
+                                            ...prev.bidSubmission,
+                                            media: prev.bidSubmission.media.filter((_, i) => i !== index)
+                                        }
+                                    }))}
+                                    sx={{ m: 0.5 }}
+                                />
+                            ))}
+                        </Box>
                     </Box>
                     {state.bidError && (
                         <Alert severity="error" sx={{ mb: 2 }}>

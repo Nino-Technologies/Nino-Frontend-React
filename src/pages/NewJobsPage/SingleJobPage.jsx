@@ -9,7 +9,7 @@ import { UserContext } from '../../context/UserContext'
 import { GoClock } from 'react-icons/go'
 import BidDialogBox from './components/BidDialogBox'
 import { grey } from '@mui/material/colors'
-import { Avatar, Button, } from '@mui/material';
+import { Avatar, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, } from '@mui/material';
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 const SingleJobPage = () => {
@@ -18,6 +18,7 @@ const SingleJobPage = () => {
   const { userProfile } = useContext(UserContext)
   const [open, setOpen] = useState(false);
   const [job, setJob] = useState(null);
+  const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [loading, setLoading] = useState(true);
   useEffect(() => {
 
@@ -204,6 +205,8 @@ export default SingleJobPage
 
 
 const ArtisanCards = ({ applied }) => {
+
+  const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   // Example artisan data (replace with real data as needed)
   const artisan = {
     name: "John Doe",
@@ -279,10 +282,34 @@ const ArtisanCards = ({ applied }) => {
             '&:hover': { backgroundColor: '#d65c0a' },
             minWidth: 120,
           }}
+          onClick={() => { setArtisanBidDetails(true) }}
         >
           View Details
         </Button>
       </Box>
+
+
+      {/* dialog box */}
+      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }}  >
+        <DialogTitle >
+
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <div>
+              Proposed Budget:{applied.amount}
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => { setArtisanBidDetails(false) }}
+            color="primary"
+          >
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 };
