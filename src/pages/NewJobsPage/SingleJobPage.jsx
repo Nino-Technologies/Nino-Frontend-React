@@ -123,11 +123,11 @@ const SingleJobPage = () => {
           {/* Sidebar - Smaller Column */}
           <Grid item xs={12} md={4}>
             <Paper className='w-100 p-4 ' elevation={2}>
-              <h4>Sidebar Content Here</h4>
+              <h4>Job Details</h4>
               <div className='d-flex flex-wap justify-content-between align-items-center mb-3'>
 
                 <Typography variant="body1" color="#EF6E0B"> <LocationOn style={{ color: '#EF6E0B' }} />Location:</Typography>
-                <Typography variant="body2" className='fw-6 text-wrap fw-bold' color="#000">{job?.location} </Typography>
+                <Typography variant="body2" className='fw-6 text-wrap fw-bold text' color="#000">{job?.location} </Typography>
 
               </div>
               <div className='d-flex flex-wap justify-content-between align-items-center mb-3'>
