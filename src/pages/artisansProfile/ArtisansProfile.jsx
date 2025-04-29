@@ -47,38 +47,68 @@ function ArtisansProfile() {
 
   // ======= THIS WILL SEND REQUEST to API with the ID form the user profile ===========
 
+  // async function getProfile(profileId) {
+  //   if (profileId === "" || profileId === undefined) {
+  //     alert("this page requires an artisan ID ");
+  //     return navigate("/artisans");
+  //   }
+
+  //   if (artisans.length !== 0) {
+  //     var profile = artisans.find((artisan) => artisan._id === profileId);
+
+  //     // print
+  //     if (!profile) {
+  //       // toast.info("Artesian profile not found");
+
+  //       toast.info(" artisan with the ID provided is a not found");
+  //       // navigate("/artisans");
+  //     } else {
+  //       setArtisan(profile);
+  //       setPageLoading(false);
+  //     }
+  //     return;
+  //   } else {
+  //     let response = await fetch(`${apiUrl}/search/${profileId}`);
+
+  //     if (response.ok) {
+  //       let json = await response.json();
+  //       setArtisan(json[0]);
+  //       setPageLoading(false);
+  //     } else {
+  //       console.log("error");
+  //       alert(" artisan with the ID provided is a not found");
+  //       return;
+  //     }
+  //   }
+  // }
   async function getProfile(profileId) {
-    if (profileId === "" || profileId === undefined) {
-      alert("this page requires an artisan ID ");
+    if (!profileId) {
+      alert("This page requires an artisan ID");
       return navigate("/artisans");
     }
 
-    if (artisans.length !== 0) {
-      var profile = artisans.find((artisan) => artisan._id === profileId);
+    try {
+      const response = await fetch(`${apiUrl}/search/${profileId || id}`);
 
-      // print
-      if (!profile) {
-        // toast.info("Artesian profile not found");
-        toast.info(" artisan with the ID provided is a not found");
-        // navigate("/artisans");
-      } else {
-        setArtisan(profile);
-        setPageLoading(false);
+      if (!response.ok) {
+        throw new Error('Profile not found');
       }
-      return;
-    } else {
-      let response = await fetch(`${apiUrl}/search/${profileId}`);
 
-      if (response.ok) {
-        let json = await response.json();
-        setArtisan(json[0]);
-        setPageLoading(false);
-      } else {
-        console.log("error");
-        alert(" artisan with the ID provided is a not found");
-        // navigate("/artisans");
-        return;
+      const data = await response.json();
+
+      // Handle case where API returns empty array
+      if (!data || data.length === 0) {
+        toast.info("Artisan with the provided ID was not found");
+        return navigate("/artisans");
       }
+
+      // Assuming API returns array, take first item
+      setArtisan(data[0]);
+      setPageLoading(false);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      toast.info("Artisan with the provided ID was not found");
+      navigate("/artisans");
     }
   }
 
@@ -321,6 +351,7 @@ function ArtisansProfile() {
   useEffect(() => {
     // console.log(id)
     getProfile(id);
+    console.log(id, 'this is id in profile page')
   }, []);
   return (
     <>
@@ -341,7 +372,7 @@ function ArtisansProfile() {
                   </div>
                   <div className="profile-image-container">
                     <img
-                      src={`${artisan.avatar === ""
+                      src={`${artisan?.avatar === ""
                         ? "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"
                         : artisan.avatar
                         }`}
@@ -357,7 +388,7 @@ function ArtisansProfile() {
                   </p>
                   <StarComponent rate={5} />
                   <div className="extra-button">
-                    <ShareButton id={`${artisan._id}`} />
+                    <ShareButton id={`${artisan?._id}`} />
                     <SaveButton artisan={artisan} />
                   </div>
                 </div>
@@ -383,7 +414,7 @@ function ArtisansProfile() {
                         <span className="icon mx-2">
                           <FaTrophy />
                         </span>
-                        Hired {artisan.hired} times
+                        Hired {artisan?.hired} times
                       </li>
 
                       <li className="d-flex">
@@ -393,10 +424,10 @@ function ArtisansProfile() {
 
                         <span>
                           <p className="mb-0">
-                            <b>State:</b> {artisan.locationState}
+                            <b>State:</b> {artisan?.locationState}
                           </p>
                           <p className="mb-0">
-                            <b>City:</b> {artisan.locationCity}
+                            <b>City:</b> {artisan?.locationCity}
                           </p>
                         </span>
                       </li>
@@ -429,7 +460,7 @@ function ArtisansProfile() {
                           <span className="icon mx-2">
                             <FaShieldAlt />
                           </span>
-                          {artisan.YearsOfExperience} Years
+                          {artisan?.YearsOfExperience} Years
                         </li>
                       ) : null}
                       {showNumber ? (
@@ -437,12 +468,12 @@ function ArtisansProfile() {
                           <span className="icon mx-2">
                             <FaPhone />
                           </span>
-                          +{artisan.phoneNumber}
+                          +{artisan?.phoneNumber}
 
                           <button
                             className="btn btn-primary btn-sm ms-2"
                             onClick={() => {
-                              copyLinkFunction("+" + artisan.phoneNumber);
+                              copyLinkFunction("+" + artisan?.phoneNumber);
                               setShowNumber(false);
                             }}
                           >
@@ -469,7 +500,7 @@ function ArtisansProfile() {
                         setShowNumber(true);
                         handelSendMessage({
                           to: `${artisan.phoneNumber}`,
-                          message: `Your contact was requested by <${userProfile.fullName} , ${userProfile.email}>. Hope you where contacted. `,
+                          message: `Your contact was requested by <${userProfile?.fullName} , ${userProfile?.email}>. Hope you where contacted. `,
                         });
                       }}
                     >
@@ -483,9 +514,9 @@ function ArtisansProfile() {
                     <h5>
                       <b>Featured Projects</b>
                     </h5>
-                    {artisan.workImage.length} photos
+                    {artisan?.workImage.length} photos
                     <div className="image-flex">
-                      {artisan.workImage.map((work, i) => {
+                      {artisan?.workImage.map((work, i) => {
                         const { image, about } = work;
                         return (
                           <ModalImage imgUrl={image} about={about} key={i} />
@@ -509,12 +540,12 @@ function ArtisansProfile() {
                   <hr />
                   <div className="reviews-div">
                     <div className="reviews">
-                      {artisan.reviews.length === 0 ? (
+                      {artisan?.reviews.length === 0 ? (
                         <h5 className="text-muted text-center">No Review</h5>
                       ) : (
                         <>
                           {" "}
-                          {artisan.reviews.map((review, i) => (
+                          {artisan?.reviews.map((review, i) => (
                             <div className="review" key={`artisanReview${i}`}>
                               <div className="d-flex">
                                 <img
@@ -535,7 +566,7 @@ function ArtisansProfile() {
                                 </div>
                               </div>
                               <div className="distribution">
-                                {review.review}
+                                {review?.review}
                               </div>
                             </div>
                           ))}
