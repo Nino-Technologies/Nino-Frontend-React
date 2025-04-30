@@ -60,7 +60,7 @@ const SingleJobPage = () => {
   if (!job) return <div>Job not found</div>;
 
   return (
-    <div className='w-100'>
+    <div className='w-100 bg-secondary-subtle'  >
       <Nav />
 
       <div className="container">
@@ -164,10 +164,10 @@ const SingleJobPage = () => {
                 <Typography variant="body2" className='fw-6 text-wrap fw-bold' color="#000">{job?.category}</Typography>
 
               </div>
-              <div className='d-flex flex-wap justify-content-between align-items-center mb-3'>
+              <div className='d-flex flex-wap justify-content-between align-items-start mb-3'>
 
-                <Typography variant="body1" color="#EF6E0B"> <BsTools style={{ color: '#EF6E0B' }} /> Skills:</Typography>
-                <Typography variant="body2" className='fw-6 text-wrap' color="#000">{job?.skills.map((skill, index) => <Chip label={skill} key={index} className=' mx-1' style={{ background: '#EF6E0B', color: '#fff' }} />)} </Typography>
+                <Typography variant="body1" color="#EF6E0B" style={{ width: '70px' }}> <BsTools style={{ color: '#EF6E0B' }} /> Skills:</Typography>
+                <Typography variant="body2" className='fw-6 text-wrap d-flex justify-content-end flex-wrap gap-1 ' color="#000">{job?.skills.map((skill, index) => <Chip label={skill} key={index} className=' mx-1' style={{ background: '#EF6E0B', color: '#fff' }} />)} </Typography>
 
               </div>
               <div>

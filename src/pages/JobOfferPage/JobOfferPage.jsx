@@ -58,7 +58,7 @@ const JobOfferPage = () => {
                 <Paper elevation={3} className="p-4 py-5 bg-primaryy">
                     <h1 className="fw-bold text-center text-white">Most Recent Job Openings</h1>
                 </Paper>
-                <div className="jobs-container container mt-4 row gap-2">
+                <div className=" container mt-4  gap-2 jobs-container">
 
                     {jobs.length > 0 ? (
                         jobs.map((job) => <JobCard key={job._id} job={job} />)
@@ -151,7 +151,7 @@ export default JobOfferPage;
 const JobCard = ({ job }) => {
     // Return a div with a class of job-card, p-3, border, rounded, shadow-sm, d-flex, flex-column, justify-content-between, and mb-4
     return (
-        <div className="job-card p-3 border rounded shadow-sm d-flex flex-column col-md-5 justify-content-between mb-4">
+        <div className="job-card p-3 border rounded shadow-sm d-flex flex-column justify-content-between mb-4" >
 
             <div className="d-flex justify-content-between align-items-center">
 
@@ -166,7 +166,7 @@ const JobCard = ({ job }) => {
 
                 <div className="d-flex">
 
-                    <p className="fw-bold">Company</p>
+                    {/* <p className="fw-bold">Company</p> */}
 
                     <span className="mx-2">|</span>
 

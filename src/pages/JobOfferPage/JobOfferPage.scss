@@ -39,3 +39,15 @@
     color: rgb(63, 63, 63);
     font-weight: 300;
 }
+
+#job-offer-page .jobs-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: stretch;
+}
+
+@media (max-width:576px) {
+    #job-offer-page .jobs-container {
+        grid-template-columns: 1fr;
+    }
+}
