@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Nav from '../../components/Nav/Nav'
-import { Box, Chip, CircularProgress, Grid, Paper, Typography } from '@mui/material'
+import { Box, Chip, CircularProgress, Grid, Paper, TextField, Typography } from '@mui/material'
 import { Category, GpsFixedSharp, LocationCity, LocationOn, MoneyRounded } from '@mui/icons-material'
 import { TbGps } from 'react-icons/tb'
 import { BsTools } from 'react-icons/bs'
@@ -12,12 +12,18 @@ import { grey } from '@mui/material/colors'
 import { Avatar, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, } from '@mui/material';
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import WorkIcon from '@mui/icons-material/Work';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
+
 const SingleJobPage = () => {
   const { id } = useParams()
   const [cookies, setCookie, removeCookie] = useCookies();
   const { userProfile } = useContext(UserContext)
   const [open, setOpen] = useState(false);
   const [job, setJob] = useState(null);
+
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -205,7 +211,8 @@ export default SingleJobPage
 
 
 const ArtisanCards = ({ applied }) => {
-
+  const [requestInspection, setRequestInspection] = useState(false);
+  const [paidInspection, setPaidInspection] = useState(false)
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   // Example artisan data (replace with real data as needed)
   const artisan = {
@@ -289,18 +296,60 @@ const ArtisanCards = ({ applied }) => {
       </Box>
 
 
-      {/* dialog box */}
-      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }}  >
-        <DialogTitle >
-
+      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }}>
+        <DialogTitle>
+          <h3 className='fw-bold ' style={{ color: '#EF6E0B' }}>Bid Details</h3>
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <div>
-              Proposed Budget:{applied.amount}
-            </div>
-          </DialogContentText>
-        </DialogContent>
+
+
+        <div className='d-flex gap-2 flex-column' style={{ padding: '10px' }}>
+          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '500px', maxWidth: '600px' }}>
+            <h6 className='fw-bold'>Description</h6>
+            <p>{applied?.description}</p>
+          </div>
+          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '500px', maxWidth: '600px' }}>
+            <h6 className='fw-bold'>Estimated Cost:</h6>
+            <p>{applied?.amount}</p>
+          </div>
+          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '500px', maxWidth: '600px' }}>
+            <h6 className='fw-bold'>Timeline</h6>
+            <p>{applied?.timeLine}</p>
+          </div>
+          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '500px', maxWidth: '600px' }}>
+            <h6 className='fw-bold'>Related Media</h6>
+            <p>    {applied?.media?.map((mediaUrl, index) => (
+              <div className='shadow' key={index}>
+                <a href={mediaUrl} target="_blank" rel="noopener noreferrer">
+                  {mediaUrl.includes('video') ? (
+                    <video
+                      src={mediaUrl}
+                      controls
+                      style={{
+                        width: '300px',
+                        height: 200,
+                        objectFit: 'contain',
+                        borderRadius: '8px'
+                      }}
+                    />
+                  ) : (
+                    <img
+                      src={mediaUrl}
+                      alt={`Media ${index + 1}`}
+                      style={{
+                        width: '300px',
+                        height: 200,
+                        objectFit: 'contain',
+                        borderRadius: '8px'
+                      }}
+                    />
+                  )}
+                </a>
+              </div>
+            ))}</p>
+          </div>
+        </div>
+
+
         <DialogActions>
           <Button
             onClick={() => { setArtisanBidDetails(false) }}

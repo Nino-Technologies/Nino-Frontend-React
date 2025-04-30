@@ -171,7 +171,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                 onChange={(e) => handleInputChange('description', e.target.value)}
                             />
                         </div>
-                        <div className='mt-3 d-flex align-items-center gap-4'>
+                        <div className='mt-3 d-flex align-items-center gap-4 flex-wrap'>
                             <div className='d-flex gap-2'>
                                 <label htmlFor="start-date">Estimated start Date: </label>
                                 <input
