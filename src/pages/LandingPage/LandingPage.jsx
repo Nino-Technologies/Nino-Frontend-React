@@ -316,7 +316,7 @@ function LandingPage() {
         </div>
 
 
-        <Box sx={{ py: 8, bgcolor: 'linear-gradient(to bottom, #f8f9fa, #ffffff)' }}>
+        {/* <Box sx={{ py: 8, bgcolor: 'linear-gradient(to bottom, #f8f9fa, #ffffff)' }}>
           <Container maxWidth="lg">
             <Paper
               elevation={6}
@@ -369,7 +369,7 @@ function LandingPage() {
               </div>
             </Paper>
           </Container>
-        </Box>
+        </Box> */}
 
         <div className="feature-section">
           <header>

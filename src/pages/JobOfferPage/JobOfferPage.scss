@@ -35,8 +35,8 @@
 }
 
 .job-des {
-    font-size: 12px;
-    color: rgb(63, 63, 63);
+    font-size: 18px;
+    color: '#013049';
     font-weight: 300;
 }
 
@@ -44,6 +44,18 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: stretch;
+}
+
+.font-sm-text {
+    font-size: 12px;
+}
+
+.city-bg {
+    background: linear-gradient(#ef6e0b, #ef6e0b) url('../../assets/images/city-bg.svg') no-repeat;
+    background-position-x: left;
+    background-size: 400px;
+    background-position-y: bottom;
+
 }
 
 @media (max-width:576px) {

@@ -60,153 +60,166 @@ const SingleJobPage = () => {
   if (!job) return <div>Job not found</div>;
 
   return (
-    <div className='w-100 bg-secondary-subtle'  >
+    <div className="w-100 " style={{ backgroundColor: '#013049', minHeight: '100vh' }}>
       <Nav />
 
-      <div className="container">
-        <Grid container className='mt-5 pt-5 w-100' sx={{ width: '100%' }} spacing={3}>
-          {/* Main Content - Larger Column */}
+      <div className="container py-5 mt-5">
+        <Grid container spacing={4}>
+          {/* Left Panel */}
           <Grid item xs={12} md={8}>
-            <Paper className='w-100 p-4' elevation={2}>
-              <div>
-                <h3 className='fw-bold text-uppercase text-primarry'>
-                  {job?.title}
-                </h3>
-              </div>
+            <Paper className="" elevation={3} style={{ borderRadius: 16 }}>
+              <h3 className="fw-bold text-uppercase text-white p-4 rounded-top-4 " style={{ color: '#013049', backgroundColor: '#ef6e0b' }}>
+                {job?.title}
+              </h3>
               <hr />
-              <div className='p-2 rounded-2 border border-1 ' style={{ background: grey }}>
-                <h5 className='fs-6 fw-bold'>
-                  Description
-                </h5>
-                <p className='text-secondary lead'>
-                  {job?.description}
-                </p>
-              </div>
-              <hr />
-              <div className='p-2 rounded-2 border border-1 ' style={{ background: grey }}>
-                <h5 className='fs-6 fw-bold'>
-                  Material Info
-                </h5>
-                <p className='text-secondary lead'>
-                  {job?.materialInformation}
-                </p>
-              </div>
-              <div>
-                {<div>
-                  {job.media.length > 0 && (
-                    <Box sx={{ mt: 4 }}>
-                      <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
-                        Attached Media
-                      </Typography>
-                      <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                        {job.media.map((mediaUrl, index) => (
-                          <div className='shadow' key={index}>
-                            <a href={mediaUrl} target="_blank" rel="noopener noreferrer">
-                              {mediaUrl.includes('video') ? (
-                                <video
-                                  src={mediaUrl}
-                                  controls
-                                  style={{
-                                    width: '300px',
-                                    height: 200,
-                                    objectFit: 'contain',
-                                    borderRadius: '8px'
-                                  }}
-                                />
-                              ) : (
-                                <img
-                                  src={mediaUrl}
-                                  alt={`Media ${index + 1}`}
-                                  style={{
-                                    width: '300px',
-                                    height: 200,
-                                    objectFit: 'contain',
-                                    borderRadius: '8px'
-                                  }}
-                                />
-                              )}
-                            </a>
-                          </div>
-                        ))}
-                      </div>
-                    </Box>
-                  )}
 
-                </div>}
+              {/* Description */}
+              <div className="p-4">
+                <section className="mb-4 p-3 rounded" style={{ background: '#f0f4f7' }}>
+                  <h5 className="fw-bold" style={{ color: '#013049' }}>Description</h5>
+                  <p className="text-secondary">{job?.description}</p>
+                </section>
+
+                {/* Material Info */}
+                <section className="mb-4 p-3 rounded" style={{ background: '#f0f4f7' }}>
+                  <h5 className="fw-bold" style={{ color: '#013049' }}>Material Info</h5>
+                  <p className="text-secondary">{job?.materialInformation}</p>
+                </section>
+
+                {/* Media Section */}
+                {job.media.length > 0 && (
+                  <Box sx={{ mt: 4 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: '#013049' }}>
+                      Attached Media
+                    </Typography>
+                    <div className="d-flex flex-wrap gap-3">
+                      {job.media.map((mediaUrl, index) => (
+                        <a href={mediaUrl} key={index} target="_blank" rel="noopener noreferrer">
+                          {mediaUrl.includes('video') ? (
+                            <video src={mediaUrl} controls style={{ width: 280, borderRadius: 12 }} />
+                          ) : (
+                            <img src={mediaUrl} alt={`Media ${index + 1}`} style={{ width: 280, borderRadius: 12 }} />
+                          )}
+                        </a>
+                      ))}
+                    </div>
+                  </Box>
+                )}
               </div>
             </Paper>
           </Grid>
-          {/* Sidebar - Smaller Column */}
+
+          {/* Right Panel */}
           <Grid item xs={12} md={4}>
-            <Paper className='w-100 p-4 ' elevation={2}>
-              <h4>Job Details</h4>
-              <div className='d-flex flex-wap justify-content-between align-items-center mb-3'>
+            <Paper elevation={3} style={{ borderRadius: 16, padding: '24px', background: '#ffffff' }}>
+              <h4 className="fw-bold mb-4" style={{ color: '#013049', fontSize: '1.5rem' }}><span>Job Details</span></h4>
 
-                <Typography variant="body1" color="#EF6E0B"> <LocationOn style={{ color: '#EF6E0B' }} />Location:</Typography>
-                <Typography variant="body2" className='fw-6 text-wrap fw-bold text' color="#000">{job?.location} </Typography>
+              <div className="mb-3 d-flex align-items-start">
 
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}><LocationOn style={{ color: '#013049', marginRight: 8 }} /><span>Location</span></Typography>
+                  <Typography variant="body1" className="fw-bold"><span>{job?.location}</span></Typography>
+                </div>
               </div>
-              <div className='d-flex flex-wap justify-content-between align-items-center mb-3'>
 
-                <Typography variant="body1" color="#EF6E0B"> <MoneyRounded style={{ color: '#EF6E0B' }} /> Budget:</Typography>
-                <Typography variant="body2" className='fw-6 text-wrap fw-bold' color="#000">₦ {job?.budget} </Typography>
+              <div className="mb-3 d-flex align-items-start">
 
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}>  <MoneyRounded style={{ color: '#013049', marginRight: 8 }} /><span>Budget</span></Typography>
+                  <Typography variant="body1" className="fw-bold"><span>₦ {job?.budget}</span> </Typography>
+                </div>
               </div>
-              <div className='d-flex flex-wap justify-content-between align-items-center mb-3'>
 
-                <Typography variant="body1" color="#EF6E0B"> <GoClock style={{ color: '#EF6E0B' }} /> Estimated Time:</Typography>
-                <Typography variant="body2" className='fw-6 text-wrap fw-bold' color="#000">31/02/25 - 31/5/25 </Typography>
+              <div className="mb-3 d-flex align-items-start">
 
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}>  <GoClock style={{ color: '#013049', marginRight: 8 }} /><span>Estimated Time</span></Typography>
+                  <Typography variant="body1" className="fw-bold"><span>31/02/25 - 31/5/25</span></Typography>
+                </div>
               </div>
-              <div className='d-flex flex-wap justify-content-between align-items-center mb-3'>
 
-                <Typography variant="body1" color="#EF6E0B"> <Category style={{ color: '#EF6E0B' }} />Category:</Typography>
-                <Typography variant="body2" className='fw-6 text-wrap fw-bold' color="#000">{job?.category}</Typography>
+              <div className="mb-3 d-flex align-items-start">
 
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}> <Category style={{ color: '#013049', marginRight: 8 }} /> Category</Typography>
+                  <Typography variant="body1" className="fw-bold"> <span>
+                    {job?.category} </span></Typography>
+                </div>
               </div>
-              <div className='d-flex flex-wap justify-content-between align-items-start mb-3'>
 
-                <Typography variant="body1" color="#EF6E0B" style={{ width: '70px' }}> <BsTools style={{ color: '#EF6E0B' }} /> Skills:</Typography>
-                <Typography variant="body2" className='fw-6 text-wrap d-flex justify-content-end flex-wrap gap-1 ' color="#000">{job?.skills.map((skill, index) => <Chip label={skill} key={index} className=' mx-1' style={{ background: '#EF6E0B', color: '#fff' }} />)} </Typography>
+              <div className="mb-4 d-flex align-items-start">
 
-              </div>
-              <div>
-                <hr />
-                {userProfile?.role === 1 ?
-                  <button className='btn w-full rounded-3  py-2 px-4 ' onClick={() => setOpen(true)} style={{
-                    width: '100%',
-                    background: '#EF6E0B',
-                    color: 'white'
-                  }}>Make Bid </button> : ''}
-              </div>
-              {job ? <BidDialogBox open={open} id={id} setOpen={setOpen} job={job || {}} /> : ''}
-            </Paper>
-            {userProfile?._id === job.user ?
-              <Paper sx={{ marginTop: 2, padding: 1, background: '#EF6E0B' }}>
-                <div className="hello" style={{ fontWeight: 700 }}><Typography className='fw-bold text-white'>Artisans bids</Typography></div>
-                <hr />
-                <div className='p-2 rounded bg-white'>
-                  <div>
-
-                    {Array.isArray(job.applied) && job.applied.length < 1 ? (
-                      <div>No Bids Yet</div>
-                    ) : (
-                      job.applied.map((applied, index) => (
-                        <ArtisanCards key={applied._id || index} applied={applied} />
-                      ))
-                    )}
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}>  <BsTools style={{ color: '#013049', marginRight: 8, marginTop: 4 }} /><span>Required Skills</span></Typography>
+                  <div className="mt-2 d-flex flex-wrap gap-2">
+                    {job?.skills.map((skill, i) => (
+                      <Chip
+                        key={i}
+                        label={skill}
+                        size="small"
+                        style={{ backgroundColor: '#ef6e0b', color: '#fff', fontWeight: 500 }}
+                      />
+                    ))}
                   </div>
                 </div>
-              </Paper> : ''}
+              </div>
+
+              {userProfile?.role === 1 && (
+                <button
+                  onClick={() => setOpen(true)}
+                  className="btn w-100"
+                  style={{
+                    backgroundColor: '#013049',
+                    color: 'white',
+                    borderRadius: 10,
+                    padding: '10px 16px',
+                    fontWeight: 'bold',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Make Bid
+                </button>
+              )}
+
+              {job && <BidDialogBox open={open} id={id} setOpen={setOpen} job={job} />}
+            </Paper>
+
+
+            {/* Artisan Bids (Owner Only) */}
+            {userProfile?._id === job.user && (
+              <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#013049' }}>
+                <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
+                <div className="bg-white p-2 rounded bg-secondary-subtle">
+                  {job.applied.length < 1 ? (
+                    <div>No Bids Yet</div>
+                  ) : (
+                    job.applied.map((applied, i) => (
+                      <ArtisanCards key={applied._id || i} applied={applied} />
+                    ))
+                  )}
+                </div>
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </div>
     </div>
+
   )
 }
 
 export default SingleJobPage
 
+const InfoRow = ({ icon, label, value }) => (
+  <div className="d-flex justify-content-between align-items-start mb-3">
+    <Typography variant="body1" className="fw-bold d-flex align-items-center" style={{ color: '#EF6E0B' }}>
+      {icon}&nbsp;{label}:
+    </Typography>
+    <Typography variant="body2" style={{ color: '#013049', fontWeight: '600', maxWidth: 200, textAlign: 'right' }}>
+      {value}
+    </Typography>
+  </div>
+);
 
 
 

@@ -52,10 +52,10 @@ const JobOfferPage = () => {
     </div>
 
     return (
-        <div id="job-offer-page">
+        <div id="job-offer-page" className='bg-secondary-subtle' style={{ background: '' }}>
             <Nav />
             <div className="container mx-auto my-5 pt-5">
-                <Paper elevation={3} className="p-4 py-5 bg-primaryy">
+                <Paper elevation={3} className="p-4 py-5 bg-primaryy city-bg">
                     <h1 className="fw-bold text-center text-white">Most Recent Job Openings</h1>
                 </Paper>
                 <div className=" container mt-4  gap-2 jobs-container">
@@ -151,43 +151,43 @@ export default JobOfferPage;
 const JobCard = ({ job }) => {
     // Return a div with a class of job-card, p-3, border, rounded, shadow-sm, d-flex, flex-column, justify-content-between, and mb-4
     return (
-        <div className="job-card p-3 border rounded shadow-sm d-flex flex-column justify-content-between mb-4" >
+        <div className="job-card p-3 border rounded shadow-sm d-flex flex-column justify-content-between mb-4 bg-white" >
 
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex justify-content-between align-items-center " >
 
                 <h5 className="fw-bold">{job.title}</h5>
 
-                <button className="btn bg-primaryy text-white">Apply</button>
+                {/* <button className="btn bg-primaryy text-white">Apply</button> */}
             </div>
 
             <hr />
 
-            <div className="d-flex flex-wrap mt-2 justify-content-between fw-bold text-secondary fs-6">
+            <div className="d-flex flex-wrap mt-2 justify-content-between fw-bold text-secondary font-sm-text">
 
                 <div className="d-flex">
 
                     {/* <p className="fw-bold">Company</p> */}
 
-                    <span className="mx-2">|</span>
+                    {/* <span className="mx-2">|</span> */}
 
                     <p>{new Date(job.createdAt).toLocaleDateString()}</p>
                 </div>
 
-                <p className="d-flex align-items-center gap-2 fs-6">
+                <p className="d-flex align-items-center gap-2 font-sm-text ">
 
                     <LocationOn className="fs-6" />
 
-                    {job.location}
+                    {job.location.length > 8 ? job.location.slice(-8) : job.location}...
                 </p>
 
-                <p className="d-flex align-items-center gap-2">
+                <p className="d-flex align-items-center gap-2 font-sm-text">
 
                     <TbMoneybag />
 
-                    ${job.budget}
+                    ₦{job.budget}
                 </p>
 
-                <p className="d-flex align-items-center gap-2">
+                <p className="d-flex align-items-center gap-2 font-sm-text">
 
                     <WorkRounded className="fs-6" />
 
@@ -210,7 +210,7 @@ const JobCard = ({ job }) => {
 
             <Link to={`/single-job/${job._id}`} className="text-white text-decoration-none w-100">
 
-                <button className="btn bg-primaryy text-white w-100">
+                <button className="btn  text-white w-100" style={{ backgroundColor: '#013049' }}>
                     VIEW DETAIL
                 </button>
             </Link>
