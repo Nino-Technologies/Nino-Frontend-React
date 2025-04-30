@@ -164,7 +164,7 @@ const JobCard = ({ job }) => {
 
             <div className="d-flex flex-wrap mt-2 justify-content-between fw-bold text-secondary font-sm-text">
 
-                <div className="d-flex">
+                <div className="d-flex text-black">
 
                     {/* <p className="fw-bold">Company</p> */}
 
@@ -173,21 +173,21 @@ const JobCard = ({ job }) => {
                     <p>{new Date(job.createdAt).toLocaleDateString()}</p>
                 </div>
 
-                <p className="d-flex align-items-center gap-2 font-sm-text ">
+                <p className="d-flex text-black align-items-center gap-2 font-sm-text ">
 
                     <LocationOn className="fs-6" />
 
-                    {job.location.length > 8 ? job.location.slice(-8) : job.location}...
+                    {job.location.length > 8 ? job.location.slice(0, 8) : job.location}...
                 </p>
 
-                <p className="d-flex align-items-center gap-2 font-sm-text">
+                <p className="d-flex text-black align-items-center gap-2 font-sm-text">
 
                     <TbMoneybag />
 
                     ₦{job.budget}
                 </p>
 
-                <p className="d-flex align-items-center gap-2 font-sm-text">
+                <p className="d-flex text-black align-items-center gap-2 font-sm-text">
 
                     <WorkRounded className="fs-6" />
 
@@ -195,7 +195,7 @@ const JobCard = ({ job }) => {
                 </p>
             </div>
 
-            <p className="text-secondary job-des mt-3">{job.description}</p>
+            <p className="text-black fs-6 mt-3">{job.location.length > 50 ? job.description.slice(0, 50) : job.description}...</p>
 
             <div className="d-flex flex-wrap gap-2 my-3">
 

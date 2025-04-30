@@ -187,7 +187,7 @@ const SingleJobPage = () => {
 
             {/* Artisan Bids (Owner Only) */}
             {userProfile?._id === job.user && (
-              <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#013049' }}>
+              <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
                 <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
                 <div className="bg-white p-2 rounded bg-secondary-subtle">
                   {job.applied.length < 1 ? (
