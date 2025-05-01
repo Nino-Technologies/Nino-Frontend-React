@@ -51,9 +51,9 @@
 }
 
 .city-bg {
-    background: linear-gradient(#ef6e0b, #ef6e0b) url('../../assets/images/city-bg.svg') no-repeat;
+    background: url('../../assets/images/city-bg.svg') no-repeat, linear-gradient(to right, #ef6e0b, #ef6e0b);
     background-position-x: left;
-    background-size: 400px;
+    background-size: cover;
     background-position-y: bottom;
 
 }
