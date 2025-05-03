@@ -186,10 +186,12 @@ const BidCard = ({ bid, onUpdate }) => {
                             Cancel                         </Button>
                         <Button
                             variant="contained"
-                            onClick={handleUpdateBid} sx={{
+                            // onClick={handleUpdateBid}
+                            sx={{
                                 backgroundColor: '#EF6E0B',
                                 '&:hover': { backgroundColor: '#d65c0a' }
                             }}
+                            onClick={() => { submitDispute() }}
                         >
                             Submit Dispute
                         </Button>

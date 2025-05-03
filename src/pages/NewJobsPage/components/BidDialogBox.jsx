@@ -86,11 +86,11 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
             const body = JSON.stringify({
                 description: state.bidSubmission.description,
                 timeLine: timelineString,
-                materialCost: state.bidSubmission.materialCost,
+                // materialCost: state.bidSubmission.materialCost,
                 amount: Number(state.bidSubmission.amount),
                 inspectionFee: Number(state.bidSubmission.inspectionFee),
-                laborCost: Number(state.bidSubmission.laborCost),
-                expensis: Number(state.bidSubmission.expensis),
+                // laborCost: Number(state.bidSubmission.laborCost),
+                // expensis: Number(state.bidSubmission.expensis),
                 media: state.bidSubmission.media.map(m => m.url)
             });
 
@@ -155,15 +155,20 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                 variant="outlined"
                                 required
                                 sx={{
+                                    minHeight: '100px',
                                     '& .MuiOutlinedInput-root': {
                                         '& fieldset': {
                                             borderColor: '#013049',
+                                            minHeight: '100px',
+
                                         },
                                         '&:hover fieldset': {
                                             borderColor: '#EF6E0B',
+                                            minHeight: '100px',
                                         },
                                         '&.Mui-focused fieldset': {
                                             borderColor: '#EF6E0B',
+                                            minHeight: '100px',
                                         },
                                     },
                                 }}
@@ -172,7 +177,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                             />
                         </div>
                         <div className='mt-3 d-flex align-items-center gap-4 flex-wrap'>
-                            <div className='d-flex gap-2'>
+                            <div className='d-flex gap-2 align-items-center'>
                                 <label htmlFor="start-date">Estimated start Date: </label>
                                 <input
                                     type="date"
@@ -182,7 +187,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                     className='w-full p-2 rounded border-1 border-black'
                                 />
                             </div>
-                            <div className='d-flex gap-2'>
+                            <div className='d-flex gap-2  align-items-center'>
                                 <label htmlFor="end-date">Estimated Completion Date: </label>
                                 <input
                                     type="date"
@@ -195,7 +200,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                         </div>
 
                         {/* </div> */}
-                        <div className='mt-3'>
+                        {/* <div className='mt-3'>
                             <TextField
                                 fullWidth
                                 label="Material Cost"
@@ -217,11 +222,11 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                 value={state.bidSubmission.materialCost}
                                 onChange={(e) => handleInputChange('materialCost', e.target.value)}
                             />
-                        </div>
+                        </div> */}
                         <div className='mt-3'>
                             <TextField
                                 fullWidth
-                                label="Budget"
+                                label="Total Budget"
                                 variant="outlined"
                                 required
                                 sx={{
@@ -241,7 +246,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                 onChange={(e) => handleInputChange('amount', e.target.value)}
                             />
                         </div>
-                        <div className='mt-3'>
+                        {/* <div className='mt-3'>
                             <TextField
                                 fullWidth
                                 label="Additional Expenses"
@@ -263,8 +268,8 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                 value={state.bidSubmission.expensis}
                                 onChange={(e) => handleInputChange('expensis', e.target.value)}
                             />
-                        </div>
-                        <div className='mt-3'>
+                        </div> */}
+                        {/* <div className='mt-3'>
                             <TextField
                                 fullWidth
                                 label="Bid Amount"
@@ -286,8 +291,8 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                 value={state.bidSubmission.amount}
                                 onChange={(e) => handleInputChange('amount', e.target.value)}
                             />
-                        </div>
-                        <div className='mt-3'>
+                        </div> */}
+                        {/* <div className='mt-3'>
                             <TextField
                                 fullWidth
                                 label="Budget"
@@ -309,7 +314,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                 value={state.bidSubmission.description}
                                 onChange={(e) => handleInputChange('timeLine', e.target.value)}
                             />
-                        </div>
+                        </div> */}
                         <div className='d-flex gap-5 mt-3 py-3 align-items-center'>
                             {job?.requestInspection ?
                                 <div className='d-flex gap-5'>

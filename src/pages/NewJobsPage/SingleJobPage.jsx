@@ -229,12 +229,12 @@ const ArtisanCards = ({ applied }) => {
   const [paidInspection, setPaidInspection] = useState(false)
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   // Example artisan data (replace with real data as needed)
-  const artisan = {
-    name: "John Doe",
-    profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
-    profession: "Electrician",
-    bidAmount: "₦50,000",
-  };
+  // const artisan = {
+  //   name: "John Doe",
+  //   profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
+  //   profession: "Electrician",
+  //   bidAmount: "₦50,000",
+  // };
 
   return (
     <Paper
