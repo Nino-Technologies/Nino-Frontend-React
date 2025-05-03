@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkIcon from '@mui/icons-material/Work';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { toast } from 'react-toastify'
 
 
 const SingleJobPage = () => {
@@ -195,7 +196,7 @@ const SingleJobPage = () => {
                     <div>No Bids Yet</div>
                   ) : (
                     job.applied.map((applied, i) => (
-                      <ArtisanCards key={applied._id || i} applied={applied} />
+                      <ArtisanCards key={applied._id || i} applied={applied} jobId={id} />
                     ))
                   )}
                 </div>
@@ -224,18 +225,51 @@ const InfoRow = ({ icon, label, value }) => (
 
 
 
-const ArtisanCards = ({ applied }) => {
+const ArtisanCards = ({ applied, jobId }) => {
   const [requestInspection, setRequestInspection] = useState(false);
   const [paidInspection, setPaidInspection] = useState(false)
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
-  // Example artisan data (replace with real data as needed)
-  // const artisan = {
-  //   name: "John Doe",
-  //   profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
-  //   profession: "Electrician",
-  //   bidAmount: "₦50,000",
-  // };
+  const [cookies, setCookie, removeCookie] = useCookies();
+  useEffect(() => {
 
+  })
+  const updateJobStatus = async ({ jobId, artisanId, status }) => {
+    try {
+      // Validate required parameters
+      if (!jobId || !artisanId || !status) {
+        throw new Error('Missing required parameters: jobId, artisanId, status');
+      }
+
+      // Get token from secure storage (never hardcode in production)
+      const token = cookies.grinderUser.token // Replace with your token storage method
+
+      // Configure request
+      const headers = new Headers({
+        'Authorization': `${token}`,
+        'Content-Type': 'application/json'
+      });
+
+      const body = JSON.stringify({
+        jobId: jobId,
+        artisanId: artisanId,
+        status: status
+      });
+      const response = await fetch('https://nino-backend.vercel.app/api/job/artisan', {
+        method: 'POST',
+        headers,
+        body,
+        redirect: 'follow'
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`API Error: ${errorData.message || response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.log(error);
+      toast.error('Error Accepting job status: ' + error.message,)
+    }
+  }
   return (
     <Paper
       elevation={3}
@@ -365,9 +399,27 @@ const ArtisanCards = ({ applied }) => {
 
 
         <DialogActions>
+
+          <Button
+            onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'accepted') }}
+            color="primary"
+            className='fw-bold'
+            sx={{ backgroundColor: '#EF6E0B', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
+          >
+            Accept Bid
+          </Button>
+          <Button
+            onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'rejected') }}
+            color="primary"
+            className='fw-bold'
+            sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'crimson' } }}
+          >
+            Reject Bid
+          </Button>
           <Button
             onClick={() => { setArtisanBidDetails(false) }}
             color="primary"
+            variant='outlined'
           >
             Cancel
           </Button>
