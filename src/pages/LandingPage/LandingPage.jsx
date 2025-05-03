@@ -95,36 +95,53 @@ function LandingPage() {
           </div>
         </div>
 
-        {/* <div className="artisan-request-section py-5 px-2 quick_hire_bg ">
-          <div className="artesian-request-container container">
-            <div className="row">
-              <div className="col-md-6 d-flex text-start">
-                <div className="my-auto">
-                  <h2 className="font-bold fw-bold text-2xl text-white">Send A Quick Request</h2>
-                  <p className="light_grey">
-                    <strong>
-                      {" "}
-                      Do you need something done and you can’t find someone by
-                      service?
-                    </strong>{" "}
-                    <br />
-                    Tell us what you are trying to get done and get a
-                    professional within 30min
-                  </p>
-
-                </div>
-              </div>
-              <div className="col-md-6 mt-3 mt-md-0">
-                Form
-                <QuickRequestComponent />
-              </div>
-            </div>
-          </div>
-        </div> */}
         <div className="  p-md-5">
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center   row ">
+          <div className=" flex-column flex-md-row justify-content-between  m-0 m-md-auto job-banner" >
+            {/* Section for Posting New Jobs */}
+            <div className="post-jobs-section text-center text-md-start col-md-6 p-5  h-100 main-banner" style={{ backgroundColor: '#013049' }}>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 'bold',
+                  color: '#fff',
+                  mb: 2,
+                }}
+              >
+                Post a New Task
+
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#fff',
+                  mb: 3,
+                  lineHeight: 1.8,
+                }}
+              >
+                <span> Need help with a project? Connect with skilled local artisans, get bids, and hire the right pro—fast.</span>
+              </Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: '#EF6E0B',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: '8px',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#d65c0a',
+                  },
+                }}
+              >
+                <Link to="/dashboard/create-offer" className="text-decoration-none text-white">
+                  Post a New Task
+                </Link>
+              </Button>
+            </div>
             {/* Section for Hiring Artisans */}
-            <div className="hire-artisans-section text-center text-md-start col-md-6 p-5 bg-primaryy">
+            <div className="hire-artisans-section text-center text-md-start col-md-6 p-5 bg-primaryy h-100 main-banner">
               <Typography
                 variant="h4"
                 sx={{
@@ -133,7 +150,7 @@ function LandingPage() {
                   mb: 2,
                 }}
               >
-                Hire Skilled Service Provider
+                Hire Skilled Artisans
               </Typography>
               <Typography
                 variant="body1"
@@ -141,9 +158,10 @@ function LandingPage() {
                   color: 'white',
                   mb: 3,
                   lineHeight: 1.8,
+
                 }}
               >
-                <span> Connect with trusted and skilled artisans for your projects. Browse through our list of verified service providers and find the perfect match for your needs.</span>
+                <span> Browse verified pros and find the right match for your project  —quick and easy.</span>
               </Typography>
               <Button
                 variant="contained"
@@ -167,48 +185,7 @@ function LandingPage() {
               </Button>
             </div>
 
-            {/* Section for Posting New Jobs */}
-            <div className="post-jobs-section text-center text-md-start col-md-6 p-5 " style={{ backgroundColor: '#013049' }}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 'bold',
-                  color: '#fff',
-                  mb: 2,
-                }}
-              >
-                Post a New Job
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#fff',
-                  mb: 3,
-                  lineHeight: 1.8,
-                }}
-              >
-                <span> Looking for top-tier candidates? Post a job opening and let us help you find the perfect talent to grow your team.</span>
-              </Typography>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: '#EF6E0B',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: '8px',
-                  textTransform: 'none',
-                  '&:hover': {
-                    backgroundColor: '#d65c0a',
-                  },
-                }}
-              >
-                <Link to="/dashboard/create-offer" className="text-decoration-none text-white">
-                  Post a Job
-                </Link>
-              </Button>
-            </div>
+
           </div>
         </div>
 
@@ -445,8 +422,6 @@ function LandingPage() {
                     <div className="content-box">
                       <div className="single-item  flex-wrap flex-sm-nowrap">
                         <div className="icon-box">
-                          {/* <div className="bg-layer"></div>
-                          <i className="fas fa-users"></i> */}
                           <img src={img5} alt="." />
                         </div>
                         <div className="box">

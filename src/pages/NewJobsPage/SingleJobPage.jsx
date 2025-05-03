@@ -27,8 +27,9 @@ const SingleJobPage = () => {
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    console.log('this is the user profile', userProfile);
 
-  })
+  }, [userProfile])
   useEffect(() => {
     const fetchJob = async () => {
       try {
@@ -186,7 +187,7 @@ const SingleJobPage = () => {
 
 
             {/* Artisan Bids (Owner Only) */}
-            {userProfile?._id === job.user && (
+            {userProfile?._id === job?.user?._id && (
               <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
                 <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
                 <div className="bg-white p-2 rounded bg-secondary-subtle">
@@ -253,8 +254,8 @@ const ArtisanCards = ({ applied }) => {
       {/* Profile Image */}
       <Box sx={{ display: 'flex', gap: 1, width: '100%', alignItems: 'center' }}>
         <Avatar
-          src={artisan.profileImage}
-          alt={artisan.name}
+          src={applied?.artisan?.avatar}
+          alt={applied?.artisan?.fullName}
           sx={{ width: 64, height: 64, mr: 2 }}
         />
 
@@ -262,10 +263,10 @@ const ArtisanCards = ({ applied }) => {
         <Box>
           <Box sx={{ flex: 1 }}>
             <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#013049' }}>
-              {artisan.name}
+              {applied?.artisan?.fullName}
             </Typography>
             <Typography variant="body2" sx={{ color: '#666', mb: 1 }}>
-              {artisan.profession}
+              {applied?.artisan?.service}
             </Typography>
             <Typography variant="body2" sx={{ color: '#EF6E0B', fontWeight: 600 }}>
               Bid: {applied.amount}
@@ -278,7 +279,7 @@ const ArtisanCards = ({ applied }) => {
       </Box>
       {/* Action Buttons */}
       <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, width: '100%' }}>
-        <Link to={`/artisans-profile/` + applied.artisan}> <Button
+        <Link to={`/artisans-profile/` + applied?.artisan?._id}> <Button
           variant="outlined"
           sx={{
             flex: 1,

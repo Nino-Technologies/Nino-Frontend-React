@@ -181,7 +181,7 @@ const CreateNewJobPage = () => {
                         textAlign: 'center',
                     }}
                 >
-                    Welcome to Job Creation
+                    Welcome to Task Creation
                 </Typography>
                 <Typography
                     variant="body1"
@@ -190,7 +190,7 @@ const CreateNewJobPage = () => {
                         lineHeight: 1.8,
                     }}
                 >
-                    Post your job openings and connect with top-tier candidates. Fill out the form to create a new job and attract the best talent for your team.
+                    Got a job that needs doing? Post your task and connect with skilled, local artisans ready to help. Just fill out the form to create a new task and start receiving bids from qualified professionals.
                 </Typography>
             </Box>
 
