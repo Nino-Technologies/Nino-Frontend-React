@@ -86,13 +86,14 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
             const body = JSON.stringify({
                 description: state.bidSubmission.description,
                 timeLine: timelineString,
-                // materialCost: state.bidSubmission.materialCost,
+                materialCost: state.bidSubmission.materialCost,
                 amount: Number(state.bidSubmission.amount),
                 inspectionFee: Number(state.bidSubmission.inspectionFee),
-                // laborCost: Number(state.bidSubmission.laborCost),
-                // expensis: Number(state.bidSubmission.expensis),
+                laborCost: Number(state.bidSubmission.laborCost),
+                expensis: Number(state.bidSubmission.expensis),
                 media: state.bidSubmission.media.map(m => m.url)
             });
+            console.log('this is the bid submitted', body)
 
             const response = await fetch(
                 `https://nino-backend.vercel.app/api/job/apply/${id}`,
@@ -315,7 +316,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                 onChange={(e) => handleInputChange('timeLine', e.target.value)}
                             />
                         </div> */}
-                        <div className='d-flex gap-5 mt-3 py-3 align-items-center'>
+                        <div className='d-flex gap-5 mt-3 py-3 flex-wrap align-items-center'>
                             {job?.requestInspection ?
                                 <div className='d-flex gap-5'>
                                     <div className='d-flex align-items-center gap-2'>
@@ -324,10 +325,10 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                     <div className='d-flex align-items-center gap-2' >
                                         <input type="radio" name="inspection" id="" checked={paidInspection} onChange={() => { setPaidInspection(true) }} /> <label htmlFor="inspection">Paid Inspection</label>
                                     </div> </div> : <p className='text-secondary-subtle'>Inspection Unavailable</p>}
-                            {paidInspection ? <div className='mt-3'>
+                            {paidInspection ? <div className='mb-3'>
                                 <TextField
                                     fullWidth
-                                    label="Inspect Cost"
+                                    label="Inspection Cost"
                                     variant="outlined"
                                     required
                                     sx={{

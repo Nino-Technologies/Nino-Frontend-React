@@ -92,7 +92,7 @@ const SingleJobPage = () => {
                 {job.media.length > 0 && (
                   <Box sx={{ mt: 4 }}>
                     <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: '#013049' }}>
-                      Attached Media
+                      <h5 className="fw-bold" style={{ color: '#013049' }}> Attached Media</h5>
                     </Typography>
                     <div className="d-flex flex-wrap gap-3">
                       {job.media.map((mediaUrl, index) => (
@@ -100,7 +100,8 @@ const SingleJobPage = () => {
                           {mediaUrl.includes('video') ? (
                             <video src={mediaUrl} controls style={{ width: 280, borderRadius: 12 }} />
                           ) : (
-                            <img src={mediaUrl} alt={`Media ${index + 1}`} style={{ width: 280, borderRadius: 12 }} />
+                            <div className='' style={{ width: '300px', height: '300px', overflow: 'hidden', borderRadius: 12 }}> <img src={mediaUrl} alt={`Media ${index + 1}`} style={{ width: '100%', height: '100%', borderRadius: 12, objectFit: 'cover' }} />
+                            </div>
                           )}
                         </a>
                       ))}
@@ -351,22 +352,22 @@ const ArtisanCards = ({ applied, jobId }) => {
 
 
         <div className='d-flex gap-2 flex-column' style={{ padding: '10px' }}>
-          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '500px', maxWidth: '600px' }}>
+          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Description</h6>
             <p>{applied?.description}</p>
           </div>
-          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '500px', maxWidth: '600px' }}>
+          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Estimated Cost:</h6>
             <p>{applied?.amount}</p>
           </div>
-          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '500px', maxWidth: '600px' }}>
+          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Timeline</h6>
             <p>{applied?.timeLine}</p>
           </div>
-          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '500px', maxWidth: '600px' }}>
+          <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Related Media</h6>
             <p>    {applied?.media?.map((mediaUrl, index) => (
-              <div className='shadow' key={index}>
+              <div className='shadow' key={index} >
                 <a href={mediaUrl} target="_blank" rel="noopener noreferrer">
                   {mediaUrl.includes('video') ? (
                     <video
@@ -395,11 +396,27 @@ const ArtisanCards = ({ applied, jobId }) => {
               </div>
             ))}</p>
           </div>
+          {applied.inspectionFee > 0 ? <div className="rounded bg-secondary-subtle p-2 d-flex gap-1 flex-column " style={{ width: '500px', maxWidth: '600px' }}>
+            <h6 className='fw-bold'>Inspection Fee : ₦ {applied.inspectionFee}</h6>
+            <div className='d-flex gap-2 flex-wrap'>
+              <input type="text" placeholder='Address' className='p-3 rounded border-solid border-black' />
+              <input type="datetime-local" placeholder='Inspection Date' className='p-3 rounded border-solid border-black' />
+            </div>
+          </div> : <p className='text-center'>No inspection fee Required</p>
+          }
         </div>
-
 
         <DialogActions>
 
+          {applied?.inspectionFee > 0 ? <Button
+            // onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'accepted') }}
+            color="primary"
+            // disabled={applied?.inspectionFee > 0 ? 'true' : 'false'}
+            className='fw-bold'
+            sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
+          >
+            Pay for Inspection
+          </Button> : ''}
           <Button
             onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'accepted') }}
             color="primary"

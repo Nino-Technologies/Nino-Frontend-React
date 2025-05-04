@@ -195,13 +195,13 @@ const JobCard = ({ job }) => {
                 </p>
             </div>
 
-            <p className="text-black fs-6 mt-3">{job.location.length > 50 ? job.description.slice(0, 50) : job.description}...</p>
+            <p className="text-black fs-6 mt-3">{job.description.length > 100 ? job.description.slice(0, 100) + '...' : job.description}</p>
 
             <div className="d-flex flex-wrap gap-2 my-3">
 
                 {job.skills?.map((skill, index) => (
                     // Return a span with a class of job-tag-p, text-black, px-3, py-1, rounded-5, and bg-secondary-subtle
-                    <span key={index} className="job-tag-p text-black px-3 py-1 rounded-5 bg-secondary-subtle">
+                    <span key={index} className="job-tag-p text-white px-3 py-1 rounded-5 " style={{ backgroundColor: '#EF6E0B' }}>
 
                         {skill}
                     </span>
