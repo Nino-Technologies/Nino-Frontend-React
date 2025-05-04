@@ -100,7 +100,7 @@ const SingleJobPage = () => {
                           {mediaUrl.includes('video') ? (
                             <video src={mediaUrl} controls style={{ width: 280, borderRadius: 12 }} />
                           ) : (
-                            <div className='' style={{ width: '300px', height: '300px', overflow: 'hidden', borderRadius: 12 }}> <img src={mediaUrl} alt={`Media ${index + 1}`} style={{ width: '100%', height: '100%', borderRadius: 12, objectFit: 'cover' }} />
+                            <div className='m-auto ' style={{ width: '300px', height: '300px', overflow: 'hidden', borderRadius: 12, cursor: 'pointer' }}> <img src={mediaUrl} alt={`Media ${index + 1}`} style={{ width: '100%', height: '100%', borderRadius: 12, objectFit: 'cover' }} />
                             </div>
                           )}
                         </a>
