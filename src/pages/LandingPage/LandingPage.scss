@@ -1153,3 +1153,20 @@
     color: #3498db;
   }
 }
+
+.job-banner {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: stretch;
+}
+
+.main-banner {
+  width: 100% !important;
+}
+
+@media (max-width:768px) {
+
+  .job-banner {
+    grid-template-columns: 1fr;
+  }
+}

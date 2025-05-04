@@ -35,7 +35,31 @@
 }
 
 .job-des {
-    font-size: 12px;
-    color: rgb(63, 63, 63);
+    font-size: 20px;
+    color: '#013049';
     font-weight: 300;
+}
+
+#job-offer-page .jobs-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: stretch;
+}
+
+.font-sm-text {
+    font-size: 12px;
+}
+
+.city-bg {
+    background: url('../../assets/images/city-bg.svg') no-repeat, linear-gradient(to right, #ef6e0b, #ef6e0b);
+    background-position-x: left;
+    background-size: cover;
+    background-position-y: bottom;
+
+}
+
+@media (max-width:576px) {
+    #job-offer-page .jobs-container {
+        grid-template-columns: 1fr;
+    }
 }

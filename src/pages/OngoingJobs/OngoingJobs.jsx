@@ -1,191 +1,4 @@
-// import React, { useState } from 'react';
-// import { Box, Typography, Button, Paper, Chip, Dialog, TextField } from '@mui/material';
-// import EditIcon from '@mui/icons-material/Edit';
-// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-// import ScheduleIcon from '@mui/icons-material/Schedule';
-
-// const BidCard = ({ bid, onUpdate }) => {
-//     const [openEdit, setOpenEdit] = useState(false);
-//     const [editedBid, setEditedBid] = useState(bid);
-
-//     const handleUpdateBid = () => {
-//         onUpdate(editedBid);
-//         setOpenEdit(false);
-//     };
-
-//     return (
-//         <Paper elevation={1} sx={{ p: 3, mb: 3, borderRadius: 2, position: 'relative' }}>
-//             {/* Edit Button */}
-//             <Button
-//                 variant="outlined"
-//                 startIcon={<EditIcon />}
-//                 sx={{
-//                     position: 'absolute',
-//                     top: 16,
-//                     right: 16,
-//                     color: '#013049',
-//                     borderColor: '#013049',
-//                     '&:hover': {
-//                         borderColor: '#EF6E0B',
-//                         color: '#EF6E0B'
-//                     }
-//                 }}
-//                 onClick={() => setOpenEdit(true)}
-//             >
-//                 Edit
-//             </Button>
-
-//             {/* Bid Content */}
-//             <Typography variant="h6" sx={{ color: '#013049', mb: 1, fontWeight: 'bold' }}>
-//                 {bid.jobTitle}
-//             </Typography>
-
-//             <Box sx={{ display: 'flex', gap: 3, alignItems: 'center', mb: 2 }}>
-//                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-//                     <AttachMoneyIcon sx={{ color: '#EF6E0B', mr: 1 }} />
-//                     <Typography variant="body1">
-//                         Bid Amount: <span style={{ fontWeight: 'bold' }}>₦{bid.amount}</span>
-//                     </Typography>
-//                 </Box>
-
-//                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-//                     <ScheduleIcon sx={{ color: '#EF6E0B', mr: 1 }} />
-//                     <Typography variant="body1">
-//                         Timeline: <span style={{ fontWeight: 'bold' }}>{bid.timeline} days</span>
-//                     </Typography>
-//                 </Box>
-//             </Box>
-
-//             <Typography variant="body2" sx={{ mb: 2 }}>
-//                 <strong>Description:</strong> {bid.description}
-//             </Typography>
-
-//             {bid.materials && (
-//                 <Box sx={{ mb: 2 }}>
-//                     <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-//                         Materials:
-//                     </Typography>
-//                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
-//                         {bid.materials.map((material, index) => (
-//                             <Chip
-//                                 key={index}
-//                                 label={material}
-//                                 sx={{ backgroundColor: '#f0f0f0', color: '#013049' }}
-//                             />
-//                         ))}
-//                     </Box>
-//                 </Box>
-//             )}
-
-//             {/* Edit Bid Dialog */}
-//             <Dialog open={openEdit} onClose={() => setOpenEdit(false)} maxWidth="md">
-//                 <Box sx={{ p: 4, width: '600px' }}>
-//                     <Typography variant="h5" sx={{ color: '#013049', mb: 3 }}>
-//                         Edit Bid for {bid.jobTitle}
-//                     </Typography>
-
-//                     <TextField
-//                         fullWidth
-//                         label="Bid Amount"
-//                         value={editedBid.amount}
-//                         onChange={(e) => setEditedBid({ ...editedBid, amount: e.target.value })}
-//                         sx={{ mb: 3 }}
-//                     />
-
-//                     <TextField
-//                         fullWidth
-//                         label="Timeline (days)"
-//                         value={editedBid.timeline}
-//                         onChange={(e) => setEditedBid({ ...editedBid, timeline: e.target.value })}
-//                         sx={{ mb: 3 }}
-//                     />
-
-//                     <TextField
-//                         fullWidth
-//                         multiline
-//                         rows={4}
-//                         label="Description"
-//                         value={editedBid.description}
-//                         onChange={(e) => setEditedBid({ ...editedBid, description: e.target.value })}
-//                         sx={{ mb: 3 }}
-//                     />
-
-//                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-//                         <Button
-//                             variant="outlined"
-//                             onClick={() => setOpenEdit(false)}
-//                             sx={{
-//                                 color: '#013049',
-//                                 borderColor: '#013049',
-//                                 '&:hover': { borderColor: '#EF6E0B' }
-//                             }}
-//                         >
-//                             Cancel
-//                         </Button>
-//                         <Button
-//                             variant="contained"
-//                             onClick={handleUpdateBid}
-//                             sx={{
-//                                 backgroundColor: '#EF6E0B',
-//                                 '&:hover': { backgroundColor: '#d65c0a' }
-//                             }}
-//                         >
-//                             Update Bid
-//                         </Button>
-//                     </Box>
-//                 </Box>
-//             </Dialog>
-//         </Paper>
-//     );
-// };
-
-// const OngoingJobs = () => {
-//     // Example bids data - replace with real data from your API/context
-//     const [bids, setBids] = useState([
-//         {
-//             id: 1,
-//             jobTitle: "Kitchen Wiring Installation",
-//             amount: "150,000",
-//             timeline: "14",
-//             description: "Complete installation of kitchen wiring with safety certification",
-//             materials: ["2mm cables", "Circuit breakers", "Socket outlets"]
-//         },
-//         {
-//             id: 2,
-//             jobTitle: "Office Lighting Upgrade",
-//             amount: "85,000",
-//             timeline: "7",
-//             description: "LED lighting upgrade for office space including dimmer switches"
-//         }
-//     ]);
-
-//     const handleUpdateBid = (updatedBid) => {
-//         setBids(bids.map(bid => bid.id === updatedBid.id ? updatedBid : bid));
-//     };
-
-//     return (
-//         <div className='pb-5'>
-
-//             <Box sx={{ p: 4, mt: 8 }}>
-//                 <Typography variant="h4" sx={{ color: '#013049', mb: 4, fontWeight: 'bold' }}>
-//                     My Bids
-//                 </Typography>
-
-//                 {bids.map(bid => (
-//                     <BidCard
-//                         key={bid.id}
-//                         bid={bid}
-//                         onUpdate={handleUpdateBid}
-//                     />
-//                 ))}
-//             </Box>
-
-//         </div>
-//     );
-// };
-
-// export default OngoingJobs;
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Button, Paper, Chip, Dialog, TextField, Grid } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -193,16 +6,49 @@ import ScheduleIcon from '@mui/icons-material/Schedule';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 import { AccessTimeSharp, WalletRounded } from '@mui/icons-material';
+import { toast } from "react-toastify";
+import { useCookies } from 'react-cookie';
 
 const BidCard = ({ bid, onUpdate }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [editedBid, setEditedBid] = useState(bid);
+    const [cookies, setCookie, removeCookie] = useCookies();
+
+    const submitDispute = async ({ jobId, description }) => {
+        try {
+            const response = await fetch("https://nino-backend.vercel.app/api/jobDispute", {
+                method: "POST",
+                headers: {
+                    "Authorization": cookies.grinderUser.token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    job: jobId,
+                    description: description
+                }),
+                redirect: "follow"
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result?.message || "An error occurred while submitting the dispute");
+            }
+
+            toast.success("Dispute submitted successfully!");
+            return result;
+        } catch (error) {
+            console.error("Dispute Error:", error);
+            toast.error(`Error: ${error.message}`);
+            return null;
+        }
+
+    };
 
     const handleUpdateBid = () => {
         onUpdate(editedBid);
         setOpenEdit(false);
-    };
-
+    }
     return (
         <Paper elevation={1} sx={{
             p: 3,
@@ -243,7 +89,7 @@ const BidCard = ({ bid, onUpdate }) => {
 
             </Box>
 
-            <Box sx={{ flexGrow: 1 }}>
+            <Box className='h-100 d-flex flex-column justify-content-between' sx={{ flexGrow: 1 }}>
                 <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 2 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <AttachMoneyIcon sx={{ color: '#EF6E0B', mr: 1 }} />
@@ -259,34 +105,37 @@ const BidCard = ({ bid, onUpdate }) => {
                         </Typography>
                     </Box>
                 </Box>
-
                 <Typography variant="body2" sx={{ mb: 2 }}>
                     {bid.description}
                 </Typography>
+                <Box>
 
-                {bid.materials && (
-                    <Box sx={{ mb: 2 }}>
-                        <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
-                            Materials:
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                            {bid.materials.map((material, index) => (
-                                <Chip
-                                    key={index}
-                                    label={material}
-                                    size="small"
-                                    sx={{
-                                        backgroundColor: '#f8f9fa',
-                                        color: '#013049',
-                                        border: '1px solid #e0e0e0'
-                                    }}
-                                />
-                            ))}
+
+
+                    {bid.materials && (
+                        <Box sx={{ mb: 2 }}>
+                            <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
+                                Materials:
+                            </Typography>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                                {bid.materials.map((material, index) => (
+                                    <Chip
+                                        key={index}
+                                        label={material}
+                                        size="small"
+                                        sx={{
+                                            backgroundColor: '#f8f9fa',
+                                            color: '#013049',
+                                            border: '1px solid #e0e0e0'
+                                        }}
+                                    />
+                                ))}
+                            </Box>
                         </Box>
+                    )}
+                    <Box className="" >
+                        <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#ef6e0b', position: 'relative', button: 0 }}>View Job</button>
                     </Box>
-                )}
-                <Box className="" >
-                    <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#ef6e0b', position: 'relative', button: 0 }}>View Job</button>
                 </Box>
             </Box>
 
@@ -294,30 +143,31 @@ const BidCard = ({ bid, onUpdate }) => {
             <Dialog open={openEdit} onClose={() => setOpenEdit(false)} maxWidth="md">
                 <Box sx={{ p: 4, width: '600px' }}>
                     <Typography variant="h5" sx={{ color: '#013049', mb: 3 }}>
-                        Edit Bid for {bid.jobTitle}
+                        Create Dispute for {bid.jobTitle}
                     </Typography>
 
-                    <TextField
+                    {/* <TextField
                         fullWidth
                         label="Bid Amount"
                         value={editedBid.amount}
                         onChange={(e) => setEditedBid({ ...editedBid, amount: e.target.value })}
                         sx={{ mb: 3 }}
-                    />
+                    /> */}
 
-                    <TextField
+                    {/* <TextField
                         fullWidth
                         label="Timeline (days)"
                         value={editedBid.timeline}
                         onChange={(e) => setEditedBid({ ...editedBid, timeline: e.target.value })}
                         sx={{ mb: 3 }}
-                    />
+                    /> */}
 
                     <TextField
                         fullWidth
                         multiline
                         rows={4}
                         label="Description"
+                        name='desciption'
                         value={editedBid.description}
                         onChange={(e) => setEditedBid({ ...editedBid, description: e.target.value })}
                         sx={{ mb: 3 }}
@@ -336,12 +186,14 @@ const BidCard = ({ bid, onUpdate }) => {
                             Cancel                         </Button>
                         <Button
                             variant="contained"
-                            onClick={handleUpdateBid} sx={{
+                            // onClick={handleUpdateBid}
+                            sx={{
                                 backgroundColor: '#EF6E0B',
                                 '&:hover': { backgroundColor: '#d65c0a' }
                             }}
+                            onClick={() => { submitDispute() }}
                         >
-                            Completed
+                            Submit Dispute
                         </Button>
                     </Box>
                 </Box>

@@ -47,9 +47,9 @@ const JobRecord = () => {
                 <h1 className='text-center text-white fw-bold'>Job Records</h1>
             </div>
 
-            <div className="row mt-5">
+            <div className="jobs-container mt-5">
                 {loading ? (
-                    <div className="text-center p-4 d-flex justify-content-center align-items-center " style={{ width: '100%', }}>
+                    <div className="text-center p-4 d-flex justify-content-center align-items-center  m-auto text-center" style={{ width: '100%', height: 'calc(100vh - 300px)' }}>
                         <CircularProgress style={{ color: '#EF6E0B' }} size={48} thickness={5} />
                         <span className="ms-3 fs-5">Loading jobs...</span>
                     </div>
@@ -57,7 +57,7 @@ const JobRecord = () => {
                     <div className="text-center p-4 text-danger">Error: {error}</div>
                 ) : jobs.length > 0 ? (
                     jobs.map((job) => (
-                        <div className="col-md-6 mb-4" key={job._id}>
+                        <div className=" mb-4" key={job._id}>
                             <JobCard job={job} />
                         </div>
                     ))
@@ -71,7 +71,7 @@ const JobRecord = () => {
 
 const JobCard = ({ job }) => {
     return (
-        <div className="job-card p-3 border rounded shadow-sm d-flex flex-column justify-content-between">
+        <div className="job-card p-3 border rounded shadow-sm d-flex flex-column h-100 justify-content-between">
             <div className="d-flex justify-content-between align-items-center">
                 <h5 className="fw-bold">{job.title}</h5>
                 <div className="d-flex gap-2">
