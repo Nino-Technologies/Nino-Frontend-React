@@ -234,7 +234,7 @@ const OngoingJobs = () => {
 
             <Box sx={{
                 p: 4,
-                mt: 8,
+                mt: 2,
                 minHeight: 'calc(100vh - 128px)'
             }}>
                 <div className='d-flex justify-content-center align-items-center p-5 rounded-3 mb-4' style={{ backgroundColor: '#ef6e0b' }}>

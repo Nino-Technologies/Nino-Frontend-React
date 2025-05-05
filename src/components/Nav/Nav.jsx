@@ -81,7 +81,7 @@ function Nav() {
         <label htmlFor="menu-toggle" className="menu-button"></label>
       </div>
       <div className="link-container d-flex">
-        {navLinks.map((link, index) => {
+        {/* {navLinks.map((link, index) => {
           return (
             <NavLink
               to={link.link}
@@ -91,7 +91,20 @@ function Nav() {
               {link.name}
             </NavLink>
           );
-        })}
+        })} */}
+        {navLinks
+          .filter((link) => link.name !== "Dashboard" || loggedIn)
+          .map((link, index) => {
+            return (
+              <NavLink
+                to={link.link}
+                className={({ isActive }) => (isActive ? "active" : "")}
+                key={index}
+              >
+                {link.name}
+              </NavLink>
+            );
+          })}
         {loggedIn ? <AccountMenu /> : <CustomizedMenus />}
       </div>
     </div>

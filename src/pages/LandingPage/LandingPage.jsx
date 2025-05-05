@@ -276,11 +276,11 @@ function LandingPage() {
                     </div>
                   </div>
 
-                  <div className="mt-5">
+                  {/* <div className="mt-5">
                     <a href="/about-us" className=" px-5 py-3 primary-btn">
                       Explore Our Story <i className="fas fa-arrow-right ms-2"></i>
                     </a>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
