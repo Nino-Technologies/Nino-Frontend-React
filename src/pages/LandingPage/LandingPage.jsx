@@ -17,7 +17,9 @@ import img3 from "../../assets/images/quirky-twenty-four-hours-service-1.png";
 import img4 from "../../assets/images/bonbon-five-stars-quality-rating.png";
 import img5 from "../../assets/images/pocus-service.png";
 import img6 from "../../assets/images/juicy-woman-connects-a-laptop-to-the-server.png";
-
+import womanArtisan from "../../assets/images/AboutUsLady1.png";
+import AboutUsArtisan from '../../assets/images/AboutUs_Artisan.webp'
+import createJobIMG from '../../assets/images/internship-job-training-illustration.png'
 import AboutImg from '../../assets/images/fpkdl.com_750_people-standing-against-clear-sky_1048944-2881346.jpg'
 // import { Button } from "@mui/material";
 import { Container, Box, Typography, Button, Paper } from '@mui/material';
@@ -69,7 +71,7 @@ function LandingPage() {
       content: "Experience seamless integration and outstanding performance."
     }]
   return (
-    <>
+    <div className='w-100 overflow-x-hidden'>
       <Nav />
       <div className="con tainer">
         <div className="hero-section">
@@ -93,7 +95,7 @@ function LandingPage() {
           </div>
         </div>
 
-        <div className="p-md-5">
+        <div className="  p-md-5">
           <div className=" flex-column flex-md-row justify-content-between  m-0 m-md-auto job-banner" >
             {/* Section for Posting New Jobs */}
             <div className="post-jobs-section text-center text-md-start col-md-6 p-5  h-100 main-banner" style={{ backgroundColor: '#013049' }}>
@@ -227,7 +229,7 @@ function LandingPage() {
               </div>
             </div>
 
-            <div className="row align-items-center g-5" style={{ width: '100%' }}>
+            <div className="row align-items-center g-5">
               <div className="col-lg-6">
                 <div className="position-relative">
                   <img
@@ -274,11 +276,11 @@ function LandingPage() {
                     </div>
                   </div>
 
-                  {/* <div className="mt-5">
+                  <div className="mt-5">
                     <a href="/about-us" className=" px-5 py-3 primary-btn">
                       Explore Our Story <i className="fas fa-arrow-right ms-2"></i>
                     </a>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
@@ -555,7 +557,7 @@ function LandingPage() {
         </div>
         <Footer />
       </div>
-    </>
+    </div>
   );
 }
 
