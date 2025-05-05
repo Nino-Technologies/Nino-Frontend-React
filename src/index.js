@@ -9,21 +9,24 @@ import UserProvider from "./context/UserContext.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import { CookiesProvider } from "react-cookie";
 import SearchProvider from "./context/SearchContext.jsx";
+import { EditorProvider } from "react-simple-wysiwyg";
 // import { TestProvider } from "./context/ContextTest";
 
 const root = ReactDOM.createRoot(document.getElementById("root")); // Create root using the correct API
 root.render(
   <React.StrictMode>
     <CookiesProvider>
-      <BrowserRouter>
-        <UserProvider>
-          <SearchProvider>
-            {/* <TestProvider> */}
-            <App />
-            {/* </TestProvider> */}
-          </SearchProvider>
-        </UserProvider>
-      </BrowserRouter>
+      <EditorProvider>
+        <BrowserRouter>
+          <UserProvider>
+            <SearchProvider>
+              {/* <TestProvider> */}
+              <App />
+              {/* </TestProvider> */}
+            </SearchProvider>
+          </UserProvider>
+        </BrowserRouter>
+      </EditorProvider>
     </CookiesProvider>
   </React.StrictMode>
 );

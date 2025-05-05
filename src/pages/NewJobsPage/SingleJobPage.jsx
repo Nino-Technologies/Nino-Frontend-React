@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Nav from '../../components/Nav/Nav'
 import { Box, Chip, CircularProgress, Grid, Paper, TextField, Typography } from '@mui/material'
-import { Category, GpsFixedSharp, LocationCity, LocationOn, MoneyRounded } from '@mui/icons-material'
+import { ArrowBackRounded, Category, Description, GpsFixedSharp, LocationCity, LocationOn, MoneyRounded, Photo, Title } from '@mui/icons-material'
+
 import { TbGps } from 'react-icons/tb'
 import { BsTools } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
@@ -11,12 +12,12 @@ import BidDialogBox from './components/BidDialogBox'
 import { grey } from '@mui/material/colors'
 import { Avatar, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, } from '@mui/material';
 import { useCookies } from 'react-cookie'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkIcon from '@mui/icons-material/Work';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { toast } from 'react-toastify'
-
+import './SingleJobPage.scss'
 
 const SingleJobPage = () => {
   const { id } = useParams()
@@ -24,7 +25,7 @@ const SingleJobPage = () => {
   const { userProfile } = useContext(UserContext)
   const [open, setOpen] = useState(false);
   const [job, setJob] = useState(null);
-
+  const navigate = useNavigate();
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -68,27 +69,25 @@ const SingleJobPage = () => {
       <div className="container py-5 mt-5">
         <Grid container spacing={4}>
           {/* Left Panel */}
-          <Grid item xs={12} md={8}>
+          {/* <Grid item xs={12} md={8}>
             <Paper className="" elevation={3} style={{ borderRadius: 16 }}>
               <h3 className="fw-bold text-uppercase text-white p-4 rounded-top-4 " style={{ color: '#013049', backgroundColor: '#ef6e0b' }}>
                 {job?.title}
               </h3>
               <hr />
 
-              {/* Description */}
               <div className="p-4">
                 <section className="mb-4 p-3 rounded" style={{ background: '#f0f4f7' }}>
                   <h5 className="fw-bold" style={{ color: '#013049' }}>Description</h5>
                   <p className="text-secondary">{job?.description}</p>
                 </section>
 
-                {/* Material Info */}
                 <section className="mb-4 p-3 rounded" style={{ background: '#f0f4f7' }}>
                   <h5 className="fw-bold" style={{ color: '#013049' }}>Material Info</h5>
                   <p className="text-secondary">{job?.materialInformation}</p>
                 </section>
 
-                {/* Media Section */}
+             
                 {job.media.length > 0 && (
                   <Box sx={{ mt: 4 }}>
                     <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: '#013049' }}>
@@ -110,13 +109,38 @@ const SingleJobPage = () => {
                 )}
               </div>
             </Paper>
-          </Grid>
+          </Grid> */}
 
           {/* Right Panel */}
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={12}>
             <Paper elevation={3} style={{ borderRadius: 16, padding: '24px', background: '#ffffff' }}>
-              <h4 className="fw-bold mb-4" style={{ color: '#013049', fontSize: '1.5rem' }}><span>Job Details</span></h4>
+              <h4 className="fw-bold mb-4" style={{
+                color: '#013049', fontSize: '1.5rem',
+              }}><span style={{
+                display: 'flex',
+                alignItems: 'center', gap: 8
+              }}> <div className='p-2 border-black border-1 rounded-circle' onClick={() => navigate(-1)} style={{
+                width: '30px', height: '30px', border: 'solid 1px black', display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center', cursor: 'pointer'
+              }}><ArrowBackRounded /> </div>Job Details</span></h4>
+              <hr />
+              <div className="mb-3 d-flex align-items-start">
 
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}><Title style={{ color: '#013049', marginRight: 8 }} /><span className=''>Title</span></Typography>
+                  <Typography variant="body1" className="fw-bold"><span>{job?.title}</span></Typography>
+                </div>
+              </div>
+              <div className="mb-3 d-flex align-items-start">
+
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}><Description style={{ color: '#013049', marginRight: 8 }} /><span>Description</span></Typography>
+                  {/* <Typography variant="body1" className="fw-bold"><span> */}
+                  {job?.description}
+                  {/* </span></Typography> */}
+                </div>
+              </div>
               <div className="mb-3 d-flex align-items-start">
 
                 <div>
@@ -166,11 +190,25 @@ const SingleJobPage = () => {
                   </div>
                 </div>
               </div>
-
+              <hr />
+              <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}> <Photo style={{ color: '#013049', marginRight: 8 }} /><span>Media</span> </Typography>
+              <hr />
+              <div className="d-flex flex-wrap gap-3">
+                {job.media.map((mediaUrl, index) => (
+                  <a href={mediaUrl} key={index} target="_blank" rel="noopener noreferrer">
+                    {mediaUrl.includes('video') ? (
+                      <video src={mediaUrl} controls style={{ width: 280, borderRadius: 12 }} />
+                    ) : (
+                      <div className='m-auto ' style={{ width: '150px', height: '150px', overflow: 'hidden', borderRadius: 12, cursor: 'pointer' }}> <img src={mediaUrl} alt={`Media ${index + 1}`} style={{ width: '100%', height: '100%', borderRadius: 12, objectFit: 'cover' }} />
+                      </div>
+                    )}
+                  </a>
+                ))}
+              </div>
               {userProfile?.role === 1 && (
                 <button
                   onClick={() => setOpen(true)}
-                  className="btn w-100"
+                  className="btn w-100 mt-3"
                   style={{
                     backgroundColor: '#013049',
                     color: 'white',
@@ -180,7 +218,7 @@ const SingleJobPage = () => {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  Make Bid
+                  Make A Bid
                 </button>
               )}
 
@@ -192,7 +230,7 @@ const SingleJobPage = () => {
             {userProfile?._id === job?.user?._id && (
               <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
                 <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
-                <div className="bg-white p-2 rounded bg-secondary-subtle">
+                <div id='artisan-card-container' className="bg-white p-2 rounded bg-secondary-subtle artisan-card-container">
                   {job.applied.length < 1 ? (
                     <div>No Bids Yet</div>
                   ) : (

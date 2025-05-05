@@ -37,9 +37,14 @@ const navLinks = [
     link: "/home",
   },
   {
+    name: "Dashboard",
+    link: "/dashboard/home",
+  },
+  {
     name: "Service Providers",
     link: "/artisans",
   },
+
   {
     name: "Job Offers",
     link: "/job-offer",

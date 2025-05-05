@@ -2,14 +2,20 @@ import { Alert, Box, Chip, Dialog, DialogContent, TextField, Typography } from '
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie';
+import Editor, {
+    BtnBold,
+    BtnItalic,
+    Toolbar, BtnBulletList
+} from 'react-simple-wysiwyg';
 import { toast } from 'react-toastify';
 
 
 const BidDialogBox = ({ open, setOpen, id, job }) => {
     const [cookies] = useCookies();
     const [paidInspection, setPaidInspection] = useState(false)
-
+    const [html, setHtml] = useState('');
     const [state, setState] = useState({
+
         loading: true,
         error: null,
         job: null,
@@ -28,6 +34,10 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
         bidError: null,
         uploadingMedia: false
     });
+
+    function onChange(e) {
+        setHtml(e.target.value);
+    }
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -84,7 +94,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
 
         try {
             const body = JSON.stringify({
-                description: state.bidSubmission.description,
+                description: html,
                 timeLine: timelineString,
                 materialCost: state.bidSubmission.materialCost,
                 amount: Number(state.bidSubmission.amount),
@@ -139,8 +149,8 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
         <div>
             <Dialog open={open} onClose={() => setOpen(false)} className=' p-2' sx={{ backdropFilter: 'blur(1px)' }}>
                 <DialogContent className='p-2 ' sx={{ width: { sm: '100%', md: '700px', maxWidth: 600 }, backgroundColor: '#fff', borderRadius: '8px' }}>
-                    <div className='d-flex justify-content-between align-items-center p-4'>
-                        <h5 className='text- fw-bold text-primaryy'>Submit A Bid</h5>
+                    <div className='d-flex justify-content-between align-items-center pt-4'>
+                        <h3 className='text-  fw-bold text-primaryy'>Submit A Bid</h3>
                         {/* <div className="p-2 border-1 border-primary text-black rounded-2 text-white" style={{
                 backgroundColor: '#EF6E0B'
               }}><span className='fw-bold '>Connect:</span>12</div> */}
@@ -149,7 +159,19 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                         {/* <Input type="number" placeholder='BID PRICE' className=' p-1 border-0 w-75' style={{
                 // Removes arrows in Firefox
               }} /> */}
-                        <div className='mt-3'>
+                        <div className="mt-3">
+                            <label className='mb-2'>Description </label>
+                            <Editor value={html} onChange={onChange} className='border-1 border-primary' style={{ minHeight: '200px', borderRadius: '8px', padding: '10px', backgroundColor: '#fff' }}>
+                                <div className='text-secondary-subtle mb-2'>Describe your bid and the work you will do in detail</div>
+                                <Toolbar>
+                                    <BtnBold />
+                                    <BtnItalic />
+                                    <BtnBulletList />
+                                </Toolbar>
+
+                            </Editor>
+                        </div>
+                        {/* <div className='mt-3'>
                             <TextField
                                 fullWidth
                                 label="Description"
@@ -176,7 +198,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                                 value={state.bidSubmission.description}
                                 onChange={(e) => handleInputChange('description', e.target.value)}
                             />
-                        </div>
+                        </div> */}
                         <div className='mt-3 d-flex align-items-center gap-4 flex-wrap'>
                             <div className='d-flex gap-2 align-items-center'>
                                 <label htmlFor="start-date">Estimated start Date: </label>
@@ -318,13 +340,18 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                         </div> */}
                         <div className='d-flex gap-5 mt-3 py-3 flex-wrap align-items-center'>
                             {job?.requestInspection ?
-                                <div className='d-flex gap-5'>
+                                <div className='d-flex gap-3 flex-wrap'>
                                     <div className='d-flex align-items-center gap-2'>
                                         <input type="radio" name="inspection" id="" checked={!paidInspection} onChange={() => { setPaidInspection(false) }} /> <label htmlFor="inspection">Free Inspection</label>
                                     </div>
                                     <div className='d-flex align-items-center gap-2' >
                                         <input type="radio" name="inspection" id="" checked={paidInspection} onChange={() => { setPaidInspection(true) }} /> <label htmlFor="inspection">Paid Inspection</label>
-                                    </div> </div> : <p className='text-secondary-subtle'>Inspection Unavailable</p>}
+                                    </div>
+                                    <div className='d-flex align-items-center gap-2' >
+                                        <input type="radio" name="inspection" id="" checked={paidInspection} onChange={() => { console.log('done') }} /> <label htmlFor="inspection">No Inspection</label>
+                                    </div>
+                                </div>
+                                : <p className='text-secondary-subtle'>Inspection Unavailable</p>}
                             {paidInspection ? <div className='mb-3'>
                                 <TextField
                                     fullWidth
@@ -396,7 +423,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                             {state.bidError}
                         </Alert>
                     )}
-                    <Button variant='contained' className='p-3' sx={{ width: "100%", backgroundColor: '#EF6E0B', color: 'white', fontWeight: 'bold', fontSize: '16px', '&:hover': { backgroundColor: '#d65c0a', } }} onClick={submitBid}
+                    <Button variant='contained' className='p-2' sx={{ width: "100%", backgroundColor: '#EF6E0B', color: 'white', fontWeight: 'bold', fontSize: '16px', '&:hover': { backgroundColor: '#d65c0a', } }} onClick={submitBid}
                         disabled={state.submittingBid}>
                         <span>
                             {state.submittingBid ? 'Submitting...' : 'Submit Bid'}</span>
