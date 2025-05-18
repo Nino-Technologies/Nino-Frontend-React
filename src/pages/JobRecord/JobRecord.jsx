@@ -44,7 +44,7 @@ const JobRecord = () => {
     return (
         <div id='job-record' className='container mx-auto my-1 pt-5'>
             <div className='rounded-2 primary-color p-5'>
-                <h1 className='text-center text-white fw-bold'>Job Records</h1>
+                <h1 className='text-center text-white fw-bold'>Created Jobs</h1>
             </div>
 
             <div className="jobs-container mt-5">

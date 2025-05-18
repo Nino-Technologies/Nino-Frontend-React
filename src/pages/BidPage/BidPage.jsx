@@ -275,7 +275,7 @@ const BidPage = () => {
                 if (!response.ok) throw new Error('Failed to fetch bids');
 
                 const data = await response.json();
-
+                console.log('this are all the bids', response)
                 // Transform backend data to match frontend structure
                 const transformedBids = data.jobs.flatMap(job =>
                     job.applied.map(applied => ({
@@ -328,9 +328,27 @@ const BidPage = () => {
             console.error('Update error:', error);
         }
     };
+    // const GetArtisanBids = async () => {
+    //     try {
+    //         const response = await fetch('https://nino-backend.vercel.app/api/job/applied', {
+    //             method: 'GET', headers: {
+    //                 Authorization: cookies.grinderUser.token,
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         })
+    //         console.log(response)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
+
 
     if (loading) return <div className='d-flex justify-content-center align-items-center' style={{ minHeight: '80vh' }} > <Typography>Loading bids...</Typography></div>;
     if (error) return <div className='d-flex justify-content-center align-items-center' style={{ minHeight: '80vh' }} >  <Typography color="error">Error: {error}</Typography></div>;
+
+
+
 
     return (
         <div className='pb-5'>

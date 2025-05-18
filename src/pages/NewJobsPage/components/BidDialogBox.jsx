@@ -342,13 +342,17 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                             {job?.requestInspection ?
                                 <div className='d-flex gap-3 flex-wrap'>
                                     <div className='d-flex align-items-center gap-2'>
-                                        <input type="radio" name="inspection" id="" checked={!paidInspection} onChange={() => { setPaidInspection(false) }} /> <label htmlFor="inspection">Free Inspection</label>
+                                        <input type="radio" name="inspection" id="" onChange={() => {
+                                            setPaidInspection(false)
+                                            handleInputChange('inspectionFee', 0)
+                                        }} /> <label htmlFor="inspection">Free Inspection</label>
+                                        {/* onChange={(e) => handleInputChange('inspectionFee', e.target.value)} */}
                                     </div>
                                     <div className='d-flex align-items-center gap-2' >
                                         <input type="radio" name="inspection" id="" checked={paidInspection} onChange={() => { setPaidInspection(true) }} /> <label htmlFor="inspection">Paid Inspection</label>
                                     </div>
                                     <div className='d-flex align-items-center gap-2' >
-                                        <input type="radio" name="inspection" id="" checked={paidInspection} onChange={() => { console.log('done') }} /> <label htmlFor="inspection">No Inspection</label>
+                                        <input type="radio" name="inspection" id="" onChange={() => { setPaidInspection(false) }} /> <label htmlFor="inspection">No Inspection</label>
                                     </div>
                                 </div>
                                 : <p className='text-secondary-subtle'>Inspection Unavailable</p>}

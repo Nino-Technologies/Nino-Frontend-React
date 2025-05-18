@@ -241,6 +241,31 @@ const SingleJobPage = () => {
                 </div>
               </Paper>
             )}
+            {
+              // userProfile?._id === job?.user?._id && (
+              //   <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
+              //     <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
+              //     <div id='artisan-card-container' className="bg-white p-2 rounded bg-secondary-subtle artisan-card-container">
+              //       {job.applied.length < 1 ? (
+              //         <div>No Bids Yet</div>
+              //       ) : (
+              //         job.applied.map((applied, i) => (
+              //           <ArtisanCards key={applied._id || i} applied={applied} jobId={id} />
+              //         ))
+              //       )}
+              //     </div>
+              //   </Paper>
+              // )
+              job?.applied?.filter(job => job?.artisan?._id === userProfile?._id).length > 0 && (
+                <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
+                  <Typography className="fw-bold text-white mb-2">Your Bid</Typography>
+                  <div id='artisan-card-container' className="bg-white p-2 rounded bg-secondary-subtle artisan-card-container">
+                    {job?.applied?.filter(job => job?.artisan?._id === userProfile?._id).map((applied, i) => (
+                      <ArtisanCards key={applied?._id || i} applied={applied} jobId={id} userId={job?.user?._id} />
+                    ))}
+                  </div>
+                </Paper>
+              )}
           </Grid>
         </Grid>
       </div>
@@ -264,11 +289,12 @@ const InfoRow = ({ icon, label, value }) => (
 
 
 
-const ArtisanCards = ({ applied, jobId }) => {
+const ArtisanCards = ({ applied, jobId, userId }) => {
   const [requestInspection, setRequestInspection] = useState(false);
   const [paidInspection, setPaidInspection] = useState(false)
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies();
+  const { userProfile } = useContext(UserContext)
   useEffect(() => {
 
   })
@@ -383,7 +409,7 @@ const ArtisanCards = ({ applied, jobId }) => {
       </Box>
 
 
-      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }}>
+      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }} style={{ minWidth: '500px' }}>
         <DialogTitle>
           <h3 className='fw-bold ' style={{ color: '#EF6E0B' }}>Bid Details</h3>
         </DialogTitle>
@@ -443,42 +469,42 @@ const ArtisanCards = ({ applied, jobId }) => {
           </div> : <p className='text-center'>No inspection fee Required</p>
           }
         </div>
+        {
+          userProfile?._id === userId && (<DialogActions>
 
-        <DialogActions>
-
-          {applied?.inspectionFee > 0 ? <Button
-            // onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'accepted') }}
-            color="primary"
-            // disabled={applied?.inspectionFee > 0 ? 'true' : 'false'}
-            className='fw-bold'
-            sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
-          >
-            Pay for Inspection
-          </Button> : ''}
-          <Button
-            onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'accepted') }}
-            color="primary"
-            className='fw-bold'
-            sx={{ backgroundColor: '#EF6E0B', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
-          >
-            Accept Bid
-          </Button>
-          <Button
-            onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'rejected') }}
-            color="primary"
-            className='fw-bold'
-            sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'crimson' } }}
-          >
-            Reject Bid
-          </Button>
-          <Button
-            onClick={() => { setArtisanBidDetails(false) }}
-            color="primary"
-            variant='outlined'
-          >
-            Cancel
-          </Button>
-        </DialogActions>
+            {applied?.inspectionFee > 0 ? <Button
+              // onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'accepted') }}
+              color="primary"
+              // disabled={applied?.inspectionFee > 0 ? 'true' : 'false'}
+              className='fw-bold'
+              sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
+            >
+              Pay for Inspection
+            </Button> : ''}
+            <Button
+              onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'accepted') }}
+              color="primary"
+              className='fw-bold'
+              sx={{ backgroundColor: '#EF6E0B', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
+            >
+              Accept Bid
+            </Button>
+            <Button
+              onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'rejected') }}
+              color="primary"
+              className='fw-bold'
+              sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'crimson' } }}
+            >
+              Reject Bid
+            </Button>
+            <Button
+              onClick={() => { setArtisanBidDetails(false) }}
+              color="primary"
+              variant='outlined'
+            >
+              Cancel
+            </Button>
+          </DialogActions>)}
       </Dialog>
     </Paper>
   );

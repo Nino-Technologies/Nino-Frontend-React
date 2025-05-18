@@ -8,12 +8,12 @@ import Footer from '../../components/Footer/Footer';
 import { AccessTimeSharp, WalletRounded } from '@mui/icons-material';
 import { toast } from "react-toastify";
 import { useCookies } from 'react-cookie';
-
+import { Link } from 'react-router-dom';
 const BidCard = ({ bid, onUpdate }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [editedBid, setEditedBid] = useState(bid);
     const [cookies, setCookie, removeCookie] = useCookies();
-
+    const [disputeDescription, setDisputeDescription] = useState(''); // Add this line
     const submitDispute = async ({ jobId, description }) => {
         try {
             const response = await fetch("https://nino-backend.vercel.app/api/jobDispute", {
@@ -134,7 +134,8 @@ const BidCard = ({ bid, onUpdate }) => {
                         </Box>
                     )}
                     <Box className="" >
-                        <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#ef6e0b', position: 'relative', button: 0 }}>View Job</button>
+
+                        <Link to={`/single-job/${bid.job}`} className='text-white text-decoration-none w-100' >    <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#ef6e0b', position: 'relative', button: 0 }}>Link View Job</button></Link>
                     </Box>
                 </Box>
             </Box>
@@ -166,10 +167,10 @@ const BidCard = ({ bid, onUpdate }) => {
                         fullWidth
                         multiline
                         rows={4}
-                        label="Description"
-                        name='desciption'
-                        value={editedBid.description}
-                        onChange={(e) => setEditedBid({ ...editedBid, description: e.target.value })}
+                        label="Dispute Description"
+                        name='description' // Fixed typo
+                        value={disputeDescription}
+                        onChange={(e) => setDisputeDescription(e.target.value)}
                         sx={{ mb: 3 }}
                     />
 
@@ -186,12 +187,22 @@ const BidCard = ({ bid, onUpdate }) => {
                             Cancel                         </Button>
                         <Button
                             variant="contained"
-                            // onClick={handleUpdateBid}
                             sx={{
                                 backgroundColor: '#EF6E0B',
                                 '&:hover': { backgroundColor: '#d65c0a' }
                             }}
-                            onClick={() => { submitDispute() }}
+                            onClick={async () => {
+                                try {
+                                    await submitDispute({
+                                        jobId: bid.job, // Make sure your bid object contains the job ID
+                                        description: disputeDescription
+                                    });
+                                    setOpenEdit(false);
+                                    setDisputeDescription(''); // Clear the input
+                                } catch (error) {
+                                    // Error is already handled in submitDispute
+                                }
+                            }}
                         >
                             Submit Dispute
                         </Button>
