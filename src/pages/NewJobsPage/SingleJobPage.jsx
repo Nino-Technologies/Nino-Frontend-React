@@ -67,53 +67,11 @@ const SingleJobPage = () => {
       <Nav />
 
       <div className="container py-5 mt-5">
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
           {/* Left Panel */}
-          {/* <Grid item xs={12} md={8}>
-            <Paper className="" elevation={3} style={{ borderRadius: 16 }}>
-              <h3 className="fw-bold text-uppercase text-white p-4 rounded-top-4 " style={{ color: '#013049', backgroundColor: '#ef6e0b' }}>
-                {job?.title}
-              </h3>
-              <hr />
-
-              <div className="p-4">
-                <section className="mb-4 p-3 rounded" style={{ background: '#f0f4f7' }}>
-                  <h5 className="fw-bold" style={{ color: '#013049' }}>Description</h5>
-                  <p className="text-secondary">{job?.description}</p>
-                </section>
-
-                <section className="mb-4 p-3 rounded" style={{ background: '#f0f4f7' }}>
-                  <h5 className="fw-bold" style={{ color: '#013049' }}>Material Info</h5>
-                  <p className="text-secondary">{job?.materialInformation}</p>
-                </section>
-
-             
-                {job.media.length > 0 && (
-                  <Box sx={{ mt: 4 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: '#013049' }}>
-                      <h5 className="fw-bold" style={{ color: '#013049' }}> Attached Media</h5>
-                    </Typography>
-                    <div className="d-flex flex-wrap gap-3">
-                      {job.media.map((mediaUrl, index) => (
-                        <a href={mediaUrl} key={index} target="_blank" rel="noopener noreferrer">
-                          {mediaUrl.includes('video') ? (
-                            <video src={mediaUrl} controls style={{ width: 280, borderRadius: 12 }} />
-                          ) : (
-                            <div className='m-auto ' style={{ width: '300px', height: '300px', overflow: 'hidden', borderRadius: 12, cursor: 'pointer' }}> <img src={mediaUrl} alt={`Media ${index + 1}`} style={{ width: '100%', height: '100%', borderRadius: 12, objectFit: 'cover' }} />
-                            </div>
-                          )}
-                        </a>
-                      ))}
-                    </div>
-                  </Box>
-                )}
-              </div>
-            </Paper>
-          </Grid> */}
-
           {/* Right Panel */}
-          <Grid item xs={12} md={12}>
-            <Paper elevation={3} style={{ borderRadius: 16, padding: '24px', background: '#ffffff' }}>
+          <Grid item xs={12} md={8}>
+            <Paper elevation={3} style={{ borderRadius: 10, padding: '24px', background: '#ffffff' }}>
               <h4 className="fw-bold mb-4" style={{
                 color: '#013049', fontSize: '1.5rem',
               }}><span style={{
@@ -161,7 +119,7 @@ const SingleJobPage = () => {
 
                 <div>
                   <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}>  <GoClock style={{ color: '#013049', marginRight: 8 }} /><span>Estimated Time</span></Typography>
-                  <Typography variant="body1" className="fw-bold"><span>31/02/25 - 31/5/25</span></Typography>
+                  {/* <Typography variant="body1" className="fw-bold"><span>31/02/25 - 31/5/25</span></Typography> */}
                 </div>
               </div>
 
@@ -227,6 +185,9 @@ const SingleJobPage = () => {
 
 
             {/* Artisan Bids (Owner Only) */}
+
+          </Grid>
+          <Grid item xs={12} md={4}>
             {userProfile?._id === job?.user?._id && (
               <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
                 <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
@@ -235,37 +196,30 @@ const SingleJobPage = () => {
                     <div>No Bids Yet</div>
                   ) : (
                     job.applied.map((applied, i) => (
-                      <ArtisanCards key={applied._id || i} applied={applied} jobId={id} />
+                      <ArtisanCards key={applied._id || i} applied={applied} jobId={job._id} userId={job?.user?._id} />
                     ))
                   )}
                 </div>
               </Paper>
             )}
-            {
-              // userProfile?._id === job?.user?._id && (
-              //   <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
-              //     <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
-              //     <div id='artisan-card-container' className="bg-white p-2 rounded bg-secondary-subtle artisan-card-container">
-              //       {job.applied.length < 1 ? (
-              //         <div>No Bids Yet</div>
-              //       ) : (
-              //         job.applied.map((applied, i) => (
-              //           <ArtisanCards key={applied._id || i} applied={applied} jobId={id} />
-              //         ))
-              //       )}
-              //     </div>
-              //   </Paper>
-              // )
-              job?.applied?.filter(job => job?.artisan?._id === userProfile?._id).length > 0 && (
-                <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
-                  <Typography className="fw-bold text-white mb-2">Your Bid</Typography>
-                  <div id='artisan-card-container' className="bg-white p-2 rounded bg-secondary-subtle artisan-card-container">
-                    {job?.applied?.filter(job => job?.artisan?._id === userProfile?._id).map((applied, i) => (
-                      <ArtisanCards key={applied?._id || i} applied={applied} jobId={id} userId={job?.user?._id} />
+
+            {job?.applied?.filter(job => job?.artisan?._id === userProfile?._id).length > 0 && (
+              <Paper sx={{ mt: { sx: 3, md: 0 }, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
+                <Typography className="fw-bold text-white mb-2">Your Bid</Typography>
+                <div id='artisan-card-container' className="bg-white p-2 rounded bg-secondary-subtle artisan-card-container">
+                  {job.applied
+                    .filter(applied => applied?.artisan?._id === userProfile?._id)
+                    .map((applied, i) => (
+                      <ArtisanCards
+                        key={applied._id || i}
+                        applied={applied}
+                        jobId={job._id}
+                        userId={job?.user?._id}  // Correct prop passing
+                      />
                     ))}
-                  </div>
-                </Paper>
-              )}
+                </div>
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </div>
@@ -296,7 +250,9 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const { userProfile } = useContext(UserContext)
   useEffect(() => {
-
+    console.log(jobId, 'this is the job id from artisan card');
+    console.log(applied, 'this is the applied from artisan card');
+    console.log(userId, 'this is the user id from artisan card');
   })
   const updateJobStatus = async ({ jobId, artisanId, status }) => {
     try {
@@ -469,42 +425,39 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
           </div> : <p className='text-center'>No inspection fee Required</p>
           }
         </div>
-        {
-          userProfile?._id === userId && (<DialogActions>
-
-            {applied?.inspectionFee > 0 ? <Button
-              // onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'accepted') }}
-              color="primary"
-              // disabled={applied?.inspectionFee > 0 ? 'true' : 'false'}
-              className='fw-bold'
-              sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
-            >
-              Pay for Inspection
-            </Button> : ''}
+        {userProfile?._id === userId && (
+          <DialogActions>
+            {console.log(userProfile?._id, userId, 'this is from dialog box')}
+            {applied?.inspectionFee > 0 && (
+              <Button
+                className='fw-bold'
+                sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
+              >
+                Pay for Inspection
+              </Button>
+            )}
             <Button
-              onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'accepted') }}
-              color="primary"
+              onClick={() => updateJobStatus(jobId, applied?.artisan?._id, 'accepted')}
               className='fw-bold'
               sx={{ backgroundColor: '#EF6E0B', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
             >
               Accept Bid
             </Button>
             <Button
-              onClick={() => { updateJobStatus(jobId, applied?.artisan?._id, 'rejected') }}
-              color="primary"
+              onClick={() => updateJobStatus(jobId, applied?.artisan?._id, 'rejected')}
               className='fw-bold'
               sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'crimson' } }}
             >
               Reject Bid
             </Button>
             <Button
-              onClick={() => { setArtisanBidDetails(false) }}
-              color="primary"
+              onClick={() => setArtisanBidDetails(false)}
               variant='outlined'
             >
               Cancel
             </Button>
-          </DialogActions>)}
+          </DialogActions>
+        )}
       </Dialog>
     </Paper>
   );
