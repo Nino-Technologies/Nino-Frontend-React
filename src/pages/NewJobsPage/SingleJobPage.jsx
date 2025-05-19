@@ -189,7 +189,7 @@ const SingleJobPage = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             {userProfile?._id === job?.user?._id && (
-              <Paper sx={{ mt: 3, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
+              <Paper sx={{ mt: { xs: 3, md: 0 }, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
                 <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
                 <div id='artisan-card-container' className="bg-white p-2 rounded bg-secondary-subtle artisan-card-container">
                   {job.applied.length < 1 ? (
@@ -204,7 +204,7 @@ const SingleJobPage = () => {
             )}
 
             {job?.applied?.filter(job => job?.artisan?._id === userProfile?._id).length > 0 && (
-              <Paper sx={{ mt: { sx: 3, md: 0 }, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
+              <Paper sx={{ mt: { xs: 3, md: 0 }, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
                 <Typography className="fw-bold text-white mb-2">Your Bid</Typography>
                 <div id='artisan-card-container' className="bg-white p-2 rounded bg-secondary-subtle artisan-card-container">
                   {job.applied
@@ -365,7 +365,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
       </Box>
 
 
-      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }} style={{ minWidth: '500px' }}>
+      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }} style={{}}>
         <DialogTitle>
           <h3 className='fw-bold ' style={{ color: '#EF6E0B' }}>Bid Details</h3>
         </DialogTitle>
