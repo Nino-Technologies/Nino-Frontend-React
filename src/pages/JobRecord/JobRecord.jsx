@@ -75,23 +75,21 @@ const JobCard = ({ job }) => {
             <div className="d-flex justify-content-between align-items-center">
                 <h5 className="fw-bold">{job.title}</h5>
                 <div className="d-flex gap-2">
-                    <span>Job Status : <span className='fw-bold text-success-emphasis'>On Going</span></span>
+                    <span>Job Status : <span className='fw-bold   text-light'>{job.artisan ? <span className='text-light bg-success p-2 rounded' style={{ fontSize: '12px' }}>On going</span> : <span className='fw-bold p-2 rounded bg-warning text-black' style={{ fontSize: '12px' }}> Pending</span>}</span></span>
                 </div>
             </div>
             <hr />
             <div className="d-flex flex-wrap mt-2 justify-content-between fw-bold text-secondary fs-6">
                 <div className="d-flex">
-                    <p className="fw-bold">Company</p>
-                    <span className="mx-2">|</span>
                     <p>{new Date(job.createdAt).toLocaleDateString()}</p>
                 </div>
-                <p className="d-flex align-items-center gap-2 fs-6">
+                <p className="d-flex align-items-center gap-2 fs-6" style={{ fontSize: '12px' }}>
                     <LocationOnOutlined className="fs-6" />
                     {job.location}
                 </p>
                 <p className="d-flex align-items-center gap-2">
-                    <TbMoneybag />
-                    ${job.budget}
+                    <TbMoneybag className='text-sucess' />
+                    ₦{job.budget}
                 </p>
                 <p className="d-flex align-items-center gap-2">
                     <WorkRounded className="fs-6" />

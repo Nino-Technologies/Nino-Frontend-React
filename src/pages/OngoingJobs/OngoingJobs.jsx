@@ -14,6 +14,9 @@ const BidCard = ({ bid, onUpdate }) => {
     const [editedBid, setEditedBid] = useState(bid);
     const [cookies, setCookie, removeCookie] = useCookies();
     const [disputeDescription, setDisputeDescription] = useState(''); // Add this line
+    useEffect(() => {
+
+    }, [])
     const submitDispute = async ({ jobId, description }) => {
         try {
             const response = await fetch("https://nino-backend.vercel.app/api/jobDispute", {
@@ -135,7 +138,7 @@ const BidCard = ({ bid, onUpdate }) => {
                     )}
                     <Box className="" >
 
-                        <Link to={`/single-job/${bid.job}`} className='text-white text-decoration-none w-100' >    <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#ef6e0b', position: 'relative', button: 0 }}>Link View Job</button></Link>
+                        <Link to={`/single-job/${bid.job}`} className='text-white text-decoration-none w-100' >    <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#013049', position: 'relative', button: 0 }}>Link View Job</button></Link>
                     </Box>
                 </Box>
             </Box>
@@ -146,23 +149,6 @@ const BidCard = ({ bid, onUpdate }) => {
                     <Typography variant="h5" sx={{ color: '#013049', mb: 3 }}>
                         Create Dispute for {bid.jobTitle}
                     </Typography>
-
-                    {/* <TextField
-                        fullWidth
-                        label="Bid Amount"
-                        value={editedBid.amount}
-                        onChange={(e) => setEditedBid({ ...editedBid, amount: e.target.value })}
-                        sx={{ mb: 3 }}
-                    /> */}
-
-                    {/* <TextField
-                        fullWidth
-                        label="Timeline (days)"
-                        value={editedBid.timeline}
-                        onChange={(e) => setEditedBid({ ...editedBid, timeline: e.target.value })}
-                        sx={{ mb: 3 }}
-                    /> */}
-
                     <TextField
                         fullWidth
                         multiline
@@ -173,7 +159,6 @@ const BidCard = ({ bid, onUpdate }) => {
                         onChange={(e) => setDisputeDescription(e.target.value)}
                         sx={{ mb: 3 }}
                     />
-
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
                         <Button
                             variant="outlined"

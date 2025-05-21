@@ -288,6 +288,14 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
         throw new Error(`API Error: ${errorData.message || response.statusText}`);
       }
       console.log(response, 'this is the response from artisan card');
+
+      setArtisanBidDetails(false)
+      if (status === 'accepted') {
+        toast.success('Artisan Bid Accepted  Successfully');
+      }
+      else {
+        toast.success('Artisan Bid Rejected  Successfully');
+      }
       return await response.json();
     } catch (error) {
       console.log(error);
@@ -441,14 +449,22 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
               </Button>
             )}
             <Button
-              onClick={() => updateJobStatus(jobId, applied?.artisan?._id, 'accepted')}
+              onClick={() => updateJobStatus({
+                jobId: jobId,
+                artisanId: applied?.artisan?._id,
+                status: 'accepted'
+              })}
               className='fw-bold'
               sx={{ backgroundColor: '#EF6E0B', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
             >
               Accept Bid
             </Button>
             <Button
-              onClick={() => updateJobStatus(jobId, applied?.artisan?._id, 'rejected')}
+              onClick={() => updateJobStatus({
+                jobId: jobId,
+                artisanId: applied?.artisan?._id,
+                status: 'rejected'
+              })}
               className='fw-bold'
               sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'crimson' } }}
             >
