@@ -275,6 +275,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
         artisanId: artisanId,
         status: status
       });
+      console.log(body, 'this is the object from artisan card');
       const response = await fetch('https://nino-backend.vercel.app/api/job/artisan', {
         method: 'POST',
         headers,
@@ -285,6 +286,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
         const errorData = await response.json();
         throw new Error(`API Error: ${errorData.message || response.statusText}`);
       }
+      console.log(response, 'this is the response from artisan card');
       return await response.json();
     } catch (error) {
       console.log(error);
@@ -418,10 +420,11 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
           </div>
           {applied.inspectionFee > 0 ? <div className="rounded bg-secondary-subtle p-2 d-flex gap-1 flex-column " style={{ width: '500px', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Inspection Fee : ₦ {applied.inspectionFee}</h6>
-            <div className='d-flex gap-2 flex-wrap'>
+            {userProfile?._id === userId && (<div className='d-flex gap-2 flex-wrap'>
               <input type="text" placeholder='Address' className='p-3 rounded border-solid border-black' />
               <input type="datetime-local" placeholder='Inspection Date' className='p-3 rounded border-solid border-black' />
             </div>
+            )}
           </div> : <p className='text-center'>No inspection fee Required</p>
           }
         </div>
