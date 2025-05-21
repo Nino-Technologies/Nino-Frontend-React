@@ -256,6 +256,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
   })
   const updateJobStatus = async ({ jobId, artisanId, status }) => {
     try {
+      console.log(jobId, artisanId, status, 'this is the job id from artisan card');
       // Validate required parameters
       if (!jobId || !artisanId || !status) {
         throw new Error('Missing required parameters: jobId, artisanId, status');
