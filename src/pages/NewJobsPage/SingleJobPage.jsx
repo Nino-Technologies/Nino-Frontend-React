@@ -18,7 +18,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { toast } from 'react-toastify'
 import './SingleJobPage.scss'
-
+import { usePaystackPayment } from "react-paystack";
 const SingleJobPage = () => {
   const { id } = useParams()
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -248,7 +248,8 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
   const [paidInspection, setPaidInspection] = useState(false)
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies();
-  const { userProfile } = useContext(UserContext)
+  const { userProfile } = useContext(UserContext);
+
   useEffect(() => {
     console.log(jobId, 'this is the job id from artisan card');
     console.log(applied, 'this is the applied from artisan card');
@@ -292,6 +293,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
       setArtisanBidDetails(false)
       if (status === 'accepted') {
         toast.success('Artisan Bid Accepted  Successfully');
+
       }
       else {
         toast.success('Artisan Bid Rejected  Successfully');
