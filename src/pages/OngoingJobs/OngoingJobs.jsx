@@ -9,6 +9,8 @@ import { AccessTimeSharp, WalletRounded } from '@mui/icons-material';
 import { toast } from "react-toastify";
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
+
+import { SlOptionsVertical } from "react-icons/sl";
 const BidCard = ({ bid, onUpdate }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [editedBid, setEditedBid] = useState(bid);
@@ -17,6 +19,7 @@ const BidCard = ({ bid, onUpdate }) => {
     useEffect(() => {
 
     }, [])
+    const [cardOptions, setCardOptions] = useState(false)
     const submitDispute = async ({ jobId, description }) => {
         try {
             const response = await fetch("https://nino-backend.vercel.app/api/jobDispute", {
@@ -80,6 +83,8 @@ const BidCard = ({ bid, onUpdate }) => {
         }
     };
 
+
+
     return (
         <Paper elevation={1} sx={{
             p: 3,
@@ -90,15 +95,17 @@ const BidCard = ({ bid, onUpdate }) => {
             transition: '0.3s',
             '&:hover': {
                 boxShadow: '0 4px 20px 0 rgba(0,0,0,0.12)'
-            }
+
+            },
+            position: 'relative'
         }}>
             {/* Edit Button */}
-            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between', alignItems: 'start', mb: 2 }}>
                 <Typography variant="h6" sx={{ color: '#013049', mb: 1, fontWeight: 'bold' }}>
                     {bid.jobTitle}
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column', }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
+                    {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Button
                             variant="outlined"// startIcon={<EditIcon />}
                             sx={{
@@ -113,7 +120,19 @@ const BidCard = ({ bid, onUpdate }) => {
                         >
                             Dispute
                         </Button>
-                    </Box>
+                    </Box> */}
+                    <span className='cursor-pointer text-end px-3'>
+                        <SlOptionsVertical className=' ' style={{ cursor: 'pointer' }} onClick={() => setCardOptions(!cardOptions)} />
+
+                    </span>
+                    {cardOptions ? <ul className='card-options shadow bg-white rounded p-2  z-2 position-relative' style={{ right: 20 }}>
+                        <li className='list-unstyled'>
+                            <Button onClick={() => setOpenEdit(true)}>
+                                Dispute
+                            </Button>
+                        </li>
+                    </ul> : ''}
+
                 </Box>
 
                 {/* Bid Content */}

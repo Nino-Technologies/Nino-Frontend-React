@@ -201,8 +201,10 @@ const CreateNewJobPage = () => {
 
             <Box sx={{ flex: 2, padding: { md: 4 } }}>
                 <Paper elevation={3} sx={{ padding: { xs: 1, md: 4 } }}>
-                    <Typography variant="h4" sx={{ color: '#EF6E0B', textAlign: 'center', mb: 3 }}>
-                        Create a New Job
+                    <Typography variant="h4" sx={{ color: '#EF6E0B', textAlign: 'center', mb: 3, fontWeight: 900 }}>
+                        <span className='fw-bold '>
+                            Create a New Job
+                        </span>
                     </Typography>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={3}>

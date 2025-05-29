@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Nav from '../../components/Nav/Nav'
 import { Box, Chip, CircularProgress, Grid, Paper, TextField, Typography } from '@mui/material'
-import { ArrowBackRounded, Category, Description, GpsFixedSharp, LocationCity, LocationOn, MoneyRounded, Photo, Title } from '@mui/icons-material'
+import { ArrowBackRounded, Category, Description, Email, GpsFixedSharp, LocationCity, LocationOn, MoneyRounded, Photo, Title } from '@mui/icons-material'
 
 import { TbGps } from 'react-icons/tb'
 import { BsTools } from 'react-icons/bs'
@@ -61,16 +61,16 @@ const SingleJobPage = () => {
     <span className="ms-3 fs-5">Loading job Details...</span>
   </div>;
   if (!job) return <div>Job not found</div>;
-
+  console.log(job)
   return (
     <div className="w-100 " style={{ backgroundColor: '#013049', minHeight: '100vh' }}>
       <Nav />
 
       <div className="container py-5 mt-5">
-        <Grid container spacing={2}>
+        <Grid container spacing={2} >
           {/* Left Panel */}
           {/* Right Panel */}
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={8} className='m-auto'>
             <Paper elevation={3} style={{ borderRadius: 10, padding: '24px', background: '#ffffff' }}>
               <h4 className="fw-bold mb-4" style={{
                 color: '#013049', fontSize: '1.5rem',
@@ -187,7 +187,7 @@ const SingleJobPage = () => {
             {/* Artisan Bids (Owner Only) */}
 
           </Grid>
-          <Grid item xs={12} md={4}>
+          {job.status === 'pending' && (<Grid item xs={12} md={4}>
             {userProfile?._id === job?.user?._id && (
               <Paper sx={{ mt: { xs: 3, md: 0 }, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
                 <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
@@ -220,7 +220,7 @@ const SingleJobPage = () => {
                 </div>
               </Paper>
             )}
-          </Grid>
+          </Grid>)}
         </Grid>
       </div>
     </div>
@@ -248,12 +248,73 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
   const [paidInspection, setPaidInspection] = useState(false)
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies();
-  const { userProfile } = useContext(UserContext);
+  const { userProfile, token } = useContext(UserContext);
+  // const [payment, setOpen] = useState(false);
+  const config = {
+    reference: jobId,
+    email: userProfile.email,
+    amount: applied.amount * 100,
+    //save key in .env
+    publicKey: "pk_live_e109e2fcfae6ad6a12d44d9d3d0833abd80b4cc4",
+  };
+  const initializePayment = usePaystackPayment(config);
+  const onSuccess = async (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log('this is the reference after the payment', reference);
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", "{{vault:json-web-token}}");
 
+      const raw = {
+        type: "pay",
+        artisan: applied?.artisan._id,
+        amount: applied?.amount,
+        payment_verified: true,
+        status: "inprogress",
+        redirectUrl: window.location.href,
+        reference: reference
+      };
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(raw),
+        redirect: "follow"
+      };
+
+      const response = await fetch(`${token}/payments/job?jobId=${jobId}`, requestOptions)
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Payment verification failed');
+      }
+      const result = await response.json();
+      console.log('Payment verification successful:', result);
+
+      // Show success notification to user
+      toast.success('Payment processed successfully!');
+
+      // You might want to update UI state here
+      return result;
+
+    } catch (error) {
+      console.error('Payment processing error:', error);
+
+      // Show error notification to user
+      toast.error(error.message || 'Failed to process payment');
+
+    }
+  }
+
+  const onClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    toast.info("Payment Canceled");
+  };
   useEffect(() => {
     console.log(jobId, 'this is the job id from artisan card');
     console.log(applied, 'this is the applied from artisan card');
     console.log(userId, 'this is the user id from artisan card');
+    console.log(config, 'this is the config from artisan card')
   })
   const updateJobStatus = async ({ jobId, artisanId, status }) => {
     try {
@@ -277,6 +338,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
         artisanId: artisanId,
         status: status
       });
+
       console.log(body, 'this is the object from artisan card');
       const response = await fetch('https://nino-backend.vercel.app/api/job/artisan', {
         method: 'POST',
@@ -293,7 +355,11 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
       setArtisanBidDetails(false)
       if (status === 'accepted') {
         toast.success('Artisan Bid Accepted  Successfully');
-
+        // depositFundsForJob()
+        if (applied?.amount > 0) {
+          initializePayment(onSuccess, onClose)
+        }
+        setArtisanBidDetails(false)
       }
       else {
         toast.success('Artisan Bid Rejected  Successfully');
