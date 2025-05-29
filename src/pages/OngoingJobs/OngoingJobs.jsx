@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Typography, Button, Paper, Chip, Dialog, TextField, Grid, CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -11,10 +11,12 @@ import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 
 import { SlOptionsVertical } from "react-icons/sl";
+import { UserContext } from '../../context/UserContext';
 const BidCard = ({ bid, onUpdate }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [editedBid, setEditedBid] = useState(bid);
     const [cookies, setCookie, removeCookie] = useCookies();
+    const { userProfile, token } = useContext(UserContext);
     const [disputeDescription, setDisputeDescription] = useState(''); // Add this line
     useEffect(() => {
 
@@ -102,9 +104,9 @@ const BidCard = ({ bid, onUpdate }) => {
             {/* Edit Button */}
             <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between', alignItems: 'start', mb: 2 }}>
                 <Typography variant="h6" sx={{ color: '#013049', mb: 1, fontWeight: 'bold' }}>
-                    {bid.jobTitle}
+                    {bid.jobTitle.length > 20 ? `${bid.jobTitle.slice(0, 20)}...` : bid.jobTitle}
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', position: '' }}>
                     {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Button
                             variant="outlined"// startIcon={<EditIcon />}
@@ -125,11 +127,16 @@ const BidCard = ({ bid, onUpdate }) => {
                         <SlOptionsVertical className=' ' style={{ cursor: 'pointer' }} onClick={() => setCardOptions(!cardOptions)} />
 
                     </span>
-                    {cardOptions ? <ul className='card-options shadow bg-white rounded p-2  z-2 position-relative' style={{ right: 20 }}>
+                    {cardOptions ? <ul className='card-options shadow bg-white rounded p-2  z-2 position-absolute' style={{ right: 30, top: 60 }}>
                         <li className='list-unstyled'>
-                            <Button onClick={() => setOpenEdit(true)}>
+                            <Button onClick={() => setOpenEdit(true)} className='text-black'>
                                 Dispute
                             </Button>
+
+                        </li>
+                        <li className='list-unstyled'>
+                            <Link to={`/single-job/${bid.job}`}  >
+                                <Button className='text-black'>View Job</Button> </Link>
                         </li>
                     </ul> : ''}
 
@@ -185,7 +192,9 @@ const BidCard = ({ bid, onUpdate }) => {
                     )}
                     <Box className="" >
 
-                        <Link to={`/single-job/${bid.job}`} className='text-white text-decoration-none w-100' >    <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#013049', position: 'relative', button: 0 }}>Link View Job</button></Link>
+                        {userProfile.role === 0 ? <Button className='text-white' variant='contained' sx={{ width: '100%', color: 'white', backgroundColor: '#ef6e0b' }}><span>
+                            Satisfied with Job   </span> </Button> : <Button variant='contained' sx={{ width: '100%', color: 'white', backgroundColor: '#ef6e0b' }} className='text-black'><span>
+                                Task  Completed    </span></Button>}
                     </Box>
                 </Box>
             </Box>
