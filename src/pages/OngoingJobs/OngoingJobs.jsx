@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Typography, Button, Paper, Chip, Dialog, TextField, Grid } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import { Box, Typography, Button, Paper, Chip, Dialog, TextField, Grid, CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ScheduleIcon from '@mui/icons-material/Schedule';
@@ -9,14 +9,19 @@ import { AccessTimeSharp, WalletRounded } from '@mui/icons-material';
 import { toast } from "react-toastify";
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
+
+import { SlOptionsVertical } from "react-icons/sl";
+import { UserContext } from '../../context/UserContext';
 const BidCard = ({ bid, onUpdate }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [editedBid, setEditedBid] = useState(bid);
     const [cookies, setCookie, removeCookie] = useCookies();
+    const { userProfile, token } = useContext(UserContext);
     const [disputeDescription, setDisputeDescription] = useState(''); // Add this line
     useEffect(() => {
 
     }, [])
+    const [cardOptions, setCardOptions] = useState(false)
     const submitDispute = async ({ jobId, description }) => {
         try {
             const response = await fetch("https://nino-backend.vercel.app/api/jobDispute", {
@@ -52,6 +57,36 @@ const BidCard = ({ bid, onUpdate }) => {
         onUpdate(editedBid);
         setOpenEdit(false);
     }
+
+    // Add this utility function outside your component
+    const calculateDaysLeft = (timelineString) => {
+        if (!timelineString) return 'N/A';
+
+        try {
+            // Split the date range into start and end dates
+            const [startDateStr, endDateStr] = timelineString.split('-');
+
+            // Parse the dates (assuming format DD/MM/YYYY)
+            const [day, month, year] = endDateStr.split('/');
+            const endDate = new Date(`${year}-${month}-${day}`);
+            const today = new Date();
+
+            // Calculate difference in days
+            const timeDiff = endDate - today;
+            const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+            // Return appropriate message
+            if (daysLeft < 0) return 'Exceeded';
+            if (daysLeft === 0) return 'Due today';
+            return `${daysLeft} day${daysLeft !== 1 ? 's' : ''} left`;
+        } catch (error) {
+            console.error('Error parsing timeline:', error);
+            return 'N/A';
+        }
+    };
+
+
+
     return (
         <Paper elevation={1} sx={{
             p: 3,
@@ -62,15 +97,17 @@ const BidCard = ({ bid, onUpdate }) => {
             transition: '0.3s',
             '&:hover': {
                 boxShadow: '0 4px 20px 0 rgba(0,0,0,0.12)'
-            }
+
+            },
+            position: 'relative'
         }}>
             {/* Edit Button */}
-            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between', alignItems: 'start', mb: 2 }}>
                 <Typography variant="h6" sx={{ color: '#013049', mb: 1, fontWeight: 'bold' }}>
-                    {bid.jobTitle}
+                    {bid.jobTitle.length > 20 ? `${bid.jobTitle.slice(0, 20)}...` : bid.jobTitle}
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column', }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', position: '' }}>
+                    {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Button
                             variant="outlined"// startIcon={<EditIcon />}
                             sx={{
@@ -85,7 +122,24 @@ const BidCard = ({ bid, onUpdate }) => {
                         >
                             Dispute
                         </Button>
-                    </Box>
+                    </Box> */}
+                    <span className='cursor-pointer text-end px-3'>
+                        <SlOptionsVertical className=' ' style={{ cursor: 'pointer' }} onClick={() => setCardOptions(!cardOptions)} />
+
+                    </span>
+                    {cardOptions ? <ul className='card-options shadow bg-white rounded p-2  z-2 position-absolute' style={{ right: 30, top: 60 }}>
+                        <li className='list-unstyled'>
+                            <Button onClick={() => setOpenEdit(true)} className='text-black'>
+                                Dispute
+                            </Button>
+
+                        </li>
+                        <li className='list-unstyled'>
+                            <Link to={`/single-job/${bid.job}`}  >
+                                <Button className='text-black'>View Job</Button> </Link>
+                        </li>
+                    </ul> : ''}
+
                 </Box>
 
                 {/* Bid Content */}
@@ -95,7 +149,7 @@ const BidCard = ({ bid, onUpdate }) => {
             <Box className='h-100 d-flex flex-column justify-content-between' sx={{ flexGrow: 1 }}>
                 <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 2 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <AttachMoneyIcon sx={{ color: '#EF6E0B', mr: 1 }} />
+                        {/* <AttachMoneyIcon sx={{ color: '#EF6E0B', mr: 1 }} /> */}
                         <Typography variant="body1">
                             ₦{bid.amount}
                         </Typography>
@@ -104,7 +158,7 @@ const BidCard = ({ bid, onUpdate }) => {
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <ScheduleIcon sx={{ color: '#EF6E0B', mr: 1 }} />
                         <Typography variant="body1">
-                            {bid.timeline} days
+                            {calculateDaysLeft(bid.timeLine)}
                         </Typography>
                     </Box>
                 </Box>
@@ -138,7 +192,9 @@ const BidCard = ({ bid, onUpdate }) => {
                     )}
                     <Box className="" >
 
-                        <Link to={`/single-job/${bid.job}`} className='text-white text-decoration-none w-100' >    <button className='btn bg-primaryy w-100 text-white' style={{ backgroundColor: '#013049', position: 'relative', button: 0 }}>Link View Job</button></Link>
+                        {userProfile.role === 0 ? <Button className='text-white' variant='contained' sx={{ width: '100%', color: 'white', backgroundColor: '#ef6e0b' }}><span>
+                            Satisfied with Job   </span> </Button> : <Button variant='contained' sx={{ width: '100%', color: 'white', backgroundColor: '#ef6e0b' }} className='text-black'><span>
+                                Task  Completed    </span></Button>}
                     </Box>
                 </Box>
             </Box>
@@ -199,35 +255,166 @@ const BidCard = ({ bid, onUpdate }) => {
     );
 };
 
+// const OngoingJobs = () => {
+//     const [jobs, setJobs] = useState([]);
+//     const [loading, setLoading] = useState(true);
+//     const [error, setError] = useState(null);
+//     const [cookies, setCookie, removeCookie] = useCookies();
+//     useEffect(() => {
+//         const fetchJobs = async () => {
+//             try {
+//                 const myHeaders = new Headers();
+//                 myHeaders.append("Authorization", cookies.grinderUser.token);
+
+//                 const response = await fetch("https://nino-backend.vercel.app/api/job/mine", {
+//                     method: "GET",
+//                     headers: myHeaders,
+//                     redirect: "follow"
+//                 });
+
+//                 if (!response.ok) {
+//                     throw new Error(`HTTP error! status: ${response.status}`);
+//                 }
+
+//                 const data = await response.json();
+//                 const activeJobs = await data.jobs.filter(job => job.application !== null); // Filter for ongoing jobs
+//                 setJobs(data.jobs);
+//                 setBids(activeJobs.application); // Assuming jobs contain the bids data
+//                 if (data.jobs.length === 0) {
+//                     toast.info("No ongoing jobs found.");
+//                 }
+//             } catch (err) {
+//                 setError(err.message);
+//             } finally {
+//                 setLoading(false);
+//             }
+//         };
+
+//         fetchJobs();
+//     }, []);
+//     const [bids, setBids] = useState([
+//         // Sample bids data
+
+//         // Add more sample bids as needed
+//     ]);
+
+//     const handleUpdateBid = (updatedBid) => {
+//         setBids(bids.map(bid => bid.id === updatedBid.id ? updatedBid : bid));
+//     };
+
+//     return (
+//         <div className='pb-5'>
+
+//             <Box sx={{
+//                 p: 4,
+//                 mt: 2,
+//                 minHeight: 'calc(100vh - 128px)'
+//             }}>
+//                 <div className='d-flex justify-content-center align-items-center p-5 rounded-3 mb-4' style={{ backgroundColor: '#ef6e0b' }}>
+//                     <Typography variant="h4" sx={{
+//                         color: '#fff',
+//                         mb: 4,
+//                         fontWeight: 'bold',
+//                         textAlign: 'center'
+//                     }}>
+//                         <span class='fw-6'>  ACTIVE JOBS</span>
+//                     </Typography>
+
+//                 </div>
+//                 <div className='d-flex gap-2  mb-4'>
+//                     <div className='p-2 rounded-1 bg-secondary-subtle my-2'>
+//                         <span className='fw-5'> <WalletRounded style={{ color: '#ef6e0b' }} /> <span className='fw-bold'>Wallet</span> : 510,045</span>
+//                     </div>
+//                     <div className='p-2 rounded-1 bg-secondary-subtle my-2'>
+//                         <span className='fw-5'> <AccessTimeSharp style={{ color: '#ef6e0b' }} /> <span className='fw-bold'>Pending</span>  : 510,045</span>
+//                     </div>
+//                 </div>
+//                 <Grid container spacing={3}>
+//                     {bids.map(bid => (
+//                         <Grid item key={bid.id} xs={12} sm={6} md={4}>
+//                             <BidCard
+//                                 bid={bid.application}
+//                                 onUpdate={handleUpdateBid}
+//                             />
+//                         </Grid>
+//                     ))}
+//                 </Grid>
+//             </Box>
+
+//         </div>
+//     );
+// };
 const OngoingJobs = () => {
-    const [bids, setBids] = useState([
-        // Sample bids data
-        {
-            id: 1,
-            jobTitle: "Kitchen Wiring Installation",
-            amount: "150,000",
-            timeline: "14",
-            description: "Complete installation of kitchen wiring with safety certification",
-            materials: ["2mm cables", "Circuit breakers", "Socket outlets"]
-        },
-        {
-            id: 2,
-            jobTitle: "Office Lighting Upgrade",
-            amount: "85,000",
-            timeline: "7",
-            inspection: 'pending Approval',
-            description: "LED lighting upgrade for office space including dimmer switches"
-        },
-        // Add more sample bids as needed
-    ]);
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [cookies, setCookie, removeCookie] = useCookies();
+
+    useEffect(() => {
+        const fetchJobs = async () => {
+            try {
+                const myHeaders = new Headers();
+                myHeaders.append("Authorization", cookies.grinderUser.token);
+
+                const response = await fetch("https://nino-backend.vercel.app/api/job/mine", {
+                    method: "GET",
+                    headers: myHeaders,
+                    redirect: "follow"
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                setJobs(data.jobs);
+
+                // Filter jobs to only include those with application data and status "inprogress"
+                const ongoingJobs = data.jobs.filter(job =>
+                    (job.application || (job.applied && job.applied.length > 0)) &&
+                    job.status === "inprogress"
+                );
+
+                setBids(ongoingJobs);
+
+                if (ongoingJobs.length === 0) {
+                    toast.info("No ongoing jobs found.");
+                }
+            } catch (err) {
+                setError(err.message);
+                toast.error("Failed to fetch jobs: " + err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchJobs();
+    }, []);
+
+    const [bids, setBids] = useState([]);
 
     const handleUpdateBid = (updatedBid) => {
         setBids(bids.map(bid => bid.id === updatedBid.id ? updatedBid : bid));
     };
 
+    if (loading) {
+        return (
+            <Box sx={{ p: 4, textAlign: 'center' }}>
+                <CircularProgress />
+            </Box>
+        );
+    }
+
+    if (error) {
+        return (
+            <Box sx={{ p: 4, textAlign: 'center' }}>
+                <Typography color="error">{error}</Typography>
+            </Box>
+        );
+    }
+
     return (
         <div className='pb-5'>
-
             <Box sx={{
                 p: 4,
                 mt: 2,
@@ -240,32 +427,49 @@ const OngoingJobs = () => {
                         fontWeight: 'bold',
                         textAlign: 'center'
                     }}>
-                        <span class='fw-6'>  ACTIVE JOBS</span>
+                        <span className='fw-6'>ACTIVE JOBS</span>
                     </Typography>
-
                 </div>
-                <div className='d-flex gap-2  mb-4'>
+                <div className='d-flex gap-2 mb-4'>
                     <div className='p-2 rounded-1 bg-secondary-subtle my-2'>
                         <span className='fw-5'> <WalletRounded style={{ color: '#ef6e0b' }} /> <span className='fw-bold'>Wallet</span> : 510,045</span>
                     </div>
                     <div className='p-2 rounded-1 bg-secondary-subtle my-2'>
-                        <span className='fw-5'> <AccessTimeSharp style={{ color: '#ef6e0b' }} /> <span className='fw-bold'>Pending</span>  : 510,045</span>
+                        <span className='fw-5'> <AccessTimeSharp style={{ color: '#ef6e0b' }} /> <span className='fw-bold'>Pending</span> : 510,045</span>
                     </div>
                 </div>
-                <Grid container spacing={3}>
-                    {bids.map(bid => (
-                        <Grid item key={bid.id} xs={12} sm={6} md={4}>
-                            <BidCard
-                                bid={bid}
-                                onUpdate={handleUpdateBid}
-                            />
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
 
+                {bids.length === 0 ? (
+                    <Box sx={{ p: 4, textAlign: 'center' }}>
+                        <Typography variant="h6">No ongoing jobs found</Typography>
+                    </Box>
+                ) : (
+                    <Grid container spacing={3}>
+                        {bids.map((job) => {
+                            // Use the application data if it exists, otherwise use the first applied item
+                            const application = job.application ||
+                                (job.applied && job.applied.length > 0 ? job.applied[0] : null);
+
+                            if (!application) return null;
+
+                            return (
+                                <Grid item key={job._id} xs={12} sm={6} md={4}>
+                                    <BidCard
+                                        bid={{
+                                            ...application,
+                                            jobTitle: job.title,
+                                            job: job._id,
+                                            // Add any other necessary fields
+                                        }}
+                                        onUpdate={handleUpdateBid}
+                                    />
+                                </Grid>
+                            );
+                        })}
+                    </Grid>
+                )}
+            </Box>
         </div>
     );
 };
-
 export default OngoingJobs;

@@ -101,6 +101,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                 inspectionFee: Number(state.bidSubmission.inspectionFee),
                 laborCost: Number(state.bidSubmission.laborCost),
                 expensis: Number(state.bidSubmission.expensis),
+                // media: state.bidSubmission.media.map(m => m.url)
                 media: state.bidSubmission.media.map(m => m.url)
             });
             console.log('this is the bid submitted', body)
