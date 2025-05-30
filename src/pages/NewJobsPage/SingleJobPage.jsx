@@ -163,22 +163,21 @@ const SingleJobPage = () => {
                   </a>
                 ))}
               </div>
-              {userProfile?.role === 1 && (
-                <button
-                  onClick={() => setOpen(true)}
-                  className="btn w-100 mt-3"
-                  style={{
-                    backgroundColor: '#013049',
-                    color: 'white',
-                    borderRadius: 10,
-                    padding: '10px 16px',
-                    fontWeight: 'bold',
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  Make A Bid
-                </button>
-              )}
+              {userProfile?.role === 1 && job.status === 'pending' ? <button
+                onClick={() => setOpen(true)}
+                className="btn w-100 mt-3"
+                style={{
+                  backgroundColor: '#013049',
+                  color: 'white',
+                  borderRadius: 10,
+                  padding: '10px 16px',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                Make A Bid
+              </button>
+                : ''}
 
               {job && <BidDialogBox open={open} id={id} setOpen={setOpen} job={job} />}
             </Paper>
@@ -187,7 +186,7 @@ const SingleJobPage = () => {
             {/* Artisan Bids (Owner Only) */}
 
           </Grid>
-          {job.status === 'pending' && (<Grid item xs={12} md={4}>
+          {job.status === 'pending' || userProfile?._id === job?.user?._id || job?.artisan?._id === userProfile?._id ? <Grid item xs={12} md={4}>
             {userProfile?._id === job?.user?._id && (
               <Paper sx={{ mt: { xs: 3, md: 0 }, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
                 <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
@@ -196,7 +195,7 @@ const SingleJobPage = () => {
                     <div>No Bids Yet</div>
                   ) : (
                     job.applied.map((applied, i) => (
-                      <ArtisanCards key={applied._id || i} applied={applied} jobId={job._id} userId={job?.user?._id} />
+                      <ArtisanCards key={applied._id || i} applied={applied} jobId={job._id} userId={job?.user?._id} jobStatus={job.status} />
                     ))
                   )}
                 </div>
@@ -220,7 +219,7 @@ const SingleJobPage = () => {
                 </div>
               </Paper>
             )}
-          </Grid>)}
+          </Grid> : ''}
         </Grid>
       </div>
     </div>
@@ -243,24 +242,27 @@ const InfoRow = ({ icon, label, value }) => (
 
 
 
-const ArtisanCards = ({ applied, jobId, userId }) => {
+const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
   const [requestInspection, setRequestInspection] = useState(false);
   const [paidInspection, setPaidInspection] = useState(false)
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies();
   const { userProfile, token } = useContext(UserContext);
+  const [job, setJob] = useState(null); // Add this line
   // const [payment, setOpen] = useState(false);
   const config = {
     reference: jobId,
     email: userProfile.email,
     amount: applied.amount * 100,
     //save key in .env
-    publicKey: "pk_live_e109e2fcfae6ad6a12d44d9d3d0833abd80b4cc4",
+    // publicKey: "pk_live_e109e2fcfae6ad6a12d44d9d3d0833abd80b4cc4",
+    publicKey: "pk_test_f8e5c57777aaf7ebb1d557ab36331af498857a93"//test key
+
   };
   const initializePayment = usePaystackPayment(config);
   const onSuccess = async (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log('this is the reference after the payment', reference);
+
     try {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", "{{vault:json-web-token}}");
@@ -505,7 +507,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
           </div> : <p className='text-center'>No inspection fee Required</p>
           }
         </div>
-        {userProfile?._id === userId && (
+        {userProfile?._id === userId && jobStatus === 'pending' ?
           <DialogActions>
             {console.log(userProfile?._id, userId, 'this is from dialog box')}
             {applied?.inspectionFee > 0 && (
@@ -545,7 +547,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
               Cancel
             </Button>
           </DialogActions>
-        )}
+          : ''}
       </Dialog>
     </Paper>
   );
