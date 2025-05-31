@@ -18,7 +18,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { toast } from 'react-toastify'
 import './SingleJobPage.scss'
-import { usePaystackPayment } from "react-paystack";
+import { usePaystackPayment, } from "react-paystack";
 const SingleJobPage = () => {
   const { id } = useParams()
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -250,22 +250,22 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
   const { userProfile, token } = useContext(UserContext);
   const [job, setJob] = useState(null); // Add this line
   // const [payment, setOpen] = useState(false);
+
+
   const config = {
     reference: jobId,
     email: userProfile.email,
-    amount: applied.amount * 100,
+    amount: applied?.amount * 100,
     //save key in .env
     // publicKey: "pk_live_e109e2fcfae6ad6a12d44d9d3d0833abd80b4cc4",
-    publicKey: "pk_test_f8e5c57777aaf7ebb1d557ab36331af498857a93"//test key
-
+    publicKey: "pk_test_f8e5c57777aaf7ebb1d557ab36331af498857a93"//test key,
   };
   const initializePayment = usePaystackPayment(config);
-  const onSuccess = async (reference) => {
-    // Implementation for whatever you want to do with reference and after success call.
-
+  const depositFundsForJob = async (reference) => {
     try {
       const myHeaders = new Headers();
-      myHeaders.append("Authorization", "{{vault:json-web-token}}");
+      myHeaders.append("Authorization", cookies.grinderUser.token);
+      myHeaders.append('Content-Type', 'application/json');
 
       const raw = {
         type: "pay",
@@ -274,9 +274,9 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
         payment_verified: true,
         status: "inprogress",
         redirectUrl: window.location.href,
-        reference: reference
+        reference: reference.reference
       };
-
+      console.log('after paystack was successful', raw)
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -284,7 +284,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
         redirect: "follow"
       };
 
-      const response = await fetch(`${token}/payments/job?jobId=${jobId}`, requestOptions)
+      const response = await fetch(`https://nino-backend.vercel.app/api/payments/job?jobId=${jobId}`, requestOptions)
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -307,17 +307,16 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
 
     }
   }
-
+  const onSuccess = (reference) => {
+    console.log(">>> Paystack onSuccess fired with reference:", reference);
+    toast.success("Payment Successful");
+    toast.success(reference);
+    depositFundsForJob(reference)
+  }
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
     toast.info("Payment Canceled");
-  };
-  useEffect(() => {
-    console.log(jobId, 'this is the job id from artisan card');
-    console.log(applied, 'this is the applied from artisan card');
-    console.log(userId, 'this is the user id from artisan card');
-    console.log(config, 'this is the config from artisan card')
-  })
+  }
   const updateJobStatus = async ({ jobId, artisanId, status }) => {
     try {
       console.log(jobId, artisanId, status, 'this is the job id from artisan card');
@@ -373,6 +372,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
     }
   }
   return (
+
     <Paper
       elevation={3}
       sx={{

@@ -97,7 +97,6 @@ const BidCard = ({ bid, onUpdate }) => {
             transition: '0.3s',
             '&:hover': {
                 boxShadow: '0 4px 20px 0 rgba(0,0,0,0.12)'
-
             },
             position: 'relative'
         }}>
@@ -107,22 +106,6 @@ const BidCard = ({ bid, onUpdate }) => {
                     {bid.jobTitle.length > 20 ? `${bid.jobTitle.slice(0, 20)}...` : bid.jobTitle}
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', position: '' }}>
-                    {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button
-                            variant="outlined"// startIcon={<EditIcon />}
-                            sx={{
-                                color: '#013049',
-                                borderColor: '#013049',
-                                '&:hover': {
-                                    borderColor: '#EF6E0B',
-                                    color: '#EF6E0B'
-                                }
-                            }}
-                            onClick={() => setOpenEdit(true)}
-                        >
-                            Dispute
-                        </Button>
-                    </Box> */}
                     <span className='cursor-pointer text-end px-3'>
                         <SlOptionsVertical className=' ' style={{ cursor: 'pointer' }} onClick={() => setCardOptions(!cardOptions)} />
 
