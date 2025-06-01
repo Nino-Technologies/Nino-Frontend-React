@@ -252,6 +252,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
   const { userProfile, token } = useContext(UserContext);
   const [job, setJob] = useState(null); // Add this line
   // const [payment, setOpen] = useState(false);
+
   const config = {
     reference: (new Date()).getTime().toString(),
     email: userProfile.email,
@@ -446,13 +447,13 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
       </Box>
 
 
-      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }} style={{}}>
+      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }} sx={{ padding: { xs: 2, md: 4 } }} style={{}}>
         <DialogTitle>
           <h3 className='fw-bold ' style={{ color: '#EF6E0B' }}>Bid Details</h3>
         </DialogTitle>
 
 
-        <div className='d-flex gap-2 flex-column' style={{ padding: '10px' }}>
+        <div className='d-flex gap-2 flex-column p-3' style={{ padding: '10px' }}>
           <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Description</h6>
             <p>{applied?.description}</p>
@@ -507,7 +508,12 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
           </div> : <p className='text-center'>No inspection fee Required</p>
           }
         </div>
-        {<PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />}
+        <div>
+          <div className='d-flex gap-2 flex-wrap justify-content-center align-items-center p-2'>
+            {<PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />}
+          </div>
+
+        </div>
         {userProfile?._id === userId && jobStatus === 'pending' ?
           <DialogActions>
             {console.log(userProfile?._id, userId, 'this is from dialog box')}
