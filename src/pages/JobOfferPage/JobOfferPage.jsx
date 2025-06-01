@@ -61,7 +61,7 @@ const JobOfferPage = () => {
                 <div className=" container mt-4  gap-2 jobs-container">
 
                     {jobs.length > 0 ? (
-                        jobs.map((job) => <JobCard key={job._id} job={job} />)
+                        jobs.reverse().map((job) => <JobCard key={job._id} job={job} />)
                     ) : (
                         <div className="text-center p-4">No jobs available</div>
                     )}

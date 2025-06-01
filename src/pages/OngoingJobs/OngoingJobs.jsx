@@ -9,7 +9,7 @@ import { AccessTimeSharp, WalletRounded } from '@mui/icons-material';
 import { toast } from "react-toastify";
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
-
+import { PaystackButton } from 'react-paystack';
 import { SlOptionsVertical } from "react-icons/sl";
 import { UserContext } from '../../context/UserContext';
 const BidCard = ({ bid, onUpdate }) => {
@@ -19,8 +19,74 @@ const BidCard = ({ bid, onUpdate }) => {
     const { userProfile, token } = useContext(UserContext);
     const [disputeDescription, setDisputeDescription] = useState(''); // Add this line
     useEffect(() => {
-
+        console.log(bid)
     }, [])
+    const config = {
+        reference: (new Date()).getTime().toString(),
+        email: userProfile.email,
+        amount: bid.amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+        publicKey: "pk_test_f8e5c57777aaf7ebb1d557ab36331af498857a93"
+    };
+    const handlePaystackSuccessAction = async (reference) => {
+        // Implementation for whatever you want to do with reference and after success call.
+        console.log(reference);
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", cookies.grinderUser.token);
+            myHeaders.append('Content-Type', 'application/json');
+
+            const raw = {
+                type: "pay",
+                artisan: bid?.artisan,
+                amount: bid?.amount,
+                payment_verified: true,
+                status: "inprogress",
+                redirectUrl: window.location.href,
+                reference: reference.reference
+            };
+            console.log('after paystack was successful', raw)
+            const requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: JSON.stringify(raw),
+                redirect: "follow"
+            };
+
+            const response = await fetch(`https://nino-backend.vercel.app/api/payments/job?jobId=${bid.job}`, requestOptions)
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Payment verification failed');
+            }
+            const result = await response.json();
+            console.log('Payment verification successful:', result);
+
+            // Show success notification to user
+            toast.success('Payment processed successfully!');
+
+            // You might want to update UI state here
+            return result;
+
+        } catch (error) {
+            console.error('Payment processing error:', error);
+
+            // Show error notification to user
+            toast.error(error.message || 'Failed to process payment');
+
+        }
+    };
+
+    // you can call this function anything
+    const handlePaystackCloseAction = () => {
+        // implementation for  whatever you want to do when the Paystack dialog closed.
+        console.log('closed')
+    }
+    const componentProps = {
+        ...config,
+        text: 'Proceed to Payment',
+        onSuccess: (reference) => handlePaystackSuccessAction(reference),
+        onClose: handlePaystackCloseAction,
+    };
     const [cardOptions, setCardOptions] = useState(false)
     const submitDispute = async ({ jobId, description }) => {
         try {
@@ -89,7 +155,7 @@ const BidCard = ({ bid, onUpdate }) => {
 
     return (
         <Paper elevation={1} sx={{
-            p: 3,
+            p: { xs: 1, md: 3 },
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
@@ -173,11 +239,13 @@ const BidCard = ({ bid, onUpdate }) => {
                             </Box>
                         </Box>
                     )}
-                    <Box className="" >
+                    <Box className="flex justify-content-center align-items-center" >
 
-                        {userProfile.role === 0 ? <Button className='text-white' variant='contained' sx={{ width: '100%', color: 'white', backgroundColor: '#ef6e0b' }}><span>
-                            Satisfied with Job   </span> </Button> : <Button variant='contained' sx={{ width: '100%', color: 'white', backgroundColor: '#ef6e0b' }} className='text-black'><span>
+                        {userProfile.role === 0 ? <Button className='text-white flex-1 w-100' variant='contained' sx={{ color: 'white', backgroundColor: '#ef6e0b' }}><span>
+                            Satisfied   </span> </Button> : <Button variant='contained' sx={{ color: 'white', backgroundColor: '#ef6e0b' }} className='flex-1 w-100'><span>
                                 Task  Completed    </span></Button>}
+
+                        {<PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />}
                     </Box>
                 </Box>
             </Box>

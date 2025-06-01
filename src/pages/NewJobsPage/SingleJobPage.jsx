@@ -19,6 +19,8 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { toast } from 'react-toastify'
 import './SingleJobPage.scss'
 import { usePaystackPayment, } from "react-paystack";
+import { PaystackButton } from 'react-paystack';
+import { reference } from '@popperjs/core'
 const SingleJobPage = () => {
   const { id } = useParams()
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -250,18 +252,15 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
   const { userProfile, token } = useContext(UserContext);
   const [job, setJob] = useState(null); // Add this line
   // const [payment, setOpen] = useState(false);
-
-
   const config = {
-    reference: jobId,
+    reference: (new Date()).getTime().toString(),
     email: userProfile.email,
-    amount: applied?.amount * 100,
-    //save key in .env
-    // publicKey: "pk_live_e109e2fcfae6ad6a12d44d9d3d0833abd80b4cc4",
-    publicKey: "pk_test_f8e5c57777aaf7ebb1d557ab36331af498857a93"//test key,
+    amount: applied.amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    publicKey: "pk_test_f8e5c57777aaf7ebb1d557ab36331af498857a93"
   };
-  const initializePayment = usePaystackPayment(config);
-  const depositFundsForJob = async (reference) => {
+  const handlePaystackSuccessAction = async (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
     try {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", cookies.grinderUser.token);
@@ -269,7 +268,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
 
       const raw = {
         type: "pay",
-        artisan: applied?.artisan._id,
+        artisan: applied?.artisan,
         amount: applied?.amount,
         payment_verified: true,
         status: "inprogress",
@@ -306,17 +305,20 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
       toast.error(error.message || 'Failed to process payment');
 
     }
-  }
-  const onSuccess = (reference) => {
-    console.log(">>> Paystack onSuccess fired with reference:", reference);
-    toast.success("Payment Successful");
-    toast.success(reference);
-    depositFundsForJob(reference)
-  }
-  const onClose = () => {
+  };
+
+  // you can call this function anything
+  const handlePaystackCloseAction = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    toast.info("Payment Canceled");
+    console.log('closed')
   }
+  const componentProps = {
+    ...config,
+    text: 'Proceed to Payment',
+    onSuccess: (reference) => handlePaystackSuccessAction(reference),
+    onClose: handlePaystackCloseAction,
+  };
+
   const updateJobStatus = async ({ jobId, artisanId, status }) => {
     try {
       console.log(jobId, artisanId, status, 'this is the job id from artisan card');
@@ -355,12 +357,9 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
 
       setArtisanBidDetails(false)
       if (status === 'accepted') {
-        toast.success('Artisan Bid Accepted  Successfully');
-        // depositFundsForJob()
-        if (applied?.amount > 0) {
-          initializePayment(onSuccess, onClose)
-        }
-        setArtisanBidDetails(false)
+        toast.success('Artisan Bid Accepted Successfully');
+        // if (applied?.amount > 0) {
+        // }
       }
       else {
         toast.success('Artisan Bid Rejected  Successfully');
@@ -443,6 +442,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
         >
           View Details
         </Button>
+
       </Box>
 
 
@@ -507,6 +507,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
           </div> : <p className='text-center'>No inspection fee Required</p>
           }
         </div>
+        {<PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />}
         {userProfile?._id === userId && jobStatus === 'pending' ?
           <DialogActions>
             {console.log(userProfile?._id, userId, 'this is from dialog box')}
@@ -518,6 +519,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
                 Pay for Inspection
               </Button>
             )}
+
             <Button
               onClick={() => updateJobStatus({
                 jobId: jobId,
