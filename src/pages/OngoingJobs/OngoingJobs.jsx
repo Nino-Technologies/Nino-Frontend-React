@@ -18,7 +18,8 @@ const BidCard = ({ bid, onUpdate }) => {
     const [cookies, setCookie, removeCookie] = useCookies();
     const { userProfile, token } = useContext(UserContext);
     const [disputeDescription, setDisputeDescription] = useState(''); // Add this line
-    useEffect(() => {
+      const [cardOptions, setCardOptions] = useState(false)
+      useEffect(() => {
         console.log(bid)
     }, [])
     const config = {
@@ -87,7 +88,7 @@ const BidCard = ({ bid, onUpdate }) => {
         onSuccess: (reference) => handlePaystackSuccessAction(reference),
         onClose: handlePaystackCloseAction,
     };
-    const [cardOptions, setCardOptions] = useState(false)
+  
     const submitDispute = async ({ jobId, description }) => {
         try {
             const response = await fetch("https://nino-backend.vercel.app/api/jobDispute", {
