@@ -12,15 +12,18 @@ import { Link } from 'react-router-dom';
 import { PaystackButton } from 'react-paystack';
 import { SlOptionsVertical } from "react-icons/sl";
 import { UserContext } from '../../context/UserContext';
-const BidCard = ({ bid, onUpdate }) => {
+const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [editedBid, setEditedBid] = useState(bid);
     const [cookies, setCookie, removeCookie] = useCookies();
     const { userProfile, token } = useContext(UserContext);
     const [disputeDescription, setDisputeDescription] = useState(''); // Add this line
-      const [cardOptions, setCardOptions] = useState(false)
-      useEffect(() => {
-        console.log(bid)
+    const [cardOptions, setCardOptions] = useState(false)
+    useEffect(() => {
+        console.log(job, 'this is job ')
+        console.log(userProfile?._id, 'user id')
+        console.log(job?.user?._id, 'user id in job')
+        console.log(bid, 'user bid')
     }, [])
     const config = {
         reference: (new Date()).getTime().toString(),
@@ -30,22 +33,22 @@ const BidCard = ({ bid, onUpdate }) => {
     };
     const handlePaystackSuccessAction = async (reference) => {
         // Implementation for whatever you want to do with reference and after success call.
-        console.log(reference);
+        console.log(reference, '>>>>thus is the reference');
         try {
             const myHeaders = new Headers();
             myHeaders.append("Authorization", cookies.grinderUser.token);
             myHeaders.append('Content-Type', 'application/json');
 
             const raw = {
-                type: "pay",
+                type: "job",
                 artisan: bid?.artisan,
                 amount: bid?.amount,
                 payment_verified: true,
                 status: "inprogress",
-                redirectUrl: window.location.href,
+                redirectUrl: 'hi',
                 reference: reference.reference
             };
-            console.log('after paystack was successful', raw)
+            console.log('>>>>after paystack was successful in ongoing job', raw)
             const requestOptions = {
                 method: "POST",
                 headers: myHeaders,
@@ -74,6 +77,8 @@ const BidCard = ({ bid, onUpdate }) => {
             // Show error notification to user
             toast.error(error.message || 'Failed to process payment');
 
+        } finally {
+            fetchJob()
         }
     };
 
@@ -88,7 +93,7 @@ const BidCard = ({ bid, onUpdate }) => {
         onSuccess: (reference) => handlePaystackSuccessAction(reference),
         onClose: handlePaystackCloseAction,
     };
-  
+
     const submitDispute = async ({ jobId, description }) => {
         try {
             const response = await fetch("https://nino-backend.vercel.app/api/jobDispute", {
@@ -213,7 +218,8 @@ const BidCard = ({ bid, onUpdate }) => {
                     </Box>
                 </Box>
                 <Typography variant="body2" sx={{ mb: 2 }}>
-                    {bid.description}
+
+                    <div dangerouslySetInnerHTML={{ __html: bid?.description.slice(0, 50) }} />...
                 </Typography>
                 <Box>
 
@@ -246,7 +252,18 @@ const BidCard = ({ bid, onUpdate }) => {
                             Satisfied   </span> </Button> : <Button variant='contained' sx={{ color: 'white', backgroundColor: '#ef6e0b' }} className='flex-1 w-100'><span>
                                 Task  Completed    </span></Button>}
 
-                        {<PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />}
+                        {/* {<PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />} */}
+                        <div className='flex-1'>
+                            {/* Payment Button - Conditionally Rendered */}
+                            {(job.paymentJob.length === 0) &&
+                                job.status === 'inprogress' && userProfile?._id === job?.user &&
+                                (
+                                    <div className='d-flex gap-2 flex-wrap justify-content-center align-items-center '>
+                                        <PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />
+                                    </div>
+                                )
+                            }
+                        </div>
                     </Box>
                 </Box>
             </Box>
@@ -401,44 +418,44 @@ const OngoingJobs = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [cookies, setCookie, removeCookie] = useCookies();
+    const fetchJobs = async () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", cookies.grinderUser.token);
+
+            const response = await fetch("https://nino-backend.vercel.app/api/job/mine", {
+                method: "GET",
+                headers: myHeaders,
+                redirect: "follow"
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            setJobs(data.jobs);
+
+            // Filter jobs to only include those with application data and status "inprogress"
+            const ongoingJobs = data.jobs.filter(job =>
+                (job.application || (job.applied && job.applied.length > 0)) &&
+                job.status === "inprogress"
+            );
+
+            setBids(ongoingJobs);
+
+            if (ongoingJobs.length === 0) {
+                toast.info("No ongoing jobs found.");
+            }
+        } catch (err) {
+            setError(err.message);
+            toast.error("Failed to fetch jobs: " + err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchJobs = async () => {
-            try {
-                const myHeaders = new Headers();
-                myHeaders.append("Authorization", cookies.grinderUser.token);
-
-                const response = await fetch("https://nino-backend.vercel.app/api/job/mine", {
-                    method: "GET",
-                    headers: myHeaders,
-                    redirect: "follow"
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                setJobs(data.jobs);
-
-                // Filter jobs to only include those with application data and status "inprogress"
-                const ongoingJobs = data.jobs.filter(job =>
-                    (job.application || (job.applied && job.applied.length > 0)) &&
-                    job.status === "inprogress"
-                );
-
-                setBids(ongoingJobs);
-
-                if (ongoingJobs.length === 0) {
-                    toast.info("No ongoing jobs found.");
-                }
-            } catch (err) {
-                setError(err.message);
-                toast.error("Failed to fetch jobs: " + err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
 
         fetchJobs();
     }, []);
@@ -507,6 +524,7 @@ const OngoingJobs = () => {
                             return (
                                 <Grid item key={job._id} xs={12} sm={6} md={4}>
                                     <BidCard
+                                        job={job}
                                         bid={{
                                             ...application,
                                             jobTitle: job.title,
@@ -514,6 +532,8 @@ const OngoingJobs = () => {
                                             // Add any other necessary fields
                                         }}
                                         onUpdate={handleUpdateBid}
+                                        fetchJob={fetchJobs}
+                                        setJobs={setJobs}
                                     />
                                 </Grid>
                             );

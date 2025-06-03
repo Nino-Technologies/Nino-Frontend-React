@@ -34,25 +34,28 @@ const SingleJobPage = () => {
     console.log('this is the user profile', userProfile);
 
   }, [userProfile])
-  useEffect(() => {
-    const fetchJob = async () => {
-      try {
-        const response = await fetch(`https://nino-backend.vercel.app/api/job?id=${id}`);
-        if (!response.ok) throw new Error('Failed to fetch job');
 
-        const data = await response.json();
-        console.log('this is the data from a single job', data)
-        console.log('this is the id from a params', id)
-        if (data.ok && data.jobs.length > 0) {
-          setJob(data.jobs[0]);
+  const fetchJob = async () => {
+    try {
+      const response = await fetch(`https://nino-backend.vercel.app/api/job?id=${id}`);
+      if (!response.ok) throw new Error('Failed to fetch job');
 
-        }
-      } catch (error) {
-        console.error('Error fetching job:', error);
-      } finally {
-        setLoading(false);
+      const data = await response.json();
+      console.log('this is the data from a single job', data)
+      console.log('this is the id from a params', id)
+      if (data.ok && data.jobs.length > 0) {
+        setJob(data.jobs[0]);
+
       }
-    };
+    } catch (error) {
+      console.error('Error fetching job:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+
 
     fetchJob();
     console.log('this is the user profile', userProfile)
@@ -197,7 +200,7 @@ const SingleJobPage = () => {
                     <div>No Bids Yet</div>
                   ) : (
                     job.applied.map((applied, i) => (
-                      <ArtisanCards key={applied._id || i} applied={applied} jobId={job._id} userId={job?.user?._id} jobStatus={job.status} />
+                      <ArtisanCards key={applied._id || i} applied={applied} jobId={job._id} userId={job?.user?._id} jobStatus={job.status} paymentJob={job?.paymentJob} fetchJob={fetchJob} />
                     ))
                   )}
                 </div>
@@ -216,6 +219,8 @@ const SingleJobPage = () => {
                         applied={applied}
                         jobId={job._id}
                         userId={job?.user?._id}  // Correct prop passing
+                        paymentJob={job?.paymentJob}
+                        fetchJob={fetchJob} // Pass fetchJob to update job state after payment
                       />
                     ))}
                 </div>
@@ -244,7 +249,7 @@ const InfoRow = ({ icon, label, value }) => (
 
 
 
-const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
+const ArtisanCards = ({ applied, jobId, userId, jobStatus, paymentJob, fetchJob }) => {
   const [requestInspection, setRequestInspection] = useState(false);
   const [paidInspection, setPaidInspection] = useState(false)
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
@@ -252,7 +257,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
   const { userProfile, token } = useContext(UserContext);
   const [job, setJob] = useState(null); // Add this line
   // const [payment, setOpen] = useState(false);
-
+  useEffect(() => { console.log(paymentJob, 'this is the job payment array from artisan card') }, [])
   const config = {
     reference: (new Date()).getTime().toString(),
     email: userProfile.email,
@@ -268,12 +273,12 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
       myHeaders.append('Content-Type', 'application/json');
 
       const raw = {
-        type: "pay",
-        artisan: applied?.artisan,
+        type: "job",
+        artisan: applied?.artisan?._id,
         amount: applied?.amount,
         payment_verified: true,
         status: "inprogress",
-        redirectUrl: window.location.href,
+        redirectUrl: 'hi',
         reference: reference.reference
       };
       console.log('after paystack was successful', raw)
@@ -295,7 +300,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
 
       // Show success notification to user
       toast.success('Payment processed successfully!');
-
+      fetchJob()
       // You might want to update UI state here
       return result;
 
@@ -356,7 +361,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
       }
       console.log(response, 'this is the response from artisan card');
 
-      setArtisanBidDetails(false)
+      // setArtisanBidDetails(false)
       if (status === 'accepted') {
         toast.success('Artisan Bid Accepted Successfully');
         // if (applied?.amount > 0) {
@@ -456,7 +461,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
         <div className='d-flex gap-2 flex-column p-3' style={{ padding: '10px' }}>
           <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Description</h6>
-            <p>{applied?.description}</p>
+            <div dangerouslySetInnerHTML={{ __html: applied?.description }} />
           </div>
           <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Estimated Cost:</h6>
@@ -464,7 +469,7 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
           </div>
           <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Timeline</h6>
-            <p>{applied?.timeLine}</p>
+            <p>{applied?.timeLine ? applied?.timeLine : 'Not Specified'}</p>
           </div>
           <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Related Media</h6>
@@ -509,10 +514,15 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus }) => {
           }
         </div>
         <div>
-          <div className='d-flex gap-2 flex-wrap justify-content-center align-items-center p-2'>
-            {<PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />}
-          </div>
-
+          {/* Payment Button - Conditionally Rendered */}
+          {(paymentJob.length === 0) && userProfile?._id === userId &&
+            jobStatus === 'inprogress' &&
+            (
+              <div className='d-flex gap-2 flex-wrap justify-content-center align-items-center p-2'>
+                <PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />
+              </div>
+            )
+          }
         </div>
         {userProfile?._id === userId && jobStatus === 'pending' ?
           <DialogActions>
