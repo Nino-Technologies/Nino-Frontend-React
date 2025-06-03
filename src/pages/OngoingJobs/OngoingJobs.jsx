@@ -18,6 +18,8 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
     const [cookies, setCookie, removeCookie] = useCookies();
     const { userProfile, token } = useContext(UserContext);
     const [disputeDescription, setDisputeDescription] = useState(''); // Add this line
+
+    const [loadingJobComplete, setLoadingJobComplete] = useState(false);
     const [cardOptions, setCardOptions] = useState(false)
     useEffect(() => {
         console.log(job, 'this is job ')
@@ -25,6 +27,64 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
         console.log(job?.user?._id, 'user id in job')
         console.log(bid, 'user bid')
     }, [])
+
+    // const CompleteJob = () => {
+    //     try {
+    //          const myHeaders = new Headers();
+    //     myHeaders.append("Authorization", token);
+    //     myHeaders.append("Content-Type", "application/json");
+
+    //     // Replace 'yourJobIdHere' with the actual job ID value
+    //     // const jobId = "yourJobIdHere";
+
+    //     const requestOptions = {
+    //         method: "PUT",
+    //         headers: myHeaders,
+    //         redirect: "follow"
+    //     };
+
+    //     fetch(`https://nino-backend.vercel.app/api/job/complete?jobId=${bid.job}`, requestOptions)
+    //         .then((response) => response.text())
+    //         .then((result) => console.log(result))
+    //         .catch((error) => console.error("Error:", error));
+
+    //     } catch (error) {
+    //         console.error("Error completing job:", error);
+    //         toast.error("Failed to complete job. Please try again.");
+    //         return;
+
+    //     }
+
+    // }
+    const CompleteJob = async () => {
+
+        console.log(bid.job, 'this is the job id')
+        setLoadingJobComplete(true);
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", cookies.grinderUser.token);
+            myHeaders.append("Content-Type", "application/json");
+
+            const requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                redirect: "follow"
+            };
+
+            const response = await fetch(`https://nino-backend.vercel.app/api/job/complete?jobId=${bid.job}`, requestOptions);
+            const result = await response.json();
+
+            console.log(result);
+            setLoadingJobComplete(false);
+            toast.success("Job completed successfully!");
+            // You can also add toast.success here if needed
+        } catch (error) {
+            console.error("Error completing job:", error);
+            toast.error("Failed to complete job. Please try again.");
+        }
+    };
+
+
     const config = {
         reference: (new Date()).getTime().toString(),
         email: userProfile.email,
@@ -110,7 +170,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
             });
 
             const result = await response.json();
-
+            console.log(result, 'this is the result of dispute')
             if (!response.ok) {
                 throw new Error(result?.message || "An error occurred while submitting the dispute");
             }
@@ -248,8 +308,8 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
                     )}
                     <Box className="flex justify-content-center align-items-center" >
 
-                        {userProfile.role === 0 ? <Button className='text-white flex-1 w-100' variant='contained' sx={{ color: 'white', backgroundColor: '#ef6e0b' }}><span>
-                            Satisfied   </span> </Button> : <Button variant='contained' sx={{ color: 'white', backgroundColor: '#ef6e0b' }} className='flex-1 w-100'><span>
+                        {userProfile.role === 0 ? <Button className='text-white flex-1 w-100' variant='contained' sx={{ color: 'white', backgroundColor: '#ef6e0b' }} disabled={loadingJobComplete} onClick={() => CompleteJob()}><span>
+                            Satisfied   </span> </Button> : <Button variant='contained' disabled={loadingJobComplete} onClick={() => CompleteJob()} sx={{ color: 'white', backgroundColor: '#ef6e0b' }} className='flex-1 w-100'><span>
                                 Task  Completed    </span></Button>}
 
                         {/* {<PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />} */}
@@ -492,7 +552,7 @@ const OngoingJobs = () => {
                 <div className='d-flex justify-content-center align-items-center p-5 rounded-3 mb-4' style={{ backgroundColor: '#ef6e0b' }}>
                     <Typography variant="h4" sx={{
                         color: '#fff',
-                        mb: 4,
+                        // mb: 4,
                         fontWeight: 'bold',
                         textAlign: 'center'
                     }}>
