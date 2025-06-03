@@ -310,7 +310,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
 
                         {userProfile.role === 0 ? <Button className='text-white flex-1 w-100' variant='contained' sx={{ color: 'white', backgroundColor: '#ef6e0b' }} disabled={loadingJobComplete} onClick={() => CompleteJob()}><span>
                             Satisfied   </span> </Button> : <Button variant='contained' disabled={loadingJobComplete} onClick={() => CompleteJob()} sx={{ color: 'white', backgroundColor: '#ef6e0b' }} className='flex-1 w-100'><span>
-                                Task  Completed    </span></Button>}
+                                Complete Task    </span></Button>}
 
                         {/* {<PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />} */}
                         <div className='flex-1'>
