@@ -407,7 +407,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
                         <Box sx={{ width: '100%', mt: 1 }}>
                             <PaystackButton
                                 {...componentProps}
-                                className="w-100"
+                                className="w-100 border-0 p-2 rounded bg-success text-white"
                                 style={{
                                     width: '100%',
                                     padding: '12px',
