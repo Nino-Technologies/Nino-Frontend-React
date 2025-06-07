@@ -11,6 +11,7 @@ import {
   ProfileSubscriptionAlertCard, ProfileSVerificationAlertCard
 } from "../ProfilePage/ProfilePage.jsx";
 import { useCookies } from "react-cookie";
+import { WalletRounded } from "@mui/icons-material";
 
 function HomePage() {
   const {
@@ -162,6 +163,7 @@ function HomePage() {
         <div className="welcome ms-4">
           Welcome {userProfile.fullName || "User"}
         </div>
+        {userProfile.role === 1 ? <div className='p-2 rounded-1 bg-secondary-subtle my-2'><span className='fw-5'><span className='fw-bold'><WalletRounded style={{ color: '#ef6e0b' }} /> Wallet: </span>{userProfile?.wallet.toLocaleString()}</span></div> : ''}
         <button
           className="btn-danger btn me-4 btn-sm"
           onClick={() => logOutFunction()}

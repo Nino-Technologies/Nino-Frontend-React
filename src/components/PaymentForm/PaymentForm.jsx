@@ -73,7 +73,7 @@ function PaymentForm({ selectedPlane }) {
           }
           toast.error(error.message);
         });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   // you can call this function anything

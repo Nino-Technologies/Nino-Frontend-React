@@ -18,7 +18,9 @@ import WorkIcon from '@mui/icons-material/Work';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { toast } from 'react-toastify'
 import './SingleJobPage.scss'
-import { usePaystackPayment } from "react-paystack";
+import { usePaystackPayment, } from "react-paystack";
+import { PaystackButton } from 'react-paystack';
+import { reference } from '@popperjs/core'
 const SingleJobPage = () => {
   const { id } = useParams()
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -32,25 +34,28 @@ const SingleJobPage = () => {
     console.log('this is the user profile', userProfile);
 
   }, [userProfile])
-  useEffect(() => {
-    const fetchJob = async () => {
-      try {
-        const response = await fetch(`https://nino-backend.vercel.app/api/job?id=${id}`);
-        if (!response.ok) throw new Error('Failed to fetch job');
 
-        const data = await response.json();
-        console.log('this is the data from a single job', data)
-        console.log('this is the id from a params', id)
-        if (data.ok && data.jobs.length > 0) {
-          setJob(data.jobs[0]);
+  const fetchJob = async () => {
+    try {
+      const response = await fetch(`https://nino-backend.vercel.app/api/job?id=${id}`);
+      if (!response.ok) throw new Error('Failed to fetch job');
 
-        }
-      } catch (error) {
-        console.error('Error fetching job:', error);
-      } finally {
-        setLoading(false);
+      const data = await response.json();
+      console.log('this is the data from a single job', data)
+      console.log('this is the id from a params', id)
+      if (data.ok && data.jobs.length > 0) {
+        setJob(data.jobs[0]);
+
       }
-    };
+    } catch (error) {
+      console.error('Error fetching job:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+
 
     fetchJob();
     console.log('this is the user profile', userProfile)
@@ -163,22 +168,21 @@ const SingleJobPage = () => {
                   </a>
                 ))}
               </div>
-              {userProfile?.role === 1 && (
-                <button
-                  onClick={() => setOpen(true)}
-                  className="btn w-100 mt-3"
-                  style={{
-                    backgroundColor: '#013049',
-                    color: 'white',
-                    borderRadius: 10,
-                    padding: '10px 16px',
-                    fontWeight: 'bold',
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  Make A Bid
-                </button>
-              )}
+              {userProfile?.role === 1 && job.status === 'pending' ? <button
+                onClick={() => setOpen(true)}
+                className="btn w-100 mt-3"
+                style={{
+                  backgroundColor: '#013049',
+                  color: 'white',
+                  borderRadius: 10,
+                  padding: '10px 16px',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                Make A Bid
+              </button>
+                : ''}
 
               {job && <BidDialogBox open={open} id={id} setOpen={setOpen} job={job} />}
             </Paper>
@@ -187,7 +191,7 @@ const SingleJobPage = () => {
             {/* Artisan Bids (Owner Only) */}
 
           </Grid>
-          {job.status === 'pending' && (<Grid item xs={12} md={4}>
+          {job.status === 'pending' || userProfile?._id === job?.user?._id || job?.artisan?._id === userProfile?._id ? <Grid item xs={12} md={4}>
             {userProfile?._id === job?.user?._id && (
               <Paper sx={{ mt: { xs: 3, md: 0 }, p: 2, borderRadius: 2, backgroundColor: '#ef6e0b' }}>
                 <Typography className="fw-bold text-white mb-2">Artisans Bids</Typography>
@@ -196,7 +200,7 @@ const SingleJobPage = () => {
                     <div>No Bids Yet</div>
                   ) : (
                     job.applied.map((applied, i) => (
-                      <ArtisanCards key={applied._id || i} applied={applied} jobId={job._id} userId={job?.user?._id} />
+                      <ArtisanCards key={applied._id || i} applied={applied} jobId={job._id} userId={job?.user?._id} jobStatus={job.status} paymentJob={job?.paymentJob} fetchJob={fetchJob} />
                     ))
                   )}
                 </div>
@@ -215,12 +219,14 @@ const SingleJobPage = () => {
                         applied={applied}
                         jobId={job._id}
                         userId={job?.user?._id}  // Correct prop passing
+                        paymentJob={job?.paymentJob}
+                        fetchJob={fetchJob} // Pass fetchJob to update job state after payment
                       />
                     ))}
                 </div>
               </Paper>
             )}
-          </Grid>)}
+          </Grid> : ''}
         </Grid>
       </div>
     </div>
@@ -243,38 +249,39 @@ const InfoRow = ({ icon, label, value }) => (
 
 
 
-const ArtisanCards = ({ applied, jobId, userId }) => {
+const ArtisanCards = ({ applied, jobId, userId, jobStatus, paymentJob, fetchJob }) => {
   const [requestInspection, setRequestInspection] = useState(false);
   const [paidInspection, setPaidInspection] = useState(false)
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies();
   const { userProfile, token } = useContext(UserContext);
+  const [job, setJob] = useState(null); // Add this line
   // const [payment, setOpen] = useState(false);
+  useEffect(() => { console.log(paymentJob, 'this is the job payment array from artisan card') }, [])
   const config = {
-    reference: jobId,
+    reference: (new Date()).getTime().toString(),
     email: userProfile.email,
-    amount: applied.amount * 100,
-    //save key in .env
-    publicKey: "pk_live_e109e2fcfae6ad6a12d44d9d3d0833abd80b4cc4",
+    amount: applied.amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    publicKey: "pk_test_f8e5c57777aaf7ebb1d557ab36331af498857a93"
   };
-  const initializePayment = usePaystackPayment(config);
-  const onSuccess = async (reference) => {
+  const handlePaystackSuccessAction = async (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log('this is the reference after the payment', reference);
+    console.log(reference);
     try {
       const myHeaders = new Headers();
-      myHeaders.append("Authorization", "{{vault:json-web-token}}");
+      myHeaders.append("Authorization", cookies.grinderUser.token);
+      myHeaders.append('Content-Type', 'application/json');
 
       const raw = {
-        type: "pay",
-        artisan: applied?.artisan._id,
+        type: "job",
+        artisan: applied?.artisan?._id,
         amount: applied?.amount,
         payment_verified: true,
         status: "inprogress",
-        redirectUrl: window.location.href,
-        reference: reference
+        redirectUrl: 'hi',
+        reference: reference.reference
       };
-
+      console.log('after paystack was successful', raw)
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -282,7 +289,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
         redirect: "follow"
       };
 
-      const response = await fetch(`${token}/payments/job?jobId=${jobId}`, requestOptions)
+      const response = await fetch(`https://nino-backend.vercel.app/api/payments/job?jobId=${jobId}`, requestOptions)
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -293,7 +300,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
 
       // Show success notification to user
       toast.success('Payment processed successfully!');
-
+      fetchJob()
       // You might want to update UI state here
       return result;
 
@@ -304,18 +311,20 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
       toast.error(error.message || 'Failed to process payment');
 
     }
-  }
-
-  const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    toast.info("Payment Canceled");
   };
-  useEffect(() => {
-    console.log(jobId, 'this is the job id from artisan card');
-    console.log(applied, 'this is the applied from artisan card');
-    console.log(userId, 'this is the user id from artisan card');
-    console.log(config, 'this is the config from artisan card')
-  })
+
+  // you can call this function anything
+  const handlePaystackCloseAction = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log('closed')
+  }
+  const componentProps = {
+    ...config,
+    text: 'Proceed to Payment',
+    onSuccess: (reference) => handlePaystackSuccessAction(reference),
+    onClose: handlePaystackCloseAction,
+  };
+
   const updateJobStatus = async ({ jobId, artisanId, status }) => {
     try {
       console.log(jobId, artisanId, status, 'this is the job id from artisan card');
@@ -352,14 +361,11 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
       }
       console.log(response, 'this is the response from artisan card');
 
-      setArtisanBidDetails(false)
+      // setArtisanBidDetails(false)
       if (status === 'accepted') {
-        toast.success('Artisan Bid Accepted  Successfully');
-        // depositFundsForJob()
-        if (applied?.amount > 0) {
-          initializePayment(onSuccess, onClose)
-        }
-        setArtisanBidDetails(false)
+        toast.success('Artisan Bid Accepted Successfully');
+        // if (applied?.amount > 0) {
+        // }
       }
       else {
         toast.success('Artisan Bid Rejected  Successfully');
@@ -371,6 +377,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
     }
   }
   return (
+
     <Paper
       elevation={3}
       sx={{
@@ -441,19 +448,20 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
         >
           View Details
         </Button>
+
       </Box>
 
 
-      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }} style={{}}>
+      <Dialog open={artisanBidDetails} onClose={() => { setArtisanBidDetails(false) }} sx={{ padding: { xs: 2, md: 4 } }} style={{}}>
         <DialogTitle>
           <h3 className='fw-bold ' style={{ color: '#EF6E0B' }}>Bid Details</h3>
         </DialogTitle>
 
 
-        <div className='d-flex gap-2 flex-column' style={{ padding: '10px' }}>
+        <div className='d-flex gap-2 flex-column p-3' style={{ padding: '10px' }}>
           <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Description</h6>
-            <p>{applied?.description}</p>
+            <div dangerouslySetInnerHTML={{ __html: applied?.description }} />
           </div>
           <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Estimated Cost:</h6>
@@ -461,7 +469,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
           </div>
           <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Timeline</h6>
-            <p>{applied?.timeLine}</p>
+            <p>{applied?.timeLine ? applied?.timeLine : 'Not Specified'}</p>
           </div>
           <div className="rounded bg-secondary-subtle p-2 " style={{ width: '100%', maxWidth: '600px' }}>
             <h6 className='fw-bold'>Related Media</h6>
@@ -505,7 +513,18 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
           </div> : <p className='text-center'>No inspection fee Required</p>
           }
         </div>
-        {userProfile?._id === userId && (
+        <div>
+          {/* Payment Button - Conditionally Rendered */}
+          {(paymentJob.length === 0) && userProfile?._id === userId &&
+            jobStatus === 'inprogress' &&
+            (
+              <div className='d-flex gap-2 flex-wrap justify-content-center align-items-center p-2'>
+                <PaystackButton {...componentProps} className='btn btn-success mt-1 flex-1 w-100' />
+              </div>
+            )
+          }
+        </div>
+        {userProfile?._id === userId && jobStatus === 'pending' ?
           <DialogActions>
             {console.log(userProfile?._id, userId, 'this is from dialog box')}
             {applied?.inspectionFee > 0 && (
@@ -516,6 +535,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
                 Pay for Inspection
               </Button>
             )}
+
             <Button
               onClick={() => updateJobStatus({
                 jobId: jobId,
@@ -545,7 +565,7 @@ const ArtisanCards = ({ applied, jobId, userId }) => {
               Cancel
             </Button>
           </DialogActions>
-        )}
+          : ''}
       </Dialog>
     </Paper>
   );

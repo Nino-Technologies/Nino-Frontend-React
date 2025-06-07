@@ -61,7 +61,10 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                     { method: 'POST', body: formData }
                 );
                 const data = await response.json();
-                return { url: data.secure_url, name: file.name };
+                return {
+                    url: data.secure_url,
+                    name: file.name
+                };
             });
 
             const uploadedMedia = await Promise.all(uploadPromises);
@@ -70,7 +73,7 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                 ...prev,
                 bidSubmission: {
                     ...prev.bidSubmission,
-                    media: [...prev.bidSubmission.media, ...uploadedMedia]
+                    media: [...prev.bidSubmission.media, ...uploadedMedia.filter(item => item !== null)]
                 },
                 uploadingMedia: false
             }));
