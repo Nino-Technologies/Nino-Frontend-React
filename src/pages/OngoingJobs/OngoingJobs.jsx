@@ -250,7 +250,25 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
                 sx={{
                     position: 'absolute',
                     top: -8,
-                    right: 16,
+                    left: 6,
+                    backgroundColor: job.paymentJob.length === 0 ? 'orange' : 'green',
+                    color: 'white',
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 2,
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    zIndex: 1
+                }}
+            >
+                {job.paymentJob.length === 0 ? 'No Deposit Found' : 'User Deposited'}
+            </Box>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: -8,
+                    right: 8,
                     backgroundColor: theme.primary,
                     color: 'white',
                     px: 2,
@@ -264,6 +282,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
             >
                 Active
             </Box>
+
 
             <CardContent sx={{ flexGrow: 1, p: 3 }}>
                 {/* Header */}
