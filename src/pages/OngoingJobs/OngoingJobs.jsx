@@ -396,7 +396,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
             {/* Actions */}
             <CardActions sx={{ p: 3, pt: 0, flexDirection: 'column', gap: 1 }}>
                 {/* Complete Job Button */}
-                <Button
+                {job.paymentJob.length === 0 ? <p className=' p-1 rounded text-secondary ' >Process Payment to continue...</p> : <Button
                     fullWidth
                     variant="contained"
                     disabled={loadingJobComplete}
@@ -417,7 +417,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
                     }}
                 >
                     {userProfile.role === 0 ? 'Mark as Satisfied' : 'Complete Task'}
-                </Button>
+                </Button>}
 
                 {/* Payment Button */}
                 {(job.paymentJob.length === 0) &&

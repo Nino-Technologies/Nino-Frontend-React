@@ -1,28 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import './JobOfferPage.scss';
 import Nav from '../../components/Nav/Nav';
-import { Paper } from '@mui/material';
-import { TbMoneybag } from 'react-icons/tb';
-import { LocationOn, WorkRounded } from '@mui/icons-material';
+import {
+    Paper,
+    CircularProgress,
+    Chip,
+    Avatar,
+    Typography,
+    Box,
+    Card,
+    CardContent,
+    Button,
+    Divider,
+    Grid,
+    Container
+} from '@mui/material';
+import {
+    TbMoneybag,
+    TbCalendar,
+    TbUsers,
+    // TbCheckCircle,
+    TbClock
+} from 'react-icons/tb';
+import {
+    LocationOn,
+    WorkRounded,
+    Person,
+    AssignmentInd,
+    Verified
+} from '@mui/icons-material';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { CircularProgress } from '@mui/material';
+import { CircleCheck } from 'lucide-react';
+
 const JobOfferPage = () => {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [cookies, setCookie, removeCookie] = useCookies();
-    useEffect(() => {
 
+    useEffect(() => {
         const fetchJobs = async () => {
             try {
-                // const myHeaders = new Headers();
-                // myHeaders.append("Authorization", cookies.grinderUser.token);
-
                 const response = await fetch("https://nino-backend.vercel.app/api/job", {
                     method: "GET",
-                    // headers: myHeaders,
                     redirect: "follow"
                 });
 
@@ -42,178 +64,284 @@ const JobOfferPage = () => {
         fetchJobs();
     }, []);
 
-    if (loading) return <div className="text-center p-4 d-flex justify-content-center align-items-center " style={{ width: '100%', height: '100vh' }}>
-        <CircularProgress style={{ color: '#EF6E0B' }} size={48} thickness={5} />
-        <span className="ms-3 fs-5">Loading jobs...</span>
-    </div>
-    if (error) return <div>
-        <Nav />
-        <div className="text-center p-4 text-danger">Error: {error}</div>;
-    </div>
+    if (loading) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ width: '100%', height: '100vh' }}>
+                <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+                    <CircularProgress style={{ color: '#EF6E0B' }} size={48} thickness={5} />
+                    <Typography variant="h6" color="textSecondary">Loading jobs...</Typography>
+                </Box>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div>
+                <Nav />
+                <Container className="text-center p-4">
+                    <Typography variant="h5" color="error">Error: {error}</Typography>
+                </Container>
+            </div>
+        );
+    }
 
     return (
-        <div id="job-offer-page" className='bg-secondary-subtle' style={{ background: '' }}>
+        <div id="job-offer-page" className='bg-light'>
             <Nav />
-            <div className="container mx-auto my-5 pt-5">
-                <Paper elevation={3} className="p-4 py-5 bg-primaryy city-bg">
-                    <h1 className="fw-bold text-center text-white">Most Recent Job Openings</h1>
+            <Container maxWidth="lg" className="my-5 pt-5">
+                <Paper elevation={6} className="p-4 py-5 mb-4" sx={{
+                    background: '#EF6E0B',
+                    color: 'white'
+                }}>
+                    <Typography variant="h3" component="h1" className="fw-bold text-center">
+                        Most Recent Job Openings
+                    </Typography>
+                    <Typography variant="h6" className="text-center mt-2 opacity-75">
+                        {jobs.length} opportunities available
+                    </Typography>
                 </Paper>
-                <div className=" container mt-4  gap-2 jobs-container">
 
-                    {jobs.length > 0 ? (
-                        jobs.reverse().map((job) => <JobCard key={job._id} job={job} />)
+                <Grid container spacing={3}>
+                    {jobs && jobs.length > 0 ? (
+                        jobs.slice().reverse().map((job) => (
+                            <Grid item xs={12} md={6} lg={4} key={job._id}>
+                                <JobCard job={job} />
+                            </Grid>
+                        ))
                     ) : (
-                        <div className="text-center p-4">No jobs available</div>
+                        <Grid item xs={12}>
+                            <Paper className="text-center p-5">
+                                <Typography variant="h5" color="textSecondary">
+                                    No jobs available at the moment
+                                </Typography>
+                            </Paper>
+                        </Grid>
                     )}
-                </div>
-                {/* <div className="row mt-5 g-4">
-                    <div className="col-md-6 ">
-                        <JobCard />
-                    </div>
-                    <div className="col-md-6 ">
-                        <JobCard />
-                    </div>
-                    <div className="col-md-6 ">
-                        <JobCard />
-                    </div>
-                </div> */}
-            </div>
+                </Grid>
+            </Container>
             <Footer />
         </div>
     );
 };
 
-export default JobOfferPage;
-
-// This is a functional component called JobCard that takes in a prop called job
-// const JobCard = ({ job }) => {
-//     // This returns a div with a class of job-card, p-3, border, rounded, shadow-sm, d-flex, flex-column, justify-content-between
-//     return (
-//         <div className="job-card p-3 border rounded shadow-sm d-flex flex-column justify-content-between">
-//             // This is a div with a class of d-flex, justify-content-between, align-items-center
-//             <div className="d-flex justify-content-between align-items-center">
-//                 // This is a h5 with a class of fw-bold and a text of 'JOB NAME'
-//                 <h5 className="fw-bold">{'JOB NAME'}</h5>
-//                 // This is a button with a class of btn, bg-primaryy, text-white and a text of 'Apply'
-//                 <button className="btn bg-primaryy text-white">Apply</button>
-//             </div>
-//             // This is a horizontal rule
-//             <hr />
-//             // This is a div with a class of d-flex, flex-wrap, mt-2, justify-content-between, fw-bold, text-secondary, fs-6
-//             <div className="d-flex flex-wrap mt-2 justify-content-between fw-bold text-secondary fs-6">
-//                 // This is a div with a class of d-flex
-//                 <div className="d-flex">
-//                     // This is a p with a class of fw-bold and a text of 'Company'
-//                     <p className="fw-bold">{'Company'}</p>
-//                     // This is a span with a class of mx-2 and a text of '|'
-//                     <span className="mx-2">|</span>
-//                     // This is a p with a text of the current date
-//                     <p>{new Date().toLocaleDateString()}</p>
-//                 </div>
-//                 // This is a p with a class of d-flex, justify-content-between, align-items-center, gap-2, fs-6
-//                 <p className="d-flex justify-content-between align-items-center gap-2 fs-6">
-//                     // This is an icon with a class of fs-6
-//                     <LocationOn className="fs-6" />
-//                     // This is a text of 'Abuja'
-//                     {'Abuja'}
-//                 </p>
-//                 // This is a p with a class of d-flex, justify-content-between, align-items-center, gap-2
-//                 <p className="d-flex justify-content-between align-items-center gap-2">
-//                     // This is an icon with a class of fs-6
-//                     <TbMoneybag />
-//                     {'Price'}
-//                 </p>
-//                 <p className="d-flex justify-content-between align-items-center gap-2">
-//                     <WorkRounded className="fs-6" />
-//                     <span>Contract</span>
-//                 </p>
-//             </div>
-//             <p className="text-secondary job-des">
-//                 {
-//                     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis nam sit a vitae porro dicta. Voluptatem hic autem aliquam ducimus necessitatibus quae vero error. Minima placeat recusandae esse mollitia repudiandae.'
-//                 }
-//             </p>
-//             <div className="d-flex justify-content-between align-items-center gap-3">
-//                 <p className="job-tag-p text-black px-3 py-1 rounded-5 bg-secondary-subtle font-small">
-//                     Web Development
-//                 </p>
-//             </div>
-//             <Link to={'/single-job'} className="text-white text-decoration-none w-100">
-//                 <button className="btn bg-primaryy text-white w-100">
-//                     VIEW DETAIL
-//                 </button>
-//             </Link>
-//         </div>
-//     );
-// };
-
-// This function returns a JobCard component that takes in a job object as a prop
 const JobCard = ({ job }) => {
-    // Return a div with a class of job-card, p-3, border, rounded, shadow-sm, d-flex, flex-column, justify-content-between, and mb-4
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'inprogress': return '#ff9800';
+            case 'completed': return '#4caf50';
+            case 'pending': return '#2196f3';
+            default: return '#757575';
+        }
+    };
+
+    const getStatusIcon = (status) => {
+        switch (status) {
+            case 'inprogress': return <TbClock />;
+            case 'completed': return <CircleCheck />;
+            default: return <TbUsers />;
+        }
+    };
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    };
+
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+            currency: 'NGN',
+            minimumFractionDigits: 0
+        }).format(amount);
+    };
+
     return (
-        <div className="job-card p-3 border rounded shadow-sm d-flex flex-column justify-content-between mb-4 bg-white" >
+        <Card
+            elevation={3}
+            className="h-100"
+            sx={{
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 8px 25px rgba(0,0,0,0.15)'
+                }
+            }}
+        >
+            <CardContent className="p-4">
+                {/* Header Section */}
+                <Box className="d-flex justify-content-between align-items-start mb-3">
+                    <Typography variant="h6" component="h3" className="fw-bold" sx={{ color: '#013049' }}>
+                        {job.title}
+                    </Typography>
+                    <Chip
+                        icon={getStatusIcon(job.status)}
+                        label={job.status.toUpperCase()}
+                        size="small"
+                        sx={{
+                            backgroundColor: getStatusColor(job.status),
+                            color: 'white',
+                            fontWeight: 'bold'
+                        }}
+                    />
+                </Box>
 
-            <div className="d-flex justify-content-between align-items-center " >
+                <Divider sx={{ mb: 2 }} />
 
-                <h5 className="fw-bold">{job.title}</h5>
+                {/* Job Details */}
+                <Box className="mb-3">
+                    <Grid container spacing={2} className="mb-2">
+                        <Grid item xs={6}>
+                            <Box className="d-flex align-items-center gap-1">
+                                <TbCalendar size={16} color="#666" />
+                                <Typography variant="caption" color="textSecondary">
+                                    {formatDate(job.createdAt)}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Box className="d-flex align-items-center gap-1">
+                                <LocationOn sx={{ fontSize: 16, color: '#666' }} />
+                                <Typography variant="caption" color="textSecondary">
+                                    {job.location}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    </Grid>
 
-                {/* <button className="btn bg-primaryy text-white">Apply</button> */}
-            </div>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <Box className="d-flex align-items-center gap-1">
+                                <TbMoneybag size={16} color="#EF6E0B" />
+                                <Typography variant="body2" sx={{ color: '#EF6E0B', fontWeight: 'bold' }}>
+                                    {formatCurrency(job.budget)}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Box className="d-flex align-items-center gap-1">
+                                <WorkRounded sx={{ fontSize: 16, color: '#666' }} />
+                                <Typography variant="caption" color="textSecondary">
+                                    {job.category}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Box>
 
-            <hr />
+                {/* Description */}
+                <Typography variant="body2" color="textSecondary" className="mb-3" sx={{ lineHeight: 1.6 }}>
+                    {job.description.length > 120 ?
+                        job.description.slice(0, 120) + '...' :
+                        job.description
+                    }
+                </Typography>
 
-            <div className="d-flex flex-wrap mt-2 justify-content-between fw-bold text-secondary font-sm-text">
+                {/* Client Info */}
+                {job.user && (
+                    <Box className="d-flex align-items-center gap-2 mb-3 p-2" sx={{ backgroundColor: '#f8f9fa', borderRadius: 1 }}>
+                        <Avatar
+                            src={job.user.avatar}
+                            alt={job.user.fullName}
+                            sx={{ width: 32, height: 32 }}
+                        />
+                        <Box>
+                            <Typography variant="caption" color="textSecondary">Client</Typography>
+                            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                                {job.user.fullName}
+                            </Typography>
+                        </Box>
+                    </Box>
+                )}
 
-                <div className="d-flex text-black">
+                {/* Assigned Artisan (if exists) */}
+                {job.artisan && (
+                    <Box className="d-flex align-items-center gap-2 mb-3 p-2" sx={{ backgroundColor: '#e8f5e8', borderRadius: 1 }}>
+                        <Avatar
+                            src={job.artisan.avatar}
+                            alt={job.artisan.fullName}
+                            sx={{ width: 32, height: 32 }}
+                        />
+                        <Box className="flex-grow-1">
+                            <Box className="d-flex align-items-center gap-1">
+                                <Typography variant="caption" color="textSecondary">Assigned to</Typography>
+                                <Verified sx={{ fontSize: 12, color: '#4caf50' }} />
+                            </Box>
+                            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                                {job.artisan.fullName}
+                            </Typography>
+                            <Typography variant="caption" color="textSecondary">
+                                {job.artisan.service}
+                            </Typography>
+                        </Box>
+                    </Box>
+                )}
 
-                    {/* <p className="fw-bold">Company</p> */}
+                {/* Applications Count */}
+                {job.applied && job.applied.length > 0 && (
+                    <Box className="d-flex align-items-center gap-1 mb-3">
+                        <AssignmentInd sx={{ fontSize: 16, color: '#666' }} />
+                        <Typography variant="caption" color="textSecondary">
+                            {job.applied.length} application{job.applied.length !== 1 ? 's' : ''}
+                        </Typography>
+                    </Box>
+                )}
 
-                    {/* <span className="mx-2">|</span> */}
+                {/* Skills Tags */}
+                {job.skills && job.skills.length > 0 && (
+                    <Box className="mb-3">
+                        <Typography variant="caption" color="textSecondary" className="mb-1 d-block">
+                            Required Skills:
+                        </Typography>
+                        <Box className="d-flex flex-wrap gap-1">
+                            {job.skills.slice(0, 3).map((skill, index) => (
+                                <Chip
+                                    key={index}
+                                    label={skill}
+                                    size="small"
+                                    sx={{
+                                        backgroundColor: '#EF6E0B',
+                                        color: 'white',
+                                        fontSize: '0.7rem'
+                                    }}
+                                />
+                            ))}
+                            {job.skills.length > 3 && (
+                                <Chip
+                                    label={`+${job.skills.length - 3} more`}
+                                    size="small"
+                                    variant="outlined"
+                                    sx={{ fontSize: '0.7rem' }}
+                                />
+                            )}
+                        </Box>
+                    </Box>
+                )}
 
-                    <p>{new Date(job.createdAt).toLocaleDateString()}</p>
-                </div>
-
-                <p className="d-flex text-black align-items-center gap-2 font-sm-text ">
-
-                    <LocationOn className="fs-6" />
-
-                    {job.location.length > 8 ? job.location.slice(0, 8) : job.location}...
-                </p>
-
-                <p className="d-flex text-black align-items-center gap-2 font-sm-text">
-
-                    <TbMoneybag />
-
-                    ₦{job.budget}
-                </p>
-
-                <p className="d-flex text-black align-items-center gap-2 font-sm-text">
-
-                    <WorkRounded className="fs-6" />
-
-                    <span>{job.category}</span>
-                </p>
-            </div>
-
-            <p className="text-black fs-6 mt-3">{job.description.length > 100 ? job.description.slice(0, 100) + '...' : job.description}</p>
-
-            <div className="d-flex flex-wrap gap-2 my-3">
-
-                {job.skills?.map((skill, index) => (
-                    // Return a span with a class of job-tag-p, text-black, px-3, py-1, rounded-5, and bg-secondary-subtle
-                    <span key={index} className="job-tag-p text-white px-3 py-1 rounded-5 " style={{ backgroundColor: '#EF6E0B' }}>
-
-                        {skill}
-                    </span>
-                ))}
-            </div>
-
-            <Link to={`/single-job/${job._id}`} className="text-white text-decoration-none w-100">
-
-                <button className="btn  text-white w-100" style={{ backgroundColor: '#013049' }}>
-                    VIEW DETAIL
-                </button>
-            </Link>
-        </div>
+                {/* Action Button */}
+                <Link to={`/single-job/${job._id}`} style={{ textDecoration: 'none' }}>
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        sx={{
+                            backgroundColor: '#013049',
+                            '&:hover': {
+                                backgroundColor: '#024a6b'
+                            },
+                            textTransform: 'none',
+                            fontWeight: 'bold',
+                            py: 1.5
+                        }}
+                    >
+                        View Details
+                    </Button>
+                </Link>
+            </CardContent>
+        </Card>
     );
 };
+
+export default JobOfferPage;

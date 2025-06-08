@@ -44,6 +44,48 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     };
 
+    // const handleFileUpload = async (e) => {
+    //     const files = Array.from(e.target.files);
+    //     if (!files.length) return;
+
+    //     setState(prev => ({ ...prev, uploadingMedia: true }));
+
+    //     try {
+    //         const uploadPromises = files.map(async (file) => {
+    //             const formData = new FormData();
+    //             formData.append('file', file);
+    //             formData.append('upload_preset', 'grinders'); // Replace with your Cloudinary preset
+
+    //             const response = await fetch(
+    //                 'https://api.cloudinary.com/v1_1/dvprllhcj/upload',
+    //                 { method: 'POST', body: formData }
+    //             );
+    //             const data = await response.json();
+    //             return {
+    //                 url: data.secure_url,
+    //                 name: file.name
+    //             };
+    //         });
+
+    //         const uploadedMedia = await Promise.all(uploadPromises);
+
+    //         setState(prev => ({
+    //             ...prev,
+    //             bidSubmission: {
+    //                 ...prev.bidSubmission,
+    //                 media: [...prev.bidSubmission.media, ...uploadedMedia.filter(item => item !== null)]
+    //             },
+    //             uploadingMedia: false
+    //         }));
+    //     } catch (error) {
+    //         console.error('Upload error:', error);
+    //         setState(prev => ({
+    //             ...prev,
+    //             bidError: 'Failed to upload some files',
+    //             uploadingMedia: false
+    //         }));
+    //     }
+    // };
     const handleFileUpload = async (e) => {
         const files = Array.from(e.target.files);
         if (!files.length) return;
@@ -60,33 +102,58 @@ const BidDialogBox = ({ open, setOpen, id, job }) => {
                     'https://api.cloudinary.com/v1_1/dvprllhcj/upload',
                     { method: 'POST', body: formData }
                 );
+
+                if (!response.ok) {
+                    throw new Error(`Upload failed for ${file.name}: ${response.status}`);
+                }
+
                 const data = await response.json();
+
+                // Log the response to debug
+                console.log('Cloudinary response for', file.name, ':', data);
+
+                // Check if upload was successful
+                if (data.error) {
+                    console.error('Cloudinary error for', file.name, ':', data.error);
+                    throw new Error(`Cloudinary error: ${data.error.message}`);
+                }
+
                 return {
                     url: data.secure_url,
-                    name: file.name
+                    name: file.name,
+                    public_id: data.public_id // Adding public_id for potential future use
                 };
             });
 
             const uploadedMedia = await Promise.all(uploadPromises);
 
+            // Filter out any failed uploads (shouldn't be needed now with proper error handling)
+            const successfulUploads = uploadedMedia.filter(item => item && item.url);
+
             setState(prev => ({
                 ...prev,
                 bidSubmission: {
                     ...prev.bidSubmission,
-                    media: [...prev.bidSubmission.media, ...uploadedMedia.filter(item => item !== null)]
+                    media: [...prev.bidSubmission.media, ...successfulUploads]
                 },
                 uploadingMedia: false
             }));
+
+            // Show success message
+            if (successfulUploads.length > 0) {
+                toast.success(`Successfully uploaded ${successfulUploads.length} file(s)`);
+            }
+
         } catch (error) {
             console.error('Upload error:', error);
             setState(prev => ({
                 ...prev,
-                bidError: 'Failed to upload some files',
+                bidError: `Failed to upload files: ${error.message}`,
                 uploadingMedia: false
             }));
+            toast.error('File upload failed');
         }
     };
-
     const submitBid = async () => {
         if (!cookies?.grinderUser?.token) {
             setState(prev => ({ ...prev, bidError: 'Authentication required' }));

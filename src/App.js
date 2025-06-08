@@ -45,6 +45,7 @@ import CreateNewJobPage from "./pages/CreateNewJobPage/CreateNewJobPage.jsx";
 import JobRecord from "./pages/JobRecord/JobRecord.jsx";
 import BidPage from "./pages/BidPage/BidPage.jsx";
 import OngoingJobs from "./pages/OngoingJobs/OngoingJobs.jsx";
+import DisputeManagement from "./pages/dispute/DisputePage.jsx";
 
 const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
@@ -150,6 +151,7 @@ export default function App() {
           <Route path="job-record" element={<JobRecord />} />
           <Route path="ongoing-jobs" element={<OngoingJobs />} />
           <Route path="bids" element={<BidPage />} />
+          <Route path="dispute" element={<DisputeManagement />} />
           <Route path="verify-admins" element={<VerifyAdminsPage />} />
           <Route path="sendMessage" element={<SendMessagePage />} />
           <Route path="upload-image" element={<ArtisanUploadPhoto />} />

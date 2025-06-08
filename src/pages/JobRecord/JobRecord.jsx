@@ -56,7 +56,7 @@ const JobRecord = () => {
                 ) : error ? (
                     <div className="text-center p-4 text-danger">Error: {error}</div>
                 ) : jobs.length > 0 ? (
-                    jobs.map((job) => (
+                    [...jobs].reverse().map((job) => (
                         <div className=" mb-4" key={job._id}>
                             <JobCard job={job} />
                         </div>

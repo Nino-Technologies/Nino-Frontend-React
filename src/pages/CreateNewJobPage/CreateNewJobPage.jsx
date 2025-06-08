@@ -8,10 +8,12 @@ import { auto } from '@cloudinary/url-gen/actions/resize';
 import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
 import { AdvancedImage } from '@cloudinary/react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const jobTypes = ['Full-Time', 'Part-Time', 'Contract', 'Freelance'];
+
 const categories = [
     'Web Development',
     'Design',
@@ -65,7 +67,7 @@ const CreateNewJobPage = () => {
     const [files, setFiles] = useState([]);
     const [media, setMedia] = useState([]);
     const [requestInspection, setRequestInspection] = useState(false);
-
+    const navigate = useNavigate();
     const uploadToCloudinary = async (file) => {
         const formData = new FormData();
         formData.append('file', file);
@@ -133,6 +135,8 @@ const CreateNewJobPage = () => {
             setRequestInspection(false);
             e.target.reset();
             toast.success('Job posted successfully!');
+            navigate('/job-offer');
+
         } catch (error) {
             alert('Error posting job: ' + error.message);
         }
