@@ -104,8 +104,8 @@ const TransactionList = ({ job }) => {
         </div>
         <div className='d-flex flex-column bg-1  '>
             <span className='text-success fw-bold'>₦ {job?.application?.amount}</span>
-            <div><div><span className='p-1 bg-warning-subtle rounded-pill d-flex justify-content-center align-items-center' style={{ fontSize: '10px' }}>
-                Uncompelted</span></div></div>
+            <div><div><span className='p-2 bg-warning-subtle rounded-pill d-flex justify-content-center align-items-center ' style={{ fontSize: '10px' }}>
+                uncompleted</span></div></div>
         </div>
     </div>
 }
