@@ -24,12 +24,13 @@ import { reference } from '@popperjs/core'
 const SingleJobPage = () => {
   const { id } = useParams()
   const [cookies, setCookie, removeCookie] = useCookies();
-  const { userProfile } = useContext(UserContext)
+
   const [open, setOpen] = useState(false);
   const [job, setJob] = useState(null);
   const navigate = useNavigate();
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [loading, setLoading] = useState(true);
+  const { userProfile } = useContext(UserContext)
   useEffect(() => {
     console.log('this is the user profile', userProfile);
 
@@ -94,6 +95,14 @@ const SingleJobPage = () => {
                   <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}><Title style={{ color: '#013049', marginRight: 8 }} /><span className=''>Title</span></Typography>
                   <Typography variant="body1" className="fw-bold"><span>{job?.title}</span></Typography>
                 </div>
+
+              </div>
+              <div className="mb-3 d-flex align-items-start">
+
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}> <span className=''>Job ID</span></Typography>
+                  <Typography variant="body1" style={{ fontSize: '0.8rem' }} className="fw-light" ><span>{job?._id}</span></Typography>
+                </div>
               </div>
               <div className="mb-3 d-flex align-items-start">
 
@@ -111,6 +120,7 @@ const SingleJobPage = () => {
                   <Typography variant="body1" className="fw-bold"><span>{job?.location}</span></Typography>
                 </div>
               </div>
+
 
               <div className="mb-3 d-flex align-items-start">
 

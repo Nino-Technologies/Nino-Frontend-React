@@ -1,16 +1,18 @@
-import { Card, Box, CircularProgress } from '@mui/material'
+import { Card, Box, CircularProgress, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material'
 import { LoaderPinwheel } from 'lucide-react'
-
-import React, { useEffect, useState } from 'react'
+import { UserContext } from '../../context/UserContext'
+import React, { useContext, useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { GiCash } from 'react-icons/gi'
-
+// import { UserContext } from '../../context/UserContext'
 const WalletPage = () => {
     const [active, setActive] = useState(0)
     const [jobs, setJobs] = useState([]);
     const [cookies] = useCookies();
+    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { userProfile } = useContext(UserContext)
     useEffect(() => {
         const fetchJobs = async () => {
             try {
@@ -53,14 +55,32 @@ const WalletPage = () => {
                         <h3 className='' style={{ fontSize: '14px', lineHeight: 0, fontWeight: 200, color: 'gray' }}>Total Balance</h3>
                         <h2 style={{ fontSize: '20px', fontWeight: 900, color: 'green' }}>
 
-                            ₦{'300,000'}
+                            ₦ {userProfile?.wallet?.toLocaleString()}
 
                         </h2></Box>
                 </Card>
                 <div>
-                    <button className='btn btn-success rounded-1'>
+                    <button className='btn btn-success rounded-1' onClick={() => { setOpen(true) }}>
                         Make Withdraw
                     </button>
+                    <Dialog open={open} onClose={() => setOpen(false)} >
+                        <DialogTitle >
+
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                onClick={''}
+                                color="primary"
+                            >
+                                Cancel
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </div>
             </div>
             <div className='w-100 p-2 d-flex align-items-center justify-content-center mt-3 mb-4' style={{ background: '#fff' }}>
@@ -104,7 +124,7 @@ const TransactionList = ({ job }) => {
         </div>
         <div className='d-flex flex-column bg-1  '>
             <span className='text-success fw-bold'>₦ {job?.application?.amount}</span>
-            <div><div><span className='p-2 bg-warning-subtle rounded-pill d-flex justify-content-center align-items-center ' style={{ fontSize: '10px' }}>
+            <div><div><span className='px-2 bg-warning-subtle rounded-pill d-flex justify-content-center align-items-center ' style={{ fontSize: '10px' }}>
                 uncompleted</span></div></div>
         </div>
     </div>
