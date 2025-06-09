@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { BsBellFill, BsHeart, BsHouseFill, BsPen, BsPerson } from "react-icons/bs";
 import { Construction, ReportProblemOutlined, Work, WorkHistory, WorkOutlined } from "@mui/icons-material";
+import { Wallet2 } from "lucide-react";
 
 export const userNavLinkObject = [
   {
@@ -71,6 +72,12 @@ export const userNavLinkObject = [
   //   path: "/dashboard/bids",
   //   userPrivilege: [1],
   // },
+  {
+    name: " Wallet",
+    icon: < Wallet2 />,
+    path: "/dashboard/wallet",
+    userPrivilege: [0, 1],
+  },
   {
     name: " Create New Job",
     icon: < Work />,

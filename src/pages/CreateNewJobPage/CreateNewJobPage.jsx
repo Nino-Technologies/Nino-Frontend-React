@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, TextField, Button, Typography, Grid, Paper, MenuItem, Chip, Checkbox, FormControlLabel } from '@mui/material';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
@@ -8,7 +8,7 @@ import { auto } from '@cloudinary/url-gen/actions/resize';
 import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
 import { AdvancedImage } from '@cloudinary/react';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
@@ -61,13 +61,57 @@ const categories = [
 
 
 const CreateNewJobPage = () => {
+    const { id } = useParams()
     const { CreateJob } = useContext(UserContext)
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState('');
     const [files, setFiles] = useState([]);
     const [media, setMedia] = useState([]);
+    const [artisan, setArtisan] = useState([]);
     const [requestInspection, setRequestInspection] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+
+        if (id) {
+            getProfile(id)
+        }
+        if (!id) {
+            return
+        }
+
+    }, [])
+
+    async function getProfile(id) {
+        if (!id) {
+            alert("This page requires an artisan ID");
+            return navigate("/artisans");
+        }
+
+        try {
+            const response = await fetch(`https://nino-backend.vercel.app/api/search/${id}`);
+
+            if (!response.ok) {
+                throw new Error('Profile not found');
+            }
+
+            const data = await response.json();
+
+            // Handle case where API returns empty array
+            if (!data || data.length === 0) {
+                toast.info("Artisan with the provided ID was not found");
+                return navigate("/artisans");
+            }
+
+            // Assuming API returns array, take first item
+            setArtisan(data[0]);
+            // setPageLoading(false);
+        } catch (error) {
+            console.error("Error fetching profile:", error);
+            toast.info("Artisan with the provided ID was not found");
+            navigate("/artisans");
+        }
+    }
     const uploadToCloudinary = async (file) => {
         const formData = new FormData();
         formData.append('file', file);
@@ -121,6 +165,7 @@ const CreateNewJobPage = () => {
             location: formData.get('location'),
             category: formData.get('category'),
             requestInspection: requestInspection,
+            requested: id ? id : null, // If there's a requested ID, include it
         };
 
         try {
@@ -194,7 +239,12 @@ const CreateNewJobPage = () => {
                         lineHeight: 1.8,
                     }}
                 >
-                    Got a job that needs doing? Post your task and connect with skilled, local artisans ready to help. Just fill out the form to create a new task and start receiving bids from qualified professionals.
+                    {/* Got a job that needs doing? Post your task and connect with skilled, local artisans ready to help. Just fill out the form to create a new task and start receiving bids from qualified professionals. */}
+                    Create a Personalized Job just for you by filling out the form below. Our platform will then match you with the perfect artisan to complete your task. It's that simple!
+                    create a task for <span className='text-warning fw-bold'>
+                        {artisan?.fullName}
+                    </span>
+
                 </Typography>
             </Box>
 
@@ -203,13 +253,20 @@ const CreateNewJobPage = () => {
 
             {/* Right Section (Form) */}
 
-            <Box sx={{ flex: 2, padding: { md: 4 } }}>
+            <Box sx={{ flex: 2, padding: { md: 4 }, paddingTop: { md: 0 } }}>
                 <Paper elevation={3} sx={{ padding: { xs: 1, md: 4 } }}>
                     <Typography variant="h4" sx={{ color: '#EF6E0B', textAlign: 'center', mb: 3, fontWeight: 900 }}>
                         <span className='fw-bold '>
                             Create a New Job
                         </span>
                     </Typography>
+                    <div>
+                        <div className='m-auto mb-3 text-center' >
+                            <span className='text-center rounded-pill bg-success text-white p-2  ' style={{ fontSize: '8px' }}>
+                                For  {artisan?.fullName}
+                            </span>
+                        </div>
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
