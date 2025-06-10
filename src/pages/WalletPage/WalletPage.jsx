@@ -475,8 +475,8 @@ const WalletPage = () => {
                                         <label style={{ fontSize: '14px', fontWeight: '500', marginBottom: '8px', display: 'block' }}>
                                             Select Bank
                                         </label>
-                                        <Select
-                                            className="basic-single"
+                                        {/* <Select
+                                            className="basic-single bg-white"
                                             classNamePrefix="select"
                                             placeholder="Choose your bank..."
                                             onChange={changeBank}
@@ -489,8 +489,38 @@ const WalletPage = () => {
                                                 control: (base) => ({
                                                     ...base,
                                                     minHeight: '45px',
-                                                    borderRadius: '8px'
+                                                    borderRadius: '8px',
+                                                    backgroundColor: '#fff',
                                                 })
+                                            }}
+                                        /> */}
+                                        <Select
+                                            className="basic-single bg-white"
+                                            classNamePrefix="select"
+                                            placeholder="Choose your bank..."
+                                            onChange={changeBank}
+                                            isSearchable={true}
+                                            options={banks.map((bank) => ({
+                                                label: bank.name,
+                                                value: bank.id,
+                                            }))}
+                                            styles={{
+                                                control: (base) => ({
+                                                    ...base,
+                                                    minHeight: '45px',
+                                                    borderRadius: '8px',
+                                                    backgroundColor: '#fff',
+                                                }),
+                                                menu: (base) => ({
+                                                    ...base,
+                                                    backgroundColor: '#fff', // Ensures dropdown options have white background
+                                                    zIndex: 9999,
+                                                }),
+                                                option: (base, state) => ({
+                                                    ...base,
+                                                    backgroundColor: state.isFocused ? '#f5f5f5' : '#fff',
+                                                    color: '#222',
+                                                }),
                                             }}
                                         />
                                     </Box>

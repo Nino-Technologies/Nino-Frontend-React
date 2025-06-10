@@ -52,24 +52,47 @@ function LandingPage() {
   const steps = [
     {
       number: 1,
-      title: "Discover",
-      content: "Explore our wide range of innovative solutions tailored to your needs."
+      title: "Search Artisans & Create Jobs",
+      content: "Browse our verified artisan database by skill, location, or ratings. Hire directly or post jobs for open bidding."
     },
     {
       number: 2,
-      title: "Select",
-      content: "Choose the perfect package that matches your requirements."
+      title: "Review Bids & Select Artisan",
+      content: "Artisans submit competitive bids with pricing and timelines. Compare options and accept the best bid for your project."
     },
     {
       number: 3,
-      title: "Customize",
-      content: "Personalize your selection with our easy-to-use tools."
+      title: "Secure Payment",
+      content: "Pay the agreed amount securely via escrow. Add optional inspection fees for complex jobs. Funds are held safely until completion."
     },
     {
       number: 4,
-      title: "Enjoy",
-      content: "Experience seamless integration and outstanding performance."
-    }]
+      title: "Approve Work & Release Funds",
+      content: "Monitor progress through chat and photo updates. Inspect completed work. Release payment only when 100% satisfied."
+    }
+  ];
+  const artisanSteps = [
+    {
+      number: 1,
+      title: "Create Your Profile",
+      content: "Set up a compelling profile showcasing your skills, experience, and portfolio. Get verified to build trust with clients."
+    },
+    {
+      number: 2,
+      title: "Find & Bid on Jobs",
+      content: "Browse available jobs in your area/specialty. Submit competitive bids with your pricing and timeline."
+    },
+    {
+      number: 3,
+      title: "Get Hired & Complete Work",
+      content: "Wait for client acceptance. Once hired, communicate clearly and complete the job to specifications."
+    },
+    {
+      number: 4,
+      title: "Get Paid Securely",
+      content: "Receive payment into your wallet after client approval. Funds released immediately upon job completion sign-off."
+    }
+  ];
   return (
     <div className='w-100 overflow-x-hidden'>
       <Nav />
@@ -528,10 +551,44 @@ function LandingPage() {
             <div className="sec-title text-center style-two">
               {/* <p>Lorem Ipsum</p> */}
               <h1 className="fw-bold text-primaryy">How It Works </h1>
+              <p className="fw-bold text-primaryy" style={{ fontSize: '12' }}>For Users</p>
             </div>
             <div className="how-it-works-container">
               <div className="steps-wrapper">
                 {steps.map((step, index) => (
+                  <div
+                    key={step.number}
+                    className={`step-pill ${index === activeIndex ? 'active' : ''}`}
+                    onClick={() => setActiveIndex(index)}
+                  >
+                    <div className="step-number-container">
+                      <span className="step-number">{step.number}</span>
+                    </div>
+                    <div className="step-content">
+                      <h3>{step.title}</h3>
+                      <p>{step.content}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="how-it-works-section mt-5">
+          <div className="container">
+            <div className="sec-title text-center style-two">
+              {/* <p>Lorem Ipsum</p> */}
+              <h1 className="fw-bold " style={{ color: '#013049' }}>How It Works </h1>
+              <p className="fw-bold " style={{ fontSize: '12', color: '#013049' }}>For Artisans</p>
+            </div>
+            <div className="how-it-works-container">
+              <div className="steps-wrapper">
+                {artisanSteps.map((step, index) => (
                   <div
                     key={step.number}
                     className={`step-pill ${index === activeIndex ? 'active' : ''}`}
