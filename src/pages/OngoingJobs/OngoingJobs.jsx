@@ -250,7 +250,25 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
                 sx={{
                     position: 'absolute',
                     top: -8,
-                    right: 16,
+                    left: 6,
+                    backgroundColor: job.paymentJob.length === 0 ? 'orange' : 'green',
+                    color: 'white',
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 2,
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    zIndex: 1
+                }}
+            >
+                {job.paymentJob.length === 0 ? 'No Deposit Found' : 'User Deposited'}
+            </Box>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: -8,
+                    right: 8,
                     backgroundColor: theme.primary,
                     color: 'white',
                     px: 2,
@@ -264,6 +282,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
             >
                 Active
             </Box>
+
 
             <CardContent sx={{ flexGrow: 1, p: 3 }}>
                 {/* Header */}
@@ -377,7 +396,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
             {/* Actions */}
             <CardActions sx={{ p: 3, pt: 0, flexDirection: 'column', gap: 1 }}>
                 {/* Complete Job Button */}
-                <Button
+                {job.paymentJob.length === 0 ? <p className=' p-1 rounded text-secondary ' >Process Payment to continue...</p> : <Button
                     fullWidth
                     variant="contained"
                     disabled={loadingJobComplete}
@@ -398,7 +417,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
                     }}
                 >
                     {userProfile.role === 0 ? 'Mark as Satisfied' : 'Complete Task'}
-                </Button>
+                </Button>}
 
                 {/* Payment Button */}
                 {(job.paymentJob.length === 0) &&
@@ -407,7 +426,7 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
                         <Box sx={{ width: '100%', mt: 1 }}>
                             <PaystackButton
                                 {...componentProps}
-                                className="w-100"
+                                className="w-100 border-0 p-2 rounded bg-success text-white"
                                 style={{
                                     width: '100%',
                                     padding: '12px',

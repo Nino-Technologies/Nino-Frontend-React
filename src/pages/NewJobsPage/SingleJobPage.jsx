@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Nav from '../../components/Nav/Nav'
 import { Box, Chip, CircularProgress, Grid, Paper, TextField, Typography } from '@mui/material'
-import { ArrowBackRounded, Category, Description, Email, GpsFixedSharp, LocationCity, LocationOn, MoneyRounded, Photo, Title } from '@mui/icons-material'
+import { ArrowBackRounded, Category, Description, Email, GpsFixedSharp, LocationCity, LocationOn, MoneyRounded, Photo, Title, TopicOutlined } from '@mui/icons-material'
 
 import { TbGps } from 'react-icons/tb'
 import { BsTools } from 'react-icons/bs'
@@ -24,12 +24,13 @@ import { reference } from '@popperjs/core'
 const SingleJobPage = () => {
   const { id } = useParams()
   const [cookies, setCookie, removeCookie] = useCookies();
-  const { userProfile } = useContext(UserContext)
+
   const [open, setOpen] = useState(false);
   const [job, setJob] = useState(null);
   const navigate = useNavigate();
   const [artisanBidDetails, setArtisanBidDetails] = useState(false)
   const [loading, setLoading] = useState(true);
+  const { userProfile } = useContext(UserContext)
   useEffect(() => {
     console.log('this is the user profile', userProfile);
 
@@ -94,6 +95,14 @@ const SingleJobPage = () => {
                   <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}><Title style={{ color: '#013049', marginRight: 8 }} /><span className=''>Title</span></Typography>
                   <Typography variant="body1" className="fw-bold"><span>{job?.title}</span></Typography>
                 </div>
+
+              </div>
+              <div className="mb-3 d-flex align-items-start">
+
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}> <span className=''>Job ID</span></Typography>
+                  <Typography variant="body1" style={{ fontSize: '0.8rem' }} className="fw-light" ><span>{job?._id}</span></Typography>
+                </div>
               </div>
               <div className="mb-3 d-flex align-items-start">
 
@@ -112,6 +121,7 @@ const SingleJobPage = () => {
                 </div>
               </div>
 
+
               <div className="mb-3 d-flex align-items-start">
 
                 <div>
@@ -119,15 +129,23 @@ const SingleJobPage = () => {
                   <Typography variant="body1" className="fw-bold"><span>₦ {job?.budget}</span> </Typography>
                 </div>
               </div>
-
+              {/* 
               <div className="mb-3 d-flex align-items-start">
 
                 <div>
                   <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}>  <GoClock style={{ color: '#013049', marginRight: 8 }} /><span>Estimated Time</span></Typography>
-                  {/* <Typography variant="body1" className="fw-bold"><span>31/02/25 - 31/5/25</span></Typography> */}
+    
+                </div>
+              </div> */}
+
+              <div className="mb-3 d-flex align-items-start">
+
+                <div>
+                  <Typography variant="caption" style={{ color: '#013049', display: 'flex', alignItems: 'center' }}> <TopicOutlined style={{ color: '#013049', marginRight: 8 }} /> Material info:</Typography>
+                  <Typography variant="body1" className="fw-bold"> <span>
+                    {job?.materialInformation ? job?.materialInformation : 'N/A'} </span></Typography>
                 </div>
               </div>
-
               <div className="mb-3 d-flex align-items-start">
 
                 <div>
@@ -264,6 +282,12 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus, paymentJob, fetchJob 
     amount: applied.amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: "pk_test_f8e5c57777aaf7ebb1d557ab36331af498857a93"
   };
+  const inspectionConfig = {
+    reference: (new Date()).getTime().toString(),
+    email: userProfile.email,
+    amount: applied.inspectionFee * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    publicKey: "pk_test_f8e5c57777aaf7ebb1d557ab36331af498857a93"
+  };
   const handlePaystackSuccessAction = async (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference);
@@ -312,6 +336,54 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus, paymentJob, fetchJob 
 
     }
   };
+  const handlePaystackSuccessInspectionFeeAction = async (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", cookies.grinderUser.token);
+      myHeaders.append('Content-Type', 'application/json');
+
+      const raw = {
+        type: "inspection",
+        artisan: applied?.artisan?._id,
+        amount: applied.inspectionFee,
+        payment_verified: true,
+        status: "inprogress",
+        redirectUrl: 'hi',
+        reference: reference.reference
+      };
+      console.log('after paystack was successful', raw)
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(raw),
+        redirect: "follow"
+      };
+
+      const response = await fetch(`https://nino-backend.vercel.app/api/payments/job?jobId=${jobId}`, requestOptions)
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Payment verification failed');
+      }
+      const result = await response.json();
+      console.log('Payment verification successful:', result);
+
+      // Show success notification to user
+      toast.success('Payment processed successfully!');
+      fetchJob()
+      // You might want to update UI state here
+      return result;
+
+    } catch (error) {
+      console.error('Payment processing error:', error);
+
+      // Show error notification to user
+      toast.error(error.message || 'Failed to process payment');
+
+    }
+  };
 
   // you can call this function anything
   const handlePaystackCloseAction = () => {
@@ -322,6 +394,12 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus, paymentJob, fetchJob 
     ...config,
     text: 'Proceed to Payment',
     onSuccess: (reference) => handlePaystackSuccessAction(reference),
+    onClose: handlePaystackCloseAction,
+  };
+  const inspectionFeeComponent = {
+    ...inspectionConfig,
+    text: 'Pay Inspection Fee',
+    onSuccess: (reference) => handlePaystackSuccessInspectionFeeAction(reference),
     onClose: handlePaystackCloseAction,
   };
 
@@ -525,15 +603,14 @@ const ArtisanCards = ({ applied, jobId, userId, jobStatus, paymentJob, fetchJob 
           }
         </div>
         {userProfile?._id === userId && jobStatus === 'pending' ?
-          <DialogActions>
+          <DialogActions className={'d-flex justify-content-between align-items-center p-3 flex-wrap flex-sm-column gap-2 flex-md-row'} style={{ backgroundColor: grey[100] }}>
             {console.log(userProfile?._id, userId, 'this is from dialog box')}
             {applied?.inspectionFee > 0 && (
-              <Button
-                className='fw-bold'
-                sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: '#d65c0a' } }}
-              >
-                Pay for Inspection
-              </Button>
+
+              <div className='d-flex gap-2 flex-wrap justify-content-center align-items-center p-2'>
+                <PaystackButton {...inspectionFeeComponent} className='btn btn-success mt-1 flex-1 w-100' />
+              </div>
+
             )}
 
             <Button
