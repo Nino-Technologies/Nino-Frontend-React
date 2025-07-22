@@ -1,428 +1,507 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import Nav, { DashboardSideNav } from "../../components/Nav/Nav.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
-import { Link, useNavigate } from "react-router-dom";
-import { FaExclamation, FaRetweet } from "react-icons/fa";
-import ModalComponent from "../../components/Modal/ModalComponent.jsx";
-import { TermiiSMSContext } from "../../context/TermiiContext.jsx";
-import {
-  ProfileCompletenessProgressBar,
-  ProfileCompletenessWhatLeftDropdown,
-  ProfileSubscriptionAlertCard, ProfileSVerificationAlertCard
-} from "../ProfilePage/ProfilePage.jsx";
 import { useCookies } from "react-cookie";
-import { WalletRounded } from "@mui/icons-material";
+import {
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Avatar,
+  Chip,
+  Button,
+  IconButton,
+  LinearProgress,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Badge,
+  Paper,
+  Stack,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
+import {
+  TrendingUp,
+  TrendingDown,
+  AccountBalanceWallet,
+  Work,
+  Assignment,
+  CheckCircle,
+  Schedule,
+  Notifications,
+  Star,
+  Visibility,
+  Message,
+  Add,
+  MoreVert,
+  ArrowForward,
+  Person,
+  Business,
+  LocationOn,
+  Phone,
+  Email,
+} from "@mui/icons-material";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 
-function HomePage() {
-  const {
-    logOutFunction,
-    userProfile,
-    notification,
-    pageLoading,
-    decodeDate,
-    getNotification,
-    checkVerifiedFunction,
-    getUserProfile,
-    profileCompletenessCheck,
-    profileProgress,
-    loggedIn,
-  } = useContext(UserContext);
-  const { getBalance, smsBalance } = useContext(TermiiSMSContext);
-
-  // const [count, setCount] = useState(0);
-  // const [distance, setDistance] = useState(0);
-  // const [date, setDate] = useState("");
-
-  // useEffect(() => {
-  //   //  // Set the date we're counting down to
-  //   var countDownDate = new Date(1670510319633).getTime();
-  //   // var countDownDate = new Date("Jan 7, 2023 15:37:25").getTime();
-
-  //   //  // Update the count down every 1 second
-  //   const interval = setInterval(() => {
-  //     setCount(count + 1);
-  //     // Get today's date and time
-  //     var now = new Date().getTime();
-
-  //     // Find the distance between now and the count down date
-  //     //  var distance =
-  //     setDistance(countDownDate - now);
-  //     // setDistance(1670510319633);
-
-  //     // console.log(distance);
-
-  //     // Time calculations for days, hours, minutes and seconds
-  //     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  //     var hours = Math.floor(
-  //       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  //     );
-  //     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  //     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  //     // Output the result in an element with id="demo"
-  //     //  document.getElementById("demo").innerHTML =
-  //     //    minutes + "m " + seconds + "s ";
-  //     setDate(`${days}d ${hours}h ${minutes} m ${seconds} s`);
-  //     // If the count down is over, write some text
-  //     // if (distance < 0) {
-  //     //   clearInterval(x);
-  //     //   // document.getElementById("demo").innerHTML = "EXPIRED";
-  //     // }
-  //   }, 1000);
-
-  //   // Clean up the interval when the component unmounts
-  //   return () => clearInterval(interval);
-  // }, [count, distance]);
-  const [cookies] = useCookies();
+function Dashboard() {
+  const { loggedIn, getUserProfile, userProfile } = useContext(UserContext);
+  const [sideNavOpen, setSideNavOpen] = useState(false);
   const navigate = useNavigate();
+  const [cookies] = useCookies();
 
-  function checkIfAuthor() {
-    if (cookies?.grinderUser?.profile?.role === -1) {
-      return navigate("/dashboard/author");
+  // Mock data for the new dashboard
+  const [dashboardData, setDashboardData] = useState({
+    stats: {
+      totalJobs: 156,
+      completedJobs: 89,
+      activeJobs: 23,
+      totalEarnings: 45250,
+      monthlyGrowth: 12.5,
+      responseRate: 94.2,
+      averageRating: 4.8,
+      pendingBids: 7
+    },
+    recentActivity: [
+      {
+        id: 1,
+        type: 'job_completed',
+        title: 'Kitchen Renovation',
+        description: 'Job completed successfully',
+        amount: 2500,
+        date: '2024-01-15',
+        status: 'completed',
+        artisan: 'John Smith'
+      },
+      {
+        id: 2,
+        type: 'new_bid',
+        title: 'Electrical Installation',
+        description: 'New bid received',
+        amount: 1800,
+        date: '2024-01-14',
+        status: 'pending',
+        artisan: 'Mike Johnson'
+      },
+      {
+        id: 3,
+        type: 'payment_received',
+        title: 'Plumbing Repair',
+        description: 'Payment received',
+        amount: 950,
+        date: '2024-01-13',
+        status: 'completed',
+        artisan: 'Sarah Wilson'
+      }
+    ],
+    performanceData: [
+      { month: 'Jan', jobs: 12, earnings: 8500 },
+      { month: 'Feb', jobs: 15, earnings: 12000 },
+      { month: 'Mar', jobs: 18, earnings: 14500 },
+      { month: 'Apr', jobs: 22, earnings: 18000 },
+      { month: 'May', jobs: 25, earnings: 22000 },
+      { month: 'Jun', jobs: 28, earnings: 25000 }
+    ],
+    categoryDistribution: [
+      { name: 'Construction', value: 35, color: '#8884d8' },
+      { name: 'Electrical', value: 25, color: '#82ca9d' },
+      { name: 'Plumbing', value: 20, color: '#ffc658' },
+      { name: 'Cleaning', value: 15, color: '#ff7300' },
+      { name: 'Others', value: 5, color: '#8dd1e1' }
+    ]
+  });
+
+  useEffect(() => {
+    if (loggedIn === false) {
+      navigate("/login?as=user");
     }
-  }
-  function checkLogin() {
-    if (loggedIn && cookies?.grinderUser) {
-      getNotification();
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn) {
       getUserProfile();
     }
-  }
-  useEffect(() => {
-    checkIfAuthor();
   }, []);
 
-  useEffect(() => {
-    checkLogin();
-  }, []);
-  // useEffect(() => {
-  //   if (!userProfile.email_verified) {
-  //     if (userProfile.role === 3) {
-  //       setProfileProgress(100);
-  //     } else {
-  //       //  CLike the model button with js
-  //       window.document
-  //         .getElementById("open_profile_completeness_modal")
-  //         .click();
-  //     }
-  //   }
-  // }, [userProfile]);
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'completed': return 'success';
+      case 'pending': return 'warning';
+      case 'in_progress': return 'info';
+      default: return 'default';
+    }
+  };
+
+  const getActivityIcon = (type) => {
+    switch (type) {
+      case 'job_completed': return <CheckCircle />;
+      case 'new_bid': return <Assignment />;
+      case 'payment_received': return <AccountBalanceWallet />;
+      default: return <Notifications />;
+    }
+  };
+
   return (
-    <div className="HomePage">
-      {/* button to open model */}
-      <button
-        type="button"
-        className="button"
-        id="open_profile_completeness_modal"
-        // hide button; it will be clicked with js
+    <div className="Dashboard">
+      <input
+        type="checkbox"
+        className="sideBarCheck"
+        checked={sideNavOpen ? true : false}
         style={{ display: "none" }}
-        data-bs-toggle="modal"
-        data-bs-target="#profile_completeness_modal"
-      ></button>
-      {/* model component;  */}
-      <ModalComponent
-        modalTitle={"Important Notification"}
-        modalId={"profile_completeness_modal"}
-      >
-        Your profile is not completed <br />
-        Update Profile{" "}
-        {userProfile.role === 0 ? (
-          <>to get our top pro service provider</>
-        ) : (
-          <>
-            to become a verified service providers
-            {userProfile.refereeNumber &&
-              userProfile.refereeNumber.trim() === "" ? (
-              <>
-                <br /> <FaExclamation className="text-danger" /> Fill Referee
-                Number for Account verification
-              </>
-            ) : null}{" "}
-            {userProfile.refereeName &&
-              userProfile.refereeName.trim() === "" ? (
-              <>
-                {" "}
-                <br />
-                <FaExclamation className="text-danger" /> Fill Reference Name for
-                Account verification
-              </>
-            ) : null}
-          </>
-        )}
-        <br />{" "}
-        <Link
-          onClick={() => {
-            document.getElementById("closeModalComponent").click();
-          }}
-          to="/dashboard/profile"
-          className="btn btn-primary mt-2 ms-auto"
-        >
-          Update Profile
-        </Link>
-      </ModalComponent>
-      <div className="header my-4  d-flex justify-content-between">
-        <div className="welcome ms-4">
-          Welcome {userProfile.fullName || "User"}
-        </div>
-        {userProfile.role === 1 ? <div className='p-2 rounded-1 bg-secondary-subtle my-2'><span className='fw-5'><span className='fw-bold'><WalletRounded style={{ color: '#ef6e0b' }} /> Wallet: </span>{userProfile?.wallet?.toLocaleString()}</span></div> : ''}
-        <button
-          className="btn-danger btn me-4 btn-sm"
-          onClick={() => logOutFunction()}
-        >
-          Log Out
-        </button>
-      </div>
-      <hr className="mb-0" />
-      <ProfileSVerificationAlertCard userProfile={userProfile} />
-      <ProfileSubscriptionAlertCard userProfile={userProfile} />
-      {/* We have {count}s left <br />
-      {distance < 0 ? "Expired" : date} <br />
-      {date} */}
-      <div className="container">
-        <div className="d-flex flex-wrap ">
-          <div className="px-1"></div>
-        </div>
-      </div>
-      <div className="container">
-        {" "}
-        <div className="row"></div>
-      </div>
-      <div className="container">
-        {" "}
-        <div className="row mt-1">
-          <div className="col-sm-6">
-            {userProfile.role === 3 ? (
-              <>
-                {" "}
-                <div
-                  className="card text-dark mx-2 mt-2"
-                // style={{ maxWidth: "18rem" }}
-                >
-                  <div className="card-header d-flex justify-content-between">
-                    <span className="my-auto">SMS Wallet</span>
-                    <button
-                      className="btn btn-outline-primary btn-sm"
-                      onClick={() => {
-                        getBalance();
-                      }}
-                    >
-                      <FaRetweet />
-                      <span className="d-none d-lg-inline ml-1">Refresh</span>
-                    </button>
-                  </div>
-                  <div className="card-body">
-                    <h5 className="card-title">Wallet Balance</h5>
-                    {smsBalance.loading ? (
-                      <>Loading...</>
-                    ) : (
-                      <>
-                        <b>
-                          {smsBalance.currency} {smsBalance.balance}
-                          <br />
-                        </b>
-                        <sup>Balance for sms</sup>
-                      </>
-                    )}
-                  </div>
-                </div>{" "}
-              </>
-            ) : null}
-          </div>
-          <div className="col-sm-6">
-            <div className="card mx-2 mt-2">
-              {/* <div className="card-header"</div> */}
-              <div className="card-header d-flex justify-content-between">
-                <span className="my-auto">Profile Completeness</span>
-                <button
-                  className="btn btn-outline-primary btn-sm"
-                  onClick={() => {
-                    profileCompletenessCheck();
-                  }}
-                >
-                  <FaRetweet />
-                  <span className="d-none d-lg-inline ml-1">Refresh</span>
-                </button>
-              </div>
-              <div className="card-body d-flex flex-column">
-                <p className="card-text">
-                  Update Profile to get our top pro service providers
-                </p>
-                <ProfileCompletenessProgressBar />
-                <div className="d-flex flex-wrap">
-                  <ProfileCompletenessWhatLeftDropdown />
-                  <Link
-                    to="/dashboard/profile"
-                    className="btn btn-primary mt-2 ms-auto"
-                  >
-                    {profileProgress !== 100 ? (
-                      <>Update Profile</>
-                    ) : (
-                      <>View Profile</>
-                    )}
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="container">
-        {" "}
-        <div className="row mt-5">
-          <div className="col-sm-6">
-            <div className="card mx-2 notification">
-              <div className="card-header">Notification</div>
-              <div className="card-body">
-                {pageLoading ? (
-                  <li className="loading">Loading....</li>
-                ) : (
-                  <>
-                    {" "}
-                    {notification.length === 0 ? (
-                      <li className="loading">No Notification Found</li>
-                    ) : (
-                      notification.map((notification, i) => {
-                        const { _id, message, sentDate } = notification;
-                        return (
-                          <>
-                            {i <= 2 ? (
-                              <div key={_id}>
-                                <span className="w-100 me-4">
-                                  <sup className="d-inline d-md-flex justify-content-between  mt-2 mb-0 flex-wrap"></sup>
-                                  <sub className="date ms-md-auto my-0 ">
-                                    {decodeDate(sentDate)[0]}
-                                  </sub>{" "}
-                                  <br />
-                                  {message}{" "}
-                                </span>
-                                <hr className="my-0 mb-2" />
-                              </div>
-                            ) : null}
-                          </>
-                        );
-                      })
-                    )}
-                    <Link to={"/dashboard/notification"}>Read More...</Link>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="card mx-2">
-              <div className="card-header">Achievements</div>
-              <div className="card-body d-flex flex-column">
-                <ul className="nav">
-                  <li className="achievements-div my-1 w-100">
-                    {profileProgress !== 100
-                      ? checkVerifiedFunction(false)
-                      : checkVerifiedFunction(true)}
-                    <div className="text ms-2">
-                      <b>Profile Completeness</b>
-                      {/* <>time</> */}
-                    </div>
-                  </li>
-                  <li className="achievements-div my-1 w-100">
-                    {checkVerifiedFunction(userProfile.email_verified)}
-                    <div className="text ms-2">
-                      <b>Email verified</b>
-                      {/* <>time</> */}
-                    </div>
-                  </li>
-                  <li className="achievements-div my-1 w-100">
-                    {checkVerifiedFunction(userProfile.account_verified)}
-                    <div className="text ms-2">
-                      <b> Account verified</b>
-                    </div>
-                  </li>
-                  {userProfile.role !== 3 && userProfile.role !== 0 ? (
-                    <>
-                      <li className="achievements-div my-1 w-100">
-                        {userProfile.freeAccount === false &&
-                          userProfile.subscriptionExpired === false
-                          ? checkVerifiedFunction(true)
-                          : checkVerifiedFunction(false)}
-                        {/* {checkVerifiedFunction(userProfile.freeAccount)} */}
-                        <div className="text ms-2">
-                          <b>Account Subscription</b>
-                        </div>
-                      </li>
-                    </>
-                  ) : null}
-                  {/* {userProfile.role !== 3 && userProfile.role !== 0 ? (
-                    <>
-                      <li className="achievements-div my-1 w-100">
-                        {checkVerifiedFunction(userProfile.licensed)}
-                        <div className="text ms-2">
-                          <b>Licensed</b>
-                          {/* <>time</> * /}
-                        </div>
-                      </li>
-                      <li className="achievements-div my-1 w-100">
-                        {checkVerifiedFunction(userProfile.backgroundChecked)}
-                        <div className="text ms-2">
-                          <b>background Checked</b>
-                          {/* <>time</> * /}
-                        </div>
-                      </li>
-                      <li className="achievements-div my-1 w-100">
-                        {checkVerifiedFunction(userProfile.topPro)}
-                        <div className="text ms-2">
-                          <b>Top Pro</b>
-                          {/* <>time</> * /}
-                        </div>
-                      </li>{" "}
-                    </>
-                  ) : null} */}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/*!!!!!!!!!!!!!!!!!!!!!!!!! do not remove this commented code !!!!!!!!!!!!!!!!!!!!! */}
-      {/* <h4 className="mt-5">Resent Hairs</h4>
-      <div className="container  table-responsive ">
-        <table className="table">
-          <thead className="table-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">FullName</th>
-              <th scope="col">phoneNumber</th>
-              <th scope="col">officeLocation</th>
-              <th scope="col">Date</th>
-              <th scope="col">Profile Link</th>
-            </tr>
-          </thead>
-          <tbody className="table-primary">
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>@fat</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
+        onChange={() => null}
+      />
+      {/* <div className="dashboardNav">
+        <Nav />
       </div> */}
+      <div className="page-body-wrapper">
+        {/* <div className="side-nav">
+          <DashboardSideNav
+            sideNavOpen={sideNavOpen}
+            setSideNavOpen={setSideNavOpen}
+          />
+        </div> */}
+        <div className="w-100" >
+          <Box sx={{ p: 3 }}>
+            {/* Welcome Header */}
+            <Box sx={{ mb: 4 }}>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#013049', mb: 1 }}>
+                Welcome back, {userProfile?.fullName || 'User'}! 👋
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                Here's what's happening with your account today
+              </Typography>
+            </Box>
+
+            {/* Stats Cards */}
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Card sx={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  color: 'white',
+                  height: '100%'
+                }}>
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Box>
+                        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                          {dashboardData.stats.totalJobs}
+                        </Typography>
+                        <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                          Total Jobs
+                        </Typography>
+                      </Box>
+                      <Work sx={{ fontSize: 40, opacity: 0.8 }} />
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                      <TrendingUp sx={{ fontSize: 16, mr: 0.5 }} />
+                      <Typography variant="caption">
+                        +{dashboardData.stats.monthlyGrowth}% this month
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <Card sx={{
+                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                  color: 'white',
+                  height: '100%'
+                }}>
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Box>
+                        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                          ₦{dashboardData.stats.totalEarnings?.toLocaleString()}
+                        </Typography>
+                        <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                          Total Earnings
+                        </Typography>
+                      </Box>
+                      <AccountBalanceWallet sx={{ fontSize: 40, opacity: 0.8 }} />
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                      <TrendingUp sx={{ fontSize: 16, mr: 0.5 }} />
+                      <Typography variant="caption">
+                        +8.2% vs last month
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <Card sx={{
+                  background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                  color: 'white',
+                  height: '100%'
+                }}>
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Box>
+                        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                          {dashboardData.stats.activeJobs}
+                        </Typography>
+                        <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                          Active Jobs
+                        </Typography>
+                      </Box>
+                      <Schedule sx={{ fontSize: 40, opacity: 0.8 }} />
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                      <Typography variant="caption">
+                        {dashboardData.stats.pendingBids} pending bids
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <Card sx={{
+                  background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                  color: 'white',
+                  height: '100%'
+                }}>
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Box>
+                        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                          {dashboardData.stats.averageRating}
+                        </Typography>
+                        <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                          Avg Rating
+                        </Typography>
+                      </Box>
+                      <Star sx={{ fontSize: 40, opacity: 0.8 }} />
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                      <Typography variant="caption">
+                        {dashboardData.stats.responseRate}% response rate
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+
+            {/* Charts and Analytics */}
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid item xs={12} lg={8}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+                      Performance Overview
+                    </Typography>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <LineChart data={dashboardData.performanceData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="earnings" stroke="#8884d8" strokeWidth={2} />
+                        <Line type="monotone" dataKey="jobs" stroke="#82ca9d" strokeWidth={2} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} lg={4}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+                      Job Categories
+                    </Typography>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <PieChart>
+                        <Pie
+                          data={dashboardData.categoryDistribution}
+                          cx="50%"
+                          cy="50%"
+                          labelLine={false}
+                          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          dataKey="value"
+                        >
+                          {dashboardData.categoryDistribution.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+
+            {/* Recent Activity and Quick Actions */}
+            <Grid container spacing={3}>
+              <Grid item xs={12} lg={8}>
+                <Card>
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                        Recent Activity
+                      </Typography>
+                      <Button size="small" endIcon={<ArrowForward />}>
+                        View All
+                      </Button>
+                    </Box>
+                    <List>
+                      {dashboardData.recentActivity.map((activity, index) => (
+                        <React.Fragment key={activity.id}>
+                          <ListItem alignItems="flex-start">
+                            <ListItemAvatar>
+                              <Avatar sx={{ bgcolor: getStatusColor(activity.status) + '.main' }}>
+                                {getActivityIcon(activity.type)}
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                                    {activity.title}
+                                  </Typography>
+                                  <Chip
+                                    label={activity.status}
+                                    color={getStatusColor(activity.status)}
+                                    size="small"
+                                  />
+                                </Box>
+                              }
+                              secondary={
+                                <React.Fragment>
+                                  <Typography component="span" variant="body2" color="text.primary">
+                                    {activity.description} • {activity.artisan}
+                                  </Typography>
+                                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+                                    <Typography variant="caption" color="text.secondary">
+                                      ₦{activity.amount.toLocaleString()}
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                      {new Date(activity.date).toLocaleDateString()}
+                                    </Typography>
+                                  </Box>
+                                </React.Fragment>
+                              }
+                            />
+                          </ListItem>
+                          {index < dashboardData.recentActivity.length - 1 && <Divider variant="inset" component="li" />}
+                        </React.Fragment>
+                      ))}
+                    </List>
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} lg={4}>
+                <Stack spacing={3}>
+                  {/* Quick Actions */}
+                  <Card>
+                    <CardContent>
+                      <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+                        Quick Actions
+                      </Typography>
+                      <Stack spacing={2}>
+                        <Button
+                          variant="contained"
+                          startIcon={<Add />}
+                          fullWidth
+                          sx={{
+                            background: 'linear-gradient(135deg, #EF6E0B 0%, #d65c0a 100%)',
+                            '&:hover': { background: 'linear-gradient(135deg, #d65c0a 0%, #c04a09 100%)' }
+                          }}
+                          onClick={() => navigate('/dashboard/create-offer')}
+                        >
+                          Create New Job
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          startIcon={<Work />}
+                          fullWidth
+                          onClick={() => navigate('/dashboard/job-record')}
+                        >
+                          View My Jobs
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          startIcon={<AccountBalanceWallet />}
+                          fullWidth
+                          onClick={() => navigate('/dashboard/wallet')}
+                        >
+                          Check Wallet
+                        </Button>
+                      </Stack>
+                    </CardContent>
+                  </Card>
+
+                  {/* Profile Summary */}
+                  <Card>
+                    <CardContent>
+                      <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+                        Profile Summary
+                      </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                        <Avatar sx={{ width: 56, height: 56, mr: 2 }}>
+                          {userProfile?.fullName?.charAt(0) || 'U'}
+                        </Avatar>
+                        <Box>
+                          <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                            {userProfile?.fullName || 'User Name'}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {userProfile?.role === 0 ? 'Client' : userProfile?.role === 1 ? 'Artisan' : 'Admin'}
+                          </Typography>
+                        </Box>
+                      </Box>
+
+                      <Stack spacing={1}>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <LocationOn sx={{ fontSize: 16, mr: 1, color: 'text.secondary' }} />
+                          <Typography variant="body2" color="text.secondary">
+                            {userProfile?.officeLocation || 'Location not set'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <Phone sx={{ fontSize: 16, mr: 1, color: 'text.secondary' }} />
+                          <Typography variant="body2" color="text.secondary">
+                            {userProfile?.phoneNumber || 'Phone not set'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <Email sx={{ fontSize: 16, mr: 1, color: 'text.secondary' }} />
+                          <Typography variant="body2" color="text.secondary">
+                            {userProfile?.email || 'Email not set'}
+                          </Typography>
+                        </Box>
+                      </Stack>
+
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        onClick={() => navigate('/dashboard/profile')}
+                      >
+                        Edit Profile
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Stack>
+              </Grid>
+            </Grid>
+          </Box>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default HomePage;
+export default Dashboard;

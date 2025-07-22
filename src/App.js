@@ -136,7 +136,7 @@ export default function App() {
         <Route path="/verify-code/:email" element={<VerifyCodePage />} />
         <Route path="/image-cropper" element={<ImageCropperWithStyle />} />
         <Route
-          path="/Dashboard"
+          path="/dashboard"
           element={
             <TermiiSMSProvider>
               <Dashboard />
