@@ -81,149 +81,133 @@ export function ProfileSubNav({ setCurrentTab }) {
 }
 export function ShowProfile({ userProfile, decodeDate }) {
   function getAccountType(role) {
-    if (role === -1) {
-      return "Author";
-    }
-    if (role === 0) {
-      return "User";
-    }
-    if (role === 1) {
-      return "Artisan";
-    }
-    if (role === 3) {
-      return "Admin";
-    }
+    if (role === -1) return "Author";
+    if (role === 0) return "User";
+    if (role === 1) return "Artisan";
+    if (role === 3) return "Admin";
+    return "Unknown";
   }
   return (
-    <div className="ProfilePage">
-      <ProfileSubscriptionAlertCard userProfile={userProfile} />
-      <div className="d-flex justify-content-between flex-column flex-md-row w-100 mb-2">
-        <span>
-          <b>Profile completeness</b>
-          <ProfileCompletenessProgressBar />
-        </span>
-        <span className="mt-1 my-md-auto">
-          <ProfileCompletenessWhatLeftDropdown />
-        </span>
-      </div>
-      <div className="card d-flex ">
-        <div className="card-header py-3 fw-bold">Profile</div>
-        <div className="card-body">
-          <div className="image-div d-flex">
-            <img
-              src={userProfile.avatar || "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"}
-              alt="profilePix"
-              className="mx-auto"
-            />
-          </div>
-          {/* ============================= open Subscription modal button =============================== * /}
-        <button
-          className="btn btn-primary"
-          data-bs-toggle="modal"
-          href="#paymentModalToggle"
-          role="button"
-        >
-          Buy Subscription
-        </button>
-        {/* ===================================== </> ================================================= */}
-          <div className="form-div ">
-            <form className="my-5">
-              <div className="d-flex flex-column flex-md-row">
-                {/* <label className="w-100 mx-3 my-3" htmlFor="">
-                  <b> National Identity Number</b>
-                  <br />
-                  {userProfile.Nin}
-                </label> */}
-                <label className="w-100 mx-3 my-3" htmlFor="">
-                  <b> FullName:</b> <br />
-                  {userProfile.fullName || "Full Name"}
-                </label>
-              </div>
-              <div className="d-flex flex-column flex-md-row">
-                <label className="w-100 mx-3 my-3" htmlFor="">
-                  <b> Phone number</b> <br />+{userProfile.phoneNumber}
-                </label>
-                <label className="w-100 mx-3 my-3" htmlFor="">
-                  <b> Email</b>
-                  <br />
-                  {userProfile.email}
-                </label>
-              </div>
-
-              <>
-                <div className="d-flex flex-column flex-md-row">
-                  <label className="w-100 mx-3 my-3" htmlFor="">
-                    <b> City</b> <br />
-                    {userProfile.locationCity}
-                  </label>
-                  <label className="w-100 mx-3 my-3" htmlFor="">
-                    <b> State</b> <br />
-                    {userProfile.locationState}
-                  </label>
+    <div className="container py-4">
+      <div className="row justify-content-center">
+        <div className="col-lg-8">
+          <div className="card shadow-lg border-0 mb-4">
+            <div className="card-body p-4">
+              <div className="d-flex flex-column flex-md-row align-items-center mb-4">
+                <img
+                  src={userProfile.avatar || "https://i.ibb.co/DHhj1TSL/avatar-1577909-1280.png"}
+                  alt="Profile Avatar"
+                  className="rounded-circle border shadow"
+                  style={{ width: 120, height: 120, objectFit: 'cover', marginRight: 32 }}
+                />
+                <div className="flex-grow-1 text-center text-md-start mt-3 mt-md-0">
+                  <h2 className="fw-bold mb-1">{userProfile.fullName}</h2>
+                  <div className="mb-2">
+                    <span className="badge bg-primary me-2">{getAccountType(userProfile.role)}</span>
+                    {userProfile.account_verified ? (
+                      <span className="badge bg-success">Verified</span>
+                    ) : (
+                      <span className="badge bg-warning text-dark">Not Verified</span>
+                    )}
+                  </div>
+                  <div className="text-muted small">
+                    Joined: {decodeDate(userProfile.joinDate)}
+                  </div>
                 </div>
-              </>
-              <div className="d-flex flex-column flex-md-row">
-                <label className="w-100 mx-3 my-3" htmlFor="">
-                  <b> Account Type</b> <br />
-                  {getAccountType(userProfile.role)}
-                </label>
-                <label className="w-100 mx-3 my-3" htmlFor="">
-                  <b> Joined Date</b> <br />
-                  {decodeDate(userProfile.joinDate)}
-                </label>
               </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      {userProfile.role === 1 ? (
-        <>
-          <div className="card  my-5">
-            <div className="card-header py-3 fw-bold"> Business Info</div>
-            <div className="card-body">
-              <div className=" w-100 py-2">
-                <form className=" my-5 px-3">
-                  <p>
-                    <b>Introduction</b> <br />
-                    {userProfile.introduction}
-                  </p>
-
-                  <div className="d-flex flex-column flex-md-row">
-                    <p className="w-100 mx-0 me-md-3 my-3">
-                      <b> office address</b> <br />
-                      {/* {console.log(userProfile)} */}
-                      {userProfile.officeLocation}
-                    </p>
-                    <p className="w-100 mx-0 ms-md-3 my-3">
-                      <b> Year of experience</b> <br />
-                      {/* {console.log(userProfile)} */}
-                      {userProfile.YearsOfExperience} Years
-                    </p>
+              <hr />
+              <div className="row g-3 mb-4">
+                <div className="col-12 col-md-6">
+                  <div className="d-flex align-items-center mb-2">
+                    <i className="bi bi-envelope me-2"></i>
+                    <span className="fw-bold">Email:</span>
+                    <span className="ms-2">{userProfile.email}</span>
                   </div>
-                  <div className="d-flex flex-column flex-md-row">
-                    <p className="w-100 mx-0 me-md-3 my-3">
-                      <b> Referee Name</b> <br />
-                      {/* {console.log(userProfile)} */}
-                      {userProfile.refereeName}
-                    </p>
-                    <p className="w-100 mx-0 ms-md-3 my-3">
-                      <b> Referee Number</b> <br />
-                      {/* {console.log(userProfile)} */}
-                      {userProfile.refereeNumber}
-                    </p>
+                  <div className="d-flex align-items-center mb-2">
+                    <i className="bi bi-telephone me-2"></i>
+                    <span className="fw-bold">Phone:</span>
+                    <span className="ms-2">+{userProfile.phoneNumber}</span>
                   </div>
-
-                  {/* {editForm ? (
-                  <button className="w-50 m-auto mt-4 btn-primary btn">
-                    Save
-                  </button>
-                ) : null} */}
-                </form>
+                  <div className="d-flex align-items-center mb-2">
+                    <i className="bi bi-geo-alt me-2"></i>
+                    <span className="fw-bold">Location:</span>
+                    <span className="ms-2">{userProfile.locationCity}, {userProfile.locationState}</span>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <i className="bi bi-wallet2 me-2"></i>
+                    <span className="fw-bold">Wallet:</span>
+                    <span className="ms-2 text-success">₦{userProfile.wallet?.toLocaleString() || 0}</span>
+                  </div>
+                </div>
+                <div className="col-12 col-md-6">
+                  <div className="d-flex align-items-center mb-2">
+                    <i className="bi bi-building me-2"></i>
+                    <span className="fw-bold">Office:</span>
+                    <span className="ms-2">{userProfile.officeLocation || 'N/A'}</span>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <i className="bi bi-person-badge me-2"></i>
+                    <span className="fw-bold">Gender:</span>
+                    <span className="ms-2">{userProfile.gender}</span>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <i className="bi bi-award me-2"></i>
+                    <span className="fw-bold">Subscription:</span>
+                    <span className="ms-2">
+                      {userProfile.freeAccount ? (
+                        <span className="badge bg-secondary">Free Trial</span>
+                      ) : (
+                        <span className="badge bg-info text-dark">{userProfile.accountPlan?.name || 'N/A'}</span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <i className="bi bi-calendar-check me-2"></i>
+                    <span className="fw-bold">Account Active:</span>
+                    <span className="ms-2">
+                      {userProfile.account_active ? (
+                        <span className="text-success">Active</span>
+                      ) : (
+                        <span className="text-danger">Inactive</span>
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div className="mb-4">
+                <h5 className="fw-bold mb-2">About</h5>
+                <p className="mb-1">{userProfile.introduction}</p>
+                <div className="mb-2">
+                  <span className="fw-bold">Service(s):</span> {userProfile.service}
+                </div>
+              </div>
+              {userProfile.workImage && userProfile.workImage.length > 0 && (
+                <div className="mb-4">
+                  <h5 className="fw-bold mb-2">Portfolio</h5>
+                  <div className="row g-2">
+                    {userProfile.workImage.map((img, idx) => (
+                      <div className="col-6 col-md-4 col-lg-3" key={idx}>
+                        <img
+                          src={typeof img === 'string' ? img : img.image}
+                          alt={`work-${idx}`}
+                          className="img-fluid rounded shadow-sm border"
+                          style={{ width: '100%', height: 120, objectFit: 'cover' }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div className="d-flex justify-content-end">
+                <Link to="/dashboard/profile?edit=true" className="btn btn-outline-primary">
+                  Edit Profile
+                </Link>
               </div>
             </div>
           </div>
-        </>
-      ) : null}
+        </div>
+      </div>
     </div>
   );
 }

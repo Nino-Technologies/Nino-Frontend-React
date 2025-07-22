@@ -11,7 +11,7 @@ import CloudinaryUploadProfileButton from "../CloudnaryUploadButton/CloudnaryUpl
 function ArtisanRegistrationForm({ saveAccountType }) {
   const [currentTab, setCurrentTab] = useState(1);
   // change this to "5" to add imageCropper
-  const [maxTab] = useState(5);
+  const [maxTab, setMaxTab] = useState(6); // Increase maxTab to 6
   const [formComplete, setFormComplete] = useState(false);
   const [loading, setLoading] = useState(false);
   // form data
@@ -32,6 +32,7 @@ function ArtisanRegistrationForm({ saveAccountType }) {
   const [introduction, setIntroduction] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   // const [profileImageFile, setProfileImageFile] = useState(null);
+  const [workImage, setWorkImage] = useState([]); // Array of image URLs for previous work
 
   function updateProfilePicture(img) {
     setAvatar(img);
@@ -54,6 +55,38 @@ function ArtisanRegistrationForm({ saveAccountType }) {
     // if()
     setFormComplete(true);
   }, [email, fullName, phoneNumber, locationCity, locationState, password]);
+
+  function handleOpenWorkWidget() {
+    if (!formComplete) {
+      return toast.info("Complete registration form to upload...");
+    }
+    var myWorkWidget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: "dhvacnvek",
+        uploadPreset: "oyieaesl", // You may want a separate preset for work images
+        folder: "WorkImages",
+        sources: ["local", "camera"],
+        multiple: true,
+        resourceType: "image",
+        maxFiles: 10,
+      },
+      (error, result) => {
+        if (error) {
+          return console.error(error);
+        }
+        if (result.event === "success" && result.info) {
+          toast.success("Image uploaded successfully");
+          setWorkImage(prev => [...prev, result.info.url]);
+          myWorkWidget.hide();
+        }
+      }
+    );
+    myWorkWidget.open();
+  }
+
+  function handleRemoveWorkImage(idx) {
+    setWorkImage(prev => prev.filter((_, i) => i !== idx));
+  }
 
   async function handelSubmit(e) {
     e.preventDefault();
@@ -96,6 +129,9 @@ function ArtisanRegistrationForm({ saveAccountType }) {
     if (!avatar || avatar === "") {
       return toast.info("Select an image before submitting");
     }
+    if (workImage.length === 0) {
+      return toast.info("Upload at least one previous work image");
+    }
     setLoading(true);
 
     const profileOject = {
@@ -112,6 +148,7 @@ function ArtisanRegistrationForm({ saveAccountType }) {
       introduction: introduction,
       email: email,
       password: password,
+      workImage: workImage, // Array of image URLs
     };
 
     // console.log(profileOject);
@@ -329,6 +366,26 @@ function ArtisanRegistrationForm({ saveAccountType }) {
                 avatar={avatar}
                 updateProfilePicture={updateProfilePicture}
               />
+            </div>
+          </div>
+
+          <div
+            className="tab"
+            style={
+              currentTab === 6 ? { display: "block", maxHeight: "650px" } : { display: "none" }
+            }
+          >
+            <label>Upload Previous Work (Portfolio)</label>
+            <button type="button" className="btn btn-primary my-2" onClick={handleOpenWorkWidget}>
+              Upload Images
+            </button>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 10 }}>
+              {workImage.map((img, idx) => (
+                <div key={idx} style={{ position: 'relative' }}>
+                  <img src={img} alt={`work-${idx}`} style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 8, border: '1px solid #ccc' }} />
+                  <button type="button" onClick={() => handleRemoveWorkImage(idx)} style={{ position: 'absolute', top: 0, right: 0, background: '#fff', border: 'none', color: 'red', fontWeight: 'bold', cursor: 'pointer' }}>×</button>
+                </div>
+              ))}
             </div>
           </div>
           {formComplete ? null : (
