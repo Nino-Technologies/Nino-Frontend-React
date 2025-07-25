@@ -52,7 +52,7 @@ const TRACKING_ID = "G-C3G25DKRJC";
 ReactGa.initialize(TRACKING_ID);
 
 export default function App() {
-  const { getUserProfile, loggedIn } = useContext(UserContext);
+  const { loggedIn } = useContext(UserContext);
 
   function ScrollToTop() {
     const { pathname } = useLocation();

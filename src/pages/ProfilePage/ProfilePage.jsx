@@ -21,9 +21,9 @@ function ProfilePage() {
   const { userProfile, decodeDate, apiUrl, getUserProfile } =
     useContext(UserContext);
   const [currentTab, setCurrentTab] = useState(1);
-  useEffect(() => {
-    getUserProfile();
-  }, [getUserProfile]);
+  // useEffect(() => {
+  //   getUserProfile();
+  // }, [getUserProfile]);
   return (
     <div className="content-body">
       <div className="container">

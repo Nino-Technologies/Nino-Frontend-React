@@ -556,58 +556,11 @@ const BidCard = ({ bid, onUpdate, job, fetchJob, setJobs }) => {
 };
 
 const OngoingJobs = () => {
-    const [jobs, setJobs] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [cookies] = useCookies();
     const { userProfile } = useContext(UserContext);
-    const [completedJobs, setCompletedJobs] = useState([]);
-    const [jobType, setJobType] = useState('ongoing');
-    const [bids, setBids] = useState([]);
+    const { bids, setBids, fetchJobs, completedJobs, setJobs, jobLoading, jobType, setJobType } = useContext(UserContext);
 
-    const fetchJobs = async () => {
-        try {
-            const myHeaders = new Headers();
-            myHeaders.append("Authorization", cookies.grinderUser.token);
 
-            const response = await fetch("https://nino-backend.vercel.app/api/job/mine", {
-                method: "GET",
-                headers: myHeaders,
-                redirect: "follow"
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            setJobs(data.jobs);
-
-            const ongoingJobs = data.jobs.filter(job =>
-                (job.application || (job.applied && job.applied.length > 0)) &&
-                job.status === "inprogress"
-            );
-            const completedJobs = data.jobs.filter(job =>
-                job.status === "completed"
-            );
-
-            setBids(ongoingJobs);
-            setCompletedJobs(completedJobs);
-
-            if (ongoingJobs.length === 0 && jobType === 'ongoing') {
-                toast.info("No ongoing jobs found.");
-            }
-        } catch (err) {
-            setError(err.message);
-            toast.error("Failed to fetch jobs: " + err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchJobs();
-    }, []);
 
     const handleUpdateBid = (updatedBid) => {
         setBids(bids.map(bid => bid.id === updatedBid.id ? updatedBid : bid));
@@ -637,7 +590,7 @@ const OngoingJobs = () => {
         }
     ].filter(card => card.show);
 
-    if (loading) {
+    if (jobLoading) {
         return (
             <Box sx={{ p: 4 }}>
                 {/* Header Skeleton */}

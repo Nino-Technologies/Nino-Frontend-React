@@ -167,11 +167,11 @@ function ArtisansProfile() {
     countHireFunction(artisan);
   }
 
-  useEffect(() => {
-    if (loggedIn) {
-      getUserProfile();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     getUserProfile();
+  //   }
+  // }, []);
 
   function giveArtisanReview() {
     if (!loggedIn) {

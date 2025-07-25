@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Typography, Button, Paper, Chip, Dialog, TextField, Grid } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -8,23 +8,8 @@ import ScheduleIcon from '@mui/icons-material/Schedule';
 import { AccessTimeSharp, WalletRounded } from '@mui/icons-material';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
-const calculateDays = (timelineStr) => {
-    if (!timelineStr) return '0';
-    const [startStr, endStr] = timelineStr.split('-').map(s => s.trim());
-    const parseDate = (dateStr) => {
-        const [day, month, year] = dateStr.split('/').map(Number);
-        return new Date(year, month - 1, day);
-    };
+import { UserContext } from '../../context/UserContext';
 
-    try {
-        const startDate = parseDate(startStr);
-        const endDate = parseDate(endStr);
-        const diffTime = Math.abs(endDate - startDate);
-        return Math.ceil(diffTime / (1000 * 60 * 60 * 24)).toString();
-    } catch (error) {
-        return '0';
-    }
-};
 
 const BidCard = ({ bid, onUpdate }) => {
     const [openEdit, setOpenEdit] = useState(false);
@@ -260,74 +245,76 @@ const BidPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [cookies, setCookie, removeCookie] = useCookies();
+    const { calculateDays, handleUpdateBid, artisanBids, getArtisanBids } =
+        useContext(UserContext);
     useEffect(() => {
-        const fetchBids = async () => {
-            try {
-                const token = localStorage.getItem('token'); // Get token from storage
-                const response = await fetch('https://nino-backend.vercel.app/api/job/applied', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': cookies.grinderUser.token,
-                        'Content-Type': 'application/json'
-                    }
-                });
+        // const fetchBids = async () => {
+        //     try {
+        //         const token = localStorage.getItem('token'); // Get token from storage
+        //         const response = await fetch('https://nino-backend.vercel.app/api/job/applied', {
+        //             method: 'GET',
+        //             headers: {
+        //                 'Authorization': cookies.grinderUser.token,
+        //                 'Content-Type': 'application/json'
+        //             }
+        //         });
 
-                if (!response.ok) throw new Error('Failed to fetch bids');
+        //         if (!response.ok) throw new Error('Failed to fetch bids');
 
-                const data = await response.json();
-                console.log('this are all the bids', response)
-                // Transform backend data to match frontend structure
-                const transformedBids = data.jobs.flatMap(job =>
-                    job.applied.map(applied => ({
-                        id: applied._id,
-                        jobId: job._id,
-                        jobTitle: job.title,
-                        amount: `${applied.amount?.toLocaleString() || '0'}`,
-                        timeline: calculateDays(applied.timeLine),
-                        description: applied.description,
-                        materials: job.materialInformation?.split(', ') || [],
-                        status: applied.status,
-                        rawData: applied // Keep raw data for potential updates
-                    }))
-                );
+        //         const data = await response.json();
+        //         console.log('this are all the bids', data.jobs)
+        //         // Transform backend data to match frontend structure
+        //         const transformedBids = data.jobs.flatMap(job =>
+        //             job.applied.map(applied => ({
+        //                 id: applied._id,
+        //                 jobId: job._id,
+        //                 jobTitle: job.title,
+        //                 amount: `${applied.amount?.toLocaleString() || '0'}`,
+        //                 timeline: calculateDays(applied.timeLine),
+        //                 description: applied.description,
+        //                 materials: job.materialInformation?.split(', ') || [],
+        //                 status: applied.status,
+        //                 rawData: applied // Keep raw data for potential updates
+        //             }))
+        //         );
 
-                setBids(transformedBids);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
-            }
-        };
+        //         setBids(transformedBids);
+        //         setLoading(false);
+        //     } catch (error) {
+        //         setError(error.message);
+        //         setLoading(false);
+        //     }
+        // };
 
-        fetchBids();
+        getArtisanBids();
     }, []);
 
-    const handleUpdateBid = async (updatedBid) => {
-        try {
-            // Update backend
-            const token = localStorage.getItem('token');
-            const response = await fetch(`https://nino-backend.vercel.app/api/job/applied/${updatedBid.rawData._id}`, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': token,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    description: updatedBid.description,
-                    amount: parseInt(updatedBid.rawData.amount),
-                    timeLine: updatedBid.rawData.timeLine,
-                    // Include other necessary fields
-                })
-            });
+    // const handleUpdateBid = async (updatedBid) => {
+    //     try {
+    //         // Update backend
+    //         const token = localStorage.getItem('token');
+    //         const response = await fetch(`https://nino-backend.vercel.app/api/job/applied/${updatedBid.rawData._id}`, {
+    //             method: 'PUT',
+    //             headers: {
+    //                 'Authorization': token,
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 description: updatedBid.description,
+    //                 amount: parseInt(updatedBid.rawData.amount),
+    //                 timeLine: updatedBid.rawData.timeLine,
+    //                 // Include other necessary fields
+    //             })
+    //         });
 
-            if (!response.ok) throw new Error('Update failed');
+    //         if (!response.ok) throw new Error('Update failed');
 
-            // Update local state
-            setBids(bids.map(bid => bid.id === updatedBid.id ? updatedBid : bid));
-        } catch (error) {
-            console.error('Update error:', error);
-        }
-    };
+    //         // Update local state
+    //         setBids(artisanBids.map(bid => bid.id === updatedBid.id ? updatedBid : bid));
+    //     } catch (error) {
+    //         console.error('Update error:', error);
+    //     }
+    // };
     // const GetArtisanBids = async () => {
     //     try {
     //         const response = await fetch('https://nino-backend.vercel.app/api/job/applied', {
@@ -344,8 +331,8 @@ const BidPage = () => {
 
 
 
-    if (loading) return <div className='d-flex justify-content-center align-items-center' style={{ minHeight: '80vh' }} > <Typography>Loading bids...</Typography></div>;
-    if (error) return <div className='d-flex justify-content-center align-items-center' style={{ minHeight: '80vh' }} >  <Typography color="error">Error: {error}</Typography></div>;
+    // if (loading) return <div className='d-flex justify-content-center align-items-center' style={{ minHeight: '80vh' }} > <Typography>Loading bids...</Typography></div>;
+    // if (error) return <div className='d-flex justify-content-center align-items-center' style={{ minHeight: '80vh' }} >  <Typography color="error">Error: {error}</Typography></div>;
 
 
 
@@ -355,7 +342,7 @@ const BidPage = () => {
             <Box sx={{ p: 4, mt: 8, minHeight: 'calc(100vh - 128px)' }}>
                 {/* Header and wallet display (same as before) */}
                 <Grid container spacing={3}>
-                    {bids.map(bid => (
+                    {artisanBids.map(bid => (
                         <Grid item key={bid.id} xs={12} sm={6} md={4}>
                             <BidCard
                                 bid={bid}

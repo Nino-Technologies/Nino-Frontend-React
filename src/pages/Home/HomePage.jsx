@@ -50,7 +50,9 @@ import {
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 
 function Dashboard() {
-  const { loggedIn, getUserProfile, userProfile } = useContext(UserContext);
+  const { loggedIn, getUserProfile, userProfile, bids,
+    jobs,
+    completedJobs, artisanBids } = useContext(UserContext);
   const [sideNavOpen, setSideNavOpen] = useState(false);
   const navigate = useNavigate();
   const [cookies] = useCookies();
@@ -59,62 +61,119 @@ function Dashboard() {
   const [dashboardData, setDashboardData] = useState({
     stats: {
       totalJobs: 156,
-      completedJobs: 89,
-      activeJobs: 23,
-      totalEarnings: 45250,
+      completedJobs: 0,
+      activeJobs: 0,
+      totalEarnings: userProfile.wallet || 0,
       monthlyGrowth: 12.5,
       responseRate: 94.2,
       averageRating: 4.8,
       pendingBids: 7
     },
     recentActivity: [
-      {
-        id: 1,
-        type: 'job_completed',
-        title: 'Kitchen Renovation',
-        description: 'Job completed successfully',
-        amount: 2500,
-        date: '2024-01-15',
-        status: 'completed',
-        artisan: 'John Smith'
-      },
-      {
-        id: 2,
-        type: 'new_bid',
-        title: 'Electrical Installation',
-        description: 'New bid received',
-        amount: 1800,
-        date: '2024-01-14',
-        status: 'pending',
-        artisan: 'Mike Johnson'
-      },
-      {
-        id: 3,
-        type: 'payment_received',
-        title: 'Plumbing Repair',
-        description: 'Payment received',
-        amount: 950,
-        date: '2024-01-13',
-        status: 'completed',
-        artisan: 'Sarah Wilson'
-      }
-    ],
-    performanceData: [
-      { month: 'Jan', jobs: 12, earnings: 8500 },
-      { month: 'Feb', jobs: 15, earnings: 12000 },
-      { month: 'Mar', jobs: 18, earnings: 14500 },
-      { month: 'Apr', jobs: 22, earnings: 18000 },
-      { month: 'May', jobs: 25, earnings: 22000 },
-      { month: 'Jun', jobs: 28, earnings: 25000 }
+      // {
+      //   id: 1,
+      //   type: 'job_completed',
+      //   title: 'Kitchen Renovation',
+      //   description: 'Job completed successfully',
+      //   amount: 2500,
+      //   date: '2024-01-15',
+      //   status: 'completed',
+      //   artisan: 'John Smith'
+      // },
+      // {
+      //   id: 2,
+      //   type: 'new_bid',
+      //   title: 'Electrical Installation',
+      //   description: 'New bid received',
+      //   amount: 1800,
+      //   date: '2024-01-14',
+      //   status: 'pending',
+      //   artisan: 'Mike Johnson'
+      // },
+      // {
+      //   id: 3,
+      //   type: 'payment_received',
+      //   title: 'Plumbing Repair',
+      //   description: 'Payment received',
+      //   amount: 950,
+      //   date: '2024-01-13',
+      //   status: 'completed',
+      //   artisan: 'Sarah Wilson'
+      // },
+      ,
+      // { month: 'Mar', jobs: 18, earnings: 14500 },
+      // { month: 'Jan', jobs: 1, earnings: 0 },
+      // { month: 'Feb', jobs: 15, earnings: 12000 },
+      // { month: 'Mar', jobs: 18, earnings: 14500 },
+      // { month: 'Apr', jobs: 22, earnings: 18000 },
+      // { month: 'May', jobs: 25, earnings: 22000 },
+      // { month: 'Jun', jobs: 28, earnings: 25000 },
+      // { month: 'Apr', jobs: 22, earnings: 18000 },
+      // { month: 'May', jobs: 25, earnings: 22000 },
     ],
     categoryDistribution: [
-      { name: 'Construction', value: 35, color: '#8884d8' },
-      { name: 'Electrical', value: 25, color: '#82ca9d' },
+      // { name: 'Construction', value: 35, color: '#8884d8' },
+      // { name: 'Electrical', value: 25, color: '#82ca9d' },
       { name: 'Plumbing', value: 20, color: '#ffc658' },
-      { name: 'Cleaning', value: 15, color: '#ff7300' },
-      { name: 'Others', value: 5, color: '#8dd1e1' }
+      // { name: 'Cleaning', value: 15, color: '#ff7300' },
+      // { name: 'Others', value: 5, color: '#8dd1e1' }
+
     ]
   });
+
+  useEffect(() => {
+    if (userProfile?.reviews && Array.isArray(userProfile.reviews) && userProfile.reviews.length > 0) {
+      const rates = userProfile.reviews.map(r => Number(r.rate)).filter(r => !isNaN(r));
+      const avgRate = rates.length ? (rates.reduce((a, b) => a + b, 0) / rates.length).toFixed(1) : 0;
+      console.log("Average Rating:", avgRate);
+      // Update the dashboard data with the average rating
+      setDashboardData(prev => ({
+        ...prev,
+        stats: {
+          ...prev.stats,
+          averageRating: avgRate
+        }
+      }));
+    } else {
+      console.log("No reviews found or invalid data structure");
+      // If no reviews, set average rating to 0
+      setDashboardData(prev => ({
+        ...prev,
+        stats: {
+          ...prev.stats,
+          averageRating: 0
+        }
+      }));
+    }
+  }, [userProfile]);
+
+
+  function filterBidsByUserId(bidsArray, userId) {
+    return bidsArray.filter(
+      (bid) => bid.rawData?.artisan?._id === userId
+    );
+  }
+
+  useEffect(() => {
+    // console.log({ artisanBids })
+    {
+      // artisanBids.map((bid) => {
+      //   console.log({ bid });
+
+
+      // Example usage:
+      const userId = userProfile?._id;
+      const myBids = filterBidsByUserId(artisanBids, userId);
+      console.log("Filtered Bids for user:", myBids);
+
+      // }
+      // )
+    }
+  }, [artisanBids]);
+  // useEffect(() => {
+
+  // }, []);
+
 
   useEffect(() => {
     if (loggedIn === false) {
@@ -123,10 +182,27 @@ function Dashboard() {
   }, [loggedIn]);
 
   useEffect(() => {
-    if (loggedIn) {
-      getUserProfile();
-    }
-  }, []);
+
+    console.log("recentActivity", dashboardData.recentActivity)
+  }, [dashboardData.recentActivity]);
+
+  useEffect(() => {
+    let artisanBidsArray = artisanBids?.map((bid) => ({
+      id: bid._id,
+      type: 'new_bid',
+      title: bid?.jobTitle || 'New Bid',
+      description: bid?.description || 'You have a new bid',
+      amount: bid?.amount || 0,
+      date: bid?.createdAt || new Date().toISOString(),
+      status: bid?.status || 'pending',
+      artisan: bid.rawData?.artisan?.fullName || 'Unknown Artisan'
+    }))
+    console.log({ artisanBids })
+    setDashboardData(prev => ({
+      ...prev,
+      recentActivity: artisanBidsArray || []
+    }));
+  }, [artisanBids]);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -179,6 +255,11 @@ function Dashboard() {
 
             {/* Stats Cards */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
+
+              {
+                userProfile.role === 0 && (
+
+
               <Grid item xs={12} sm={6} md={3}>
                 <Card sx={{
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -206,8 +287,12 @@ function Dashboard() {
                   </CardContent>
                 </Card>
               </Grid>
+                )
+              }
 
-              <Grid item xs={12} sm={6} md={3}>
+
+              {
+                userProfile.role === 1 && (<Grid item xs={12} sm={6} md={3}>
                 <Card sx={{
                   background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                   color: 'white',
@@ -217,7 +302,7 @@ function Dashboard() {
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <Box>
                         <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-                          ₦{dashboardData.stats.totalEarnings?.toLocaleString()}
+                            ₦{dashboardData.stats?.totalEarnings?.toLocaleString()}
                         </Typography>
                         <Typography variant="body2" sx={{ opacity: 0.8 }}>
                           Total Earnings
@@ -233,7 +318,9 @@ function Dashboard() {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
+                </Grid>)
+              }
+
 
               <Grid item xs={12} sm={6} md={3}>
                 <Card sx={{
@@ -282,7 +369,8 @@ function Dashboard() {
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
                       <Typography variant="caption">
-                        {dashboardData.stats.responseRate}% response rate
+                        {/* {dashboardData.stats.responseRate}% response rate */}
+                        0% response rate
                       </Typography>
                     </Box>
                   </CardContent>
@@ -384,7 +472,7 @@ function Dashboard() {
                                   </Typography>
                                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
                                     <Typography variant="caption" color="text.secondary">
-                                      ₦{activity.amount.toLocaleString()}
+                                      ₦{activity.amount?.toLocaleString()}
                                     </Typography>
                                     <Typography variant="caption" color="text.secondary">
                                       {new Date(activity.date).toLocaleDateString()}

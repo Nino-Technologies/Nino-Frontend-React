@@ -172,12 +172,12 @@ export function AccountMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   // const isOpen = Boolean(anchorEl);
 
-  // Fetch user profile if logged in and cookie is present
-  useEffect(() => {
-    if (loggedIn && cookies.grinderUser) {
-      getUserProfile();
-    }
-  }, [loggedIn, cookies.grinderUser, getUserProfile]);
+  // // Fetch user profile if logged in and cookie is present
+  // useEffect(() => {
+  //   if (loggedIn && cookies.grinderUser) {
+  //     getUserProfile();
+  //   }
+  // }, [loggedIn, cookies.grinderUser, getUserProfile]);
 
   // Handlers with useCallback for memoization
   const handleClick = useCallback((event) => setAnchorEl(event.currentTarget), []);

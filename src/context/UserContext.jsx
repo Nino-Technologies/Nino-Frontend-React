@@ -7,6 +7,7 @@ import axios from "axios";
 import VerifiedBadge from "../components/verifiedBadge/verifiedBadge.jsx";
 import { FaExclamation } from "react-icons/fa";
 import { useContext } from "react";
+import { toast } from "react-toastify";
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
@@ -19,9 +20,9 @@ function UserProvider({ children }) {
   const [notification, setNotification] = useState([]);
   const navigate = useNavigate();
   // const apiUrl = "https://nino-technologies.herokuapp.com/api";
-  // const apiUrl = "http://localhost:5000/api";
+  const apiUrl = "http://localhost:5000/api";
   // const apiUrl = "https://api.grinders.ng/api";
-  const apiUrl = "https://nino-backend.vercel.app/api";
+  // const apiUrl = "https://nino-backend.vercel.app/api";
   const [pageLoading, setPageLoading] = useState(true);
 
   // useEffect(() => {
@@ -32,12 +33,10 @@ function UserProvider({ children }) {
   //   setLoggedIn(true);
   //   // setUserProfile(cookies.grinderUser.profile || null);
   // }, [cookies.grinderUser]);
-  // useEffect(() => {
-  //   if (userProfile === null) {
-  //     setLoggedIn(false);
-  //     return;
-  //   }
-  // }, [userProfile]);
+  useEffect(() => {
+    console.log('userProfile', userProfile);
+
+  }, [userProfile]);
   useEffect(() => {
     if (!cookies.grinderUser) {
       setLoggedIn(false);
@@ -199,28 +198,153 @@ function UserProvider({ children }) {
     }
   }
 
+
+  // functions for jobs
+  const [bids, setBids] = useState([]);
+  const [jobs, setJobs] = useState([]);
+  const [completedJobs, setCompletedJobs] = useState([]);
+  const [jobLoading, setJobLoading] = useState(true);
+  const [jobType, setJobType] = useState('ongoing');
+
+  // const [error, setError] = useState(null);
+
+  const fetchJobs = async () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", cookies.grinderUser.token);
+
+      const response = await fetch("https://nino-backend.vercel.app/api/job/mine", {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setJobs(data.jobs);
+
+      const ongoingJobs = data.jobs.filter(job =>
+        (job.application || (job.applied && job.applied.length > 0)) &&
+        job.status === "inprogress"
+      );
+      const completedJobs = data.jobs.filter(job =>
+        job.status === "completed"
+      );
+
+      setBids(ongoingJobs);
+      setCompletedJobs(completedJobs);
+
+      if (ongoingJobs.length === 0 && jobType === 'ongoing') {
+        toast.info("No ongoing jobs found.");
+      }
+    } catch (err) {
+      // setError(err.message);
+      toast.error("Failed to fetch jobs: " + err.message);
+    } finally {
+      setJobLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+
+  // function for bids
+  const [artisanBids, setArtisanBids] = useState([]);
+
+  const calculateDays = (timelineStr) => {
+    if (!timelineStr) return '0';
+    const [startStr, endStr] = timelineStr.split('-').map(s => s.trim());
+    const parseDate = (dateStr) => {
+      const [day, month, year] = dateStr.split('/').map(Number);
+      return new Date(year, month - 1, day);
+    };
+
+    try {
+      const startDate = parseDate(startStr);
+      const endDate = parseDate(endStr);
+      const diffTime = Math.abs(endDate - startDate);
+      return Math.ceil(diffTime / (1000 * 60 * 60 * 24)).toString();
+    } catch (error) {
+      return '0';
+    }
+  };
+
+  async function getArtisanBids() {
+    // const fetchBids = async () => {
+    try {
+      const token = localStorage.getItem('token'); // Get token from storage
+      const response = await fetch('https://nino-backend.vercel.app/api/job/applied', {
+        method: 'GET',
+        headers: {
+          'Authorization': cookies.grinderUser.token,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch bids');
+
+      const data = await response.json();
+      console.log('this are all the bids', data.jobs)
+      // Transform backend data to match frontend structure
+      const transformedBids = data.jobs.flatMap(job =>
+        job.applied.map(applied => ({
+          id: applied._id,
+          jobId: job._id,
+          jobTitle: job.title,
+          amount: `${applied.amount?.toLocaleString() || '0'}`,
+          timeline: calculateDays(applied.timeLine),
+          createdAt: decodeDate(applied.createdAt),
+          updatedAt: decodeDate(applied.updatedAt),
+          description: applied.description,
+          materials: job.materialInformation?.split(', ') || [],
+          status: applied.status,
+          rawData: applied // Keep raw data for potential updates
+        }))
+      );
+
+      setArtisanBids(transformedBids);
+    } catch (error) {
+      // setError(error.message);
+      // setLoading(false);
+      console.log(error)
+    }
+    // };
+  }
+
+
+  const handleUpdateBid = async (updatedBid) => {
+    try {
+      // Update backend
+      const token = localStorage.getItem('token');
+      const response = await fetch(`https://nino-backend.vercel.app/api/job/applied/${updatedBid.rawData._id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          description: updatedBid.description,
+          amount: parseInt(updatedBid.rawData.amount),
+          timeLine: updatedBid.rawData.timeLine,
+          // Include other necessary fields
+        })
+      });
+
+      if (!response.ok) throw new Error('Update failed');
+
+      // Update local state
+      setArtisanBids(artisanBids.map(bid => bid.id === updatedBid.id ? updatedBid : bid));
+    } catch (error) {
+      console.error('Update error:', error);
+    }
+  };
   return (
-    // <UserContext.Provider
-    //   value={{
-    //     loggedIn,
-    //     setLoggedIn,
-    //     userProfile,
-    //     setUserProfile,
-    //     logOutFunction,
-    //     apiUrl,
-    //     decodeDate,
-    //     getNotification,
-    //     notification,
-    //     checkVerifiedFunction,
-    //     pageLoading,
-    //     getUserProfile,
-    //     profileCompletenessCheck,
-    //     profileProgress,
-    //     nonCompleted,
-    //   }}
-    // >
-    //   {children}
-    // </UserContext.Provider>
+
     <UserContext.Provider
       value={{
         loggedIn,
@@ -239,6 +363,21 @@ function UserProvider({ children }) {
         profileProgress,
         nonCompleted,
         CreateJob,
+        // job state
+        jobLoading,
+        setJobLoading,
+        jobs,
+        setJobs,
+        bids,
+        setBids,
+        completedJobs,
+        setCompletedJobs,
+        fetchJobs, jobType, setJobType,
+        // profileCompletenessCheck,
+        // get artisan bids
+        calculateDays,
+        artisanBids,
+        getArtisanBids, handleUpdateBid
       }}
     >
       {children}
